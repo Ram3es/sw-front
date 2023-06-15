@@ -1,45 +1,31 @@
-# NOT FINISHED
-image: node:lts
-
-variables:
-  DOCKER_DRIVER: overlay
-
 stages:
   - build
   - deploy
 
-before_script:
-  - docker info
-
-build:
+build_staging:
   stage: build
-  image: docker:18.03.1
+  image: docker:18-git
   only:
-    - main
+    - staging
   services:
-    - docker:dind
-  before_script:
-    - rm -rf .env
-    - cp .env.build .env
-    - rm -rf .env.build
+    - docker:18-dind
   script:
-    - ls -la
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
-    - docker build -t registry.gitlab.com/des-labs1/skinwallet-front .
-    - docker push registry.gitlab.com/des-labs1/skinwallet-front
-deploy:
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker build -t $CI_REGISTRY_IMAGE:staging .
+    - docker push $CI_REGISTRY_IMAGE:staging
+
+deploy_staging:
   stage: deploy
+  image: alpine:latest
   only:
-    - main
-  before_script:
-    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan $HOST >> ~/.ssh/known_hosts
-    - chmod 644 ~/.ssh/known_hosts
+    - staging
   script:
-    - ssh ${USER}@${HOST} "cd ~/skinwallet && docker-compose pull"
-    - ssh ${USER}@${HOST} "cd ~/skinwallet && docker-compose down"
-    - ssh ${USER}@${HOST} "cd ~/skinwallet && docker-compose up -d"
+    - chmod og= $SSH_KEY
+    - apk update && apk add openssh-client
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker-compose rm -s frontend"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker rm $CI_PROJECT_NAME || true"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker image rm $CI_REGISTRY_IMAGE:staging || true"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker pull $CI_REGISTRY_IMAGE:staging"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker-compose up -d frontend"
+

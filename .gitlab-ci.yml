@@ -22,10 +22,10 @@ deploy_staging:
   script:
     - chmod og= $SSH_KEY
     - apk update && apk add openssh-client
-    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker-compose rm -s frontend"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker compose rm -s frontend"
     - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker rm $CI_PROJECT_NAME || true"
     - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker image rm $CI_REGISTRY_IMAGE:staging || true"
     - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY"
     - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker pull $CI_REGISTRY_IMAGE:staging"
-    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker-compose up -d frontend"
+    - ssh -i $SSH_KEY -o StrictHostKeyChecking=no $STAGING_USER@$STAGING_SERVER "cd ~/skinwallet && docker compose up -d frontend"
 

@@ -1,4 +1,4 @@
-export default function SellPage() {
+export default function InstantSell() {
   return (
     <div>Sell Page</div>
   )

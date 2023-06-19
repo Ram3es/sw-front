@@ -1,8 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
-import SellPage from '../pages/SellPage/SellPage';
+import App from '../App';
+import InstantSell from '../pages/InstantSell/InstantSell';
 import Payouts from '../pages/Payouts/Payouts';
 import TransactionsPage from '../pages/Transactions/Transactions';
-import App from '../App';
+import SignIn from '../pages/SignIn/signIn';
+import Profile from '../pages/Profile/Profile';
+import Buy from '../pages/Buy/Buy';
 
 const router = createBrowserRouter([
   {
@@ -10,12 +13,24 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: 'sell',
-        element: <SellPage />
+        path: 'instant-sell',
+        element: <InstantSell />
       },
       {
-        path: 'payouts',
+        path: 'sign-in',
+        element: <SignIn />
+      },
+      {
+        path: 'profile',
+        element: <Profile />
+      },
+      {
+        path: 'payout',
         element: <Payouts />
+      },
+      {
+        path: 'buy',
+        element: <Buy />
       },
       {
         path: 'transactions',

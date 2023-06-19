@@ -6,7 +6,7 @@ import App from '../App';
 
 const router = createBrowserRouter([
   {
-    path: '/market',
+    path: '/',
     element: <App />,
     children: [
       {
@@ -23,6 +23,6 @@ const router = createBrowserRouter([
       },
     ]
   },
-]);
+], { basename: '/market'});
 
 export default router;

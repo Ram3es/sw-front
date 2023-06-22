@@ -2,26 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@layer utilities {
+  .cta-clip-path {
+    clip-path: polygon(100% 0, 100% 100%, calc(0% + 8px) 100%, 0 calc(100% - 8px), 0 0);
+  }
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  .bar-clip-path {
+    clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 40% 100%, 40.5% 90%, 100% 90%);
+  }
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  .button {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+    border: 0;
+    outline: none;
+  }
+}
+
+@font-face {
+  font-family: 'Barlow';
+  src:
+    url('./assets/fonts/Barlow-Medium.ttf'),
+    url('./assets/fonts/Barlow-Bold.ttf'),
+    url('./assets/fonts/Barlow-Regular.ttf');
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  height: 2000px;
 }

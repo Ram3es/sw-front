@@ -1,3 +1,4 @@
+import plugin from 'tailwindcss/plugin'
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -5,8 +6,29 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        almostBlack: 'rgb(20, 20, 21)',
+        skinwallerGray: 'rgb(164, 164, 164)',
+        darkGrey: 'rgba(32, 32, 35, 1)'
+      },
+      screens: {
+        'sm-viewport': '50em'
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    plugin(function({ matchUtilities, theme }) {
+      matchUtilities(
+        {
+          'translate-z': (value) => ({
+            '--tw-translate-z': value,
+            transform: ` translate3d(var(--tw-translate-x), var(--tw-translate-y), var(--tw-translate-z)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))`,
+          }),
+        },
+        { values: theme('translate'), supportsNegativeValues: true }
+      )
+    })
+  ],
 }
 

@@ -1,5 +1,9 @@
+import Bar from '../../components/Bar/Bar';
+
 export default function Buy() {
   return (
-    <div>Buy Page</div>
+    <>
+      <Bar />
+    </>
   )
 }

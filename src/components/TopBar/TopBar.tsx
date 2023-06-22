@@ -3,7 +3,6 @@ import { ReactComponent as SkinwalletLogo } from './images/logo-skinwallet.inlin
 import { ReactComponent as SearchIcon } from './images/search-icon.svg'
 import { ReactComponent as Chevron } from './images/chevron-down.svg'
 import { Button } from './Link/Link';
-import './TopBar.css';
 
 interface ITopBar {
   isHidableOnScroll: boolean,

@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as SkinwalletLogo } from './images/logo-skinwallet.inline.svg';
 import { ReactComponent as SearchIcon } from './images/search-icon.svg'
 import { ReactComponent as Chevron } from './images/chevron-down.svg'
-import { Button } from './Link/Link';
+import { ReactComponent as Cart } from './images/cart.svg'
+import { ReactComponent as StoreIcon } from './images/store.svg'
+import { Button, Link } from './Navigation'
+import { useAppContext } from '../../context/AppContext';
 
 interface ITopBar {
   isHidableOnScroll: boolean,
@@ -41,7 +44,16 @@ const useHideOnScroll = () => {
 };
 
 const TopBar = ({ isHidableOnScroll }: ITopBar) => {
+  const [user, setUser] = useState(false);
   const shouldHide = useHideOnScroll();
+  const {
+    changeCategoriesState,
+    categoriesState,
+    changeSearchState,
+    searchOpened,
+    changegameSelectorState,
+    gameSelectorOpened,
+  } = useAppContext();
 
   return (
     <header id="top-bar" className="pointer-events-none cursor-default w-full h-[56px]">
@@ -51,53 +63,121 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           isHidableOnScroll && shouldHide ? 'transform-gpu translate-x-0 translate-y-[-56px] translate-z-0' : 'transform-gpu translate-x-0 translate-y-0 translate-z-0',
         )}
       >
-        <nav className='flex'>
-          <a href='/market' id='topbar-logo-button' className="relative block w-[26px] h-[26px] overflow-hidden outline-none appearance-none sm-viewport:w-[140px]" aria-label="Skinwallet" role="button">
-            <SkinwalletLogo class='absolute p-0 top-0 right-[-1px]' />
-          </a>
+        <nav className='flex items-center'>
+          <Link
+            to='/'
+            text={<SkinwalletLogo />}
+          />
           <Button
             className='font-medium text-skinwallerGray hover:text-white ml-[14px]'
             text='cs:go'
-            icon={<Chevron className='fill-skinwallerGray h-[12px] w-[12px]'/>}
+            icon={
+              <Chevron
+                className={classNames(
+                  'fill-skinwallerGray h-[12px] w-[12px]',
+                  gameSelectorOpened ? 'rotate-180' : '',
+                )}
+              />
+            }
             iconRight
+            onClick={changegameSelectorState}
           />
           <div className='p-0 border-l border-white h-[32px] opacity-10 mx-4'></div>
-          <Button
+          <Link
             to='/buy'
             className='font-medium text-skinwallerGray hover:text-white'
             text='buy'
-            icon={<SearchIcon className='fill-skinwallerGray h-[12px] w-[12px]' />}
+            icon={<StoreIcon className='fill-skinwallerGray h-[12px] w-[12px]' />}
           />
-          <Button
+          <Link
             to='/instant-sell'
             className='font-medium text-skinwallerGray hover:text-white'
             text='instant sell'
-            icon={<SearchIcon className='fill-skinwallerGray h-[12px] w-[12px]' />}
+            // icon={<SearchIcon className='fill-skinwallerGray h-[12px] w-[12px]' />}
           />
         </nav>
-        <nav className='flex'>
+        <nav className='flex items-center'>
           <Button
             className='font-medium text-skinwallerGray hover:text-white'
             text='categories'
-            icon={<Chevron className='fill-skinwallerGray h-[12px] w-[12px]'/>}
+            icon={
+              <Chevron
+                className={classNames(
+                  'fill-skinwallerGray h-[12px] w-[12px]',
+                  categoriesState ? 'rotate-180' : '',
+                )}
+              />
+            }
             iconRight
+            onClick={changeCategoriesState}
           />
           <Button
             className='font-medium text-skinwallerGray hover:text-white'
             text='search'
-            icon={<SearchIcon className='fill-skinwallerGray h-[12px] w-[12px]' />}
+            icon={
+              <SearchIcon
+                className={classNames(
+                  'fill-skinwallerGray h-[12px] w-[12px]',
+                )}
+              />
+            }
+            onClick={changeSearchState}
           />
           <div className='p-0 border-l border-white h-[32px] opacity-10 mx-4'></div>
-          <Button
-            to='/sign-in'
-            className='mr-[20px] font-medium text-skinwallerGray hover:text-white'
-            text='Log in'
-          />
-          <Button
-            to='/sign-up'
-            className='font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'
-            text='Sign up'
-          />
+          {
+            user ? 
+            <>
+              <Button
+                text='821.46'
+                className='font-medium text-skinwallerGray hover:text-white'
+              />
+              <Link
+                to='/cart'
+                className='font-medium text-skinwallerGray hover:text-white'
+                icon={
+                  <Cart
+                    className={classNames(
+                      'fill-linkUnderline h-[24px] w-[21px]',
+                    )}
+                  />
+                }
+              />
+              <Button
+                text='user'
+                className='font-medium text-skinwallerGray hover:text-white'
+                icon={
+                  <Chevron
+                    className={classNames(
+                      'fill-skinwallerGray h-[12px] w-[12px]',
+                    )}
+                  />
+                }
+                iconRight
+                onClick={() => setUser(!user)}
+              />
+            </>
+            : <>
+              {/* <Link
+                to='/sign-in'
+                className='mr-[20px] font-medium text-skinwallerGray hover:text-white'
+                text='Log in'
+              /> */}
+              {/* <Link
+                to='/sign-up'
+                className='font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'
+                text='Sign up'
+              /> */}
+              <Button
+                text='log in'
+                className='mr-[20px] font-medium text-skinwallerGray hover:text-white'
+                onClick={() => setUser(!user)}
+              />
+              <Button
+                text='Sign up'
+                className='font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'
+              />
+            </>
+          }
         </nav>
       </div>
     </header>

@@ -4,6 +4,7 @@ export default function Buy() {
   return (
     <>
       <Bar />
+      <div className='text-white'>111</div>
     </>
   )
 }

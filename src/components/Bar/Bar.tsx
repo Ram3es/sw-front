@@ -40,11 +40,13 @@ export default function Bar({ children }: IBar) {
   const isTopBarHidden = useOnScroll();
 
   return (
-    <div className={classNames(
-      'fixed flex max-w-[1440px] min-w-full h-20 bg-darkGrey bar-clip-path transition-transform delay-[150ms] ease-in-out',
-      isTopBarHidden ? 'transform-gpu translate-x-0 translate-y-[-60px] translate-z-0' : ''
-    )}>
-      { children }
+    <div className="pointer-events-none cursor-default w-full h-[80px]">
+      <div className={classNames(
+        'fixed flex max-w-[1440px] min-w-full h-20 bg-darkGrey bar-clip-path transition-transform delay-[150ms] ease-in-out',
+        isTopBarHidden ? 'transform-gpu translate-x-0 translate-y-[-60px] translate-z-0' : ''
+      )}>
+        { children }
+      </div>
     </div>
   );
 }

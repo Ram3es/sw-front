@@ -10,7 +10,8 @@ export default {
       colors: {
         almostBlack: 'rgb(20, 20, 21)',
         skinwallerGray: 'rgb(164, 164, 164)',
-        darkGrey: 'rgba(32, 32, 35, 1)'
+        darkGrey: 'rgba(32, 32, 35, 1)',
+        linkUnderline: '#6842FF',
       },
       screens: {
         'sm-viewport': '50em'

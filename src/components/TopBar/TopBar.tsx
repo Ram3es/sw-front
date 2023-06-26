@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { ReactComponent as SkinwalletLogo } from './images/logo-skinwallet.inline.svg';
-import { ReactComponent as SearchIcon } from './images/search-icon.svg'
-import { ReactComponent as Chevron } from './images/chevron-down.svg'
-import { StoreIcon } from './Navigation/images/store';
-import { USDCircleIcon } from './Navigation/images/usd-circle';
-import { CartIcon } from './Navigation/images/cart';
-import { Button, Link } from './Navigation'
+import { ReactComponent as SkinwalletLogo } from '../../assets/logo-skinwallet.inline.svg';
+import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
+import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
+import { StoreIcon } from '../StoreIcon/store';
+import { USDCircleIcon } from '../USDIcon/usd-circle';
+import { CartIcon } from '../CartIcon/cart';
+import { Button, Link } from '../Navigation'
 import { useAppContext } from '../../context/AppContext';
 
 interface ITopBar {

@@ -1,19 +1,21 @@
+import React from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 
 interface ILink {
   to?: string;
   text?: string | React.JSX.Element;
   className?: string;
-  icon?: any;
+  icon?: boolean;
   iconRight?: boolean;
   onClick?: any;
+  children?: any;
 }
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export const Link = ({ to = '', text, className = '', onClick, icon, iconRight = false}: ILink) => {
+export const Link = ({ to = '', text, className = '', onClick, icon, iconRight = false, children}: ILink) => {
   const { pathname } = useLocation();
 
   return (
@@ -34,9 +36,17 @@ export const Link = ({ to = '', text, className = '', onClick, icon, iconRight =
           text ? '' : 'contents'
         )}
       >
-        { icon && !iconRight && <span className="pr-[8px]">{icon}</span> }
+        { icon && !iconRight &&
+          <span className="pr-[8px]">
+            { React.cloneElement(children, { color: classNames(to !== '/' && pathname.replace('/market', '').includes(to) ? '#6842FF' : '#A4A4A4') }) }
+          </span>
+        }
         { text }
-        { icon && iconRight && <span className="pl-[8px]">{icon}</span> }
+        { icon && iconRight &&
+          <span className="pl-[8px]">
+            { React.cloneElement(children, { color: classNames(to !== '/' && pathname.replace('/market', '').includes(to) ? '#6842FF' : '#A4A4A4') }) }
+          </span>
+        }
       </RouterLink>
     </span>
   );

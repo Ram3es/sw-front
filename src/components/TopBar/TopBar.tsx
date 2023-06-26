@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as SkinwalletLogo } from './images/logo-skinwallet.inline.svg';
 import { ReactComponent as SearchIcon } from './images/search-icon.svg'
 import { ReactComponent as Chevron } from './images/chevron-down.svg'
-import { ReactComponent as Cart } from './images/cart.svg'
-import { ReactComponent as StoreIcon } from './images/store.svg'
+import { StoreIcon } from './images/store';
+import { USDCircleIcon } from './images/usd-circle';
+import { CartIcon } from './images/cart';
 import { Button, Link } from './Navigation'
 import { useAppContext } from '../../context/AppContext';
 
@@ -87,14 +88,18 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             to='/buy'
             className='font-medium text-skinwallerGray hover:text-white'
             text='buy'
-            icon={<StoreIcon className='fill-skinwallerGray h-[12px] w-[12px]' />}
-          />
+            icon
+          >
+            <StoreIcon />
+          </Link>
           <Link
             to='/instant-sell'
             className='font-medium text-skinwallerGray hover:text-white'
             text='instant sell'
-            // icon={<SearchIcon className='fill-skinwallerGray h-[12px] w-[12px]' />}
-          />
+            icon
+          >
+            <USDCircleIcon />
+          </Link>
         </nav>
         <nav className='flex items-center'>
           <Button
@@ -128,20 +133,16 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             user ? 
             <>
               <Button
-                text='821.46'
+                text='$821.46'
                 className='font-medium text-skinwallerGray hover:text-white'
               />
               <Link
                 to='/cart'
                 className='font-medium text-skinwallerGray hover:text-white'
-                icon={
-                  <Cart
-                    className={classNames(
-                      'fill-linkUnderline h-[24px] w-[21px]',
-                    )}
-                  />
-                }
-              />
+                icon
+              >
+                <CartIcon />
+              </Link>
               <Button
                 text='user'
                 className='font-medium text-skinwallerGray hover:text-white'

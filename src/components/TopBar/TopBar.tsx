@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as SkinwalletLogo } from './images/logo-skinwallet.inline.svg';
 import { ReactComponent as SearchIcon } from './images/search-icon.svg'
 import { ReactComponent as Chevron } from './images/chevron-down.svg'
-import { StoreIcon } from './images/store';
-import { USDCircleIcon } from './images/usd-circle';
-import { CartIcon } from './images/cart';
+import { StoreIcon } from './Navigation/images/store';
+import { USDCircleIcon } from './Navigation/images/usd-circle';
+import { CartIcon } from './Navigation/images/cart';
 import { Button, Link } from './Navigation'
 import { useAppContext } from '../../context/AppContext';
 

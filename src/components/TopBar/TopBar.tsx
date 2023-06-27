@@ -70,7 +70,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             text={<SkinwalletLogo />}
           />
           <Button
-            className='font-medium text-skinwallerGray hover:text-white ml-[14px]'
+            className='uppercase font-medium text-skinwallerGray hover:text-white ml-[14px]'
             text='cs:go'
             icon={
               <Chevron
@@ -103,7 +103,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
         </nav>
         <nav className='flex items-center'>
           <Button
-            className='font-medium text-skinwallerGray hover:text-white'
+            className='uppercase font-medium text-skinwallerGray hover:text-white'
             text='categories'
             icon={
               <Chevron
@@ -117,7 +117,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             onClick={changeCategoriesState}
           />
           <Button
-            className='font-medium text-skinwallerGray hover:text-white'
+            className='uppercase font-medium text-skinwallerGray hover:text-white'
             text='search'
             icon={
               <SearchIcon
@@ -134,7 +134,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             <>
               <Button
                 text='$821.46'
-                className='font-medium text-skinwallerGray hover:text-white'
+                className='uppercase font-medium text-skinwallerGray hover:text-white'
               />
               <Link
                 to='/cart'
@@ -145,7 +145,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               </Link>
               <Button
                 text='user'
-                className='font-medium text-skinwallerGray hover:text-white'
+                className='uppercase font-medium text-skinwallerGray hover:text-white'
                 icon={
                   <Chevron
                     className={classNames(
@@ -170,12 +170,12 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               /> */}
               <Button
                 text='log in'
-                className='mr-[20px] font-medium text-skinwallerGray hover:text-white'
+                className='uppercase mr-[20px] font-medium text-skinwallerGray hover:text-white'
                 onClick={() => setUser(!user)}
               />
               <Button
                 text='Sign up'
-                className='font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'
+                className='uppercase font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'
               />
             </>
           }

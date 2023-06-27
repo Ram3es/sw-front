@@ -7,6 +7,7 @@ import { USDCircleIcon } from '../USDIcon/usd-circle';
 import { CartIcon } from '../CartIcon/cart';
 import { Button, Link } from '../Navigation'
 import { useAppContext } from '../../context/AppContext';
+import { useLocation } from 'react-router-dom';
 
 interface ITopBar {
   isHidableOnScroll: boolean,
@@ -45,6 +46,7 @@ const useHideOnScroll = () => {
 };
 
 const TopBar = ({ isHidableOnScroll }: ITopBar) => {
+  const { pathname } = useLocation();
   const [user, setUser] = useState(false);
   const shouldHide = useHideOnScroll();
   const {
@@ -90,6 +92,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             wrapperStyles='h-[56px]'
             text='buy'
             icon
+            active={ pathname.includes('/buy')}
           >
             <StoreIcon />
           </Link>
@@ -99,6 +102,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             wrapperStyles='h-[56px]'
             text='instant sell'
             icon
+            active={ pathname.includes('/instant-sell')}
           >
             <USDCircleIcon />
           </Link>

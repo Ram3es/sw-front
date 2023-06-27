@@ -13,6 +13,7 @@ export default {
         darkGrey: '#202023',
         sidebarGrey: '#202023',
         linkUnderline: '#6842FF',
+        skinwalletPink: '#CFBBFE',
       },
       screens: {
         'sm-viewport': '50em'

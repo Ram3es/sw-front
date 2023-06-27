@@ -6,6 +6,9 @@ import TransactionsPage from '../pages/Transactions/Transactions';
 import SignIn from '../pages/SignIn/signIn';
 import Profile from '../pages/Profile/Profile';
 import Buy from '../pages/Buy/Buy';
+import { Inventory } from '../pages/InstantSell/inventory/inventory'
+import { Payout } from '../pages/InstantSell/payout/payout';
+import { Bonus } from '../pages/InstantSell/bonus/bonus';
 
 const router = createBrowserRouter([
   {
@@ -18,15 +21,15 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <div className='text-white'>inventory</div>,
+            element: <Inventory />,
           },
           {
             path: 'payout',
-            element: <div className='text-white'>payout</div>,
+            element: <Payout />,
           },
           {
             path: 'bonus',
-            element: <div className='text-white'>bonus</div>,
+            element: <Bonus />,
           },
         ],
       },

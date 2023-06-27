@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 interface ILink {
   to?: string;
@@ -10,6 +10,7 @@ interface ILink {
   onClick?: any;
   children?: any;
   wrapperStyles?: string;
+  active?: boolean;
 }
 
 function classNames(...classes: string[]) {
@@ -25,15 +26,14 @@ export const Link = ({
   iconRight = false,
   children,
   wrapperStyles,
+  active,
 }: ILink) => {
-  const { pathname } = useLocation();
-
   return (
     <span
       className={
         classNames(
           'inline-flex items-center mx-[16px]',
-          to !== '/' && pathname.replace('/market', '').includes(to) ? 'border-b border-solid border-linkUnderline' : '',
+          active ? 'border-b border-solid border-linkUnderline' : '',
           wrapperStyles ? wrapperStyles : ''
         )
       }
@@ -49,13 +49,13 @@ export const Link = ({
       >
         { icon && !iconRight &&
           <span className="pr-[8px]">
-            { React.cloneElement(children, { color: classNames(to !== '/' && pathname.replace('/market', '').includes(to) ? '#6842FF' : '#A4A4A4') }) }
+            { React.cloneElement(children, { color: active ? '#6842FF' : '#A4A4A4' }) }
           </span>
         }
         { text }
         { icon && iconRight &&
           <span className="pl-[8px]">
-            { React.cloneElement(children, { color: classNames(to !== '/' && pathname.replace('/market', '').includes(to) ? '#6842FF' : '#A4A4A4') }) }
+            { React.cloneElement(children, { color: active ? '#6842FF' : '#A4A4A4' }) }
           </span>
         }
       </RouterLink>

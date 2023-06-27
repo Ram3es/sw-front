@@ -12,6 +12,7 @@ export default {
         skinwallerGray: 'rgb(164, 164, 164)',
         darkGrey: 'rgba(32, 32, 35, 1)',
         linkUnderline: '#6842FF',
+        graySecondary: "#A4A4A4",
       },
       screens: {
         'sm-viewport': '50em'

@@ -19,7 +19,7 @@ export default function InstantSell() {
           <h1 className='text-white font-["Barlow"] text-[21px] font-medium'>INSTANT SELL</h1>
         </div>
       </Bar>
-      <div className='flex'>
+      <div className='flex flex-grow'>
         <div className='flex flex-col flex-grow'>
           <div className='flex justify-between h-[50px] border-b border-solid border-sidebarGrey px-[8px]'>
             <Nav />

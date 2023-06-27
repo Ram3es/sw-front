@@ -13,8 +13,22 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: 'instant-sell',
-        element: <InstantSell />
+        path: '/instant-sell',
+        element: <InstantSell />,
+        children: [
+          {
+            index: true,
+            element: <div className='text-white'>inventory</div>,
+          },
+          {
+            path: 'payout',
+            element: <div className='text-white'>payout</div>,
+          },
+          {
+            path: 'bonus',
+            element: <div className='text-white'>bonus</div>,
+          },
+        ],
       },
       {
         path: 'sign-in',

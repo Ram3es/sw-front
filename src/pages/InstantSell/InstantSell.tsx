@@ -1,12 +1,17 @@
 import Bar from '../../components/Bar/Bar';
-import { Button } from '../../components/Navigation'
+import { Button, Link } from '../../components/Navigation'
 import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
+import { Outlet, useLocation } from 'react-router-dom';
+import { Nav } from './controls/nav';
+import { Filters } from './controls/filters';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function InstantSell() {
+  const location = useLocation();
+  console.log('location :>> ', location);
   return (
     <>
       <Bar>
@@ -17,51 +22,14 @@ export default function InstantSell() {
       <div className='flex'>
         <div className='flex flex-col flex-grow'>
           <div className='flex justify-between h-[50px] border-b border-solid border-sidebarGrey px-[8px]'>
-            <div className='flex items-center'>
-              <Button className='uppercase font-medium text-skinwallerGray hover:text-white' text='your inventory'/>
-              <Button className='uppercase font-medium text-skinwallerGray hover:text-white' text='payout'/>
-              <Button className='uppercase font-medium text-skinwallerGray hover:text-white' text='bonus'/>
-            </div>
-            <div className='flex items-center'>
-              <Button
-                className='uppercase font-medium text-skinwallerGray hover:text-white'
-                text='ALL'
-                icon={
-                  <Chevron
-                    className={classNames(
-                      'fill-skinwallerGray h-[12px] w-[12px]',
-                    )}
-                  />
-                }
-                iconRight
-              />
-              <Button
-                className='uppercase font-medium text-skinwallerGray hover:text-white'
-                text='value'
-                icon={
-                  <Chevron
-                    className={classNames(
-                      'fill-skinwallerGray h-[12px] w-[12px]',
-                    )}
-                  />
-                }
-                iconRight
-              />
-              <Button
-                className='font-medium text-skinwallerGray hover:text-white'
-                text='Select All'
-              />
-              <Button
-                className='font-medium text-skinwallerGray hover:text-white'
-                text='Reload'
-              />
-            </div>
+            <Nav />
+            <Filters />
           </div>
           <div className='px-[24px] py-[30px] h-9'>
-            {/* content */}
+            <Outlet />
           </div>
         </div>
-        <div className='sticky top-[60px] flex flex-col max-w-[429px] w-full h-[400px] bg-sidebarGrey'></div>
+        <div className='sticky top-[60px] flex flex-col max-w-[429px] w-full h-[400px] side-bar-gradient'></div>
       </div>
     </>
   )

@@ -87,6 +87,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           <Link
             to='/buy'
             className='font-medium text-skinwallerGray hover:text-white'
+            wrapperStyles='h-[56px]'
             text='buy'
             icon
           >
@@ -95,6 +96,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           <Link
             to='/instant-sell'
             className='font-medium text-skinwallerGray hover:text-white'
+            wrapperStyles='h-[56px]'
             text='instant sell'
             icon
           >

@@ -9,21 +9,32 @@ interface ILink {
   iconRight?: boolean;
   onClick?: any;
   children?: any;
+  wrapperStyles?: string;
 }
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export const Link = ({ to = '', text, className = '', onClick, icon, iconRight = false, children}: ILink) => {
+export const Link = ({
+  to = '',
+  text,
+  className = '',
+  onClick,
+  icon,
+  iconRight = false,
+  children,
+  wrapperStyles,
+}: ILink) => {
   const { pathname } = useLocation();
 
   return (
     <span
       className={
         classNames(
-          'inline-flex items-center h-[56px]',
+          'inline-flex items-center mx-[16px]',
           to !== '/' && pathname.replace('/market', '').includes(to) ? 'border-b border-solid border-linkUnderline' : '',
+          wrapperStyles ? wrapperStyles : ''
         )
       }
     >
@@ -31,7 +42,7 @@ export const Link = ({ to = '', text, className = '', onClick, icon, iconRight =
         to={to}
         onClick={onClick}
         className={classNames(
-          'button font-["Barlow"] px-[16px] h-[32px] text-[14px] uppercase tracking-[1.12px]',
+          'button font-["Barlow"] h-[32px] text-[14px] uppercase tracking-[1.12px]',
           className,
           text ? '' : 'contents'
         )}

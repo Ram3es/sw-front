@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { ReactComponent as SkinwalletLogo } from './images/logo-skinwallet.inline.svg';
-import { ReactComponent as SearchIcon } from './images/search-icon.svg'
-import { ReactComponent as Chevron } from './images/chevron-down.svg'
-import { StoreIcon } from './images/store';
-import { USDCircleIcon } from './images/usd-circle';
-import { CartIcon } from './images/cart';
-import { Button, Link } from './Navigation'
+import { ReactComponent as SkinwalletLogo } from '../../assets/logo-skinwallet.inline.svg';
+import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
+import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
+import { StoreIcon } from '../StoreIcon/store';
+import { USDCircleIcon } from '../USDIcon/usd-circle';
+import { CartIcon } from '../CartIcon/cart';
+import { Button, Link } from '../Navigation'
 import { useAppContext } from '../../context/AppContext';
+import { useLocation } from 'react-router-dom';
 
 interface ITopBar {
   isHidableOnScroll: boolean,
@@ -45,6 +46,7 @@ const useHideOnScroll = () => {
 };
 
 const TopBar = ({ isHidableOnScroll }: ITopBar) => {
+  const { pathname } = useLocation();
   const [user, setUser] = useState(false);
   const shouldHide = useHideOnScroll();
   const {
@@ -70,7 +72,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             text={<SkinwalletLogo />}
           />
           <Button
-            className='font-medium text-skinwallerGray hover:text-white ml-[14px]'
+            className='uppercase font-medium text-skinwallerGray hover:text-white ml-[14px]'
             text='cs:go'
             icon={
               <Chevron
@@ -87,23 +89,27 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           <Link
             to='/buy'
             className='font-medium text-skinwallerGray hover:text-white'
+            wrapperStyles='h-[56px]'
             text='buy'
             icon
+            active={ pathname.includes('/buy')}
           >
             <StoreIcon />
           </Link>
           <Link
             to='/instant-sell'
             className='font-medium text-skinwallerGray hover:text-white'
+            wrapperStyles='h-[56px]'
             text='instant sell'
             icon
+            active={ pathname.includes('/instant-sell')}
           >
             <USDCircleIcon />
           </Link>
         </nav>
         <nav className='flex items-center'>
           <Button
-            className='font-medium text-skinwallerGray hover:text-white'
+            className='uppercase font-medium text-skinwallerGray hover:text-white'
             text='categories'
             icon={
               <Chevron
@@ -117,7 +123,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             onClick={changeCategoriesState}
           />
           <Button
-            className='font-medium text-skinwallerGray hover:text-white'
+            className='uppercase font-medium text-skinwallerGray hover:text-white'
             text='search'
             icon={
               <SearchIcon
@@ -134,7 +140,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             <>
               <Button
                 text='$821.46'
-                className='font-medium text-skinwallerGray hover:text-white'
+                className='uppercase font-medium text-skinwallerGray hover:text-white'
               />
               <Link
                 to='/cart'
@@ -145,7 +151,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               </Link>
               <Button
                 text='user'
-                className='font-medium text-skinwallerGray hover:text-white'
+                className='uppercase font-medium text-skinwallerGray hover:text-white'
                 icon={
                   <Chevron
                     className={classNames(
@@ -170,12 +176,12 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               /> */}
               <Button
                 text='log in'
-                className='mr-[20px] font-medium text-skinwallerGray hover:text-white'
+                className='uppercase mr-[20px] font-medium text-skinwallerGray hover:text-white'
                 onClick={() => setUser(!user)}
               />
               <Button
                 text='Sign up'
-                className='font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'
+                className='uppercase font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'
               />
             </>
           }

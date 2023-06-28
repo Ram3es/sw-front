@@ -10,9 +10,11 @@ export default {
       colors: {
         almostBlack: 'rgb(20, 20, 21)',
         skinwallerGray: 'rgb(164, 164, 164)',
-        darkGrey: 'rgba(32, 32, 35, 1)',
+        darkGrey: '#202023',
+        sidebarGrey: '#202023',
         linkUnderline: '#6842FF',
         graySecondary: "#A4A4A4",
+        skinwalletPink: '#CFBBFE',
       },
       screens: {
         'sm-viewport': '50em'

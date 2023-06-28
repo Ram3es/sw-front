@@ -6,6 +6,9 @@ import TransactionsPage from '../pages/Transactions/Transactions';
 import SignIn from '../pages/SignIn/signIn';
 import Profile from '../pages/Profile/Profile';
 import Buy from '../pages/Buy/Buy';
+import { Inventory } from '../pages/InstantSell/inventory/inventory'
+import { Payout } from '../pages/InstantSell/payout/payout';
+import { Bonus } from '../pages/InstantSell/bonus/bonus';
 
 const router = createBrowserRouter([
   {
@@ -13,8 +16,22 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: 'instant-sell',
-        element: <InstantSell />
+        path: '/instant-sell',
+        element: <InstantSell />,
+        children: [
+          {
+            index: true,
+            element: <Inventory />,
+          },
+          {
+            path: 'payout',
+            element: <Payout />,
+          },
+          {
+            path: 'bonus',
+            element: <Bonus />,
+          },
+        ],
       },
       {
         path: 'sign-in',

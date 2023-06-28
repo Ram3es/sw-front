@@ -2,7 +2,7 @@ import { ChangeEvent } from "react";
 
 interface CheckboxProps {
   checked: boolean;
-  onChange: (checked: boolean) => void;
+  onChange?: (checked: boolean) => void;
 }
 
 function classNames(...classes: string[]) {
@@ -12,7 +12,7 @@ function classNames(...classes: string[]) {
 const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
-    onChange(checked);
+    if (onChange) onChange(checked);
   };
 
   return (

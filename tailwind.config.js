@@ -11,13 +11,19 @@ export default {
         almostBlack: 'rgb(20, 20, 21)',
         skinwallerGray: 'rgb(164, 164, 164)',
         darkGrey: '#202023',
+        darkSecondary: '#0D0D0D',
         sidebarGrey: '#202023',
         linkUnderline: '#6842FF',
+        graySecondary: "#A4A4A4",
         skinwalletPink: '#CFBBFE',
+        
       },
       screens: {
         'sm-viewport': '50em'
       },
+      gridTemplateColumns: {
+        cards: "repeat(auto-fill,minmax(190px,1fr))"
+      }
     },
   },
   plugins: [

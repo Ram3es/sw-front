@@ -33,7 +33,6 @@
   }
 
   .button {
-    display: inline-flex;
     align-items: center;
     /* text-decoration: none; */
     cursor: pointer;
@@ -46,6 +45,14 @@
     background: linear-gradient(180deg, rgba(32, 32, 35, 0.74) 0%, #202023 100%);
   }
   
+}
+
+.card-clip-path {
+  clip-path: polygon(calc(100% - 8px) 0, 100% calc(0% + 8px), 100% 100%, calc(0% + 8px) 100%, 0 calc(100% - 8px), 0 0);
+}
+
+.group:hover .card-clip-path {
+  clip-path: polygon(calc(100% - 8px) 0, 100% calc(0% + 8px), 100% 100%, 0% 100%, 0 100%, 0 0);
 }
 
 @font-face {

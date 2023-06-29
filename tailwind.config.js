@@ -16,13 +16,29 @@ export default {
         linkUnderline: '#6842FF',
         graySecondary: "#A4A4A4",
         skinwalletPink: '#CFBBFE',
-        
+        swBlack:'#0D0D0D',
+        swViolet: '#6842FF',
+        swGrey:'#A4A4A4',
+        'gray-42':'#424242'
       },
       fontSize:{
         21:'1.3125rem'
       },
       screens: {
-        'sm-viewport': '50em'
+        'sm-viewport': '50em',
+        ssm: "350px",
+        ssl: "450px",
+        sm: "550px",
+        md: "700px",
+        lg: "900px", 
+        llg: "1100px",
+        xl: "1300px", 
+        xll: "1600px",
+        xxl: "1750px",
+        fourk: "2500px",
+      },
+      fontFamily:{
+        Barlow: ['Barlow']
       },
       gridTemplateColumns: {
         cards: "repeat(auto-fill,minmax(190px,1fr))"

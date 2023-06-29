@@ -6,6 +6,27 @@
   .cta-clip-path {
     clip-path: polygon(100% 0, 100% 100%, calc(0% + 8px) 100%, 0 calc(100% - 8px), 0 0);
   }
+  .bonus-wrapper-hexagon {
+    position: relative;
+    clip-path: polygon(0% 0%, 98% 0%, 100% 5%, 100% 100%, 2% 100%, 0% 95%);
+
+  }
+  .bonus-percent-hexagon {
+    position: relative;
+    clip-path: polygon(0% 0%, 80% 0%, 100% 20%, 100% 100%, 20% 100%, 0% 80%);
+  }
+  .is-border.bonus-percent-hexagon::before,
+  .bonus-wrapper-hexagon::before
+   {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    bottom: 1px;
+    right: 1px;
+    background: rgb(20, 20, 21);
+    clip-path: inherit;
+  }
 
   .bar-clip-path {
     clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 40% 100%, 40.5% 90%, 100% 90%);

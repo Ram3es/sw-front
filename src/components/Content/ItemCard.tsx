@@ -1,19 +1,8 @@
+import { CardItem } from '../../types/Card';
 import { Button } from '../Navigation';
 import Checkbox from './Checkbox';
 import { ReactComponent as ClockIcon } from './images/clock.svg'
 
-interface CardItem {
-  isTradable: boolean;
-  timeToTrade?: number;
-  image: string;
-  isSelected: boolean;
-  isNoFee: boolean;
-  price: number;
-  name: string;
-  type: string;
-  condition: number;
-  onClick: (isSelected: boolean) => void;
-}
 
 interface ConditionItem {
   maxVal: number;

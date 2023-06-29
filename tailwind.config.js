@@ -18,6 +18,9 @@ export default {
         skinwalletPink: '#CFBBFE',
         
       },
+      fontSize:{
+        21:'1.3125rem'
+      },
       screens: {
         'sm-viewport': '50em'
       },

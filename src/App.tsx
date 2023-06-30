@@ -1,14 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import { Header } from './components/header/Header'
-
-import './App.css'
+import TopBar from './components/TopBar/TopBar';
 
 function App () {
   return (
-    <>
-        <Header />
-        <Outlet />
-    </>
+    <div className='flex flex-col bg-darkSecondary min-h-screen'>
+      <TopBar isHidableOnScroll={true}/>
+      <Outlet />
+    </div>
   )
 }
 

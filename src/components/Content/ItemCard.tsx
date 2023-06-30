@@ -61,12 +61,21 @@ const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, n
   const conditionObj = findNearestMaxValue(conditions, condition)
 
   return (
-    <div className={classNames('relative', isTradable ? "group hover:-translate-y-4 duration-75" : '')}>
+    <div className={classNames('relative',
+      isTradable && !isSelected ? "group hover:-translate-y-4 hover:z-20 duration-75" : '',
+      isSelected ? "shadow-checkedCard" : ""
+    )}>
       <div
-        className={classNames('absolute left-0 top-0 w-full h-full border border-b-[3px] group-hover:border-0 group-hover:bg-darkGrey border-darkGrey card-clip-path')}
+        className={classNames('absolute left-0 top-0 w-full h-full border border-b-[3px] group-hover:border-0 group-hover:bg-darkGrey card-clip-path',
+          isSelected ? "border-swViolet" : "border-darkGrey"
+        )}
       >
-        <span className="absolute group-hover:hidden border-darkGrey -right-[2px] top-[3px] w-[10px] border-t rotate-45" />
-        <span className="absolute group-hover:hidden border-darkGrey -left-[2px] bottom-[1px] w-[10px] border-t rotate-45" />
+        <span className={classNames("absolute group-hover:hidden -right-[2px] top-[3px] w-[10px] rotate-45",
+          isSelected ? "border-swViolet border-t-2" : "border-t border-darkGrey"
+        )} />
+        <span className={classNames("absolute group-hover:hidden -left-[2px] bottom-[1px] w-[10px] rotate-45",
+          isSelected ? "border-swViolet border-t-2" : "border-t border-darkGrey"
+        )} />
       </div>
       {!isTradable ? <div className="bg-darkSecondary bg-opacity-50 absolute left-0 top-0 w-full h-full z-20">
         <span
@@ -76,7 +85,7 @@ const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, n
         </span>
       </div> : ''}
       <div
-        className={classNames('relative min-h-[200px] cursor-pointer overflow-hidden', !isTradable ? 'grayscale' : '' )}
+        className={classNames('relative min-h-[200px] cursor-pointer overflow-hidden h-full', !isTradable ? 'grayscale' : '' )}
         onClick={() => onClick()}
       >
         <span

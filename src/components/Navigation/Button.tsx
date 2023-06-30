@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
@@ -7,15 +9,16 @@ interface IButton {
   className?: string;
   icon?: any;
   iconRight?: boolean;
-  disabled?: boolean
+  disabled?: boolean;
+  children?: ReactNode;
   onClick?: () => void;
 }
 
-export const Button = ({ text = '', className = '', icon, iconRight = false, onClick, disabled }: IButton) => {
+export const Button = ({ text = '', className = '', icon, iconRight = false, onClick, disabled, children }: IButton) => {
   return (
     <button 
       className={classNames(
-        'button font-["Barlow"] h-[32px] px-[16px] ',
+        'button font-["Barlow"] h-[32px] px-[16px] flex',
         className ?? ' text-[14px] tracking-[1.12px]',
       )}
       onClick={onClick}
@@ -23,6 +26,7 @@ export const Button = ({ text = '', className = '', icon, iconRight = false, onC
     >
       { icon && !iconRight && <span className="pr-[8px]">{icon}</span> }
       { text }
+      { children }
       { icon && iconRight && <span className="pl-[8px]">{icon}</span> }
     </button>
   );

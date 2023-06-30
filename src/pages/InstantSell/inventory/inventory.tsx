@@ -7,14 +7,14 @@ import { Button } from '../../../components/Navigation';
 import SellsBar from './SellsBar';
 import { TInventoryCard } from '../../../types/Card';
 import { USER_INVENTORY } from '../../../mock/inventory';
+import { useAppContext } from '../../../context/AppContext';
 
 
 
 export const Inventory = () => {
-  const [user, setUser] = useState(true);
   const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])
   const [selectedCards, setSellectedCards] = useState<TInventoryCard[]>([]);
-
+  const { user, userUpdate } = useAppContext();
   const toggleSelect = (card: TInventoryCard) => {
     setRenderCards(prev => [...prev.map( item => card.id === item.id ? {...item, isChecked: !item.isChecked} : item)])
     setSellectedCards(prev => {
@@ -33,10 +33,15 @@ export const Inventory = () => {
 
   return (
     <div className='flex flex-grow'>
-      <div className='flex flex-col flex-grow'>
+      <div className='flex flex-col flex-grow py-5'>
         <div className='flex justify-between h-[50px] border-b border-solid border-sidebarGrey px-[8px]'>
           <Nav />
-          <Filters />
+          <Filters
+            onSelectAll={() => {
+              setRenderCards(prev => [...prev.map( item => item.isTradable ? {...item, isChecked: true} : item)])
+              setSellectedCards(renderCards.filter(card => card.isTradable))
+            }}
+          />
         </div>
         {
           user
@@ -51,7 +56,9 @@ export const Inventory = () => {
                    )
               }
               </div>
-           : <NotLogged />
+           : <NotLogged
+              onLogIn={() => userUpdate()}
+           />
         }
       </div>
       <SellsBar selectedCards={selectedCards} onClose={toggleSelect} />

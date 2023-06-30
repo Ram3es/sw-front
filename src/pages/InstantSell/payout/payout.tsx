@@ -3,7 +3,7 @@ import { Nav } from '../controls/nav';
 export const Payout = () => {
   return (
     <>
-      <div className='flex flex-col flex-grow'>
+      <div className='flex flex-col flex-grow py-5'>
         <div className='flex justify-between h-[50px] border-b border-solid border-sidebarGrey px-[8px]'>
           <Nav />
         </div>

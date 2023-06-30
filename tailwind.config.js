@@ -13,7 +13,6 @@ export default {
         darkGrey: '#202023',
         darkSecondary: '#0D0D0D',
         sidebarGrey: '#202023',
-        linkUnderline: '#6842FF',
         graySecondary: "#A4A4A4",
         skinwalletPink: '#CFBBFE',
         swBlack:'#0D0D0D',
@@ -46,6 +45,9 @@ export default {
       },
       gridTemplateColumns: {
         cards: "repeat(auto-fill,minmax(190px,1fr))"
+      },
+      boxShadow: {
+        'checkedCard': '0px 0px 20px 0px rgba(0, 0, 0, 0.50)',
       }
     },
   },

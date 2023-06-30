@@ -33,7 +33,7 @@ export const Link = ({
       className={
         classNames(
           'inline-flex items-center mx-[16px]',
-          active ? 'border-b border-solid border-linkUnderline' : '',
+          active ? 'border-b border-solid border-swViolet' : '',
           wrapperStyles ? wrapperStyles : ''
         )
       }
@@ -42,7 +42,7 @@ export const Link = ({
         to={to}
         onClick={onClick}
         className={classNames(
-          'button font-["Barlow"] h-[32px] text-[14px] uppercase tracking-[1.12px]',
+          'button font-["Barlow"] h-[32px] text-[14px] uppercase flex tracking-[1.12px]',
           className,
           text ? '' : 'contents'
         )}

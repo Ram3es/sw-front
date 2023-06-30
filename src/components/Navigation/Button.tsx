@@ -15,8 +15,8 @@ export const Button = ({ text = '', className = '', icon, iconRight = false, onC
   return (
     <button 
       className={classNames(
-        'button font-["Barlow"] h-[32px] px-[16px] text-[14px] tracking-[1.12px] ',
-        className,
+        'button font-["Barlow"] h-[32px] px-[16px] ',
+        className ?? ' text-[14px] tracking-[1.12px]',
       )}
       onClick={onClick}
       disabled={!!disabled}

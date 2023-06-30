@@ -5,12 +5,16 @@ import { NavLink } from 'react-router-dom';
 import { classNames } from '../../../helpers/className';
 import SymbolIcon from './SymbolIcon';
 import { TInventoryCard } from '../../../types/Card';
+import InformationIcon from '../../../components/icons/InformationIcon';
+import ItemSelectedCard from '../../../components/Content/ItemSelectedCard';
+import { format } from '../../../helpers/numberFormater';
 
 interface ISellBarProps {
     selectedCards: TInventoryCard[]
+    onClose: ( card: TInventoryCard) => void
 }
 
-const SellsBar:FC<ISellBarProps> = ({ selectedCards }) => {
+const SellsBar:FC<ISellBarProps> = ({ selectedCards, onClose }) => {
     const [inputValue, setInputValue] = useState('')
     const [isAcceptedPolicy, setIsAcceptedPolicy] = useState(false)
 
@@ -18,8 +22,10 @@ const SellsBar:FC<ISellBarProps> = ({ selectedCards }) => {
         setInputValue(e.target.value)
 
     }
+
+    const totalWorth = selectedCards.reduce((acc, val) => acc + val.price, 0)
     return (
-        <div className='sticky top-[60px] flex flex-col  max-w-[429px] w-full h-[859px] gap-6 p-8 text-skinwallerGray side-bar-gradient cta-clip-path'>
+        <div className='sticky top-[60px] flex flex-col  max-w-[429px] w-full h-[870px] gap-6 p-8 text-skinwallerGray font-Barlow side-bar-gradient cta-clip-path'>
             <div className='relative'>
                 <input
                     type='text'
@@ -31,20 +37,22 @@ const SellsBar:FC<ISellBarProps> = ({ selectedCards }) => {
                 <Button 
                     text='Redeem'
                     onClick={() => console.log('submit')}
-                    className='absolute top-0 right-0 h-full font-medium text-swBlack bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer cta-clip-path ' 
+                    className='absolute top-0 right-0 h-full text-base font-medium text-swBlack bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer cta-clip-path ' 
                 />
             </div>
             <div className='flex-grow'>
                 <div className='flex items-center justify-between font-medium'>
                     <h5 className='text-lg uppercase tracking-widest'>Selection overview</h5>
                     <div className='flex items-center gap-2'>
-                        {0}/100
-                        <span> i</span>
+                        {selectedCards.length}/100
+                        <InformationIcon iconClasses='w-4 h-4' />
                     </div>
                 </div>
-                <div className='h-full relative py-2  '>
+                <div className=' relative flex flex-col gap-y-3 h-full max-h-[523px] show-scrollbar overflow-y-auto pt-5'>
                     {selectedCards.length 
-                        ? selectedCards.map(card => <div></div>)
+                        ? selectedCards.map(card => 
+                            <ItemSelectedCard key={card.id} onClick={() => onClose(card)} {...card} />
+                            )
                         : (
                             <div className='flex flex-col items-center mx-auto mt-[40%] font-medium gap-4'>
                                 <SymbolIcon />
@@ -56,7 +64,7 @@ const SellsBar:FC<ISellBarProps> = ({ selectedCards }) => {
                     }
                 </div>
             </div>
-            <div className=' border-b border-white/10' />
+            <div className=' border-b border-white/10 -mt-6'  />
             <div className='flex justify-between items-center text-sm font-medium'>
                 <h6 className='text-white tracking-widest uppercase'>$50 to next bonus tier</h6>
                 <div className='flex items-center gap-2 tracking-widest'>
@@ -88,15 +96,18 @@ const SellsBar:FC<ISellBarProps> = ({ selectedCards }) => {
                     </NavLink>.
                 </p>
             </div>
-            <div className='h-12'>
+            <div className='h-12 relative overflow-hidden'>
                 <Button 
-                    text={`GET $${5}.00`}
+                    text={`GET $${format(totalWorth)}`}
                     onClick={() => console.log('sell')}
-                    className={classNames('w-full h-full text-21 tracking-widest text-white font-semibold bg-linkUnderline/40 cta-clip-path border border-b-[3px] border-linkUnderline ',
-                    isAcceptedPolicy ? 'hover:opacity-90' : ' pointer-events-none grayscale '
+                    className={classNames('w-full h-full text-21  tracking-widest text-white font-medium bg-linkUnderline/40 cta-clip-path border border-b-[3px] border-linkUnderline  ',
+                    isAcceptedPolicy ? 'hover:opacity-90' : ' grayscale',
+                    selectedCards.length ? '': 'pointer-events-none'
+
                     )}
                     disabled={!isAcceptedPolicy}
                 />
+                <div className={classNames('absolute -left-1 bottom-1 h-[1px] w-4 bg-linkUnderline rotate-45', isAcceptedPolicy ? '' : ' grayscale')}  />
             </div>
         </div>
     );

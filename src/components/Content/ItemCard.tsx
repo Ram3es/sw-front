@@ -77,7 +77,7 @@ const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, n
       </div> : ''}
       <div
         className={classNames('relative min-h-[200px] cursor-pointer overflow-hidden', !isTradable ? 'grayscale' : '' )}
-        onClick={() => onClick(!isSelected)}
+        onClick={() => onClick()}
       >
         <span
           className="absolute left-1/2 -translate-x-1/2 top-24 h-0 w-1/2"

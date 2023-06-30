@@ -18,11 +18,13 @@ export default {
         skinwalletPink: '#CFBBFE',
         swBlack:'#0D0D0D',
         swViolet: '#6842FF',
+        swLime: '#18E86B',
         swGrey:'#A4A4A4',
         'gray-42':'#424242'
       },
       fontSize:{
-        21:'1.3125rem'
+        21:'1.3125rem',
+        18: '1.125rem',
       },
       screens: {
         'sm-viewport': '50em',

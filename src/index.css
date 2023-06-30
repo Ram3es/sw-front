@@ -35,7 +35,7 @@
   .button {
     align-items: center;
     /* text-decoration: none; */
-    cursor: pointer;
+    /* cursor: pointer; */
     user-select: none;
     /* border: 0; */
     outline: none;
@@ -61,4 +61,14 @@
     url('./assets/fonts/Barlow-Medium.ttf'),
     url('./assets/fonts/Barlow-Bold.ttf'),
     url('./assets/fonts/Barlow-Regular.ttf');
+}
+
+:hover > .button, svg {
+  transition-duration: 0.2s;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  border-radius: 5px;
 }

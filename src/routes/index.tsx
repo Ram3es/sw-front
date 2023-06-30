@@ -9,6 +9,8 @@ import Buy from '../pages/Buy/Buy';
 import { Inventory } from '../pages/InstantSell/inventory/inventory'
 import { Payout } from '../pages/InstantSell/payout/payout';
 import { Bonus } from '../pages/InstantSell/bonus/bonus';
+import AmontPayout from '../pages/InstantSell/payout/AmontPayout';
+import MethodsPayout from '../pages/InstantSell/payout/MethodsPayout';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +28,17 @@ const router = createBrowserRouter([
           {
             path: 'payout',
             element: <Payout />,
+            children: [
+              {
+                index: true,
+                element: <AmontPayout />
+              },
+              {
+                path: 'method',
+                element: <MethodsPayout />
+              }
+    
+            ]
           },
           {
             path: 'bonus',
@@ -43,7 +56,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'payout',
-        element: <Payouts />
+        element: <Payouts />,
       },
       {
         path: 'buy',

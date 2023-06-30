@@ -20,10 +20,12 @@ export default {
         swViolet: '#6842FF',
         swLime: '#18E86B',
         swGrey:'#A4A4A4',
+        swOrange:'#FF8F27',
         'gray-42':'#424242'
       },
       fontSize:{
         21:'1.3125rem',
+        24: '1.5rem',
         18: '1.125rem',
       },
       screens: {

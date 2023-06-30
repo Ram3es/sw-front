@@ -10,12 +10,12 @@ const ProgressScale = () => {
             <div className='w-full px-10 sm:px-14  absolute  left-0 top-1/2 -translate-y-1/2'>
                 <div className='w-full h-1 relative bg-gray-42'>
                     <div 
-                        className={` absolute inset-0 bg-linkUnderline`} 
+                        className={` absolute inset-0 bg-swViolet`} 
                         style={{ width:`${3}%`}}
                     />
                 </div>
             </div>
-            <div className='absolute h-1 w-5 ml-5 sm:ml-9 bg-linkUnderline left-0 top-1/2 -translate-y-1/2' />
+            <div className='absolute h-1 w-5 ml-5 sm:ml-9 bg-swViolet left-0 top-1/2 -translate-y-1/2' />
             <div className='absolute h-1 w-5 mr-5 sm:mr-9 bg-gray-42 right-0 top-1/2 -translate-y-1/2'/>
         </div>
     )

@@ -8,6 +8,7 @@ import { TInventoryCard } from '../../../types/Card';
 import InformationIcon from '../../../components/icons/InformationIcon';
 import ItemSelectedCard from '../../../components/Content/ItemSelectedCard';
 import { format } from '../../../helpers/numberFormater';
+import { useHideOnScroll } from '../../../helpers/useHideOnScroll';
 
 interface ISellBarProps {
     selectedCards: TInventoryCard[]
@@ -17,6 +18,7 @@ interface ISellBarProps {
 const SellsBar:FC<ISellBarProps> = ({ selectedCards, onClose }) => {
     const [inputValue, setInputValue] = useState('')
     const [isAcceptedPolicy, setIsAcceptedPolicy] = useState(false)
+    const shouldHide = useHideOnScroll();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value)
@@ -25,7 +27,7 @@ const SellsBar:FC<ISellBarProps> = ({ selectedCards, onClose }) => {
 
     const totalWorth = selectedCards.reduce((acc, val) => acc + val.price, 0)
     return (
-        <div className='sticky top-[60px] flex flex-col  max-w-[429px] w-full h-[870px] gap-6 p-8 text-skinwallerGray font-Barlow side-bar-gradient cta-clip-path'>
+        <div className={classNames('sticky flex flex-col  max-w-[429px] w-full gap-6 p-8 text-skinwallerGray font-Barlow side-bar-gradient cta-clip-path duration-100', shouldHide ? "h-[calc(100vh-60px)] top-[60px]" : "h-[calc(100vh-120px)] top-[120px]")}>
             <div className='relative'>
                 <input
                     type='text'
@@ -100,14 +102,14 @@ const SellsBar:FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                 <Button 
                     text={`GET $${format(totalWorth)}`}
                     onClick={() => console.log('sell')}
-                    className={classNames('w-full h-full text-21  tracking-widest text-white font-medium bg-linkUnderline/40 cta-clip-path border border-b-[3px] border-linkUnderline  ',
+                    className={classNames('w-full h-full text-21  tracking-widest text-white font-medium bg-swViolet/40 cta-clip-path border border-b-[3px] border-swViolet  ',
                     isAcceptedPolicy ? 'hover:opacity-90' : ' grayscale',
                     selectedCards.length ? '': 'pointer-events-none'
 
                     )}
                     disabled={!isAcceptedPolicy}
                 />
-                <div className={classNames('absolute -left-1 bottom-1 h-[1px] w-4 bg-linkUnderline rotate-45', isAcceptedPolicy ? '' : ' grayscale')}  />
+                <div className={classNames('absolute -left-1 bottom-1 h-[1px] w-4 bg-swViolet rotate-45', isAcceptedPolicy ? '' : ' grayscale')}  />
             </div>
         </div>
     );

@@ -8,6 +8,7 @@ import { CartIcon } from '../CartIcon/cart';
 import { Button, Link } from '../Navigation'
 import { useAppContext } from '../../context/AppContext';
 import { useLocation } from 'react-router-dom';
+import { useHideOnScroll } from '../../helpers/useHideOnScroll';
 
 interface ITopBar {
   isHidableOnScroll: boolean,
@@ -16,34 +17,6 @@ interface ITopBar {
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
-
-const useHideOnScroll = () => {
-  const [isHidden, setIsHidden] = useState(false);
-  const prevScrollY = useRef<any>();
-
-  useEffect(() => {
-    const onScroll = () => {
-      const offset = 60;
-      const scrolledDown = window.scrollY > prevScrollY.current;
-      const scrolledUp = !scrolledDown;
-
-      if (window.scrollY > offset && scrolledDown && !isHidden) {
-        setIsHidden(true);
-      } else if (scrolledUp && isHidden) {
-        setIsHidden(false);
-      }
-
-      prevScrollY.current = window.scrollY;
-    };
-
-    window.addEventListener('scroll', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, [isHidden]);
-
-  return isHidden;
-};
 
 const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   const { pathname } = useLocation();
@@ -59,11 +32,11 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   } = useAppContext();
 
   return (
-    <header id="top-bar" className="pointer-events-none cursor-default w-full h-[56px]">
+    <header id="top-bar" className={classNames("pointer-events-none cursor-default w-full duration-100 h-[56px] sticky top-0 z-20",
+    isHidableOnScroll && shouldHide ? 'transform-gpu translate-x-0 translate-y-[-56px] translate-z-0' : 'transform-gpu translate-x-0 translate-y-0 translate-z-0')}>
       <div
         className={classNames(
-          'fixed max-w-[1440px] min-w-full z-[666] flex items-center justify-between w-full h-[56px] px-[24px] py-[12px] overflow-hidden pointer-events-auto bg-almostBlack transition-transform delay-[150ms] ease-in-out',
-          isHidableOnScroll && shouldHide ? 'transform-gpu translate-x-0 translate-y-[-56px] translate-z-0' : 'transform-gpu translate-x-0 translate-y-0 translate-z-0',
+          'max-w-[1440px] min-w-full z-[666] flex items-center justify-between w-full h-[56px] px-[24px] py-[12px] overflow-hidden pointer-events-auto bg-almostBlack transition-transform delay-[150ms] ease-in-out',
         )}
       >
         <nav className='flex items-center'>

@@ -5,7 +5,11 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export const Filters = () => {
+interface IFilters {
+  onSelectAll: () => void;
+}
+
+export const Filters = ({onSelectAll}: IFilters) => {
   return (
     <div className='flex items-center'>
       <Button
@@ -35,6 +39,7 @@ export const Filters = () => {
       <Button
         className='font-medium text-skinwallerGray hover:text-white'
         text='Select All'
+        onClick={onSelectAll}
       />
       <Button
         className='font-medium text-skinwallerGray hover:text-white'

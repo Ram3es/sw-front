@@ -20,7 +20,6 @@ function classNames(...classes: string[]) {
 
 const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   const { pathname } = useLocation();
-  const [user, setUser] = useState(false);
   const shouldHide = useHideOnScroll();
   const {
     changeCategoriesState,
@@ -29,6 +28,8 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     searchOpened,
     changegameSelectorState,
     gameSelectorOpened,
+    user,
+    userUpdate
   } = useAppContext();
 
   return (
@@ -133,7 +134,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                   />
                 }
                 iconRight
-                onClick={() => setUser(!user)}
+                onClick={() => userUpdate()}
               />
             </>
             : <>
@@ -150,7 +151,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               <Button
                 text='log in'
                 className='uppercase mr-[20px] font-medium text-skinwallerGray hover:text-white'
-                onClick={() => setUser(!user)}
+                onClick={() => userUpdate()}
               />
               <Button
                 text='Sign up'

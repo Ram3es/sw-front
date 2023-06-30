@@ -9,10 +9,12 @@ export const AppProvider = ({ children }: IProps) => {
   const [ categoriesState, setCategoriesState ] = useState(false);
   const [ searchOpened, setSearchOpened ] = useState(false);
   const [ gameSelectorOpened, setGameSelectorOpened ] = useState(false);
+  const [ user, setUser ] = useState(false)
 
   const changeCategoriesState = () => setCategoriesState(!categoriesState);
   const changeSearchState = () => setSearchOpened(!searchOpened);
   const changegameSelectorState = () => setGameSelectorOpened(!gameSelectorOpened);
+  const userUpdate = () => setUser(prev => !prev)
 
   return (
     <AppContext.Provider
@@ -23,6 +25,8 @@ export const AppProvider = ({ children }: IProps) => {
         searchOpened,
         changegameSelectorState,
         gameSelectorOpened,
+        user,
+        userUpdate
       }}
     >
       { children }

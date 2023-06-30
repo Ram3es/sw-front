@@ -7,6 +7,8 @@ export interface IAppContext {
   searchOpened: boolean;
   changegameSelectorState: () => void;
   gameSelectorOpened: boolean;
+  user: boolean;
+  userUpdate: () => void;
 };
 
 export const AppContext = createContext<IAppContext>({
@@ -16,6 +18,8 @@ export const AppContext = createContext<IAppContext>({
   searchOpened: false,
   changegameSelectorState: () => {},
   gameSelectorOpened: false,
+  user: false,
+  userUpdate: () => {}
 });
 
 export const useAppContext = () => useContext(AppContext);

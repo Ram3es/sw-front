@@ -31,7 +31,7 @@ export const Bonus = () => {
               <Button 
                 text='Redeem'
                 onClick={() => console.log('submit')}
-                className='absolute top-0 right-0 h-full cta-clip-path text-swBlack bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer ' 
+                className='absolute top-0 right-0 h-full cta-clip-path text-base text-swBlack bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer ' 
               />
             </div>
           </div>

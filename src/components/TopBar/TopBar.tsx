@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
 import { ReactComponent as SkinwalletLogo } from '../../assets/logo-skinwallet.inline.svg';
 import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
 import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
@@ -25,7 +24,6 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     changeCategoriesState,
     categoriesState,
     changeSearchState,
-    searchOpened,
     changegameSelectorState,
     gameSelectorOpened,
     user,

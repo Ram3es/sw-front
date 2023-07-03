@@ -3,7 +3,6 @@ import { Filters } from '../controls/filters';
 import { useEffect, useState } from 'react';
 import { NotLogged } from '../../../components/NotLogged/NotLogged';
 import ItemCard from '../../../components/Content/ItemCard';
-import { Button } from '../../../components/Navigation';
 import SellsBar from './SellsBar';
 import { TInventoryCard } from '../../../types/Card';
 import { USER_INVENTORY } from '../../../mock/inventory';

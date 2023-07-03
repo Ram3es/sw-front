@@ -1,5 +1,3 @@
-import React from 'react';
-
 const TrashBin = ({ iconClasses }: { iconClasses?: string }) => {
     return (
         <svg className={iconClasses ?? ''} width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg">

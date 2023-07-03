@@ -18,11 +18,11 @@ export const Button = ({ text = '', className = '', icon, iconRight = false, onC
   return (
     <button 
       className={classNames(
-        'button font-["Barlow"] h-[32px] px-[16px] flex',
-        className ?? ' text-[14px] tracking-[1.12px]',
+        'button font-["Barlow"] h-[32px] px-[16px] tracking-[1.12px] flex',
+        className ?? ' text-[14px] ',
       )}
       onClick={onClick}
-      disabled={!!disabled}
+      disabled={disabled}
     >
       { icon && !iconRight && <span className="pr-[8px]">{icon}</span> }
       { text }

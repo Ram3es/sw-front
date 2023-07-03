@@ -67,9 +67,18 @@
     url('./assets/fonts/Barlow-Bold.ttf'),
     url('./assets/fonts/Barlow-Regular.ttf');
 }
+body {
+  font-family: 'Barlow';
+  font-weight: 500;
+}
+
 
 .button, svg {
   transition: .2s ease-in-out
+}
+
+.hover:hover {
+  filter: brightness(1.1);
 }
 
 ::-webkit-scrollbar {

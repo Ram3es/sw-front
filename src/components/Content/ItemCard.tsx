@@ -111,9 +111,11 @@ const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, n
                   `${timeToTrade} hours`}
                 </span>}
             </div>
-            <Checkbox
-              checked={isSelected}
-            />
+            <div className='text-swViolet'>
+              <Checkbox
+                checked={isSelected}
+              />
+            </div>
           </div>
           <img
             className="h-[137px]"

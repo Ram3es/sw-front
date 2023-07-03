@@ -14,7 +14,7 @@ export const Bonus = () => {
   return (
     <>
       <div className='flex flex-col flex-grow py-5'>
-        <div className='flex justify-between h-[50px] border-b border-solid border-sidebarGrey px-[8px]'>
+        <div className='flex justify-between h-[50px] border-b border-solid border-darkGrey px-[8px]'>
           <Nav />
         </div>
         <div className='flex flex-col lg:flex-row gap-y-12 px-3 sm:px-6 py-[30px] text-white '>
@@ -31,7 +31,7 @@ export const Bonus = () => {
               <Button 
                 text='Redeem'
                 onClick={() => console.log('submit')}
-                className='absolute top-0 right-0 h-full cta-clip-path text-base text-swBlack bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer ' 
+                className='absolute top-0 right-0 h-full cta-clip-path text-base text-darkGrey bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer ' 
               />
             </div>
           </div>

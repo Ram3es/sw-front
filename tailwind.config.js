@@ -12,13 +12,10 @@ export default {
         skinwallerGray: 'rgb(164, 164, 164)',
         darkGrey: '#202023',
         darkSecondary: '#0D0D0D',
-        sidebarGrey: '#202023',
         graySecondary: "#A4A4A4",
         skinwalletPink: '#CFBBFE',
-        swBlack:'#0D0D0D',
         swViolet: '#6842FF',
         swLime: '#18E86B',
-        swGrey:'#A4A4A4',
         'gray-42':'#424242'
       },
       fontSize:{

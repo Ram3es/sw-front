@@ -18,12 +18,12 @@ const SummaryPayout = () => {
     return (
         <div className=' flex flex-col items-center mx-auto gap-6 text-center max-w-[432px] text-white '>
             <div className=' uppercase tracking-[1.12px]'>
-                <h6 className='text-swGrey mb-2'>summary</h6>
+                <h6 className='text-graySecondary mb-2'>summary</h6>
                 <p className=' text-2xl leading-[24px]  max-w-[294px] '>
                     Your payout is being processed by paypal.
                 </p>
             </div>
-            <p className=' text-swGrey left-5'>
+            <p className=' text-graySecondary left-5'>
                 As soon as PayPal finishes processing your payout, we will send you an email with the final status of this operation.
             </p>
             <div className=''>
@@ -43,10 +43,10 @@ const SummaryPayout = () => {
                 <div className=' w-1/2 relative overflow-hidden hover button'>
                     <Button 
                         text='sell more items '
-                        className=' w-full h-full border border-swGrey  hover justify-center cta-clip-path uppercase text-swGrey '
+                        className=' w-full h-full border border-graySecondary  hover justify-center cta-clip-path uppercase text-graySecondary '
                         onClick={handleViewMore} 
                     />
-                        <div className='absolute w-4 bottom-1 -left-1 border-b border-swGrey hover rotate-45' />
+                        <div className='absolute w-4 bottom-1 -left-1 border-b border-graySecondary hover rotate-45' />
                 </div>
             </div>
             

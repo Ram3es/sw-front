@@ -31,13 +31,13 @@ const AmontPayout = () => {
             </div>
             <PaperPayout title='Set payout amount' >
                 <>
-                    <div className=' h-16 flex justify-between items-center px-4 font-semibold text-2xl border border-swGrey relative overflow-hidden cta-clip-path'>
-                        <div className='text-swGrey'> - </div>
+                    <div className=' h-16 flex justify-between items-center px-4 font-semibold text-2xl border border-graySecondary relative overflow-hidden cta-clip-path'>
+                        <div className='text-graySecondary'> - </div>
                         <span className=' tracking-widest '>${format(amount)}</span>
-                        <div className='text-swGrey'> + </div>
-                        <div className='w-4 absolute -left-[6px] bottom-1 border border-b border-swGrey rotate-45'/>
+                        <div className='text-graySecondary'> + </div>
+                        <div className='w-4 absolute -left-[6px] bottom-1 border border-b border-graySecondary rotate-45'/>
                     </div>
-                    <p className='mx-auto font-normal'><span className='text-swGrey'>Daily payout limit</span> $1,000.00 ($1,000.00 left)</p>
+                    <p className='mx-auto font-normal'><span className='text-graySecondary'>Daily payout limit</span> $1,000.00 ($1,000.00 left)</p>
                     <div className='h-12 mt-[20%]'>
                         <Button 
                             text='NEXT'

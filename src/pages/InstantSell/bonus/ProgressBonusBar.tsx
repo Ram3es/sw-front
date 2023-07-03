@@ -29,11 +29,11 @@ const ProgressBonusBar = () => {
                 <div key={card.percent} className='w-fit flex flex-col items-center gap-4 z-[5]'>
                     <img src={card.icon} alt="level-logo" />
                     <div className={`px-2.5 py-1.5 flex items-center justify-center ${ card.percent < 1 ? 'bg-swViolet' : 'bg-darkGrey is-border'} bonus-percent-hexagon `}>
-                        <div className={`w-full h-full center flex items-center justify-center ${ card.percent < 1 ? 'text-white' : 'text-swGrey'}  text-base font-medium z-10`}>
+                        <div className={`w-full h-full center flex items-center justify-center ${ card.percent < 1 ? 'text-white' : 'text-graySecondary'}  text-base font-medium z-10`}>
                             +{card.percent}%
                         </div>
                     </div>
-                    <div className={`mt-4 ${ card.percent < 1 ? 'text-white' : 'text-swGrey'} `}>${0}.00</div>
+                    <div className={`mt-4 ${ card.percent < 1 ? 'text-white' : 'text-graySecondary'} `}>${0}.00</div>
                 </div>
             ))}
            <div className='w-full absolute left-0 bottom-[25%] sm:bottom-[30%] '>

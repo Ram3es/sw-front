@@ -50,9 +50,9 @@ const MethodsPayout = () => {
                     <Button 
                         text='CHANGE'
                         onClick={() => setPayoutStep('amount')}
-                        className='justify-center text-swGrey font-semibold border border-swGrey cta-clip-path '
+                        className='justify-center text-graySecondary font-semibold border border-graySecondary cta-clip-path '
                     />
-                    <div className=' w-4 absolute -left-1 bottom-1  border-b border-swGrey rotate-45'  />
+                    <div className=' w-4 absolute -left-1 bottom-1  border-b border-graySecondary rotate-45'  />
                 </div>
                 
             </div>
@@ -85,7 +85,7 @@ const MethodsPayout = () => {
                                     </div>
 
                                     <div className={classNames('flex items-center gap-4 ',
-                                        idx % 3 ? 'text-swGrey' : '')}>
+                                        idx % 3 ? 'text-graySecondary' : '')}>
                                         <ClockIcon />
                                         {method.timeline}
                                     </div>
@@ -106,13 +106,13 @@ const MethodsPayout = () => {
                                                         <Button 
                                                             text='set'
                                                             onClick={handleSetEmail}
-                                                            className='absolute top-0 right-0 h-full px-[32px] cta-clip-path uppercase text-base text-swBlack bg-swLime hover cursor-pointer ' 
+                                                            className='absolute top-0 right-0 h-full px-[32px] text-darkSecondary  cta-clip-path uppercase text-base text-swBlack bg-swLime hover cursor-pointer ' 
                                                         />
                                                     </div>
                                                 </div>
                                             : <div className=" flex items-center justify-between pt-4 pb-8 pr-4  pl-12 text-white">
                                                 <div className="flex flex-col">
-                                                    <p className="text-swGrey">PayPal email</p>
+                                                    <p className="text-graySecondary">PayPal email</p>
                                                     <p className="text-base">{emailPayPal}</p>
                 
                                                 </div>
@@ -120,9 +120,9 @@ const MethodsPayout = () => {
                                                     <Button 
                                                         text='edit'
                                                         onClick={() => setIsEditMode(prev => !prev)}
-                                                        className='justify-center text-swGrey px-[36px] font-semibold border uppercase border-swGrey cta-clip-path '
+                                                        className='justify-center text-graySecondary px-[36px] font-semibold border uppercase border-graySecondary cta-clip-path '
                                                     />
-                                                    <div className=' w-4 absolute -left-1 bottom-1  border-b border-swGrey rotate-45'  />
+                                                    <div className=' w-4 absolute -left-1 bottom-1  border-b border-graySecondary rotate-45'  />
                                                 </div>
                                             </div> 
                                         }

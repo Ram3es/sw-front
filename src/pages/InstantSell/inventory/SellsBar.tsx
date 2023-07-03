@@ -39,7 +39,7 @@ const SellsBar:FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                 <Button 
                     text='Redeem'
                     onClick={() => console.log('submit')}
-                    className='absolute top-0 right-0 h-full text-base font-medium text-swBlack bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer cta-clip-path ' 
+                    className='absolute top-0 right-0 h-full text-base font-medium text-darkGrey bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer cta-clip-path ' 
                 />
             </div>
             <div className='flex-grow'>

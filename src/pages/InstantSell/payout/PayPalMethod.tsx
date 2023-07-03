@@ -33,16 +33,16 @@ const PayPalMethod = () => {
                     <Button 
                         text='CHANGE'
                         onClick={() => setPayoutStep('amount')}
-                        className='justify-center text-swGrey font-semibold border border-swGrey cta-clip-path '
+                        className='justify-center text-graySecondary font-semibold border border-graySecondary cta-clip-path '
                     />
-                    <div className=' w-4 absolute -left-1 bottom-1  border-b border-swGrey rotate-45'  />
+                    <div className=' w-4 absolute -left-1 bottom-1  border-b border-graySecondary rotate-45'  />
                 </div>
                 
             </div>
             <PaperPayout title="Choose payment provider" >
                 <div className="flex flex-col gap-4">
                     <div className=" w-max font-bold text-darkSecondary bg-swLightOrange px-2 ">IMPORTANT PAYOUT ANNOUNCEMENT</div>
-                    <p className="text-13 text-swGrey font-normal">Skinwallet instant is only servicing PayPal payouts until further notice.</p>
+                    <p className="text-13 text-graySecondary font-normal">Skinwallet instant is only servicing PayPal payouts until further notice.</p>
                     <div  
                         className={classNames('flex flex-col mb-2  text-swLime bg-gray-29 cta-clip-path')} 
                     >
@@ -57,7 +57,7 @@ const PayPalMethod = () => {
                                 <img src={PAYOUT_METHODS[1].logo} alt="method-logo" />
                             </div>
 
-                            <div className={classNames('flex items-center gap-4 text-swGrey ')}>
+                            <div className={classNames('flex items-center gap-4 text-graySecondary ')}>
                                 <ClockIcon />
                                 {PAYOUT_METHODS[1].timeline}
                             </div>
@@ -89,7 +89,7 @@ const PayPalMethod = () => {
                             </div>
                             : <div className=" flex items-center justify-between pt-4 pb-8 pr-4  pl-12 text-white">
                                 <div className="flex flex-col">
-                                    <p className="text-swGrey">PayPal email</p>
+                                    <p className="text-graySecondary">PayPal email</p>
                                     <p className="text-base">{emailPayPal}</p>
 
                                 </div>
@@ -97,9 +97,9 @@ const PayPalMethod = () => {
                                     <Button 
                                         text='edit'
                                         onClick={() => setIsEditMode(prev => !prev)}
-                                        className='justify-center text-swGrey px-[36px] font-semibold border uppercase border-swGrey cta-clip-path '
+                                        className='justify-center text-graySecondary px-[36px] font-semibold border uppercase border-graySecondary cta-clip-path '
                                     />
-                                    <div className=' w-4 absolute -left-1 bottom-1  border-b border-swGrey rotate-45'  />
+                                    <div className=' w-4 absolute -left-1 bottom-1  border-b border-graySecondary rotate-45'  />
                                  </div>
                              </div>
                          }

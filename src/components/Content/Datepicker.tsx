@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { classNames } from '../../helpers/className';
 
 interface DatepickerProps {
   selectedDate?: Date;
   onChange: (date: Date) => void;
   label: string;
+  align?: 'left' | 'right';
 }
 
-const Datepicker: React.FC<DatepickerProps> = ({ selectedDate, onChange, label }) => {
+const Datepicker: React.FC<DatepickerProps> = ({ selectedDate, onChange, label, align }) => {
   const [isOpen, setIsOpen] = useState(false);
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -43,8 +45,15 @@ const Datepicker: React.FC<DatepickerProps> = ({ selectedDate, onChange, label }
         </div>
       </button>
       {isOpen && (
-        <div ref={divRef} className='absolute top-full left-0 w-full h-full z-10'>
+        <div
+          ref={divRef}
+          className='absolute top-full w-full h-full z-10'
+        >
           <DatePicker
+            calendarClassName={classNames(
+              'absolute z-10',
+              align === 'right' ? 'right-0' : 'left-0'
+            )}
             selected={selectedDate}
             onChange={onChange}
             inline

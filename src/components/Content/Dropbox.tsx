@@ -4,7 +4,7 @@ import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
 import { classNames } from "../../helpers/className";
 
 
-const Dropbox = ({label, onChange, children}: {label: string, onChange?: (value: any) => void, children?: JSX.Element}) => {
+const Dropbox = ({label, onChange, children, renderSubHeader}: {label: string, onChange?: (value: any) => void, children?: JSX.Element, renderSubHeader?:JSX.Element}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -15,7 +15,10 @@ const Dropbox = ({label, onChange, children}: {label: string, onChange?: (value:
         <>
           <div className="relative mt-2">
             <Listbox.Button onClick={toggle} className="relative w-full cursor-pointer flex justify-between items-center">
-              <span className="uppercase text-white font-['Barlow'] text-sm">{label}</span>
+              <div className="flex items-center gap-2">
+                <span className="uppercase text-white font-['Barlow'] text-sm">{label}</span>
+                {isOpen && renderSubHeader}
+              </div>
               <Chevron
                 className={classNames('fill-white h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')}
               />

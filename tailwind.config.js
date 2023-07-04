@@ -4,7 +4,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  ], 
   theme: {
     extend: {
       colors: {
@@ -28,7 +28,7 @@ export default {
         ssl: "450px",
         sm: "550px",
         md: "700px",
-        lg: "900px", 
+        lg: "900runpx", 
         llg: "1100px",
         xl: "1300px", 
         xll: "1600px",

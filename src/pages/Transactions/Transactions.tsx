@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, MouseEvent } from "react";
 import Bar from "../../components/Bar/Bar";
 import Dropbox from "../../components/Content/Dropbox";
 import Checkbox from "../../components/Content/Checkbox";
@@ -6,6 +6,9 @@ import Datepicker from "../../components/Content/Datepicker";
 import { SIDEBAR_LINKS } from "../../constants/sidebar-links";
 import { useHideOnScroll } from "../../helpers/useHideOnScroll";
 import { classNames } from "../../helpers/className";
+import TransactionCard from "../../components/Content/TransactionCard";
+import { TRANSACTIONS } from "../../mock/invoices";
+import DownloadFileIcon from "../../components/icons/DownloadFileIcon";
 
 export default function TransactionsPage() {
   const [startDate, setStartDate] = useState<Date>();
@@ -39,6 +42,11 @@ export default function TransactionsPage() {
     },
   ]);
   const shouldHide = useHideOnScroll();
+
+  const download = (e: MouseEvent) => {
+    e.stopPropagation()
+    console.log('click');
+  }
 
 
   return (
@@ -113,7 +121,27 @@ export default function TransactionsPage() {
             </div>
           </div>
         </div>
-        <div className="h-[200vh]">test</div>
+        <div className="h-[200vh] w-full flex flex-col">
+          <div className=" w-full max-w-[672px] mx-auto ">
+            <Dropbox 
+              label="AUGUST 2020"
+              renderSubHeader={
+                  <div 
+                    className="flex items-center gap-2 text-graySecondary ml-2 hover button"
+                    onClick={download}
+                  >
+                    <DownloadFileIcon />
+                    <span className="text-sm tracking-[1.12px] uppercase">invoice</span>
+                  </div>
+                }
+              >
+              <div className="flex flex-col gap-3 mt-4"> 
+                {TRANSACTIONS.map((trx) =>  <TransactionCard key={trx.hash} {...trx} />)}
+              </div>
+            </Dropbox>
+            <div className=" border border-b border-darkGrey my-8" />
+          </div>
+        </div>
       </div>
     </>
   );

@@ -30,7 +30,7 @@ export default function TransactionsPage() {
         <div className={classNames('flex flex-col flex-grow max-w-[256px] max-h-screen sticky overflow-auto bottom-0', shouldHide ? "h-[calc(100vh-60px)] top-[60px]" : "h-[calc(100vh-120px)] top-[120px]")}>
           <TransactionsSidebar />
         </div>
-        <div className="h-[200vh] w-full flex flex-col">
+        <div className="w-full flex flex-col pt-6">
           <div className=" w-full max-w-[672px] mx-auto ">
             <Dropbox 
               label="AUGUST 2020"

@@ -43,11 +43,10 @@ const TransactionCard: FC<ITransactionCardProps>= ({ hash, amount, date, paypalI
                         <CopyIcon />
                     </div>
                 </div>
-                <div className="flex justify-end items-center gap-2 " >
+                <div className="flex justify-end items-center gap-2 cursor-pointer" onClick={toggle} >
                     <span className="text-sm tracking-[1.12px] text-graySecondary uppercase ">{isOpen ? 'hide details' : 'show details'}</span>
                     <div 
                         className=' hover button'
-                        onClick={toggle}
                     >
                         <Chevron className={classNames('fill-graySecondary h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')} />
                     </div>
@@ -58,7 +57,7 @@ const TransactionCard: FC<ITransactionCardProps>= ({ hash, amount, date, paypalI
                             <RoundedMark />
                             <p>Sold - Payout of funds to PayPal</p>
                           </div>
-                        : <div className='flex items-center gap-2 text-swOrange'>
+                        : <div className='flex items-center gap-2 text-[#FF8F27] text-swOrange'>
                             <ReloadIcon />
                             <p>Payout of funds to PayPal</p>
                           </div>

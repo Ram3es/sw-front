@@ -72,6 +72,13 @@ body {
   font-weight: 500;
 }
 
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button,
+input[type='number'] {
+  -webkit-appearance: none;
+  -moz-appearance: textfield !important;
+}
+
 
 .button, svg {
   transition: .2s ease-in-out

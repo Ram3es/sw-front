@@ -11,6 +11,7 @@ import { classNames } from '../../../helpers/className';
 import ExclamationTriangleFilled from '../../../components/icons/ExclamationTriangleFilled';
 import { NavLink } from 'react-router-dom';
 import React from 'react';
+import { REGEX } from '../../../constants/regex';
 
 const MethodsPayout = () => {
     const { amount, emailPayPal,inputPaypal, setPayoutStep, setPayPalEmail, setInputPayPal } = usePayoutContext()
@@ -18,13 +19,16 @@ const MethodsPayout = () => {
     const [isEditMode, setIsEditMode] = useState(false)
 
     const handleSetEmail = () => {
+        if(!REGEX.email.test(inputPaypal)){
+           alert('wrong format email')
+            return
+        }
         setPayPalEmail(inputPaypal)
-        setIsEditMode(prev => !prev)
-
+        setIsEditMode(false)
     }
     const [isSelectedMethod, setSelecteMethod] = useState<Record<string, boolean>>(PAYOUT_METHODS.reduce((acc, mth )=> ({...acc ,[mth.name]:false }), {}))
 
-    const currentMethod = useMemo(() => Object.keys(isSelectedMethod).filter(key => isSelectedMethod[key]).join() ,[isSelectedMethod])
+    const currentMethod = useMemo(() => Object.keys(isSelectedMethod).filter(key => isSelectedMethod[key]).join(), [isSelectedMethod])
 
     const radioChange = (method: string) => {
         setSelecteMethod( prev => {

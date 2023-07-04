@@ -3,13 +3,35 @@ import { Button } from '../../../components/Navigation';
 import ExclamationTriangleIcon from '../../../components/icons/ExclamationTriangle';
 import { format } from '../../../helpers/numberFormater';
 import { classNames } from '../../../helpers/className';
-import { useState } from 'react';
+import { useState, ChangeEvent, useRef, useEffect } from 'react';
 import { usePayoutContext } from '../../../context/PayoutContext';
 import PaperPayout from './PaperPayout';
+import PlusIcon from '../../../components/icons/PlusIcon';
+import MinusIcon from '../../../components/icons/MinusIcon';
+import { useCounter } from '../../../helpers/useCounter';
 
 const AmontPayout = () => { 
-    const { amount, setPayoutStep } = usePayoutContext()
+    const { amount, setPayoutStep, setAmount } = usePayoutContext()
+    const { increment, decrement, clearAutoCount } = useCounter(setAmount)
     const [isError, setIsError] = useState(true)
+    const [isShownInput, setShowInput] = useState(false)
+    const inputRef = useRef<HTMLInputElement>(null)
+
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if(Number(e.target.value) > 1000){
+            return
+        }
+        setAmount(Number(e.target.value))
+    }
+
+    const toggle = () => {
+        setShowInput(boolean => !boolean)
+    }
+
+    useEffect(() => {
+        isShownInput && inputRef.current?.focus()
+    }, [isShownInput])
+   
     return (
         <div className='flex flex-col items-center mx-auto max-w-[472px]'>
             <div className=' flex items-center gap-2 mb-6'>
@@ -32,9 +54,40 @@ const AmontPayout = () => {
             <PaperPayout title='Set payout amount' >
                 <>
                     <div className=' h-16 flex justify-between items-center px-4 font-semibold text-2xl border border-graySecondary relative overflow-hidden cta-clip-path'>
-                        <div className='text-graySecondary'> - </div>
-                        <span className=' tracking-widest '>${format(amount)}</span>
-                        <div className='text-graySecondary'> + </div>
+                        <div 
+                            onClick={decrement}
+                            onMouseDown={decrement}
+                            onMouseUp={clearAutoCount}
+                            onMouseLeave={clearAutoCount}
+                            className={classNames('text-graySecondary button hover:brightness-125 h-max',
+                                isShownInput ? 'pointer-events-none' : '' )}
+                        >
+                            <MinusIcon />
+                        </div>
+                        <div onClick={toggle} className='flex gap-1'>
+                        $
+                            {isShownInput 
+                                ? <input
+                                   ref={inputRef}
+                                   type='number'
+                                   value={amount === 0 ? '' : amount }
+                                   onChange={onChange}
+                                   onBlur={() =>setShowInput(false)}
+                                   className='bg-transparent w-14 outline-none text-white'
+                                 />
+                                : <span className=' tracking-widest '>{format(amount)}</span>}
+                             
+                        </div>
+                        <div 
+                            onClick={increment}
+                            onMouseDown={increment}
+                            onMouseUp={clearAutoCount}
+                            onMouseLeave={clearAutoCount}
+                            className={classNames('text-graySecondary button hover:brightness-125 h-max',
+                                isShownInput ? 'pointer-events-none' : '' )}
+                        > 
+                            <PlusIcon />
+                         </div>
                         <div className='w-4 absolute -left-[6px] bottom-1 border border-b border-graySecondary rotate-45'/>
                     </div>
                     <p className='mx-auto font-normal'><span className='text-graySecondary'>Daily payout limit</span> $1,000.00 ($1,000.00 left)</p>

@@ -5,7 +5,7 @@ import { classNames } from "../../helpers/className";
 
 
 
-const Dropbox = ({label, onChange, children, options, listClasses, additionalClasses }: {label: string, onChange?: (value: any) => void, children?: JSX.Element, listClasses?: string, additionalClasses?: string, options?:string[]}) => {
+const Dropbox = ({label, onChange, children, options,renderSubHeader, listClasses, additionalClasses }: {label: string, onChange?: (value: any) => void, children?: JSX.Element, listClasses?: string,renderSubHeader?:JSX.Element, additionalClasses?: string, options?:string[]}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -17,7 +17,11 @@ const Dropbox = ({label, onChange, children, options, listClasses, additionalCla
           <div className="relative">
             <Listbox.Button onClick={toggle} className={classNames("relative w-full cursor-pointer flex justify-between items-center", 
                   additionalClasses ?? 'text-sm text-white uppercase')}>
-              <span>{label}</span>
+                    <div className="flex items-center gap-2">
+                      <span>{label}</span>
+                      {isOpen && renderSubHeader}
+                    </div>
+             
               <Chevron
                 className={classNames('fill-current h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')}
               />

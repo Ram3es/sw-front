@@ -4,7 +4,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  ], 
   theme: {
     extend: {
       colors: {
@@ -12,15 +12,27 @@ export default {
         skinwallerGray: 'rgb(164, 164, 164)',
         darkGrey: '#202023',
         darkSecondary: '#0D0D0D',
+        'dark-14':'#141415',
         graySecondary: "#A4A4A4",
         skinwalletPink: '#CFBBFE',
         swViolet: '#6842FF',
         swLime: '#18E86B',
+        swOrange:'#FF8F27',
+        swLightOrange: '#FFD7BC',
+        swLightYellow: '#FFE8AE',
+        'yellow-1e':'#FFC01E',
+        'gray-29':'#29292C',
+        'gray-40':'#404043',
         'gray-42':'#424242'
       },
       fontSize:{
-        21:'1.3125rem',
+        11: '0.6875rem',
+        13: '0.8125rem',
         18: '1.125rem',
+        21:'1.3125rem',
+        22: '1.1375rem',
+        24: '1.5rem',
+        
       },
       screens: {
         'sm-viewport': '50em',

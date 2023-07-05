@@ -1,42 +1,10 @@
-import { CardItem } from '../../types/Card';
+import { CONDITIONS } from '../../constants/item-conditions';
+import { CardItem, ConditionItem } from '../../types/Card';
 import { Button } from '../Navigation';
 import Checkbox from './Checkbox';
 import { ReactComponent as ClockIcon } from './images/clock.svg'
 
 
-interface ConditionItem {
-  maxVal: number;
-  color: string;
-  text: string;
-}
-
-const conditions: ConditionItem[] = [
-  {
-    maxVal: 0.07,
-    color: "#18E86B",
-    text: "Factory New"
-  },
-  {
-    maxVal: 0.15,
-    color: "#3DB26E",
-    text: "Minimal Wear"
-  },
-  {
-    maxVal: 0.37,
-    color: "#FACB53",
-    text: "Field-Tested"
-  },
-  {
-    maxVal: 0.44,
-    color: "#97602D",
-    text: "Well-Worn"
-  },
-  {
-    maxVal: 1,
-    color: "#424242",
-    text: "Battle-Scarred"
-  },
-];
 
 function findNearestMaxValue(arr: ConditionItem[], value: number): ConditionItem | null {
   let nearestMaxValue: ConditionItem | null = null;
@@ -58,7 +26,7 @@ function classNames(...classes: string[]) {
 }
 
 const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, name, type, condition, onClick}: CardItem) => {
-  const conditionObj = findNearestMaxValue(conditions, condition)
+  const conditionObj = findNearestMaxValue(CONDITIONS, condition)
 
   return (
     <div className={classNames('relative',
@@ -111,9 +79,11 @@ const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, n
                   `${timeToTrade} hours`}
                 </span>}
             </div>
-            <Checkbox
-              checked={isSelected}
-            />
+            <div className='text-swViolet'>
+              <Checkbox
+                checked={isSelected}
+              />
+            </div>
           </div>
           <img
             className="h-[137px]"

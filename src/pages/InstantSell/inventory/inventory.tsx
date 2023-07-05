@@ -9,6 +9,7 @@ import { USER_INVENTORY } from '../../../mock/inventory';
 import { useAppContext } from '../../../context/AppContext';
 import { sortData } from '../../../helpers/sortData';
 import { useSort } from '../../../helpers/useSort';
+import { USER } from '../../../mock/user';
 
 
 
@@ -64,7 +65,7 @@ export const Inventory = () => {
               }
               </div>
            : <NotLogged
-              onLogIn={() => userUpdate()}
+              onLogIn={() => userUpdate(USER)}
            />
         }
       </div>

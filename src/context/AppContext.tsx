@@ -1,4 +1,6 @@
 import { createContext, useContext } from 'react';
+import { IUser } from '../types/User';
+import { InitUserState } from '../constants/user';
 
 export interface IAppContext {
   changeCategoriesState: () => void;
@@ -7,8 +9,8 @@ export interface IAppContext {
   searchOpened: boolean;
   changegameSelectorState: () => void;
   gameSelectorOpened: boolean;
-  user: boolean;
-  userUpdate: () => void;
+  user?: IUser;
+  userUpdate: (user: IUser) => void;
 };
 
 export const AppContext = createContext<IAppContext>({
@@ -18,7 +20,7 @@ export const AppContext = createContext<IAppContext>({
   searchOpened: false,
   changegameSelectorState: () => {},
   gameSelectorOpened: false,
-  user: false,
+  user: InitUserState,
   userUpdate: () => {}
 });
 

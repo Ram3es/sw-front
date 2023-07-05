@@ -5,11 +5,14 @@ import { RouterProvider } from "react-router-dom";
 import router from './routes';
 import './index.css'
 import './variables.css'
+import PayoutProvider from './providers/PayoutProvider';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <AppProvider>
-      <RouterProvider router={router} />
+      <PayoutProvider>
+        <RouterProvider router={router} />
+      </PayoutProvider>
     </AppProvider>
   </React.StrictMode>,
 )

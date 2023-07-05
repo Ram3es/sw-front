@@ -7,6 +7,7 @@ import SellsBar from './SellsBar';
 import { TInventoryCard } from '../../../types/Card';
 import { USER_INVENTORY } from '../../../mock/inventory';
 import { useAppContext } from '../../../context/AppContext';
+import { USER } from '../../../mock/user';
 
 
 
@@ -56,7 +57,7 @@ export const Inventory = () => {
               }
               </div>
            : <NotLogged
-              onLogIn={() => userUpdate()}
+              onLogIn={() => userUpdate(USER)}
            />
         }
       </div>

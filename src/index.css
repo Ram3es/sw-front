@@ -6,6 +6,15 @@
   .cta-clip-path {
     clip-path: polygon(100% 0, 100% 100%, calc(0% + 8px) 100%, 0 calc(100% - 8px), 0 0);
   }
+
+  .bar-clip-path {
+    clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 40% 100%, 40.5% 90%, 100% 90%);
+  }
+
+  .cta-tr-corner {
+    clip-path: polygon(calc(100% - 8px) 0, 100% calc(0% + 8px) , 100% 100%, 0 100%, 0 0);
+  }
+
   .bonus-wrapper-hexagon {
     position: relative;
     clip-path: polygon(0% 0%, 98% 0%, 100% 5%, 100% 100%, 2% 100%, 0% 95%);
@@ -28,14 +37,10 @@
     clip-path: inherit;
   }
 
-  .bar-clip-path {
-    clip-path: polygon(100% 0%, 0% 0%, 0% 100%, 40% 100%, 40.5% 90%, 100% 90%);
-  }
-
   .button {
     align-items: center;
     /* text-decoration: none; */
-    /* cursor: pointer; */
+    cursor: pointer;
     user-select: none;
     /* border: 0; */
     outline: none;
@@ -62,9 +67,25 @@
     url('./assets/fonts/Barlow-Bold.ttf'),
     url('./assets/fonts/Barlow-Regular.ttf');
 }
+body {
+  font-family: 'Barlow';
+  font-weight: 500;
+}
 
-:hover > .button, svg {
-  transition-duration: 0.2s;
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button,
+input[type='number'] {
+  -webkit-appearance: none;
+  -moz-appearance: textfield !important;
+}
+
+
+.button, svg {
+  transition: .2s ease-in-out
+}
+
+.hover:hover {
+  filter: brightness(1.1);
 }
 
 ::-webkit-scrollbar {

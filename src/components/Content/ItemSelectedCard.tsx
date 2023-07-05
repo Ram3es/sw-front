@@ -28,10 +28,10 @@ const ItemSelectedCard: FC<IItemSelectedCard> = ( { image, price, condition, nam
                 </div>
             </div>
             <div 
-                className='absolute h-4 w-4 right-2 top-2 text-graySecondary group cursor-pointer'
+                className='absolute h-4 w-4 right-2 top-2 text-graySecondary group button'
                 onClick={onClick}
             >
-                <TrashBin iconClasses='group-hover:text-graySecondary/90 ' />
+                <TrashBin iconClasses='group-hover:text-graySecondary/80' />
             </div>
         </div>
     );

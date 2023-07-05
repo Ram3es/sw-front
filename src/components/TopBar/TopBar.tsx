@@ -8,6 +8,7 @@ import { Button, Link } from '../Navigation'
 import { useAppContext } from '../../context/AppContext';
 import { useLocation } from 'react-router-dom';
 import { useHideOnScroll } from '../../helpers/useHideOnScroll';
+import { USER } from '../../mock/user';
 
 interface ITopBar {
   isHidableOnScroll: boolean,
@@ -111,7 +112,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             user ? 
             <>
               <Button
-                text='$821.46'
+                text={user.balance.toString()}
                 className='uppercase font-medium text-skinwallerGray hover:text-white'
               />
               <Link
@@ -132,7 +133,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                   />
                 }
                 iconRight
-                onClick={() => userUpdate()}
+                onClick={() => userUpdate(USER)}
               />
             </>
             : <>
@@ -149,7 +150,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               <Button
                 text='log in'
                 className='uppercase mr-[20px] font-medium text-skinwallerGray hover:text-white'
-                onClick={() => userUpdate()}
+                onClick={() => userUpdate(USER)}
               />
               <Button
                 text='Sign up'

@@ -8,8 +8,8 @@ import { Button, Link } from '../Navigation'
 import { useAppContext } from '../../context/AppContext';
 import { useLocation } from 'react-router-dom';
 import { useHideOnScroll } from '../../helpers/useHideOnScroll';
-import Dropbox from '../Content/Dropbox';
 import { USER } from '../../mock/user';
+import UserMenu from '../Content/UserMenu';
 
 interface ITopBar {
   isHidableOnScroll: boolean,
@@ -123,13 +123,8 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               >
                 <CartIcon />
               </Link>
-              <Dropbox 
-                label={user.username}
-                additionalClasses='gap-2 text-graySecondary uppercase group hover:text-white button tracking-[1.12px]'
-                listClasses='w-[264px] absolute -right-6 top-10 text-white bg-almostBlack p-6 pb-8 cta-clip-path '
-                >
-                  <div className='h-20'>werer43</div>
-                </Dropbox>
+              <UserMenu name={user.username} balance={user.balance} />
+    
               {/* <Button
                 text='user'
                 className='uppercase font-medium text-skinwallerGray hover:text-white'

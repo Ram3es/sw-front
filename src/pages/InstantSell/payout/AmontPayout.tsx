@@ -9,10 +9,12 @@ import PaperPayout from './PaperPayout';
 import PlusIcon from '../../../components/icons/PlusIcon';
 import MinusIcon from '../../../components/icons/MinusIcon';
 import { useCounter } from '../../../helpers/useCounter';
+import { useAppContext } from '../../../context/AppContext';
 
 const AmontPayout = () => { 
     const { amount, setPayoutStep, setAmount } = usePayoutContext()
-    const { increment, decrement, clearAutoCount } = useCounter(setAmount)
+    const { user } = useAppContext()
+    const { increment, decrement, clearAutoCount } = useCounter(setAmount, Math.floor(user?.balance || 0) )
     const [isError, setIsError] = useState(true)
     const [isShownInput, setShowInput] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
@@ -66,7 +68,7 @@ const AmontPayout = () => {
                         </div>
                         <div onClick={toggle} className='flex gap-1'>
                         $
-                            {isShownInput 
+                            {isShownInput && user
                                 ? <input
                                    ref={inputRef}
                                    type='number'

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { IUser } from '../types/User';
-import { InitUserState } from '../constants/user';
 
 type IProps = {
   children: React.JSX.Element,

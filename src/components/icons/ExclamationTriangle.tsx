@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ExclamationTriangleIcon = () => {
     return (
         <svg width="17" height="15" viewBox="0 0 17 15" fill="none" xmlns="http://www.w3.org/2000/svg">

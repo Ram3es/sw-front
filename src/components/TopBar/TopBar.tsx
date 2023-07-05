@@ -33,11 +33,11 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   } = useAppContext();
 
   return (
-    <header id="top-bar" className={classNames("pointer-events-none cursor-default w-full duration-100 h-[56px] sticky top-0 z-20",
+    <header id="top-bar" className={classNames("pointer-events-none cursor-default w-full duration-100 h-[56px] sticky top-0 z-40",
     isHidableOnScroll && shouldHide ? 'transform-gpu translate-x-0 translate-y-[-56px] translate-z-0' : 'transform-gpu translate-x-0 translate-y-0 translate-z-0')}>
       <div
         className={classNames(
-          'max-w-[1440px] min-w-full z-[666] flex items-center justify-between w-full h-[56px] px-[24px] py-[12px] overflow-hidden pointer-events-auto bg-almostBlack transition-transform delay-[150ms] ease-in-out',
+          'max-w-[1440px] min-w-full z-[666] flex items-center justify-between w-full h-[56px] px-[24px] py-[12px]  pointer-events-auto bg-almostBlack transition-transform delay-[150ms] ease-in-out',
         )}
       >
         <nav className='flex items-center'>
@@ -123,7 +123,13 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               >
                 <CartIcon />
               </Link>
-              <Dropbox label={''} ></Dropbox>
+              <Dropbox 
+                label={user.username}
+                additionalClasses='gap-2 text-graySecondary uppercase group hover:text-white button tracking-[1.12px]'
+                listClasses='w-[264px] absolute -right-6 top-10 text-white bg-almostBlack p-6 pb-8 cta-clip-path '
+                >
+                  <div className='h-20'>werer43</div>
+                </Dropbox>
               {/* <Button
                 text='user'
                 className='uppercase font-medium text-skinwallerGray hover:text-white'

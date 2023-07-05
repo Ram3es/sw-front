@@ -12,6 +12,13 @@ export interface CardItem {
     onClick: () => void;
   }
 
+  export interface ConditionItem {
+    maxVal: number;
+    color: string;
+    text: string;
+
+  }
+
   export interface IItemSelectedCard extends Pick<CardItem, 'id' | 'condition' | 'image' | 'name' | 'onClick' | 'price'> {
 
   }

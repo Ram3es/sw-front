@@ -28,7 +28,7 @@ export default {
         ssl: "450px",
         sm: "550px",
         md: "700px",
-        lg: "900runpx", 
+        lg: "900px", 
         llg: "1100px",
         xl: "1300px", 
         xll: "1600px",

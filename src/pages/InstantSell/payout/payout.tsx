@@ -4,7 +4,6 @@ import AmontPayout from './AmontPayout';
 import MethodsPayout from './MethodsPayout';
 import { usePayoutContext } from '../../../context/PayoutContext';
 import SummaryPayout from './SummaryPayout';
-import PayPalMethod from './PayPalMethod';
 
 
 export const Payout = () => {

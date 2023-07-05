@@ -38,6 +38,7 @@ const LanguagePicker = () => {
               {langs.map((lang) => (
                 <Listbox.Option
                   key={lang.id}
+                  // @ts-ignore should be fixed
                   className={({ active }) =>
                     classNames(
                       'relative cursor-default select-none py-2 pl-3 pr-9'
@@ -45,6 +46,7 @@ const LanguagePicker = () => {
                   }
                   value={lang}
                 >
+                  {/* @ts-ignore should be fixed */}
                   {({ selected, active }) => (
                     <>
                       <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate uppercase text-xs text-graySecondary cursor-pointer')}>

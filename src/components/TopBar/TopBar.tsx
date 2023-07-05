@@ -8,6 +8,7 @@ import { Button, Link } from '../Navigation'
 import { useAppContext } from '../../context/AppContext';
 import { useLocation } from 'react-router-dom';
 import { useHideOnScroll } from '../../helpers/useHideOnScroll';
+import Dropbox from '../Content/Dropbox';
 
 interface ITopBar {
   isHidableOnScroll: boolean,
@@ -121,7 +122,8 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               >
                 <CartIcon />
               </Link>
-              <Button
+              <Dropbox label={''} ></Dropbox>
+              {/* <Button
                 text='user'
                 className='uppercase font-medium text-skinwallerGray hover:text-white'
                 icon={
@@ -133,7 +135,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 }
                 iconRight
                 onClick={() => userUpdate()}
-              />
+              /> */}
             </>
             : <>
               {/* <Link

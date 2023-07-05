@@ -7,6 +7,7 @@ import SellsBar from './SellsBar';
 import { TInventoryCard } from '../../../types/Card';
 import { USER_INVENTORY } from '../../../mock/inventory';
 import { useAppContext } from '../../../context/AppContext';
+import { USER } from '../../../mock/user';
 
 
 
@@ -33,7 +34,7 @@ export const Inventory = () => {
   return (
     <div className='flex flex-grow'>
       <div className='flex flex-col flex-grow py-5'>
-        <div className='flex justify-between h-[50px] border-b border-solid border-sidebarGrey px-[8px]'>
+        <div className='flex justify-between h-[50px] border-b border-solid border-darkGrey px-[8px]'>
           <Nav />
           <Filters
             onSelectAll={() => {
@@ -56,7 +57,7 @@ export const Inventory = () => {
               }
               </div>
            : <NotLogged
-              onLogIn={() => userUpdate()}
+              onLogIn={() => userUpdate(USER)}
            />
         }
       </div>

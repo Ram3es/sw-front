@@ -39,7 +39,7 @@ const SellsBar:FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                 <Button 
                     text='Redeem'
                     onClick={() => console.log('submit')}
-                    className='absolute top-0 right-0 h-full text-base font-medium text-swBlack bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer cta-clip-path ' 
+                    className='absolute top-0 right-0 h-full text-base font-medium text-darkGrey bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer cta-clip-path ' 
                 />
             </div>
             <div className='flex-grow'>
@@ -80,8 +80,10 @@ const SellsBar:FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                 </div>
             </div>
             <div className=' border-b border-white/10' />
-            <div className='flex gap-3 items-end'>
-                <Checkbox checked={isAcceptedPolicy} onChange={(boolean) => setIsAcceptedPolicy(boolean)} />
+            <div className='flex gap-3 items-end '>
+                <div className='text-swViolet ' >
+                    <Checkbox checked={isAcceptedPolicy} onChange={(boolean) => setIsAcceptedPolicy(boolean)} />
+                </div>
                 <p className='text-sm font-normal'>
                     I agree to the {''}
                     <NavLink 
@@ -102,7 +104,7 @@ const SellsBar:FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                 <Button 
                     text={`GET $${format(totalWorth)}`}
                     onClick={() => console.log('sell')}
-                    className={classNames('w-full h-full text-21  tracking-widest text-white font-medium bg-swViolet/40 cta-clip-path border border-b-[3px] border-swViolet  ',
+                    className={classNames('w-full h-full flex justify-center text-21  tracking-widest text-white font-medium bg-swViolet/40 cta-clip-path border border-b-[3px] border-swViolet  ',
                     isAcceptedPolicy ? 'hover:opacity-90' : ' grayscale',
                     selectedCards.length ? '': 'pointer-events-none'
 

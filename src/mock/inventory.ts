@@ -1,7 +1,7 @@
 import { TItemInventory } from "../types/Card";
 
 export const USER_INVENTORY: TItemInventory[] = [
-    {
+    { 
       "id": "1",
       "isTradable": true,
       "timeToTrade": 2,
@@ -43,7 +43,7 @@ export const USER_INVENTORY: TItemInventory[] = [
       "price": 120000,
       "name": "AK-47 | Fire Serpent",
       "type": "classified rifle",
-      "condition": 0.827934
+      "condition": 0.327934
     },
     {
       "id": "5",
@@ -54,7 +54,7 @@ export const USER_INVENTORY: TItemInventory[] = [
       "price": 35000,
       "name": "Glock-18 | Fade",
       "type": "classified pistol",
-      "condition": 0.912345
+      "condition": 0.112345
     },
     {
       "id": "6",
@@ -65,7 +65,7 @@ export const USER_INVENTORY: TItemInventory[] = [
       "price": 28000,
       "name": "USP-S | Kill Confirmed",
       "type": "classified pistol",
-      "condition": 0.789012
+      "condition": 0.009012
     },
     {
       "id": "7",
@@ -76,7 +76,7 @@ export const USER_INVENTORY: TItemInventory[] = [
       "price": 8500,
       "name": "Desert Eagle | Blaze",
       "type": "classified pistol",
-      "condition": 0.987654
+      "condition": 0.007654
     },
     {
       "id": "8",

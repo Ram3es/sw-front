@@ -1,7 +1,6 @@
 import { Button } from '../../../components/Navigation'
 import { ReactComponent as Chevron } from '../../../assets/chevron-down.svg'
-import Dropbox from '../../../components/Content/Dropbox';
-import { TSortOption, useSort } from '../../../helpers/useSort';
+import Checkbox from '../../../components/Content/Checkbox';
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -9,44 +8,45 @@ function classNames(...classes: string[]) {
 
 interface IFilters {
   onSelectAll: () => void;
-  sortOptions: TSortOption[]
-  setCurrentOption: (value: any) => void
+  toggleSort: () => void;
+  isAsc: boolean
+  isSelectedAll: boolean
 
 }
 
-
-export const Filters = ({onSelectAll, sortOptions, setCurrentOption}: IFilters) => { 
+export const Filters = ({onSelectAll, toggleSort, isAsc, isSelectedAll }: IFilters) => { 
   
-
   return (
     <div className='flex items-center relative'>
       <Button
-        className='uppercase font-medium text-skinwallerGray hover:text-white'
-        text='ALL'
+        text={`price ${isAsc ? 'ascending' : 'descending'}`}
+        onClick={toggleSort}
+        className=' text-graySecondary  uppercase text-sm hover:text-white '
         icon={
           <Chevron
             className={classNames(
-              'fill-skinwallerGray h-[12px] w-[12px]',
+              'fill-current h-[12px] w-[12px]',
+              isAsc ? 'rotate-180' : '',
             )}
           />
         }
         iconRight
       />
-      <Dropbox 
-          label='VALUE'
-          additionalClasses='gap-2 text-graySecondary text-sm tracking-[1.12px]'
-          listClasses='absolute left-0 top-8 z-40 w-max text-graySecondary bg-darkGrey text-sm p-2' 
-          onChange={setCurrentOption}
-          options={sortOptions}
-        />
       <Button
         className='font-medium text-skinwallerGray hover:text-white'
         text='Select All'
         onClick={onSelectAll}
+        icon={
+          <Checkbox 
+            checked={isSelectedAll} 
+            activeClass='bg-transparent [&_svg]:text-skinwallerGray pointer-events-none border-graySecondary'
+            />
+        }
       />
       <Button
         className='font-medium text-skinwallerGray hover:text-white'
         text='Reload'
+        
       /> 
         
     </div>

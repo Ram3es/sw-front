@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom';
 import { useHideOnScroll } from '../../helpers/useHideOnScroll';
 import { USER } from '../../mock/user';
 import UserMenu from '../Content/UserMenu';
+import CategoriesFilters from '../Content/CategoriesFilters';
 
 interface ITopBar {
   isHidableOnScroll: boolean,
@@ -82,19 +83,8 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           </Link>
         </nav>
         <nav className='flex items-center'>
-          <Button
-            className='uppercase font-medium text-skinwallerGray hover:text-white'
-            text='categories'
-            icon={
-              <Chevron
-                className={classNames(
-                  'fill-skinwallerGray h-[12px] w-[12px]',
-                  categoriesState ? 'rotate-180' : '',
-                )}
-              />
-            }
-            iconRight
-            onClick={changeCategoriesState}
+          <CategoriesFilters 
+            title='categories'
           />
           <Button
             className='uppercase font-medium text-skinwallerGray hover:text-white'

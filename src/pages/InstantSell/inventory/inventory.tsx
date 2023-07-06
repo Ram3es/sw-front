@@ -16,8 +16,9 @@ import { USER } from '../../../mock/user';
 export const Inventory = () => {
   const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])
   const [selectedCards, setSellectedCards] = useState<TInventoryCard[]>([]);
+  const [isSelectedAll, setSelectedAll] = useState(false)
   const { user, userUpdate } = useAppContext();
-  const { sortOptions, currentOption, setCurrentOption } = useSort()
+  const { currentOption, toggleSort } = useSort()
 
   const sorted = useMemo(() => sortData(renderCards,'price',currentOption) ,[renderCards, currentOption])
  
@@ -31,6 +32,25 @@ export const Inventory = () => {
       return [...prev.filter( item => item.id !== prev[index].id) ]
     })
   }
+
+  const toggleAllSelected = () => {
+    if(isSelectedAll){
+      setRenderCards(prev => [...prev.map( item => item.isTradable ? {...item, isChecked: false} : item)])
+      setSellectedCards([])
+      setSelectedAll(false)
+      return
+    }
+    setRenderCards(prev => [...prev.map( item => item.isTradable ? {...item, isChecked: true} : item)])
+    setSellectedCards(renderCards.filter(card => card.isTradable))
+    setSelectedAll(true)
+    
+  }
+
+  useEffect(() => {
+    if(selectedCards.length && selectedCards.length < renderCards.filter(card => card.isTradable).length){
+      setSelectedAll(false)
+    }
+  },[selectedCards, renderCards])
   
   useEffect(() => {
     setRenderCards(USER_INVENTORY.map(item => ({...item, isChecked: false })))
@@ -43,12 +63,10 @@ export const Inventory = () => {
         <div className='flex justify-between h-[50px] border-b border-solid border-darkGrey px-[8px]'>
           <Nav />
           <Filters
-            setCurrentOption={setCurrentOption}
-            sortOptions={sortOptions}
-            onSelectAll={() => {
-              setRenderCards(prev => [...prev.map( item => item.isTradable ? {...item, isChecked: true} : item)])
-              setSellectedCards(renderCards.filter(card => card.isTradable))
-            }}
+            onSelectAll={toggleAllSelected}
+            isSelectedAll={isSelectedAll}
+            toggleSort ={toggleSort}
+            isAsc= { currentOption === 'ASC' }
           />
         </div>
         {

@@ -5,7 +5,7 @@ import { classNames } from "../../helpers/className";
 
 
 
-const Dropbox = ({label, onChange, children, options,renderSubHeader, listClasses, additionalClasses }: {label: string, onChange?: (value: any) => void, children?: JSX.Element, listClasses?: string,renderSubHeader?:JSX.Element, additionalClasses?: string, options?:string[]}) => {
+const Dropbox = ({label, onChange, children,renderSubHeader, additionalClasses }: {label: string, onChange?: (value: any) => void, children?: JSX.Element, renderSubHeader?:JSX.Element, additionalClasses?: string}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -31,22 +31,7 @@ const Dropbox = ({label, onChange, children, options,renderSubHeader, listClasse
               show={isOpen}
               as={Fragment}
             >
-              <Listbox.Options className={listClasses ?? "z-10 mt-1 w-full"}>
-                {options 
-                  ? options.map(item => (
-                        <Listbox.Option
-                          key={item}
-                          as='span'
-                          value={item}
-                          className='flex py-1.5 px-2 hover:text-white cursor-pointer'
-                          onClick={toggle}
-                        >
-                          {item}
-                        </Listbox.Option>
-                  ) ) 
-                  : children }
-  
-              </Listbox.Options>
+              { children }
             </Transition>
           </div>
         </>

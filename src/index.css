@@ -93,3 +93,6 @@ input[type='number'] {
   height: 0px;
   border-radius: 5px;
 }
+.each-capitalized:first-line {
+  text-transform: capitalize;
+}

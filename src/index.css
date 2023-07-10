@@ -80,7 +80,7 @@ input[type='number'] {
 }
 
 
-.button, svg {
+.button {
   transition: .2s ease-in-out
 }
 
@@ -92,4 +92,7 @@ input[type='number'] {
   width: 0px;
   height: 0px;
   border-radius: 5px;
+}
+.each-capitalized:first-line {
+  text-transform: capitalize;
 }

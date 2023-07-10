@@ -1,6 +1,6 @@
 interface IUSDCircleIcon {
-  className?: string;
-  color?: string;
+  className?: string
+  color?: string
 }
 
 export const USDCircleIcon = ({ className, color = '#A4A4A4' }: IUSDCircleIcon) => {
@@ -12,5 +12,5 @@ export const USDCircleIcon = ({ className, color = '#A4A4A4' }: IUSDCircleIcon) 
         fill={ color }
       />
     </svg>
-  );
+  )
 }

@@ -1,38 +1,35 @@
-import { useCallback, useEffect, useState } from 'react';
-import { AppContext } from '../context/AppContext';
-import { IUser } from '../types/User';
-import { getUser } from '../services/user.service';
+import { useCallback, useEffect, useState } from 'react'
+import { AppContext } from '../context/AppContext'
+import { type IUser } from '../types/User'
+import { getUser } from '../services/user.service'
 
-
-
-type IProps = {
-  children: React.JSX.Element,
+interface IProps {
+  children: React.JSX.Element
 }
 
 export const AppProvider = ({ children }: IProps) => {
-  const [ categoriesState, setCategoriesState ] = useState(false);
-  const [ searchOpened, setSearchOpened ] = useState(false);
-  const [ gameSelectorOpened, setGameSelectorOpened ] = useState(false);
-  const [ user, setUser ] = useState<IUser>()
+  const [categoriesState, setCategoriesState] = useState(false)
+  const [searchOpened, setSearchOpened] = useState(false)
+  const [gameSelectorOpened, setGameSelectorOpened] = useState(false)
+  const [user, setUser] = useState<IUser>()
 
-  const getUserApp = useCallback( async () => {
+  const getUserApp = useCallback(async () => {
     try {
       const data = await getUser()
       console.log(data, 'user data')
-      
     } catch (error) {
-      console.log(error ,'app provider')
+      console.log(error, 'app provider')
     }
-  },[])
+  }, [])
 
   useEffect(() => {
-    getUserApp()
-  },[])
+    void getUserApp()
+  }, [])
 
-  const changeCategoriesState = () => setCategoriesState(!categoriesState);
-  const changeSearchState = () => setSearchOpened(!searchOpened);
-  const changegameSelectorState = () => setGameSelectorOpened(!gameSelectorOpened);
-  const userUpdate = (user: IUser) => setUser(user)
+  const changeCategoriesState = () => { setCategoriesState(!categoriesState) }
+  const changeSearchState = () => { setSearchOpened(!searchOpened) }
+  const changegameSelectorState = () => { setGameSelectorOpened(!gameSelectorOpened) }
+  const userUpdate = (user: IUser) => { setUser(user) }
 
   return (
     <AppContext.Provider
@@ -49,5 +46,5 @@ export const AppProvider = ({ children }: IProps) => {
     >
       { children }
     </AppContext.Provider>
-  );
+  )
 }

@@ -1,21 +1,20 @@
 
-import { usePayoutContext } from '../../../context/PayoutContext';
-import { format } from '../../../helpers/numberFormater';
-import { Button } from '../../../components/Navigation';
-import { useNavigate } from 'react-router-dom';
+import { usePayoutContext } from '../../../context/PayoutContext'
+import { format } from '../../../helpers/numberFormater'
+import { Button } from '../../../components/Navigation'
+import { useNavigate } from 'react-router-dom'
 
 const SummaryPayout = () => {
-    const { amount, setPayoutStep, setAmount } = usePayoutContext()
-    const navigate = useNavigate()
- 
-    const handleViewMore = () => {
-        navigate('/instant-sell', { replace: true })
-        setPayoutStep('amount')
-        setAmount(0)
-        
-    }
-     
-    return (
+  const { amount, setPayoutStep, setAmount } = usePayoutContext()
+  const navigate = useNavigate()
+
+  const handleViewMore = () => {
+    navigate('/instant-sell', { replace: true })
+    setPayoutStep('amount')
+    setAmount(0)
+  }
+
+  return (
         <div className=' flex flex-col items-center mx-auto gap-6 text-center max-w-[432px] text-white '>
             <div className=' uppercase tracking-[1.12px]'>
                 <h6 className='text-graySecondary mb-2'>summary</h6>
@@ -35,23 +34,23 @@ const SummaryPayout = () => {
                 <span className='text-yellow-1e text-2xl'>${format(0)}</span>
             </div>
             <div className=' w-full flex gap-3 h-10 mt-4'>
-                <Button 
+                <Button
                     text='view transaction'
-                    onClick={() => console.log('view transaction')}
-                    className=' w-1/2 h-full bg-swLime hover justify-center text-darkSecondary cta-clip-path uppercase ' 
+                    onClick={() => { console.log('view transaction') }}
+                    className=' w-1/2 h-full bg-swLime hover justify-center text-darkSecondary cta-clip-path uppercase '
                 />
                 <div className=' w-1/2 relative overflow-hidden hover button'>
-                    <Button 
+                    <Button
                         text='sell more items '
                         className=' w-full h-full border border-graySecondary  hover justify-center cta-clip-path uppercase text-graySecondary '
-                        onClick={handleViewMore} 
+                        onClick={handleViewMore}
                     />
                         <div className='absolute w-4 bottom-1 -left-1 border-b border-graySecondary hover rotate-45' />
                 </div>
             </div>
-            
-        </div>
-    );
-};
 
-export default SummaryPayout;
+        </div>
+  )
+}
+
+export default SummaryPayout

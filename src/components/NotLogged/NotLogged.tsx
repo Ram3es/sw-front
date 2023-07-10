@@ -1,6 +1,6 @@
-import { Button } from "../Navigation";
+import { Button } from '../Navigation'
 
-export const NotLogged = ({onLogIn}: {onLogIn: () => void}) => {
+export const NotLogged = ({ onLogIn }: { onLogIn: () => void }) => {
   return (
     <div className='flex flex-grow justify-center items-center'>
       <div className='flex flex-col w-[450px] h-[152px] justify-between font-["Barlow"] items-center text-white'>
@@ -23,5 +23,5 @@ export const NotLogged = ({onLogIn}: {onLogIn: () => void}) => {
         </div>
       </div>
     </div>
-  );
+  )
 }

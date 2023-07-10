@@ -1,36 +1,31 @@
 import { Button } from '../../../components/Navigation'
 import { ReactComponent as Chevron } from '../../../assets/chevron-down.svg'
+import Checkbox from '../../../components/Content/Checkbox'
 
-function classNames(...classes: string[]) {
+function classNames (...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 interface IFilters {
-  onSelectAll: () => void;
+  onSelectAll: () => void
+  toggleSort: () => void
+  isAsc: boolean
+  isSelectedAll: boolean
+
 }
 
-export const Filters = ({onSelectAll}: IFilters) => {
+export const Filters = ({ onSelectAll, toggleSort, isAsc, isSelectedAll }: IFilters) => {
   return (
-    <div className='flex items-center'>
+    <div className='flex items-center relative'>
       <Button
-        className='uppercase font-medium text-skinwallerGray hover:text-white'
-        text='ALL'
+        text={`price ${isAsc ? 'ascending' : 'descending'}`}
+        onClick={toggleSort}
+        className=' text-graySecondary  uppercase text-sm hover:text-white '
         icon={
           <Chevron
             className={classNames(
-              'fill-skinwallerGray h-[12px] w-[12px]',
-            )}
-          />
-        }
-        iconRight
-      />
-      <Button
-        className='uppercase font-medium text-skinwallerGray hover:text-white'
-        text='value'
-        icon={
-          <Chevron
-            className={classNames(
-              'fill-skinwallerGray h-[12px] w-[12px]',
+              'fill-current h-[12px] w-[12px]',
+              isAsc ? 'rotate-180' : ''
             )}
           />
         }
@@ -40,11 +35,19 @@ export const Filters = ({onSelectAll}: IFilters) => {
         className='font-medium text-skinwallerGray hover:text-white'
         text='Select All'
         onClick={onSelectAll}
+        icon={
+          <Checkbox
+            checked={isSelectedAll}
+            activeClass='bg-transparent [&_svg]:text-skinwallerGray pointer-events-none border-graySecondary'
+            />
+        }
       />
       <Button
         className='font-medium text-skinwallerGray hover:text-white'
         text='Reload'
+
       />
+
     </div>
-  );
-};
+  )
+}

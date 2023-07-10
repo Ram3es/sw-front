@@ -1,6 +1,6 @@
 interface ICartIcon {
-  className?: string;
-  color?: string;
+  className?: string
+  color?: string
 }
 
 export const CartIcon = ({ className, color = '#A4A4A4' }: ICartIcon) => {
@@ -11,5 +11,5 @@ export const CartIcon = ({ className, color = '#A4A4A4' }: ICartIcon) => {
         fill={color}
       />
     </svg>
-  );
+  )
 }

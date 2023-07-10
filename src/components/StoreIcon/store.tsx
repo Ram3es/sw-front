@@ -1,6 +1,6 @@
 interface IStoreIcon {
-  className?: string;
-  color?: string;
+  className?: string
+  color?: string
 }
 
 export const StoreIcon = ({ className, color = '#A4A4A4' }: IStoreIcon) => {
@@ -12,5 +12,5 @@ export const StoreIcon = ({ className, color = '#A4A4A4' }: IStoreIcon) => {
         fill={ color }
       />
     </svg>
-  );
+  )
 }

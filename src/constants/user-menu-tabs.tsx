@@ -65,7 +65,7 @@ export const USER_MENU: Array<IUserMenu[]> = [
     [
         { 
             title: 'transactions',
-            path: '/',
+            path: '/transactions',
             icon: <Arrows />
         }
     ],

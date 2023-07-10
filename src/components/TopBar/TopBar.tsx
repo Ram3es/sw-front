@@ -24,8 +24,6 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   const { pathname } = useLocation()
   const shouldHide = useHideOnScroll()
   const {
-    changeCategoriesState,
-    categoriesState,
     changeSearchState,
     changegameSelectorState,
     gameSelectorOpened,

@@ -15,8 +15,8 @@ const AmontPayout = () => {
   const { amount, setPayoutStep, setAmount } = usePayoutContext()
   const { user } = useAppContext()
   const { increment, decrement, clearAutoCount } = useCounter(setAmount, Math.floor(user?.balance ?? 0))
-  // @ts-expect-error should be fixed
-  const [isError, setIsError] = useState(true)
+
+  const [isError] = useState(true)
   const [isShownInput, setShowInput] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 

@@ -6,6 +6,8 @@ import { CATEGORIES } from '../../constants/categories'
 const CategoriesFilters = ({ title }: { title: string }) => {
   const [selected, setSelected] = useState('')
 
+  console.log(selected, 'filter')
+
   return (
         <ListBoxWrapper
             title={title}

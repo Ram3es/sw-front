@@ -1,6 +1,6 @@
-import Bar from '../../components/Bar/Bar';
+import Bar from '../../components/Bar/Bar'
 
-export default function Buy() {
+export default function Buy () {
   return (
     <>
       <Bar>

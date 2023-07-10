@@ -1,19 +1,19 @@
-import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 
 interface ILink {
-  to?: string;
-  text?: string | React.JSX.Element;
-  className?: string;
-  icon?: boolean;
-  iconRight?: boolean;
-  onClick?: any;
-  children?: any;
-  wrapperStyles?: string;
-  active?: boolean;
+  to?: string
+  text?: string | React.JSX.Element
+  className?: string
+  icon?: boolean
+  iconRight?: boolean
+  onClick?: any
+  children?: any
+  wrapperStyles?: string
+  active?: boolean
 }
 
-function classNames(...classes: string[]) {
+function classNames (...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -26,7 +26,7 @@ export const Link = ({
   iconRight = false,
   children,
   wrapperStyles,
-  active,
+  active
 }: ILink) => {
   return (
     <span
@@ -34,7 +34,7 @@ export const Link = ({
         classNames(
           'inline-flex items-center mx-[16px]',
           active ? 'border-b border-solid border-swViolet' : '',
-          wrapperStyles ? wrapperStyles : ''
+          wrapperStyles ?? ''
         )
       }
     >
@@ -60,5 +60,5 @@ export const Link = ({
         }
       </RouterLink>
     </span>
-  );
+  )
 }

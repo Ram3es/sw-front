@@ -1,21 +1,20 @@
-import { MouseEvent } from "react";
-import Bar from "../../components/Bar/Bar";
-import { useHideOnScroll } from "../../helpers/useHideOnScroll";
-import { classNames } from "../../helpers/className";
-import TransactionCard from "../../components/Content/TransactionCard";
-import { TRANSACTIONS } from "../../mock/invoices";
-import DownloadFileIcon from "../../components/icons/DownloadFileIcon";
-import TransactionsSidebar from "./TransactionsSidebar";
-import Dropbox from "../../components/Content/Dropbox";
+import { type MouseEvent } from 'react'
+import Bar from '../../components/Bar/Bar'
+import { useHideOnScroll } from '../../helpers/useHideOnScroll'
+import { classNames } from '../../helpers/className'
+import TransactionCard from '../../components/Content/TransactionCard'
+import { TRANSACTIONS } from '../../mock/invoices'
+import DownloadFileIcon from '../../components/icons/DownloadFileIcon'
+import TransactionsSidebar from './TransactionsSidebar'
+import Dropbox from '../../components/Content/Dropbox'
 
-export default function TransactionsPage() {
-  const shouldHide = useHideOnScroll();
+export default function TransactionsPage () {
+  const shouldHide = useHideOnScroll()
 
   const download = (e: MouseEvent) => {
     e.stopPropagation()
-    console.log('click');
+    console.log('click')
   }
-
 
   return (
     <>
@@ -27,15 +26,15 @@ export default function TransactionsPage() {
         </div>
       </Bar>
       <div className="flex text-white pt-5">
-        <div className={classNames('flex flex-col flex-grow max-w-[256px] max-h-screen sticky overflow-auto bottom-0', shouldHide ? "h-[calc(100vh-60px)] top-[60px]" : "h-[calc(100vh-120px)] top-[120px]")}>
+        <div className={classNames('flex flex-col flex-grow max-w-[256px] max-h-screen sticky overflow-auto bottom-0', shouldHide ? 'h-[calc(100vh-60px)] top-[60px]' : 'h-[calc(100vh-120px)] top-[120px]')}>
           <TransactionsSidebar />
         </div>
         <div className="w-full flex flex-col pt-6">
           <div className=" w-full max-w-[672px] mx-auto ">
-            <Dropbox 
+            <Dropbox
               label="AUGUST 2020"
               renderSubHeader={
-                  <div 
+                  <div
                     className="flex items-center gap-2 text-graySecondary ml-2 hover button"
                     onClick={download}
                   >
@@ -44,8 +43,8 @@ export default function TransactionsPage() {
                   </div>
                 }
               >
-              <div className="flex flex-col gap-3 mt-4"> 
-                {TRANSACTIONS.map((trx) =>  <TransactionCard key={trx.hash} {...trx} />)}
+              <div className="flex flex-col gap-3 mt-4">
+                {TRANSACTIONS.map((trx) => <TransactionCard key={trx.hash} {...trx} />)}
               </div>
             </Dropbox>
             <div className=" border border-b border-darkGrey my-8" />
@@ -53,5 +52,5 @@ export default function TransactionsPage() {
         </div>
       </div>
     </>
-  );
+  )
 }

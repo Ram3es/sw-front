@@ -1,16 +1,16 @@
-import { createBrowserRouter } from 'react-router-dom';
-import App from '../App';
-import InstantSell from '../pages/InstantSell/InstantSell';
-import Payouts from '../pages/Payouts/Payouts';
-import TransactionsPage from '../pages/Transactions/Transactions';
-import SignIn from '../pages/SignIn/signIn';
-import Profile from '../pages/Profile/Profile';
-import Buy from '../pages/Buy/Buy';
+import { createBrowserRouter } from 'react-router-dom'
+import App from '../App'
+import InstantSell from '../pages/InstantSell/InstantSell'
+import Payouts from '../pages/Payouts/Payouts'
+import TransactionsPage from '../pages/Transactions/Transactions'
+import SignIn from '../pages/SignIn/signIn'
+import Profile from '../pages/Profile/Profile'
+import Buy from '../pages/Buy/Buy'
 import { Inventory } from '../pages/InstantSell/inventory/inventory'
-import { Payout } from '../pages/InstantSell/payout/payout';
-import { Bonus } from '../pages/InstantSell/bonus/bonus';
-import AmontPayout from '../pages/InstantSell/payout/AmontPayout';
-import MethodsPayout from '../pages/InstantSell/payout/MethodsPayout';
+import { Payout } from '../pages/InstantSell/payout/payout'
+import { Bonus } from '../pages/InstantSell/bonus/bonus'
+import AmontPayout from '../pages/InstantSell/payout/AmontPayout'
+import MethodsPayout from '../pages/InstantSell/payout/MethodsPayout'
 
 const router = createBrowserRouter([
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Inventory />,
+            element: <Inventory />
           },
           {
             path: 'payout',
@@ -37,14 +37,14 @@ const router = createBrowserRouter([
                 path: 'method',
                 element: <MethodsPayout />
               }
-    
+
             ]
           },
           {
             path: 'bonus',
-            element: <Bonus />,
-          },
-        ],
+            element: <Bonus />
+          }
+        ]
       },
       {
         path: 'sign-in',
@@ -56,7 +56,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'payout',
-        element: <Payouts />,
+        element: <Payouts />
       },
       {
         path: 'buy',
@@ -65,9 +65,9 @@ const router = createBrowserRouter([
       {
         path: 'transactions',
         element: <TransactionsPage />
-      },
+      }
     ]
-  },
-], { basename: '/market'});
+  }
+], { basename: '/market' })
 
-export default router;
+export default router

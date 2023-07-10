@@ -1,15 +1,14 @@
-import { ChangeEvent, useState } from 'react';
-import { Nav } from '../controls/nav';
-import { Button } from '../../../components/Navigation';
-import InformationIcon from '../../../components/icons/InformationIcon';
-import ProgressBonusBar from './ProgressBonusBar';
+import { type ChangeEvent, useState } from 'react'
+import { Nav } from '../controls/nav'
+import { Button } from '../../../components/Navigation'
+import InformationIcon from '../../../components/icons/InformationIcon'
+import ProgressBonusBar from './ProgressBonusBar'
 
 export const Bonus = () => {
-  const [inputValue, setInputValue]= useState('')
+  const [inputValue, setInputValue] = useState('')
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value)
-    
   }
   return (
     <>
@@ -28,10 +27,10 @@ export const Bonus = () => {
                 onChange={handleChange}
                 className='w-full h-11 pl-4 pr-24 bg-darkGrey outline-none'
               />
-              <Button 
+              <Button
                 text='Redeem'
-                onClick={() => console.log('submit')}
-                className='absolute top-0 right-0 h-full cta-clip-path text-base text-darkGrey bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer ' 
+                onClick={() => { console.log('submit') }}
+                className='absolute top-0 right-0 h-full cta-clip-path text-base text-darkGrey bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer '
               />
             </div>
           </div>
@@ -47,5 +46,5 @@ export const Bonus = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}

@@ -1,46 +1,46 @@
-import { useState } from "react";
-import Dropbox from "../../components/Content/Dropbox";
-import Checkbox from "../../components/Content/Checkbox";
-import Datepicker from "../../components/Content/Datepicker";
+import { useState } from 'react'
+import Dropbox from '../../components/Content/Dropbox'
+import Checkbox from '../../components/Content/Checkbox'
+import Datepicker from '../../components/Content/Datepicker'
 import {
   PAYMENT_METHODS,
   SIDEBAR_LINKS,
-  SOCIAL_LINKS,
-} from "../../constants/sidebar-links";
-import { Link } from "react-router-dom";
-import LanguagePicker from "../../components/Content/LanguagePicker";
+  SOCIAL_LINKS
+} from '../../constants/sidebar-links'
+import { Link } from 'react-router-dom'
+import LanguagePicker from '../../components/Content/LanguagePicker'
 
 const TransactionsSidebar = () => {
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
-  const [search, setSearch] = useState("");
+  const [startDate, setStartDate] = useState<Date>()
+  const [endDate, setEndDate] = useState<Date>()
+  const [search, setSearch] = useState('')
   const [type, setType] = useState([
     {
-      name: "Instant Sell",
+      name: 'Instant Sell',
       selected: false,
-      numberOfItems: 0,
+      numberOfItems: 0
     },
     {
-      name: "Purchase",
+      name: 'Purchase',
       selected: false,
-      numberOfItems: 7,
+      numberOfItems: 7
     },
     {
-      name: "Withdraw",
+      name: 'Withdraw',
       selected: false,
-      numberOfItems: 2,
+      numberOfItems: 2
     },
     {
-      name: "Deposit",
+      name: 'Deposit',
       selected: false,
-      numberOfItems: 1,
+      numberOfItems: 1
     },
     {
-      name: "Prize",
+      name: 'Prize',
       selected: false,
-      numberOfItems: 12,
-    },
-  ]);
+      numberOfItems: 12
+    }
+  ])
 
   return (
     <>
@@ -56,13 +56,13 @@ const TransactionsSidebar = () => {
                       if (i === index) {
                         return {
                           ...item,
-                          selected: !item.selected,
-                        };
+                          selected: !item.selected
+                        }
                       } else {
-                        return item;
+                        return item
                       }
                     })
-                  );
+                  )
                 }}
                 className="w-full cursor-pointer flex justify-between items-center"
               >
@@ -83,7 +83,7 @@ const TransactionsSidebar = () => {
         <div className="bg-darkGrey p-3">
           <input
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) => { setSearch(e.target.value) }}
             type="text"
             placeholder="Search items"
             className="w-full bg-transparent border-none outline-none text-graySecondary font-['Barlow'] text-sm"
@@ -96,13 +96,13 @@ const TransactionsSidebar = () => {
               align="left"
               label="From"
               selectedDate={startDate}
-              onChange={(date) => setStartDate(date)}
+              onChange={(date) => { setStartDate(date) }}
             />
             <Datepicker
               align="right"
               label="To"
               selectedDate={endDate}
-              onChange={(date) => setEndDate(date)}
+              onChange={(date) => { setEndDate(date) }}
             />
           </div>
         </Dropbox>
@@ -152,7 +152,7 @@ const TransactionsSidebar = () => {
         </p>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default TransactionsSidebar;
+export default TransactionsSidebar

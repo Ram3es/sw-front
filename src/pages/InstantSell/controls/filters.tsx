@@ -1,21 +1,20 @@
 import { Button } from '../../../components/Navigation'
 import { ReactComponent as Chevron } from '../../../assets/chevron-down.svg'
-import Checkbox from '../../../components/Content/Checkbox';
+import Checkbox from '../../../components/Content/Checkbox'
 
-function classNames(...classes: string[]) {
+function classNames (...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 interface IFilters {
-  onSelectAll: () => void;
-  toggleSort: () => void;
+  onSelectAll: () => void
+  toggleSort: () => void
   isAsc: boolean
   isSelectedAll: boolean
 
 }
 
-export const Filters = ({onSelectAll, toggleSort, isAsc, isSelectedAll }: IFilters) => { 
-  
+export const Filters = ({ onSelectAll, toggleSort, isAsc, isSelectedAll }: IFilters) => {
   return (
     <div className='flex items-center relative'>
       <Button
@@ -26,7 +25,7 @@ export const Filters = ({onSelectAll, toggleSort, isAsc, isSelectedAll }: IFilte
           <Chevron
             className={classNames(
               'fill-current h-[12px] w-[12px]',
-              isAsc ? 'rotate-180' : '',
+              isAsc ? 'rotate-180' : ''
             )}
           />
         }
@@ -37,8 +36,8 @@ export const Filters = ({onSelectAll, toggleSort, isAsc, isSelectedAll }: IFilte
         text='Select All'
         onClick={onSelectAll}
         icon={
-          <Checkbox 
-            checked={isSelectedAll} 
+          <Checkbox
+            checked={isSelectedAll}
             activeClass='bg-transparent [&_svg]:text-skinwallerGray pointer-events-none border-graySecondary'
             />
         }
@@ -46,9 +45,9 @@ export const Filters = ({onSelectAll, toggleSort, isAsc, isSelectedAll }: IFilte
       <Button
         className='font-medium text-skinwallerGray hover:text-white'
         text='Reload'
-        
-      /> 
-        
+
+      />
+
     </div>
-  );
-};
+  )
+}

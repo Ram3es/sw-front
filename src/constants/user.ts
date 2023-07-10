@@ -1,6 +1,6 @@
-import { IUser } from './../types/User';
+import { type IUser } from './../types/User'
 export const InitUserState: IUser = {
-    id: '',
-    username: '',
-    balance: 0
-  }
+  id: '',
+  username: '',
+  balance: 0
+}

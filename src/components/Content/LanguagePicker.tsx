@@ -1,12 +1,12 @@
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
-import { classNames } from '../../helpers/className';
+import { classNames } from '../../helpers/className'
 
 import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
 
 const langs = [
   { id: 1, name: 'english' },
-  { id: 2, name: 'spanish' },
+  { id: 2, name: 'spanish' }
 ]
 
 const LanguagePicker = () => {
@@ -38,7 +38,7 @@ const LanguagePicker = () => {
               {langs.map((lang) => (
                 <Listbox.Option
                   key={lang.id}
-                  // @ts-ignore should be fixed
+                  // @ts-expect-error should be fixed
                   className={({ active }) =>
                     classNames(
                       'relative cursor-default select-none py-2 pl-3 pr-9'
@@ -46,7 +46,7 @@ const LanguagePicker = () => {
                   }
                   value={lang}
                 >
-                  {/* @ts-ignore should be fixed */}
+                  {/* @ts-expect-error should be fixed */}
                   {({ selected, active }) => (
                     <>
                       <span className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate uppercase text-xs text-graySecondary cursor-pointer')}>
@@ -62,7 +62,7 @@ const LanguagePicker = () => {
       </>
     )}
   </Listbox>
-  );
+  )
 }
 
 export default LanguagePicker

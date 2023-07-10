@@ -1,13 +1,12 @@
-import { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import { ReactComponent as Chevron } from "../../assets/chevron-down.svg";
-import { classNames } from "../../helpers/className";
-import { IUserMenu, USER_MENU } from "../../constants/user-menu-tabs";
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { format } from "../../helpers/numberFormater";
+import React, { Fragment } from 'react'
+import { Menu, Transition } from '@headlessui/react'
+import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
+import { classNames } from '../../helpers/className'
+import { type IUserMenu, USER_MENU } from '../../constants/user-menu-tabs'
+import { NavLink } from 'react-router-dom'
+import { format } from '../../helpers/numberFormater'
 
-const UserMenu = ({ name, balance }: { name: string; balance: number }) => {
+const UserMenu = ({ name, balance }: { name: string, balance: number }) => {
   return (
     <Menu as="div">
       <Menu.Button className="relative w-full flex gap-2 items-center text-graySecondary uppercase group hover:text-white button tracking-[1.12px] cursor-pointer">
@@ -16,8 +15,8 @@ const UserMenu = ({ name, balance }: { name: string; balance: number }) => {
             <span>{name}</span>
             <Chevron
               className={classNames(
-                "fill-current h-[12px] w-[12px]",
-                open ? "rotate-180" : ""
+                'fill-current h-[12px] w-[12px]',
+                open ? 'rotate-180' : ''
               )}
             />
           </>
@@ -43,16 +42,16 @@ const UserMenu = ({ name, balance }: { name: string; balance: number }) => {
               {action.map((item: IUserMenu) => (
                 <Menu.Item
                   key={item.title}
-                  to={item.path ?? "/"}
+                  to={item.path ?? '/'}
                   onClick={(e) => {
                     if (item.handleFunction) {
-                      e.preventDefault();
-                      item.handleFunction();
+                      e.preventDefault()
+                      item.handleFunction()
                     }
                   }}
                   as={NavLink}
                   className={
-                    "flex items-center py-1.5 gap-2.5 text-sm text-graySecondary uppercase  hover:text-white button"
+                    'flex items-center py-1.5 gap-2.5 text-sm text-graySecondary uppercase  hover:text-white button'
                   }
                 >
                   {item.icon}
@@ -64,7 +63,7 @@ const UserMenu = ({ name, balance }: { name: string; balance: number }) => {
         </Menu.Items>
       </Transition>
     </Menu>
-  );
-};
+  )
+}
 
-export default UserMenu;
+export default UserMenu

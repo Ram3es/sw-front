@@ -1,4 +1,4 @@
-export default function Payouts() {
+export default function Payouts () {
   return (
     <div>Payouts Page</div>
   )

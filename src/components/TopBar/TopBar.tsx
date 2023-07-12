@@ -27,8 +27,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     changeSearchState,
     changegameSelectorState,
     gameSelectorOpened,
-    user,
-    userUpdate
+    user
   } = useAppContext()
 
   return (
@@ -66,6 +65,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             text='buy'
             icon
             active={ pathname.includes('/buy')}
+            withBorder
           >
             <StoreIcon />
           </Link>
@@ -76,6 +76,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             text='instant sell'
             icon
             active={ pathname.includes('/instant-sell')}
+            withBorder
           >
             <USDCircleIcon />
           </Link>
@@ -112,37 +113,21 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 <CartIcon />
               </Link>
               <UserMenu name={user.username} balance={user.balance} />
-
-              {/* <Button
-                text='user'
-                className='uppercase font-medium text-skinwallerGray hover:text-white'
-                icon={
-                  <Chevron
-                    className={classNames(
-                      'fill-skinwallerGray h-[12px] w-[12px]',
-                    )}
-                  />
-                }
-                iconRight
-                onClick={() => userUpdate()}
-              /> */}
             </>
               : <>
-              {/* <Link
-                to='/sign-in'
-                className='mr-[20px] font-medium text-skinwallerGray hover:text-white'
-                text='Log in'
-              /> */}
+                  <Link
+                    to='/sign-in'
+                    className='mr-[20px] font-medium text-skinwallerGray hover:text-white'
+                    text='Log in'
+                    state={{ from: pathname }}
+                    active={ pathname === '/sign-in' }
+
+                  />
               {/* <Link
                 to='/sign-up'
                 className='font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'
                 text='Sign up'
               /> */}
-              <Button
-                text='log in'
-                className='uppercase mr-[20px] font-medium text-skinwallerGray hover:text-white'
-                onClick={() => { userUpdate(USER) }}
-              />
               <Button
                 text='Sign up'
                 className='uppercase font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'

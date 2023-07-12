@@ -19,11 +19,9 @@ const getAxiosInstance = () => {
 
   instance.interceptors.response.use(
     (response) => {
-      console.log(response, 'response response')
       return response
     },
     async (error) => {
-      console.log(error.config, 'sdbshdhsdhsdsdsdh')
       if (error?.response?.status === 403) {
         // TODO
       }

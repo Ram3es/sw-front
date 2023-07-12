@@ -57,7 +57,7 @@ const TransactionCard: FC<ITransactionCardProps> = ({ hash, amount, date, paypal
                             <RoundedMark />
                             <p>Sold - Payout of funds to PayPal</p>
                           </div>
-                      : <div className='flex items-center gap-2 text-[#FF8F27] text-swOrange'>
+                      : <div className='flex items-center gap-2 text-swOrange'>
                             <ReloadIcon />
                             <p>Payout of funds to PayPal</p>
                           </div>

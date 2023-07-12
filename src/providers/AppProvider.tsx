@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { type IUser } from '../types/User'
-import { getUser } from '../services/user.service'
+import { getUser } from '../services/user/user'
 
 interface IProps {
   children: React.JSX.Element
@@ -15,8 +15,8 @@ export const AppProvider = ({ children }: IProps) => {
 
   const getUserApp = useCallback(async () => {
     try {
-      const data = await getUser()
-      console.log(data, 'user data')
+      const { data } = await getUser()
+      setUser({ id: data.steamId, username: data.steamUsername, balance: 777.58 })
     } catch (error) {
       console.log(error, 'app provider')
     }

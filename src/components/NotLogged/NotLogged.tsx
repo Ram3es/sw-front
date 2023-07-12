@@ -1,6 +1,10 @@
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Button } from '../Navigation'
 
 export const NotLogged = ({ onLogIn }: { onLogIn: () => void }) => {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+
   return (
     <div className='flex flex-grow justify-center items-center'>
       <div className='flex flex-col w-[450px] h-[152px] justify-between font-["Barlow"] items-center text-white'>
@@ -10,7 +14,7 @@ export const NotLogged = ({ onLogIn }: { onLogIn: () => void }) => {
           <Button
             className='flex justify-center relative mr-[20px] w-[158px] h-[40px] uppercase font-semibold text-skinwalletPink border border-skinwalletPink cta-clip-path bg-transparent role-button hover:bg-skinwalletPink hover:text-black'
             text="log in"
-            onClick={onLogIn}
+            onClick={() => { navigate('/sign-in', { state: { from: pathname } }) } }
           >
             <span className="absolute group-hover:hidden -left-[2px] bottom-[1px] w-[10px] rotate-45 border-skinwalletPink border-t-[3px]" />
           </Button>

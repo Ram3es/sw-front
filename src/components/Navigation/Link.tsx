@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link as RouterLink } from 'react-router-dom'
+import { type LinkProps, Link as RouterLink } from 'react-router-dom'
 
-interface ILink {
-  to?: string
+interface ILink extends LinkProps {
   text?: string | React.JSX.Element
   className?: string
   icon?: boolean
@@ -11,6 +10,7 @@ interface ILink {
   children?: any
   wrapperStyles?: string
   active?: boolean
+  withBorder?: boolean
 }
 
 function classNames (...classes: string[]) {
@@ -18,7 +18,6 @@ function classNames (...classes: string[]) {
 }
 
 export const Link = ({
-  to = '',
   text,
   className = '',
   onClick,
@@ -26,26 +25,30 @@ export const Link = ({
   iconRight = false,
   children,
   wrapperStyles,
-  active
+  active,
+  withBorder,
+  ...linkProps
 }: ILink) => {
   return (
     <span
       className={
         classNames(
           'inline-flex items-center mx-[16px]',
-          active ? 'border-b border-solid border-swViolet' : '',
-          wrapperStyles ?? ''
+          active ? ' pointer-events-none' : '',
+          wrapperStyles ?? '',
+          withBorder && active ? 'border-b border-solid border-swViolet' : ''
         )
       }
     >
       <RouterLink
-        to={to}
         onClick={onClick}
         className={classNames(
           'button font-["Barlow"] h-[32px] text-[14px] uppercase flex tracking-[1.12px]',
           className,
-          text ? '' : 'contents'
+          text ? '' : 'contents',
+          active ? 'text-white' : ''
         )}
+        {...linkProps}
       >
         { icon && !iconRight &&
           <span className="pr-[8px]">

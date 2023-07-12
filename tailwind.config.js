@@ -14,6 +14,7 @@ export default {
         darkSecondary: '#0D0D0D',
         'dark-14':'#141415',
         graySecondary: "#A4A4A4",
+        darkBlue: '#2b475e',
         skinwalletPink: '#CFBBFE',
         swViolet: '#6842FF',
         swLime: '#18E86B',

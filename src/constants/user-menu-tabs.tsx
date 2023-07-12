@@ -9,6 +9,7 @@ import { ReactComponent as Daggers } from '../assets/img/profile/daggers.svg'
 import { ReactComponent as Arrows } from '../assets/img/profile/arrows.svg'
 import { ReactComponent as Support } from '../assets/img/profile/support.svg'
 import { ReactComponent as Setting } from '../assets/img/profile/setting.svg'
+import { logoutSteam } from '../services/auth/auth'
 
 export interface IUserMenu {
   title: string
@@ -84,7 +85,10 @@ export const USER_MENU: IUserMenu[][] = [
   [
     {
       title: 'log out',
-      handleFunction: () => {}
+      handleFunction: () => {
+        void logoutSteam()
+        window.location.href = '/market'
+      }
     }
   ]
 ]

@@ -1,16 +1,15 @@
-import axios, { type AxiosResponse, AxiosError } from 'axios'
-import { loginSteam } from './auth.service'
+import axios, { type AxiosResponse } from 'axios'
 
-const BASE_URL = import.meta.env.VITE_BASE_URL
+export const BASE_URL: string = import.meta.env.VITE_BASE_URL
 
 export const GET = async <T>(endpoint: string): Promise<AxiosResponse<T>> =>
-  getAxiosInstance().get(endpoint)
+  await getAxiosInstance().get(endpoint)
 
 const getAxiosInstance = () => {
   const instance = axios.create({
     baseURL: BASE_URL,
-    maxRedirects: 0,
     withCredentials: true
+
   })
   instance.interceptors.request.use((config) => {
     return config
@@ -23,7 +22,6 @@ const getAxiosInstance = () => {
       return response
     },
     async (error) => {
-      console.log(error?.response?.data)
       if (error?.response?.status === 403) {
         // TODO
       }

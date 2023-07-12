@@ -12,6 +12,7 @@ export const Nav = () => {
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
         active={ pathname === '/instant-sell' }
+        withBorder
       />
       <Link
         to='/instant-sell/payout'
@@ -19,6 +20,7 @@ export const Nav = () => {
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
         active={ pathname === '/instant-sell/payout' }
+        withBorder
       />
       <Link
         to='/instant-sell/bonus'
@@ -26,6 +28,7 @@ export const Nav = () => {
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
         active={ pathname === '/instant-sell/bonus' }
+        withBorder
       />
     </div>
   )

@@ -8,7 +8,6 @@ import { Button, Link } from '../Navigation'
 import { useAppContext } from '../../context/AppContext'
 import { useLocation } from 'react-router-dom'
 import { useHideOnScroll } from '../../helpers/useHideOnScroll'
-import { USER } from '../../mock/user'
 import UserMenu from '../Content/UserMenu'
 import CategoriesFilters from '../Content/CategoriesFilters'
 

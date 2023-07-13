@@ -21,7 +21,7 @@ import { CATEGORIES } from '../../constants/categories'
 import { Listbox } from '@headlessui/react'
 import { ESteamAppId } from '../../types/Inventory'
 import { format } from '../../helpers/numberFormater'
-import Modal from '../../containers/Modal'
+import SearchModal from '../Content/SearcModal'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -38,6 +38,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     changeSearchState,
     user,
     gameId,
+    searchOpened,
     updateGameId
   } = useAppContext()
   const [selected, setSelected] = useState('')
@@ -223,7 +224,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
         </nav>
       </div>
     </header>
-    <Modal />
+    <SearchModal isOpen={searchOpened} onClose={changeSearchState} />
     </>
   )
 }

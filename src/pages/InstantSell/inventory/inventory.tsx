@@ -17,7 +17,6 @@ export const Inventory = () => {
   const [isSelectedAll, setSelectedAll] = useState(false)
   const { user, userUpdate, gameId } = useAppContext()
   const { currentOption, toggleSort } = useSort()
-  
 
   const sorted = useMemo(() => sortData(renderCards, 'price', currentOption), [renderCards, currentOption])
 
@@ -53,7 +52,7 @@ export const Inventory = () => {
   const getUserInventory = useCallback(async () => {
     if (user && gameId) {
       const inventory = await getInventory(gameId)
-      setRenderCards(Object.values(inventory).map((item: any) => ({ ...item, isTradable: true, isChecked: false })))
+      setRenderCards(inventory.default.map((item: any) => ({ ...item, isTradable: true, isChecked: false })))
     }
   }, [user, gameId])
 
@@ -74,7 +73,7 @@ export const Inventory = () => {
           />
         </div>
         {
-          user
+          user && renderCards.length
             ? <div className='px-[24px] py-[30px] grid grid-cols-cards gap-1'>
               {sorted.map(card =>
                     <ItemCard
@@ -82,7 +81,7 @@ export const Inventory = () => {
                       onClick={() => { toggleSelect(card) }}
                       isSelected={card.isChecked}
                       {...card}
-                      />
+                    />
               )
               }
               </div>

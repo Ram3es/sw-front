@@ -104,7 +104,9 @@ const ItemCard = ({ isTradable, timeToTrade, image, isSelected, isNoFee, price, 
             <div className='text-whote uppercase text-lg font-["Barlow"] text-white'>{name}</div>
           </div>
           <span className="w-full border-t border-darkGrey" />
-          <div className="flex flex-col gap-[14px] w-full">
+          {condition
+            ? (
+            <div className="flex flex-col gap-[14px] w-full">
             <div style={{
               color: conditionObj?.color ?? ''
             }}>{conditionObj?.text} - {condition}</div>
@@ -121,7 +123,10 @@ const ItemCard = ({ isTradable, timeToTrade, image, isSelected, isNoFee, price, 
                 }}
               />
             </div>
-          </div>
+          </div>)
+            : ''
+            }
+
         </div>
       </div>
       <Button

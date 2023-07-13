@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { type IUser } from '../types/User'
 import { getUser } from '../services/user/user'
+import { ESteamAppId } from '../types/Inventory'
 
 interface IProps {
   children: React.JSX.Element
@@ -10,13 +11,13 @@ interface IProps {
 export const AppProvider = ({ children }: IProps) => {
   const [categoriesState, setCategoriesState] = useState(false)
   const [searchOpened, setSearchOpened] = useState(false)
-  const [gameSelectorOpened, setGameSelectorOpened] = useState(false)
+  const [gameId, setGameId] = useState<ESteamAppId>(ESteamAppId.CSGO)
   const [user, setUser] = useState<IUser>()
 
   const getUserApp = useCallback(async () => {
     try {
-      const { data } = await getUser()
-      setUser({ id: data.steamId, username: data.steamUsername, balance: 777.58 })
+      const user = await getUser()
+      setUser({ id: user.steamId, username: user.steamUsername, balance: 777.58 })
     } catch (error) {
       console.log(error, 'app provider')
     }
@@ -28,8 +29,8 @@ export const AppProvider = ({ children }: IProps) => {
 
   const changeCategoriesState = () => { setCategoriesState(!categoriesState) }
   const changeSearchState = () => { setSearchOpened(!searchOpened) }
-  const changegameSelectorState = () => { setGameSelectorOpened(!gameSelectorOpened) }
   const userUpdate = (user: IUser) => { setUser(user) }
+  const updateGameId = (id: ESteamAppId) => { setGameId(id) }
 
   return (
     <AppContext.Provider
@@ -38,10 +39,10 @@ export const AppProvider = ({ children }: IProps) => {
         categoriesState,
         changeSearchState,
         searchOpened,
-        changegameSelectorState,
-        gameSelectorOpened,
         user,
-        userUpdate
+        userUpdate,
+        gameId,
+        updateGameId
       }}
     >
       { children }

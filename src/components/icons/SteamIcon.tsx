@@ -1,5 +1,3 @@
-import React from 'react'
-
 const SteamIcon = () => {
   return (
         <svg role="img" width='31' height='31' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" aria-hidden="true" >

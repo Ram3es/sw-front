@@ -1,8 +1,8 @@
-import axios, { type AxiosResponse } from 'axios'
+import axios from 'axios'
 
 export const BASE_URL: string = import.meta.env.VITE_BASE_URL
 
-export const GET = async <T>(endpoint: string): Promise<AxiosResponse<T>> =>
+export const GET = async <T>(endpoint: string): Promise<T> =>
   await getAxiosInstance().get(endpoint)
 
 export const POST = async <T, U = undefined >(endpoint: string, data?: U): Promise<AxiosResponse<T>> =>
@@ -22,7 +22,7 @@ const getAxiosInstance = () => {
 
   instance.interceptors.response.use(
     (response) => {
-      return response
+      return response.data
     },
     async (error) => {
       if (error?.response?.status === 403) {

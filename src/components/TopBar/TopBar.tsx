@@ -1,6 +1,12 @@
 import { ReactComponent as SkinwalletLogo } from '../../assets/logo-skinwallet.inline.svg'
 import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
-import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
+import csgoBg from '../../assets/img/top-bar/csgo-bg.png'
+import csgoLogo from '../../assets/img/top-bar/csgo-logo.svg'
+import dotaBg from '../../assets/img/top-bar/dota-bg.png'
+import dotaLogo from '../../assets/img/top-bar/dota-logo.png'
+import tf2Bg from '../../assets/img/top-bar/tf2-bg.png'
+import tf2Logo from '../../assets/img/top-bar/tf2-logo.svg'
+
 import { StoreIcon } from '../StoreIcon/store'
 import { USDCircleIcon } from '../USDIcon/usd-circle'
 import { CartIcon } from '../CartIcon/cart'
@@ -9,7 +15,11 @@ import { useAppContext } from '../../context/AppContext'
 import { useLocation } from 'react-router-dom'
 import { useHideOnScroll } from '../../helpers/useHideOnScroll'
 import UserMenu from '../Content/UserMenu'
-import CategoriesFilters from '../Content/CategoriesFilters'
+import NavDropdown from './NavDropdown'
+import { useEffect, useState } from 'react'
+import { CATEGORIES } from '../../constants/categories'
+import { Listbox } from '@headlessui/react'
+import { ESteamAppId } from '../../types/Inventory'
 import { format } from '../../helpers/numberFormater'
 import Modal from '../../containers/Modal'
 
@@ -26,116 +36,190 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   const shouldHide = useHideOnScroll()
   const {
     changeSearchState,
-    changegameSelectorState,
-    gameSelectorOpened,
-    user
+    user,
+    gameId,
+    updateGameId
   } = useAppContext()
+  const [selected, setSelected] = useState('')
+  const gamesLinks = [
+    {
+      name: 'CS:GO',
+      bg: csgoBg,
+      logo: csgoLogo,
+      id: ESteamAppId.CSGO,
+      description: 'The best knives, the coolest rifles, and many more skins!'
+    }, {
+      name: 'Dota 2',
+      bg: dotaBg,
+      logo: dotaLogo,
+      id: ESteamAppId.DOTA2,
+      description: 'Awesome wearables, bundles, gems, and more!'
+    }, {
+      name: 'Team Fortress 2',
+      bg: tf2Bg,
+      logo: tf2Logo,
+      id: ESteamAppId.TF2,
+      description: "Wearables! Armor! Weapons! We got'em all!"
+    }
+  ]
+
+  useEffect(() => {
+    console.log(selected, 'filter')
+  }, [selected])
 
   return (
-    <>
-    <header id="top-bar" className={classNames('pointer-events-none cursor-default w-full duration-100 h-[56px] sticky top-0 z-40',
-      isHidableOnScroll && shouldHide ? 'transform-gpu translate-x-0 translate-y-[-56px] translate-z-0' : 'transform-gpu translate-x-0 translate-y-0 translate-z-0')}>
+<>
+    <header
+      id="top-bar"
+      className={classNames(
+        'pointer-events-none cursor-default w-full duration-100 h-[56px] sticky top-0 z-40',
+        isHidableOnScroll && shouldHide
+          ? 'transform-gpu translate-x-0 translate-y-[-56px] translate-z-0'
+          : 'transform-gpu translate-x-0 translate-y-0 translate-z-0'
+      )}
+    >
       <div
         className={classNames(
           'max-w-[1440px] min-w-full z-[60] flex items-center justify-between w-full h-[56px] px-[24px] py-[12px]  pointer-events-auto bg-almostBlack transition-transform delay-[150ms] ease-in-out'
         )}
       >
-        <nav className='flex items-center'>
+        <nav className="flex items-center">
+          <Link to="/" text={<SkinwalletLogo />} />
+          <NavDropdown title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
+            <div className="flex w-full mx-10 gap-10 flex-wrap">
+              {gamesLinks.map((game) => (
+                <div
+                  key={game.id}
+                  className="flex flex-col gap-3 w-[178px] cursor-pointer"
+                  onClick={() => { updateGameId(game.id) }}
+                >
+                  <div className={ classNames('relative w-full', gameId === game.id ? 'border border-swViolet' : '')}>
+                    <img className="w-full" src={game.bg} alt={game.name} />
+                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                      <img src={game.logo} alt={game.name} />
+                    </div>
+                  </div>
+                  <div className='uppercase text-base text-graySecondary font-["Barlow"] font-light'>
+                    {game.name}
+                  </div>
+                  <div className='text-graySecondary text-sm font-["Barlow"] font-light'>
+                    {game.description}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </NavDropdown>
+          <div className="p-0 border-l border-white h-[32px] opacity-10 mx-4"></div>
           <Link
-            to='/'
-            text={<SkinwalletLogo />}
-          />
-          <Button
-            className='uppercase font-medium text-skinwallerGray hover:text-white ml-[14px]'
-            text='cs:go'
-            icon={
-              <Chevron
-                className={classNames(
-                  'fill-skinwallerGray h-[12px] w-[12px]',
-                  gameSelectorOpened ? 'rotate-180' : ''
-                )}
-              />
-            }
-            iconRight
-            onClick={changegameSelectorState}
-          />
-          <div className='p-0 border-l border-white h-[32px] opacity-10 mx-4'></div>
-          <Link
-            to='/buy'
-            className='font-medium text-skinwallerGray hover:text-white'
-            wrapperStyles='h-[56px]'
-            text='buy'
+            to="/buy"
+            className="font-medium text-skinwallerGray hover:text-white"
+            wrapperStyles="h-[56px]"
+            text="buy"
             icon
-            active={ pathname.includes('/buy')}
+            active={pathname.includes('/buy')}
             withBorder
           >
             <StoreIcon />
           </Link>
           <Link
-            to='/instant-sell'
-            className='font-medium text-skinwallerGray hover:text-white'
-            wrapperStyles='h-[56px]'
-            text='instant sell'
+            to="/instant-sell"
+            className="font-medium text-skinwallerGray hover:text-white"
+            wrapperStyles="h-[56px]"
+            text="instant sell"
             icon
-            active={ pathname.includes('/instant-sell')}
+            active={pathname.includes('/instant-sell')}
             withBorder
           >
             <USDCircleIcon />
           </Link>
         </nav>
-        <nav className='flex items-center'>
-          <CategoriesFilters
-            title='categories'
-          />
+        <nav className="flex items-center">
+          <NavDropdown title="categories" setSelected={setSelected}>
+            <div className="grid grid-cols-categories max-w-[1124px] mx-auto">
+              {Object.values(CATEGORIES).map((ctegory) => (
+                <div className="mb-5" key={ctegory.name}>
+                  {ctegory.name !== 'rest'
+                    ? (
+                    <div className="flex flex-col gap-2">
+                      <Listbox.Option value={ctegory.name}>
+                        <span className="uppercase text-white hover:text-graySecondary button">
+                          {ctegory.name}
+                        </span>
+                      </Listbox.Option>
+                      <div className="flex flex-col gap-1">
+                        {ctegory.models.map((obj) => (
+                          <Listbox.Option key={obj.name} value={obj.name}>
+                            <span className="block text-graySecondary  hover:text-white button  each-capitalized ">
+                              {obj.name}
+                            </span>
+                          </Listbox.Option>
+                        ))}
+                      </div>
+                    </div>
+                      )
+                    : (
+                    <div className="flex flex-col gap-6 pl-4">
+                      {ctegory.models.map((obj) => (
+                        <Listbox.Option key={obj.name} value={obj.name}>
+                          <div className="uppercase text-white hover:text-graySecondary button">
+                            {obj.name}
+                          </div>
+                        </Listbox.Option>
+                      ))}
+                    </div>
+                      )}
+                </div>
+              ))}
+            </div>
+          </NavDropdown>
           <Button
-            className='uppercase font-medium text-skinwallerGray hover:text-white'
-            text='search'
+            className="uppercase font-medium text-skinwallerGray hover:text-white"
+            text="search"
             icon={
               <SearchIcon
-                className={classNames(
-                  'fill-skinwallerGray h-[12px] w-[12px]'
-                )}
+                className={classNames('fill-skinwallerGray h-[12px] w-[12px]')}
               />
             }
             onClick={changeSearchState}
           />
-          <div className='p-0 border-l border-white h-[32px] opacity-10 mx-4'></div>
-          {
-            user
-              ? <>
-              <Button
-                text={`$${format(user.balance)}`}
-                className='uppercase items-center  font-medium text-skinwallerGray hover:text-white'
-              />
+          <div className="p-0 border-l border-white h-[32px] opacity-10 mx-4"></div>
+          {user
+            ? (
+              <>
+                <Button
+                  text={`$${format(user.balance)}`}
+                  className="uppercase font-medium text-skinwallerGray hover:text-white"
+                />
+                <Link
+                  to="/cart"
+                  className="font-medium text-skinwallerGray hover:text-white"
+                  icon
+                >
+                  <CartIcon />
+                </Link>
+                <UserMenu name={user.username} balance={user.balance} />
+              </>
+              )
+            : (
+            <>
               <Link
-                to='/cart'
-                className='font-medium text-skinwallerGray hover:text-white'
-                icon
-              >
-                <CartIcon />
-              </Link>
-              <UserMenu name={user.username} balance={user.balance} />
-            </>
-              : <>
-                  <Link
-                    to='/sign-in'
-                    className='mr-[20px] font-medium text-skinwallerGray hover:text-white'
-                    text='Log in'
-                    state={{ from: pathname }}
-                    active={ pathname === '/sign-in' }
-
-                  />
+                to="/sign-in"
+                className="mr-[20px] font-medium text-skinwallerGray hover:text-white"
+                text="Log in"
+                state={{ from: pathname }}
+                active={pathname === '/sign-in'}
+              />
               {/* <Link
                 to='/sign-up'
                 className='font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'
                 text='Sign up'
               /> */}
               <Button
-                text='Sign up'
-                className='uppercase font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50'
+                text="Sign up"
+                className="uppercase font-semibold text-black cta-clip-path bg-white role-button hover:opacity-50"
               />
             </>
-          }
+              )}
         </nav>
       </div>
     </header>

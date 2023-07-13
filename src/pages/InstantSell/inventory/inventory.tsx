@@ -1,21 +1,21 @@
 import { Nav } from '../controls/nav'
 import { Filters } from '../controls/filters'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { NotLogged } from '../../../components/NotLogged/NotLogged'
 import ItemCard from '../../../components/Content/ItemCard'
 import SellsBar from './SellsBar'
 import { type TInventoryCard } from '../../../types/Card'
-import { USER_INVENTORY } from '../../../mock/inventory'
 import { useAppContext } from '../../../context/AppContext'
 import { sortData } from '../../../helpers/sortData'
 import { useSort } from '../../../helpers/useSort'
 import { USER } from '../../../mock/user'
+import { getInventory } from '../../../services/inventory/inventory'
 
 export const Inventory = () => {
   const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])
   const [selectedCards, setSellectedCards] = useState<TInventoryCard[]>([])
   const [isSelectedAll, setSelectedAll] = useState(false)
-  const { user, userUpdate } = useAppContext()
+  const { user, userUpdate, gameId } = useAppContext()
   const { currentOption, toggleSort } = useSort()
   
 
@@ -50,9 +50,16 @@ export const Inventory = () => {
     }
   }, [selectedCards, renderCards])
 
+  const getUserInventory = useCallback(async () => {
+    if (user && gameId) {
+      const inventory = await getInventory(gameId)
+      setRenderCards(Object.values(inventory).map((item: any) => ({ ...item, isTradable: true, isChecked: false })))
+    }
+  }, [user, gameId])
+
   useEffect(() => {
-    setRenderCards(USER_INVENTORY.map(item => ({ ...item, isChecked: false })))
-  }, [USER_INVENTORY])
+    void getUserInventory()
+  }, [user, gameId])
 
   return (
     <div className='flex flex-grow'>

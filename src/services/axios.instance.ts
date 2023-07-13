@@ -5,6 +5,9 @@ export const BASE_URL: string = import.meta.env.VITE_BASE_URL
 export const GET = async <T>(endpoint: string): Promise<AxiosResponse<T>> =>
   await getAxiosInstance().get(endpoint)
 
+export const POST = async <T, U = undefined >(endpoint: string, data?: U): Promise<AxiosResponse<T>> =>
+  await getAxiosInstance().post(endpoint, data)
+
 const getAxiosInstance = () => {
   const instance = axios.create({
     baseURL: BASE_URL,

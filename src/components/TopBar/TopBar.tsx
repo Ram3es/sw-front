@@ -10,6 +10,8 @@ import { useLocation } from 'react-router-dom'
 import { useHideOnScroll } from '../../helpers/useHideOnScroll'
 import UserMenu from '../Content/UserMenu'
 import CategoriesFilters from '../Content/CategoriesFilters'
+import { format } from '../../helpers/numberFormater'
+import Modal from '../../containers/Modal'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -30,11 +32,12 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   } = useAppContext()
 
   return (
+    <>
     <header id="top-bar" className={classNames('pointer-events-none cursor-default w-full duration-100 h-[56px] sticky top-0 z-40',
       isHidableOnScroll && shouldHide ? 'transform-gpu translate-x-0 translate-y-[-56px] translate-z-0' : 'transform-gpu translate-x-0 translate-y-0 translate-z-0')}>
       <div
         className={classNames(
-          'max-w-[1440px] min-w-full z-[666] flex items-center justify-between w-full h-[56px] px-[24px] py-[12px]  pointer-events-auto bg-almostBlack transition-transform delay-[150ms] ease-in-out'
+          'max-w-[1440px] min-w-full z-[60] flex items-center justify-between w-full h-[56px] px-[24px] py-[12px]  pointer-events-auto bg-almostBlack transition-transform delay-[150ms] ease-in-out'
         )}
       >
         <nav className='flex items-center'>
@@ -101,8 +104,8 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             user
               ? <>
               <Button
-                text={user.balance.toString()}
-                className='uppercase font-medium text-skinwallerGray hover:text-white'
+                text={`$${format(user.balance)}`}
+                className='uppercase items-center  font-medium text-skinwallerGray hover:text-white'
               />
               <Link
                 to='/cart'
@@ -136,6 +139,8 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
         </nav>
       </div>
     </header>
+    <Modal />
+    </>
   )
 }
 

@@ -17,6 +17,7 @@ export const Inventory = () => {
   const [isSelectedAll, setSelectedAll] = useState(false)
   const { user, userUpdate } = useAppContext()
   const { currentOption, toggleSort } = useSort()
+  
 
   const sorted = useMemo(() => sortData(renderCards, 'price', currentOption), [renderCards, currentOption])
 

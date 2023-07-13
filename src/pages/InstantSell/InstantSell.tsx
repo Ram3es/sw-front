@@ -1,7 +1,7 @@
-import Bar from '../../components/Bar/Bar';
-import { Outlet } from 'react-router-dom';
+import Bar from '../../components/Bar/Bar'
+import { Outlet } from 'react-router-dom'
 
-export default function InstantSell() {
+export default function InstantSell () {
   return (
     <>
       <Bar>

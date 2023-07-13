@@ -14,6 +14,7 @@ export default {
         darkSecondary: '#0D0D0D',
         'dark-14':'#141415',
         graySecondary: "#A4A4A4",
+        darkBlue: '#2b475e',
         skinwalletPink: '#CFBBFE',
         swViolet: '#6842FF',
         swLime: '#18E86B',
@@ -51,7 +52,8 @@ export default {
         Barlow: ['Barlow']
       },
       gridTemplateColumns: {
-        cards: "repeat(auto-fill,minmax(190px,1fr))"
+        cards: "repeat(auto-fill,minmax(190px,1fr))",
+        categories:"repeat(auto-fill,minmax(150px, 1fr))"
       },
       boxShadow: {
         'checkedCard': '0px 0px 20px 0px rgba(0, 0, 0, 0.50)',

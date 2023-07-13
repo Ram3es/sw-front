@@ -1,60 +1,60 @@
-import { CONDITIONS } from '../../constants/item-conditions';
-import { CardItem, ConditionItem } from '../../types/Card';
-import { Button } from '../Navigation';
-import Checkbox from './Checkbox';
+import { CONDITIONS } from '../../constants/item-conditions'
+import { type CardItem, type ConditionItem } from '../../types/Card'
+import { Button } from '../Navigation'
+import Checkbox from './Checkbox'
 import { ReactComponent as ClockIcon } from './images/clock.svg'
 
-
-
-function findNearestMaxValue(arr: ConditionItem[], value: number): ConditionItem | null {
-  let nearestMaxValue: ConditionItem | null = null;
+function findNearestMaxValue (arr: ConditionItem[], value: number): ConditionItem | null {
+  let nearestMaxValue: ConditionItem | null = null
 
   for (let i = 0; i < arr.length; i++) {
-    const maxVal: number = arr[i].maxVal;
+    const maxVal: number = arr[i].maxVal
 
     if (value < maxVal) {
-      nearestMaxValue = arr[i];
-      break;
+      nearestMaxValue = arr[i]
+      break
     }
   }
 
-  return nearestMaxValue;
+  return nearestMaxValue
 }
 
-function classNames(...classes: string[]) {
+function classNames (...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, name, type, condition, onClick}: CardItem) => {
+const ItemCard = ({ isTradable, timeToTrade, image, isSelected, isNoFee, price, name, type, condition, onClick }: CardItem) => {
   const conditionObj = findNearestMaxValue(CONDITIONS, condition)
 
   return (
     <div className={classNames('relative',
-      isTradable && !isSelected ? "group hover:-translate-y-4 hover:z-20 duration-75" : '',
-      isSelected ? "shadow-checkedCard" : ""
+      isTradable && !isSelected ? 'group hover:-translate-y-4 hover:z-20 duration-75' : '',
+      isSelected ? 'shadow-checkedCard' : ''
     )}>
       <div
         className={classNames('absolute left-0 top-0 w-full h-full border border-b-[3px] group-hover:border-0 group-hover:bg-darkGrey card-clip-path',
-          isSelected ? "border-swViolet" : "border-darkGrey"
+          isSelected ? 'border-swViolet' : 'border-darkGrey'
         )}
       >
-        <span className={classNames("absolute group-hover:hidden -right-[2px] top-[3px] w-[10px] rotate-45",
-          isSelected ? "border-swViolet border-t-2" : "border-t border-darkGrey"
+        <span className={classNames('absolute group-hover:hidden -right-[2px] top-[3px] w-[10px] rotate-45',
+          isSelected ? 'border-swViolet border-t-2' : 'border-t border-darkGrey'
         )} />
-        <span className={classNames("absolute group-hover:hidden -left-[2px] bottom-[1px] w-[10px] rotate-45",
-          isSelected ? "border-swViolet border-t-2" : "border-t border-darkGrey"
+        <span className={classNames('absolute group-hover:hidden -left-[2px] bottom-[1px] w-[10px] rotate-45',
+          isSelected ? 'border-swViolet border-t-2' : 'border-t border-darkGrey'
         )} />
       </div>
-      {!isTradable ? <div className="bg-darkSecondary bg-opacity-50 absolute left-0 top-0 w-full h-full z-20">
+      {!isTradable
+        ? <div className="bg-darkSecondary bg-opacity-50 absolute left-0 top-0 w-full h-full z-20">
         <span
           className="absolute left-1/2 -translate-x-1/2 top-[84px] uppercase flex w-max text-14 font-['Barlow'] text-white py-1 px-3 border rounded-[24px]"
         >
           trade locked
         </span>
-      </div> : ''}
+      </div>
+        : ''}
       <div
-        className={classNames('relative min-h-[200px] cursor-pointer overflow-hidden h-full', !isTradable ? 'grayscale' : '' )}
-        onClick={() => onClick()}
+        className={classNames('relative min-h-[200px] cursor-pointer overflow-hidden h-full', !isTradable ? 'grayscale' : '')}
+        onClick={() => { onClick() }}
       >
         <span
           className="absolute left-1/2 -translate-x-1/2 top-24 h-0 w-1/2"
@@ -66,17 +66,17 @@ const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, n
           <div
             className="flex w-full justify-between"
           >
-            <div className={classNames('flex items-center gap-2 uppercase text-xs font-["Barlow"]', 
+            <div className={classNames('flex items-center gap-2 uppercase text-xs font-["Barlow"]',
               isTradable && !timeToTrade ? 'text-[#18E86B]' : '',
               isTradable && timeToTrade ? 'text-[#FF8F27]' : '',
-              !isTradable ? 'text-white' : '',
+              !isTradable ? 'text-white' : ''
             )}>
               <ClockIcon />
-              {isTradable && !timeToTrade ?
-                <span>Tradable</span> :
-                <span>{timeToTrade && timeToTrade > 24 ? 
-                  `${(timeToTrade / 24).toFixed()} days` : 
-                  `${timeToTrade} hours`}
+              {isTradable && !timeToTrade
+                ? <span>Tradable</span>
+                : <span>{timeToTrade && timeToTrade > 24
+                  ? `${(timeToTrade / 24).toFixed()} days`
+                  : timeToTrade ? `${timeToTrade} hours` : "Can't trade"}
                 </span>}
             </div>
             <div className='text-swViolet'>
@@ -92,19 +92,23 @@ const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, n
           />
           <div className="flex flex-col w-full relative mb-2">
             <div className='text-graySecondary uppercase text-sm font-["Barlow"] font-light'>estimated value</div>
-            <div className='text-whote uppercase text-2xl font-["Barlow"] text-white font-bold'>{price.toLocaleString("en-US", {style:"currency", currency:"USD"})}</div>
-            {isNoFee ? <span className="px-1 absolute bottom-[110%] left-0 bg-[#FFD7BC] text-darkSecondary text-xs font-['Barlow']">
+            <div className='text-whote uppercase text-2xl font-["Barlow"] text-white font-bold'>{price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</div>
+            {isNoFee
+              ? <span className="px-1 absolute bottom-[110%] left-0 bg-[#FFD7BC] text-darkSecondary text-xs font-['Barlow']">
               0% Fee
-            </span> : ""}
+            </span>
+              : ''}
           </div>
           <div className="flex flex-col w-full relative mb-2">
             <div className='text-graySecondary uppercase text-sm font-["Barlow"] font-light'>{type}</div>
             <div className='text-whote uppercase text-lg font-["Barlow"] text-white'>{name}</div>
           </div>
           <span className="w-full border-t border-darkGrey" />
-          <div className="flex flex-col gap-[14px] w-full">
+          {condition
+            ? (
+            <div className="flex flex-col gap-[14px] w-full">
             <div style={{
-              color: conditionObj?.color || ''
+              color: conditionObj?.color ?? ''
             }}>{conditionObj?.text} - {condition}</div>
             <div className="relative w-full flex h-1">
               <div className="w-[7%] h-full bg-[#18E86B]"/>
@@ -119,7 +123,10 @@ const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, n
                 }}
               />
             </div>
-          </div>
+          </div>)
+            : ''
+            }
+
         </div>
       </div>
       <Button
@@ -127,7 +134,7 @@ const ItemCard = ({isTradable, timeToTrade, image, isSelected, isNoFee, price, n
         text="add to sale"
       />
     </div>
-  );
-};
+  )
+}
 
-export default ItemCard;
+export default ItemCard

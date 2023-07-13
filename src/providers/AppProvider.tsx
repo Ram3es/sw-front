@@ -1,21 +1,36 @@
-import { useState } from 'react';
-import { AppContext } from '../context/AppContext';
-import { IUser } from '../types/User';
+import { useCallback, useEffect, useState } from 'react'
+import { AppContext } from '../context/AppContext'
+import { type IUser } from '../types/User'
+import { getUser } from '../services/user/user'
+import { ESteamAppId } from '../types/Inventory'
 
-type IProps = {
-  children: React.JSX.Element,
+interface IProps {
+  children: React.JSX.Element
 }
 
 export const AppProvider = ({ children }: IProps) => {
-  const [ categoriesState, setCategoriesState ] = useState(false);
-  const [ searchOpened, setSearchOpened ] = useState(false);
-  const [ gameSelectorOpened, setGameSelectorOpened ] = useState(false);
-  const [ user, setUser ] = useState<IUser>()
+  const [categoriesState, setCategoriesState] = useState(false)
+  const [searchOpened, setSearchOpened] = useState(false)
+  const [gameId, setGameId] = useState<ESteamAppId>(ESteamAppId.CSGO)
+  const [user, setUser] = useState<IUser>()
 
-  const changeCategoriesState = () => setCategoriesState(!categoriesState);
-  const changeSearchState = () => setSearchOpened(!searchOpened);
-  const changegameSelectorState = () => setGameSelectorOpened(!gameSelectorOpened);
-  const userUpdate = (user: IUser) => setUser(user)
+  const getUserApp = useCallback(async () => {
+    try {
+      const user = await getUser()
+      setUser({ id: user.steamId, username: user.steamUsername, balance: 777.58 })
+    } catch (error) {
+      console.log(error, 'app provider')
+    }
+  }, [])
+
+  useEffect(() => {
+    void getUserApp()
+  }, [])
+
+  const changeCategoriesState = () => { setCategoriesState(!categoriesState) }
+  const changeSearchState = () => { setSearchOpened(!searchOpened) }
+  const userUpdate = (user: IUser) => { setUser(user) }
+  const updateGameId = (id: ESteamAppId) => { setGameId(id) }
 
   return (
     <AppContext.Provider
@@ -24,13 +39,13 @@ export const AppProvider = ({ children }: IProps) => {
         categoriesState,
         changeSearchState,
         searchOpened,
-        changegameSelectorState,
-        gameSelectorOpened,
         user,
-        userUpdate
+        userUpdate,
+        gameId,
+        updateGameId
       }}
     >
       { children }
     </AppContext.Provider>
-  );
+  )
 }

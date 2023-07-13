@@ -1,16 +1,17 @@
-import { createContext, useContext } from 'react';
-import { IUser } from '../types/User';
-import { InitUserState } from '../constants/user';
+import { createContext, useContext } from 'react'
+import { type IUser } from '../types/User'
+import { InitUserState } from '../constants/user'
+import { ESteamAppId } from '../types/Inventory'
 
 export interface IAppContext {
-  changeCategoriesState: () => void;
-  categoriesState: boolean;
-  changeSearchState: () => void;
-  searchOpened: boolean;
-  changegameSelectorState: () => void;
-  gameSelectorOpened: boolean;
-  user?: IUser;
-  userUpdate: (user: IUser) => void;
+  changeCategoriesState: () => void
+  categoriesState: boolean
+  changeSearchState: () => void
+  searchOpened: boolean
+  user?: IUser
+  userUpdate: (user: IUser) => void
+  gameId: ESteamAppId
+  updateGameId: (id: ESteamAppId) => void
 };
 
 export const AppContext = createContext<IAppContext>({
@@ -18,10 +19,10 @@ export const AppContext = createContext<IAppContext>({
   changeCategoriesState: () => {},
   changeSearchState: () => {},
   searchOpened: false,
-  changegameSelectorState: () => {},
-  gameSelectorOpened: false,
   user: InitUserState,
-  userUpdate: () => {}
-});
+  userUpdate: () => {},
+  gameId: ESteamAppId.CSGO,
+  updateGameId: () => {}
+})
 
-export const useAppContext = () => useContext(AppContext);
+export const useAppContext = () => useContext(AppContext)

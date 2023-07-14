@@ -10,6 +10,7 @@ build_staging:
   services:
     - docker:18-dind
   script:
+    - cp $ENV_STAGING .env
     - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker build -t $CI_REGISTRY_IMAGE:staging .
     - docker push $CI_REGISTRY_IMAGE:staging

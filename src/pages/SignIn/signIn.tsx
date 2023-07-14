@@ -3,19 +3,14 @@ import { Link } from '../../components/Navigation'
 import SteamIcon from '../../components/icons/SteamIcon'
 import { API_BASE_URL } from '../../services/axios.instance'
 
-interface LocationState {
-  from: string
-}
-
 export default function SignIn () {
   const location = useLocation()
-  const { from = undefined } = location?.state as LocationState
   return (
     <div className="flex justify-center ">
       <div className=" flex flex-col items-center w-full max-w-[512px] py-20 text-white ">
         <h1 className="text-5xl uppercase mb-16 ">Welcome Back</h1>
         <Link
-          to={`${API_BASE_URL}/auth/steam?continue=${from ?? '/panel'}`}
+          to={`${API_BASE_URL}/auth/steam?continue=${location?.state?.from as string ?? '/'}`}
           text='login with steam'
           icon
           wrapperStyles='w-full h-14 '

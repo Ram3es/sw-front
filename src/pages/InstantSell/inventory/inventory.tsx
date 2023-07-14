@@ -73,7 +73,7 @@ export const Inventory = () => {
           />
         </div>
         {
-          user
+          user && renderCards.length
             ? <div className='px-[24px] py-[30px] grid grid-cols-cards gap-1'>
               {sorted.map(card =>
                     <ItemCard
@@ -81,7 +81,7 @@ export const Inventory = () => {
                       onClick={() => { toggleSelect(card) }}
                       isSelected={card.isChecked}
                       {...card}
-                      />
+                    />
               )
               }
               </div>

@@ -11,11 +11,24 @@ import { classNames } from '../../../helpers/className'
 import ExclamationTriangleFilled from '../../../components/icons/ExclamationTriangleFilled'
 import { NavLink } from 'react-router-dom'
 import { REGEX } from '../../../constants/regex'
+import { payout } from '../../../services/payout/payout'
 
 const MethodsPayout = () => {
-  const { amount, emailPayPal, inputPaypal, setPayoutStep, setPayPalEmail, setInputPayPal } = usePayoutContext()
   const [isAcceptedPolicy, setIsAcceptedPolicy] = useState(false)
   const [isEditMode, setIsEditMode] = useState(false)
+  const [isSelectedMethod, setSelecteMethod] = useState<Record<string, boolean>>(PAYOUT_METHODS.reduce((acc, mth) => ({ ...acc, [mth.name]: false }), {}))
+
+  const {
+    amount,
+    emailPayPal,
+    inputPaypal,
+    payoutMethods,
+    setPayoutStep,
+    setPayPalEmail,
+    setInputPayPal
+  } = usePayoutContext()
+
+  const currentMethod = useMemo(() => Object.keys(isSelectedMethod).filter(key => isSelectedMethod[key]).join(), [isSelectedMethod])
 
   const handleSetEmail = () => {
     if (!REGEX.email.test(inputPaypal)) {
@@ -25,9 +38,6 @@ const MethodsPayout = () => {
     setPayPalEmail(inputPaypal)
     setIsEditMode(false)
   }
-  const [isSelectedMethod, setSelecteMethod] = useState<Record<string, boolean>>(PAYOUT_METHODS.reduce((acc, mth) => ({ ...acc, [mth.name]: false }), {}))
-
-  const currentMethod = useMemo(() => Object.keys(isSelectedMethod).filter(key => isSelectedMethod[key]).join(), [isSelectedMethod])
 
   const radioChange = (method: string) => {
     setSelecteMethod(prev => {
@@ -41,6 +51,11 @@ const MethodsPayout = () => {
       }
       return copy
     })
+  }
+  const handleSubmit = async () => {
+    const data = await payout({ amount })
+    console.log(data, 'sddadas datad')
+    setPayoutStep('summary')
   }
   return (
         <div className='flex flex-col items-center mx-auto max-w-[472px]  '>
@@ -74,7 +89,8 @@ const MethodsPayout = () => {
                                 </div>}
                             <div
                                 className={classNames('flex flex-col mb-2  text-swLime bg-gray-29 cta-clip-path',
-                                  currentMethod === 'paypal' && currentMethod === method.name ? 'border-2 border-swLime' : '')}
+                                  currentMethod === 'paypal' && currentMethod === method.name ? 'border-2 border-swLime' : '',
+                                  Object.keys(payoutMethods).includes(method.name) ? '' : 'opacity-30 grayscale pointer-events-none')}
                             >
                                 <div className='flex items-center justify-between p-4'>
                                     <div className='flex items-center gap-4'>
@@ -162,11 +178,11 @@ const MethodsPayout = () => {
                     </div>
                     <div className='h-12 mt-4'>
                         <Button
-                                text={currentMethod ? `process payout [$${format(amount)}]` : 'select a payment method'}
-                                onClick={() => { setPayoutStep('summary') }}
-                                disabled={!isAcceptedPolicy}
-                                className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest uppercase text-21 font-medium hover',
-                                  isAcceptedPolicy && currentMethod ? '' : 'pointer-events-none')}
+                            text={currentMethod ? `process payout [$${format(amount)}]` : 'select a payment method'}
+                            onClick={() => { void handleSubmit() }}
+                            disabled={!isAcceptedPolicy}
+                            className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest uppercase text-21 font-medium hover',
+                              isAcceptedPolicy && currentMethod ? '' : 'pointer-events-none')}
                         />
                     </div>
 

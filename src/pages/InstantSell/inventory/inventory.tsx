@@ -52,7 +52,7 @@ export const Inventory = () => {
   const getUserInventory = useCallback(async () => {
     if (user && gameId) {
       const inventory = await getInventory(gameId)
-      setRenderCards(inventory.default.map((item: any) => ({ ...item, isTradable: true, isChecked: false })))
+      setRenderCards(Object.values(inventory).map((item: any) => ({ ...item, isTradable: true, isChecked: false })))
     }
   }, [user, gameId])
 

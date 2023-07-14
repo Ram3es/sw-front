@@ -20,6 +20,8 @@ import { useEffect, useState } from 'react'
 import { CATEGORIES } from '../../constants/categories'
 import { Listbox } from '@headlessui/react'
 import { ESteamAppId } from '../../types/Inventory'
+import { format } from '../../helpers/numberFormater'
+import SearchModal from '../Content/SearcModal'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -36,6 +38,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     changeSearchState,
     user,
     gameId,
+    searchOpened,
     updateGameId
   } = useAppContext()
   const [selected, setSelected] = useState('')
@@ -66,6 +69,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   }, [selected])
 
   return (
+<>
     <header
       id="top-bar"
       className={classNames(
@@ -77,7 +81,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     >
       <div
         className={classNames(
-          'max-w-[1440px] min-w-full z-[666] flex items-center justify-between w-full h-[56px] px-[24px] py-[12px]  pointer-events-auto bg-almostBlack transition-transform delay-[150ms] ease-in-out'
+          'max-w-[1440px] min-w-full z-[60] flex items-center justify-between w-full h-[56px] px-[24px] py-[12px]  pointer-events-auto bg-almostBlack transition-transform delay-[150ms] ease-in-out'
         )}
       >
         <nav className="flex items-center">
@@ -184,7 +188,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             ? (
               <>
                 <Button
-                  text={user.balance.toString()}
+                  text={`$${format(user.balance)}`}
                   className="uppercase font-medium text-skinwallerGray hover:text-white"
                 />
                 <Link
@@ -220,6 +224,8 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
         </nav>
       </div>
     </header>
+    <SearchModal isOpen={searchOpened} onClose={changeSearchState} />
+    </>
   )
 }
 

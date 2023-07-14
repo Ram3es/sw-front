@@ -4,9 +4,20 @@ import AmontPayout from './AmontPayout'
 import MethodsPayout from './MethodsPayout'
 import { usePayoutContext } from '../../../context/PayoutContext'
 import SummaryPayout from './SummaryPayout'
+import { useCallback, useEffect } from 'react'
+import { getPayoutMethods } from '../../../services/payout/payout'
 
 export const Payout = () => {
-  const { payoutStep } = usePayoutContext()
+  const { payoutStep, setPayoutMethods } = usePayoutContext()
+
+  const getAvailableMethods = useCallback(async () => {
+    const methods = await getPayoutMethods()
+    setPayoutMethods(methods)
+  }, [])
+
+  useEffect(() => {
+    void getAvailableMethods()
+  }, [])
   return (
     <>
       <div className='flex flex-col flex-grow py-5'>

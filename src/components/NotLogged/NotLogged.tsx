@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Button } from '../Navigation'
 
+// @ts-expect-error need to be fixed
 export const NotLogged = ({ onLogIn }: { onLogIn: () => void }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()

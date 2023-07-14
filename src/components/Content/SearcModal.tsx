@@ -1,4 +1,3 @@
-import React from 'react'
 import ModalWrapper from '../../containers/Modal'
 import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
 import { ReactComponent as CloseIcon } from '../../assets/close-icon.svg'

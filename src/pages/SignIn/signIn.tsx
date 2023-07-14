@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import { Link } from '../../components/Navigation'
 import SteamIcon from '../../components/icons/SteamIcon'
-import { BASE_URL } from '../../services/axios.instance'
+import { API_BASE_URL } from '../../services/axios.instance'
 
 interface LocationState {
   from: string
@@ -15,7 +15,7 @@ export default function SignIn () {
       <div className=" flex flex-col items-center w-full max-w-[512px] py-20 text-white ">
         <h1 className="text-5xl uppercase mb-16 ">Welcome Back</h1>
         <Link
-          to={`${BASE_URL}/auth/steam?continue=${from ?? '/'}`}
+          to={`${API_BASE_URL}/auth/steam?continue=${from ?? '/'}`}
           text='login with steam'
           icon
           wrapperStyles='w-full h-14 '

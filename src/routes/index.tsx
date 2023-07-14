@@ -68,6 +68,6 @@ const router = createBrowserRouter([
       }
     ]
   }
-], { basename: '/market' })
+], { basename: '/panel' })
 
 export default router

@@ -6,23 +6,31 @@ import { format } from '../../helpers/numberFormater'
 import RoundedMark from '../icons/RoundedMark'
 import ReloadIcon from '../icons/ReloadIcon'
 import { TRNS_STRING } from '../../constants/strings'
+import { type TransactionItem } from '../../types/Transactions'
 
-interface ITransactionCardProps {
-  hash: string
-  amount: number
-  date: string
-  status: string
-  paypalId: string
-
-}
-
-const TransactionCard: FC<ITransactionCardProps> = ({ hash, amount, date, paypalId, status }) => {
+const TransactionCard: FC<TransactionItem> = ({ hash, amount, date, paypalId, status }) => {
   const [isOpen, setIsOpen] = useState(false)
   const hashRef = useRef<HTMLDivElement>(null)
   const paypalIdRef = useRef<HTMLDivElement>(null)
 
   const toggle = () => { setIsOpen(!isOpen) }
 
+  const formatCustomDate = (dateString: Date) => {
+    // Convert the dateString to a Date object
+    const dateObject = new Date(dateString)
+
+    // Extract the date and time components
+    const day = dateObject.getDate().toString().padStart(2, '0')
+    const month = (dateObject.getMonth() + 1).toString().padStart(2, '0') // Months are 0-based
+    const year = dateObject.getFullYear().toString()
+    const hours = dateObject.getHours().toString().padStart(2, '0')
+    const minutes = dateObject.getMinutes().toString().padStart(2, '0')
+
+    // Construct the formatted date string
+    const formattedDate = `${day}.${month}.${year}, ${hours}:${minutes}`
+
+    return formattedDate
+  }
   const handleCopy = async (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
       try {
@@ -63,7 +71,7 @@ const TransactionCard: FC<ITransactionCardProps> = ({ hash, amount, date, paypal
                           </div>
                     }
                 </div>
-                <div className="flex justify-center font-normal text-graySecondary">{date}</div>
+                <div className="flex justify-center font-normal text-graySecondary">{formatCustomDate(date)}</div>
                 <div className="flex justify-end" >+${format(amount)}</div>
             </div>
             {isOpen &&
@@ -73,7 +81,7 @@ const TransactionCard: FC<ITransactionCardProps> = ({ hash, amount, date, paypal
                                 <span className='text-xs leading-[14px] font-normal text-graySecondary '>Payment method PayPal</span>
                                 <p>PayPal</p>
                             </div>
-                            <div>
+                            {paypalId && <div>
                                 <span className='text-xs leading-[14px] font-normal text-graySecondary '>PayPal ID</span>
                                 <div className='flex items-center gap-2'>
                                     <div ref={paypalIdRef}>{paypalId}</div>
@@ -81,7 +89,7 @@ const TransactionCard: FC<ITransactionCardProps> = ({ hash, amount, date, paypal
                                         <CopyIcon className='w-[11px] h-3' />
                                     </div>
                                 </div>
-                            </div>
+                            </div>}
                         </div>
                         <div className=' absolute left-0 w-full  border border-b border-white/10' />
                         <div className='grid grid-cols-4 pt-6'>

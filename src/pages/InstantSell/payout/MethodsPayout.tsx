@@ -24,7 +24,7 @@ const MethodsPayout = () => {
   )
   const {
     amount,
-    avalableMethods,
+    availableMethods,
     setPayoutStep
   } = usePayoutContext()
 
@@ -101,7 +101,7 @@ const MethodsPayout = () => {
                             <div
                                 className={classNames('flex flex-col mb-2  text-swLime bg-gray-29 cta-clip-path',
                                   currentMethod === method.name ? 'border-2 border-swLime' : '',
-                                  Object.keys(avalableMethods).includes(method.name) ? '' : 'opacity-30 grayscale pointer-events-none')}
+                                  Object.keys(availableMethods).includes(method.name) ? '' : 'opacity-30 grayscale pointer-events-none')}
                             >
                                 <div className='flex items-center justify-between p-4'>
                                     <div

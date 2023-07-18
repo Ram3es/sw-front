@@ -1,15 +1,16 @@
-import { type MouseEvent } from 'react'
+import { useState, type MouseEvent } from 'react'
 import Bar from '../../components/Bar/Bar'
 import { useHideOnScroll } from '../../helpers/useHideOnScroll'
 import { classNames } from '../../helpers/className'
 import TransactionCard from '../../components/Content/TransactionCard'
-import { TRANSACTIONS } from '../../mock/invoices'
+import { type ITransactions } from '../../mock/invoices'
 import DownloadFileIcon from '../../components/icons/DownloadFileIcon'
 import TransactionsSidebar from './TransactionsSidebar'
 import Dropbox from '../../components/Content/Dropbox'
 
 export default function TransactionsPage () {
   const shouldHide = useHideOnScroll()
+  const [renderTransactions, setRenderTransactions] = useState<ITransactions[]>([])
 
   const download = (e: MouseEvent) => {
     e.stopPropagation()
@@ -27,7 +28,9 @@ export default function TransactionsPage () {
       </Bar>
       <div className="flex text-white pt-5">
         <div className={classNames('flex flex-col flex-grow max-w-[256px] max-h-screen sticky overflow-auto bottom-0', shouldHide ? 'h-[calc(100vh-60px)] top-[60px]' : 'h-[calc(100vh-120px)] top-[120px]')}>
-          <TransactionsSidebar />
+          <TransactionsSidebar
+            setRenderTransactions={setRenderTransactions}
+           />
         </div>
         <div className="w-full flex flex-col pt-6">
           <div className=" w-full max-w-[672px] mx-auto ">
@@ -44,7 +47,7 @@ export default function TransactionsPage () {
                 }
               >
               <div className="flex flex-col gap-3 mt-4">
-                {TRANSACTIONS.map((trx) => <TransactionCard key={trx.hash} {...trx} />)}
+                {renderTransactions.map((trx) => <TransactionCard key={trx.hash} {...trx} />)}
               </div>
             </Dropbox>
             <div className=" border border-b border-darkGrey my-8" />

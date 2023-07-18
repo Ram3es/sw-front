@@ -5,7 +5,7 @@ export interface IPayoutContext {
   payoutStep: string
   emailPayPal: string
   inputPaypal: string
-  avalableMethods: Record<string, any>
+  availableMethods: Record<string, any>
   setAmount: Dispatch<React.SetStateAction<number>>
   setPayoutStep: Dispatch<React.SetStateAction<string>>
   setPayPalEmail: Dispatch<React.SetStateAction<string>>
@@ -19,7 +19,7 @@ export const PayoutContext = createContext<IPayoutContext>({
   payoutStep: '',
   emailPayPal: '',
   inputPaypal: '',
-  avalableMethods: {},
+  availableMethods: {},
   setAmount: () => {},
   setPayoutStep: () => {},
   setPayPalEmail: () => {},

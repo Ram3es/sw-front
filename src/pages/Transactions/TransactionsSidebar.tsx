@@ -10,9 +10,14 @@ import {
 import { Link } from 'react-router-dom'
 import LanguagePicker from '../../components/Content/LanguagePicker'
 
-const TransactionsSidebar = () => {
-  const [startDate, setStartDate] = useState<Date>()
-  const [endDate, setEndDate] = useState<Date>()
+interface ITransactionsSidebarProps {
+  endDate?: Date
+  startDate?: Date
+  setEndDate: (date: Date) => void
+  setStartDate: (date: Date) => void
+}
+
+const TransactionsSidebar = ({ setEndDate, setStartDate, endDate, startDate }: ITransactionsSidebarProps) => {
   const [search, setSearch] = useState('')
   const [type, setType] = useState([
     {
@@ -68,7 +73,7 @@ const TransactionsSidebar = () => {
               >
                 <div className="flex items-center">
                   <div className="mr-3">
-                    <Checkbox checked={item.selected} />
+                    <Checkbox checked={item.selected} additionalClasses='pointer-events-none text-black' />
                   </div>
                   <h1 className="font-['Barlow'] text-sm">{item.name}</h1>
                 </div>

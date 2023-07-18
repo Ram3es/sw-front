@@ -103,7 +103,7 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                 <Button
                     text={`GET $${format(totalWorth)}`}
                     onClick={() => { console.log('sell') }}
-                    className={classNames('w-full h-full flex justify-center text-21  tracking-widest text-white font-medium bg-swViolet/40 cta-clip-path border border-b-[3px] border-swViolet  ',
+                    className={classNames('w-full h-full min-h-[48px] flex justify-center text-21  tracking-widest text-white font-medium bg-swViolet/40 cta-clip-path border border-b-[3px] border-swViolet  ',
                       isAcceptedPolicy ? 'hover:opacity-90' : ' grayscale',
                       selectedCards.length ? '' : 'pointer-events-none'
 

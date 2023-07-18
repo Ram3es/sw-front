@@ -10,6 +10,7 @@ import PlusIcon from '../../../components/icons/PlusIcon'
 import MinusIcon from '../../../components/icons/MinusIcon'
 import { useCounter } from '../../../helpers/useCounter'
 import { useAppContext } from '../../../context/AppContext'
+import { type } from 'os'
 
 const AmontPayout = () => {
   const { amount, setPayoutStep, setAmount } = usePayoutContext()
@@ -24,7 +25,9 @@ const AmontPayout = () => {
     if (Number(e.target.value) > 1000) {
       return
     }
-    setAmount(Number(e.target.value))
+    // setAmount(Number(e.target.value) * 100)
+    console.log(typeof +e.target.value, e.target.value)
+    setAmount(+e.target.value ?? 0)
   }
 
   const toggle = () => {
@@ -51,7 +54,7 @@ const AmontPayout = () => {
                 <p className='uppercase tracking-[1.12px] '>Daily payout limit exceeded</p>
             </div>
             <p className='max-w-[346px] pt-4 font-normal [&>span]:font-semibold '>
-                You can payout a maximum of <span>${format(750.50)}</span> due to the <span>${format(1000)}</span> daily payout limit.
+                You can payout a maximum of <span>${format(75050)}</span> due to the <span>${format(100000)}</span> daily payout limit.
             </p>
             </div>
             <PaperPayout title='Set payout amount' >

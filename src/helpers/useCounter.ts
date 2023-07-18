@@ -13,7 +13,7 @@ export const useCounter = (handleFunction: Dispatch<React.SetStateAction<number>
               clearInterval(intervalRef.current)
               return prevCount
             }
-            return prevCount + 1
+            return prevCount + 100
           })
         }, 50)
       }, 200)
@@ -23,7 +23,7 @@ export const useCounter = (handleFunction: Dispatch<React.SetStateAction<number>
         if (prevCount >= limit) {
           return prevCount
         }
-        return prevCount + 1
+        return prevCount + 100
       })
     }
   }
@@ -37,7 +37,7 @@ export const useCounter = (handleFunction: Dispatch<React.SetStateAction<number>
               clearInterval(intervalRef.current)
               return prevCount
             }
-            return prevCount - 1
+            return prevCount - 100
           })
         }, 50)
       }, 200)
@@ -47,7 +47,7 @@ export const useCounter = (handleFunction: Dispatch<React.SetStateAction<number>
         if (prevCount <= 0) {
           return prevCount
         }
-        return prevCount - 1
+        return prevCount - 100
       })
     }
   }

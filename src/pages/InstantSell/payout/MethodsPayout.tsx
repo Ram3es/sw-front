@@ -187,9 +187,9 @@ const MethodsPayout = () => {
                         <Button
                             text={currentMethod ? `process payout [$${format(amount)}]` : 'select a payment method'}
                             onClick={() => { void handleSubmit() }}
-                            disabled={!isAcceptedPolicy}
+                            disabled={!isAcceptedPolicy || !methodsState[currentMethod].methodAccount }
                             className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest uppercase text-21 font-medium hover',
-                              isAcceptedPolicy && currentMethod ? '' : 'pointer-events-none')}
+                              isAcceptedPolicy && methodsState[currentMethod].methodAccount ? '' : 'pointer-events-none')}
                         />
                     </div>
 

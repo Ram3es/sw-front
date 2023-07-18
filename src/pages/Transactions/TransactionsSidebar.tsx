@@ -68,7 +68,7 @@ const TransactionsSidebar = () => {
               >
                 <div className="flex items-center">
                   <div className="mr-3">
-                    <Checkbox checked={item.selected} />
+                    <Checkbox checked={item.selected} additionalClasses='pointer-events-none text-black' />
                   </div>
                   <h1 className="font-['Barlow'] text-sm">{item.name}</h1>
                 </div>

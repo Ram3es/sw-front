@@ -34,7 +34,7 @@ const LanguagePicker = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto">
+            <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto bg-darkSecondary pl-4">
               {langs.map((lang) => (
                 <Listbox.Option
                   key={lang.id}

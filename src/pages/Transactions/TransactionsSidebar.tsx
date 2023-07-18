@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import Dropbox from '../../components/Content/Dropbox'
 import Checkbox from '../../components/Content/Checkbox'
 import Datepicker from '../../components/Content/Datepicker'
@@ -9,15 +9,15 @@ import {
 } from '../../constants/sidebar-links'
 import { Link } from 'react-router-dom'
 import LanguagePicker from '../../components/Content/LanguagePicker'
-import { TRANSACTIONS, type ITransactions } from '../../mock/invoices'
 
 interface ITransactionsSidebarProps {
-  setRenderTransactions: React.Dispatch<React.SetStateAction<ITransactions[]>>
+  endDate?: Date
+  startDate?: Date
+  setEndDate: (date: Date) => void
+  setStartDate: (date: Date) => void
 }
 
-const TransactionsSidebar = ({ setRenderTransactions }: ITransactionsSidebarProps) => {
-  const [startDate, setStartDate] = useState<Date>()
-  const [endDate, setEndDate] = useState<Date>()
+const TransactionsSidebar = ({ setEndDate, setStartDate, endDate, startDate }: ITransactionsSidebarProps) => {
   const [search, setSearch] = useState('')
   const [type, setType] = useState([
     {
@@ -46,18 +46,6 @@ const TransactionsSidebar = ({ setRenderTransactions }: ITransactionsSidebarProp
       numberOfItems: 12
     }
   ])
-
-  const ranged = useMemo(() => TRANSACTIONS.filter(item => {
-    const itemDate = new Date(item.date)
-    const start = new Date(startDate ?? 0)
-    const end = new Date(endDate ?? Date.now())
-
-    return itemDate >= start && itemDate <= end
-  }), [endDate, startDate])
-
-  useEffect(() => {
-    setRenderTransactions(ranged)
-  }, [ranged])
 
   return (
     <>

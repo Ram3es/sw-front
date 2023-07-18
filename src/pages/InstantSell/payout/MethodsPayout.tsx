@@ -12,31 +12,42 @@ import ExclamationTriangleFilled from '../../../components/icons/ExclamationTria
 import { NavLink } from 'react-router-dom'
 import { REGEX } from '../../../constants/regex'
 import { payout } from '../../../services/payout/payout'
+import InputWithBtn from '../../../components/Content/InputWithBtn'
+
+type TMethodState = Record<string, { isSelected: boolean, methodAccount: string }>
 
 const MethodsPayout = () => {
   const [isAcceptedPolicy, setIsAcceptedPolicy] = useState(false)
-  const [isEditMode, setIsEditMode] = useState(false)
-  const [isSelectedMethod, setSelecteMethod] = useState<Record<string, boolean>>(PAYOUT_METHODS.reduce((acc, mth) => ({ ...acc, [mth.name]: false }), {}))
-
+  const [methodsState, setSelecteMethod] = useState<TMethodState>(
+    PAYOUT_METHODS.reduce((acc, method) =>
+      ({ ...acc, [method.name]: { isSelected: false, methodAccount: '' } }), {})
+  )
   const {
     amount,
-    emailPayPal,
-    inputPaypal,
-    payoutMethods,
-    setPayoutStep,
-    setPayPalEmail,
-    setInputPayPal
+    avalableMethods,
+    setPayoutStep
   } = usePayoutContext()
 
-  const currentMethod = useMemo(() => Object.keys(isSelectedMethod).filter(key => isSelectedMethod[key]).join(), [isSelectedMethod])
+  const currentMethod = useMemo(() => Object.keys(methodsState).filter(key => methodsState[key].isSelected).join(), [methodsState])
 
-  const handleSetEmail = () => {
-    if (!REGEX.email.test(inputPaypal)) {
-      alert('wrong format email')
-      return
+  const handleSetMethodRequirments = (method: string, inputValue: string) => {
+    switch (method) {
+      case 'venmo':
+        if (!REGEX.phoneOrName.test(inputValue)) {
+          alert('enter valid name or number')
+          return
+        }
+        break
+      case 'paypal':
+        if (!REGEX.email.test(inputValue)) {
+          alert('wrong format email')
+          return
+        }
     }
-    setPayPalEmail(inputPaypal)
-    setIsEditMode(false)
+    setSelecteMethod(prev => ({
+      ...prev,
+      [method]: { ...prev[method], methodAccount: inputValue }
+    }))
   }
 
   const radioChange = (method: string) => {
@@ -44,10 +55,10 @@ const MethodsPayout = () => {
       const copy = { ...prev }
       for (const key in copy) {
         if (key === method) {
-          copy[key] = !copy[key]
+          copy[key] = { ...copy[key], isSelected: !copy[key].isSelected }
           continue
         }
-        copy[key] = false
+        copy[key] = { ...copy[key], isSelected: false }
       }
       return copy
     })
@@ -89,16 +100,18 @@ const MethodsPayout = () => {
                                 </div>}
                             <div
                                 className={classNames('flex flex-col mb-2  text-swLime bg-gray-29 cta-clip-path',
-                                  currentMethod === 'paypal' && currentMethod === method.name ? 'border-2 border-swLime' : '',
-                                  Object.keys(payoutMethods).includes(method.name) ? '' : 'opacity-30 grayscale pointer-events-none')}
+                                  currentMethod === method.name ? 'border-2 border-swLime' : '',
+                                  Object.keys(avalableMethods).includes(method.name) ? '' : 'opacity-30 grayscale pointer-events-none')}
                             >
                                 <div className='flex items-center justify-between p-4'>
-                                    <div className='flex items-center gap-4'>
+                                    <div
+                                      className='flex items-center gap-4 cursor-pointer'
+                                      onClick={() => { radioChange(method.name) }}
+                                    >
                                         <Checkbox
-                                            checked={isSelectedMethod[method.name]}
+                                            checked={methodsState[method.name].isSelected}
                                             activeClass=''
-                                            additionalClasses='bg-gray-40 border-none'
-                                            onChange={() => { radioChange(method.name) }}
+                                            additionalClasses='bg-gray-40 border-none pointer-events-none'
                                         />
                                         <img src={method.logo} alt="method-logo" />
                                     </div>
@@ -109,35 +122,29 @@ const MethodsPayout = () => {
                                         {method.timeline}
                                     </div>
                                 </div>
-                                {currentMethod === 'paypal' && idx === 1 &&
+                                {currentMethod === method.name &&
                                     <div>
-                                        { !emailPayPal || isEditMode
+                                        { !methodsState[method.name].methodAccount
                                           ? <div className='flex flex-col'>
-                                                    <div className='relative  m-4'>
-                                                        <input
-                                                            type='text'
-                                                            placeholder='Enter PayPal email'
-                                                            value={inputPaypal}
-                                                            onChange={(e) => { setInputPayPal(e.target.value) }}
-                                                            className='w-full h-11 pl-4 pr-24 bg-darkGrey outline-none'
-                                                        />
-                                                        <Button
-                                                            text='set'
-                                                            onClick={handleSetEmail}
-                                                            className='absolute top-0 right-0 h-full px-[32px] text-darkSecondary  cta-clip-path uppercase text-base text-swBlack bg-swLime hover cursor-pointer '
-                                                        />
-                                                    </div>
-                                                </div>
+                                            <InputWithBtn
+                                              placeholder={method.placeholder}
+                                              submitFn={(inputValue: string) => { handleSetMethodRequirments(method.name, inputValue) }} />
+                                            </div>
                                           : <div className=" flex items-center justify-between pt-4 pb-8 pr-4  pl-12 text-white">
                                                 <div className="flex flex-col">
-                                                    <p className="text-graySecondary">PayPal email</p>
-                                                    <p className="text-base">{emailPayPal}</p>
+                                                    <p className="text-graySecondary">{method.methodTitle}</p>
+                                                    <p className="text-base">{methodsState[method.name].methodAccount}</p>
 
                                                 </div>
                                                 <div className='relative overflow-hidden hover button'>
                                                     <Button
                                                         text='edit'
-                                                        onClick={() => { setIsEditMode(prev => !prev) }}
+                                                        onClick={() => {
+                                                          setSelecteMethod(prev => ({
+                                                            ...prev,
+                                                            [method.name]: { ...prev[method.name], methodAccount: '' }
+                                                          }))
+                                                        }}
                                                         className='justify-center text-graySecondary px-[36px] font-semibold border uppercase border-graySecondary cta-clip-path '
                                                     />
                                                     <div className=' w-4 absolute -left-1 bottom-1  border-b border-graySecondary rotate-45' />

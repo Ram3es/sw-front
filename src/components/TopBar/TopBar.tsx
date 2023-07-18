@@ -16,7 +16,7 @@ import { useLocation } from 'react-router-dom'
 import { useHideOnScroll } from '../../helpers/useHideOnScroll'
 import UserMenu from '../Content/UserMenu'
 import NavDropdown from './NavDropdown'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { CATEGORIES } from '../../constants/categories'
 import { Listbox } from '@headlessui/react'
 import { ESteamAppId } from '../../types/Inventory'
@@ -41,7 +41,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     searchOpened,
     updateGameId
   } = useAppContext()
-  const [selected, setSelected] = useState('')
+  const [, setSelected] = useState('')
   const gamesLinks = [
     {
       name: 'CS:GO',
@@ -64,10 +64,6 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     }
   ]
 
-  useEffect(() => {
-    console.log(selected, 'filter')
-  }, [selected])
-
   return (
 <>
     <header
@@ -85,7 +81,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
         )}
       >
         <nav className="flex items-center">
-          <Link to="/" text={<SkinwalletLogo />} />
+          <Link to={window.location.origin} text={<SkinwalletLogo />} />
           <NavDropdown title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
             <div className="flex w-full mx-10 gap-10 flex-wrap">
               {gamesLinks.map((game) => (

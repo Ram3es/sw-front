@@ -97,8 +97,9 @@ const AmontPayout = () => {
                     <div className='h-12 mt-[20%]'>
                         <Button
                             text='NEXT'
-                            className='w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest text-21 font-medium hover:brightness-110 '
-                            onClick={() => { setPayoutStep('method') }}
+                            className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest text-21 font-medium hover:brightness-110',
+                              amount === 0 ? 'opacity-50 grayscale pointer-events-none' : '')}
+                            onClick={() => { if (amount > 0) setPayoutStep('method') }}
                         />
                     </div>
                 </>

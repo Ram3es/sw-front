@@ -87,7 +87,6 @@ export const USER_MENU: IUserMenu[][] = [
       title: 'log out',
       handleFunction: () => {
         void logoutSteam()
-        window.location.href = '/panel'
       }
     }
   ]

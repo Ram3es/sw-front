@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import PaperPayout from './PaperPayout'
 import { usePayoutContext } from '../../../context/PayoutContext'
 import { convertToBacks, format } from '../../../helpers/numberFormater'
@@ -17,6 +17,7 @@ import { useAppContext } from '../../../context/AppContext'
 
 const MethodsPayout = () => {
   const [isAcceptedPolicy, setIsAcceptedPolicy] = useState(false)
+  const [isCryptoErr, setIsCryptoErr] = useState(false)
 
   const { userUpdate } = useAppContext()
   const {
@@ -67,6 +68,14 @@ const MethodsPayout = () => {
     userUpdate({ balance })
     setPayoutStep('summary')
   }
+
+  useEffect(() => {
+    if (convertToBacks(amount) < 50 && currentMethod === 'crypto') {
+      setIsCryptoErr(true)
+      return
+    }
+    setIsCryptoErr(false)
+  }, [amount, methodsState])
   return (
         <div className='flex flex-col items-center mx-auto max-w-[472px]  '>
             <div className='w-full flex items-center justify-between pb-4  font-medium tracking-widest text-sm text-white'>
@@ -92,7 +101,7 @@ const MethodsPayout = () => {
                     </div>
                     {PAYOUT_METHODS.map((method, idx) =>
                         <React.Fragment key={method.name}>
-                            {idx === 2 && convertToBacks(amount) < 50 &&
+                            {idx === 2 && isCryptoErr &&
                                 <div className='w-full flex items-center gap-2 px-2 py-1 text-sm text-darkSecondary font-normal bg-yellow-1e '>
                                     <ExclamationTriangleFilled />
                                     Minimum payout amount is $50.00
@@ -100,7 +109,7 @@ const MethodsPayout = () => {
                             <div
                                 className={classNames('flex flex-col mb-2  text-swLime bg-gray-29 cta-clip-path',
                                   currentMethod === method.name ? 'border-2 border-swLime' : '',
-                                  Object.keys(availableMethods).includes(method.name) && !(idx === 2 && convertToBacks(amount) < 50) ? '' : 'opacity-30 grayscale pointer-events-none')}
+                                  Object.keys(availableMethods).includes(method.name) && !(idx === 2 && isCryptoErr) ? '' : 'opacity-30 grayscale pointer-events-none')}
                             >
                                 <div className='flex items-center justify-between p-4'>
                                     <div
@@ -186,9 +195,9 @@ const MethodsPayout = () => {
                         <Button
                             text={currentMethod ? `process payout [$${format(amount)}]` : 'select a payment method'}
                             onClick={() => { void handleSubmit() }}
-                            disabled={!isAcceptedPolicy || !methodsState[currentMethod]?.methodAccount }
+                            disabled={!isAcceptedPolicy || !methodsState[currentMethod]?.methodAccount || isCryptoErr }
                             className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest uppercase text-21 font-medium hover',
-                              isAcceptedPolicy && methodsState[currentMethod]?.methodAccount ? '' : 'pointer-events-none opacity-50 grayscale')}
+                              isAcceptedPolicy && methodsState[currentMethod]?.methodAccount && !isCryptoErr ? '' : 'pointer-events-none opacity-50 grayscale')}
                         />
                     </div>
 

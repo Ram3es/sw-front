@@ -9,7 +9,7 @@ export interface IAppContext {
   changeSearchState: () => void
   searchOpened: boolean
   user?: IUser
-  userUpdate: (user: IUser) => void
+  userUpdate: (payload: Partial<IUser>) => void
   gameId: ESteamAppId
   updateGameId: (id: ESteamAppId) => void
 };

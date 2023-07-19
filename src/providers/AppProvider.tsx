@@ -29,7 +29,14 @@ export const AppProvider = ({ children }: IProps) => {
 
   const changeCategoriesState = () => { setCategoriesState(!categoriesState) }
   const changeSearchState = () => { setSearchOpened(!searchOpened) }
-  const userUpdate = (user: IUser) => { setUser(user) }
+  const userUpdate = (payload: Partial<IUser>) => {
+    setUser(prev => {
+      if (prev) {
+        return { ...prev, ...payload }
+      }
+      return prev
+    })
+  }
   const updateGameId = (id: ESteamAppId) => { setGameId(id) }
 
   return (

@@ -32,7 +32,7 @@ export const USER_MENU: IUserMenu[][] = [
     },
     {
       title: 'pay out',
-      path: '/',
+      path: '/instant-sell/payout',
       icon: <MinusCircle />
     },
     {

@@ -2,6 +2,7 @@ export interface IUser {
   id: string
   username: string
   balance: number
+  payoutLimit?: number
 }
 
 export interface ISteamUser {

@@ -5,13 +5,26 @@ import { Button } from '../../../components/Navigation'
 import { useNavigate } from 'react-router-dom'
 
 const SummaryPayout = () => {
-  const { amount, setPayoutStep, setAmount } = usePayoutContext()
+  const {
+    amount,
+    methodsState,
+    availableMethods,
+    setPayoutStep,
+    setAmount
+  } = usePayoutContext()
+
   const navigate = useNavigate()
 
   const handleViewMore = () => {
     navigate('/instant-sell', { replace: true })
     setPayoutStep('amount')
     setAmount(0)
+  }
+
+  const getFee = (): number => {
+    const currentMethod = Object.keys(methodsState).filter(key => methodsState[key].isSelected).join()
+    const fixedFee = availableMethods[currentMethod].fixedFee
+    return Number(((amount / 100) * fixedFee).toFixed(2))
   }
 
   return (
@@ -31,7 +44,7 @@ const SummaryPayout = () => {
             </div>
             <div className=''>
                 <h5 className='text-sm uppercase  tracking-[1.12px]'>fee value</h5>
-                <span className='text-yellow-1e text-2xl'>${format(0)}</span>
+                <span className='text-yellow-1e text-2xl'>${getFee()}</span>
             </div>
             <div className=' w-full flex gap-3 h-10 mt-4'>
                 <Button

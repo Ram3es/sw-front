@@ -1,4 +1,5 @@
 import { CONDITIONS } from '../../constants/item-conditions'
+import { format } from '../../helpers/numberFormater'
 import { type CardItem, type ConditionItem } from '../../types/Card'
 import { Button } from '../Navigation'
 import Checkbox from './Checkbox'
@@ -92,7 +93,7 @@ const ItemCard = ({ isTradable, timeToTrade, image, isSelected, isNoFee, price, 
           />
           <div className="flex flex-col w-full relative mb-2">
             <div className='text-graySecondary uppercase text-sm font-["Barlow"] font-light'>estimated value</div>
-            <div className='text-whote uppercase text-2xl font-["Barlow"] text-white font-bold'>{(+price / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</div>
+            <div className='text-whote uppercase text-2xl font-["Barlow"] text-white font-bold'>${format(price)}</div>
             {isNoFee
               ? <span className="px-1 absolute bottom-[110%] left-0 bg-[#FFD7BC] text-darkSecondary text-xs font-['Barlow']">
               0% Fee

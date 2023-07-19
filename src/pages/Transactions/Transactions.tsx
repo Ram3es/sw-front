@@ -1,4 +1,4 @@
-import { useEffect, type MouseEvent, useCallback, useState } from 'react'
+import { useEffect, type MouseEvent, useCallback, useState, useMemo } from 'react'
 import Bar from '../../components/Bar/Bar'
 import { useHideOnScroll } from '../../helpers/useHideOnScroll'
 import { classNames } from '../../helpers/className'
@@ -31,6 +31,9 @@ export default function TransactionsPage () {
   const [transactions, setTransactions] = useState<
   Record<string, TransactionItem[]>
   >({})
+  const [rawArrayTrx, setRawArrayTrx] = useState<TransactionItem[]>([])
+  const [startDate, setStartDate] = useState<Date>()
+  const [endDate, setEndDate] = useState<Date>()
 
   const download = (e: MouseEvent) => {
     e.stopPropagation()
@@ -64,15 +67,28 @@ export default function TransactionsPage () {
         date: new Date(item.created),
         status: item.tradeComplete ? 'completed' : 'pending'
       }))
+      setRawArrayTrx(transactionsArray)
       const sortedTransactions =
         sortTransactionsByYearAndMonth(transactionsArray)
       setTransactions(sortedTransactions)
     }
   }, [user])
 
+  const ranged = useMemo(() => rawArrayTrx.filter(item => {
+    const itemDate = new Date(item.date)
+    const start = new Date(startDate ?? 0)
+    const end = new Date(endDate ?? Date.now())
+
+    return itemDate >= start && itemDate <= end
+  }), [endDate, startDate, rawArrayTrx])
+
   useEffect(() => {
     void getUserTransactions()
   }, [user])
+
+  useEffect(() => {
+    setTransactions(sortTransactionsByYearAndMonth(ranged))
+  }, [ranged])
 
   return (
     <>
@@ -93,7 +109,12 @@ export default function TransactionsPage () {
               : 'h-[calc(100vh-120px)] top-[120px]'
           )}
         >
-          <TransactionsSidebar />
+          <TransactionsSidebar
+           setEndDate={setEndDate}
+           setStartDate={setStartDate}
+           endDate={endDate}
+           startDate={startDate}
+          />
         </div>
         <div className="w-full flex flex-col pt-6">
           {Object.keys(transactions).map((yearAndMonth) => (

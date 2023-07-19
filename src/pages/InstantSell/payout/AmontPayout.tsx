@@ -1,7 +1,7 @@
 import logo from '../../../assets/logo-skinwallet.inline.svg'
 import { Button } from '../../../components/Navigation'
 import ExclamationTriangleIcon from '../../../components/icons/ExclamationTriangle'
-import { format } from '../../../helpers/numberFormater'
+import { convertToCents, format } from '../../../helpers/numberFormater'
 import { classNames } from '../../../helpers/className'
 import { useState, type ChangeEvent, useRef, useEffect } from 'react'
 import { usePayoutContext } from '../../../context/PayoutContext'
@@ -12,19 +12,20 @@ import { useCounter } from '../../../helpers/useCounter'
 import { useAppContext } from '../../../context/AppContext'
 
 const AmontPayout = () => {
-  const { amount, setPayoutStep, setAmount } = usePayoutContext()
   const { user } = useAppContext()
+  const { amount, setPayoutStep, setAmount } = usePayoutContext()
   const { increment, decrement, clearAutoCount } = useCounter(setAmount, Math.floor(user?.balance ?? 0))
 
-  const [isError] = useState(true)
+  const [isLimitError, setLimitError] = useState(false)
   const [isShownInput, setShowInput] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (Number(e.target.value) > 1000) {
+    const amountCents = convertToCents(+e.target.value)
+    if (amountCents > (user?.balance ?? 0)) {
       return
     }
-    setAmount(Number(e.target.value))
+    setAmount(amountCents)
   }
 
   const toggle = () => {
@@ -35,6 +36,14 @@ const AmontPayout = () => {
     isShownInput && inputRef.current?.focus()
   }, [isShownInput])
 
+  useEffect(() => {
+    if (amount > (user?.payoutLimit ?? 100000)) {
+      setLimitError(true)
+      return
+    }
+    setLimitError(false)
+  }, [amount, user?.payoutLimit])
+
   return (
         <div className='flex flex-col items-center mx-auto max-w-[472px]'>
             <div className=' flex items-center gap-2 mb-6'>
@@ -43,7 +52,7 @@ const AmontPayout = () => {
             </div>
             <div
                 className={classNames('w-full max-w-[472px] p-6 bg-swOrange text-sm font-Barlow font-medium cta-tr-corner duration-300',
-                  isError ? 'block' : 'hidden'
+                  isLimitError ? 'block' : 'hidden'
                 )}
             >
             <div className='w-max flex items-center gap-2 py-1 px-3 rounded-full border text border-darkSecondary  '>
@@ -51,7 +60,7 @@ const AmontPayout = () => {
                 <p className='uppercase tracking-[1.12px] '>Daily payout limit exceeded</p>
             </div>
             <p className='max-w-[346px] pt-4 font-normal [&>span]:font-semibold '>
-                You can payout a maximum of <span>${format(750.50)}</span> due to the <span>${format(1000)}</span> daily payout limit.
+                You can payout a maximum of <span>${format(user?.payoutLimit ?? 10000)}</span> due to the <span>${format(100000)}</span> daily payout limit.
             </p>
             </div>
             <PaperPayout title='Set payout amount' >
@@ -73,12 +82,13 @@ const AmontPayout = () => {
                               ? <input
                                    ref={inputRef}
                                    type='number'
-                                   value={amount === 0 ? '' : amount }
+                                   value={amount === 0 ? '' : amount / 100 }
                                    onChange={onChange}
                                    onBlur={() => { setShowInput(false) }}
                                    className='bg-transparent w-14 outline-none text-white'
                                  />
-                              : <span className=' tracking-widest '>{format(amount)}</span>}
+                              : <span className=' tracking-widest '>{format(amount)}
+                                </span>}
 
                         </div>
                         <div
@@ -93,12 +103,13 @@ const AmontPayout = () => {
                          </div>
                         <div className='w-4 absolute -left-[6px] bottom-1 border border-b border-graySecondary rotate-45'/>
                     </div>
-                    <p className='mx-auto font-normal'><span className='text-graySecondary'>Daily payout limit</span> $1,000.00 ($1,000.00 left)</p>
+                    <p className='mx-auto font-normal'><span className='text-graySecondary'>Daily payout limit</span>{`$1,000.00 ( $${format(user?.payoutLimit ?? 100000)} left )`}</p>
                     <div className='h-12 mt-[20%]'>
                         <Button
                             text='NEXT'
-                            className='w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest text-21 font-medium hover:brightness-110 '
-                            onClick={() => { setPayoutStep('method') }}
+                            className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest text-21 font-medium hover:brightness-110',
+                              amount === 0 || isLimitError ? 'opacity-50 grayscale pointer-events-none' : '')}
+                            onClick={() => { if (amount > 0) setPayoutStep('method') }}
                         />
                     </div>
                 </>

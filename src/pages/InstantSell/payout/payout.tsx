@@ -5,18 +5,23 @@ import MethodsPayout from './MethodsPayout'
 import { usePayoutContext } from '../../../context/PayoutContext'
 import SummaryPayout from './SummaryPayout'
 import { useCallback, useEffect } from 'react'
-import { getPayoutMethods } from '../../../services/payout/payout'
+import { getPayoutDailyLimits, getPayoutMethods } from '../../../services/payout/payout'
+import { IsUserLogged } from '../../../components/IsUserLogged/IsUserLogged'
+import { useAppContext } from '../../../context/AppContext'
 
 export const Payout = () => {
+  const { userUpdate } = useAppContext()
   const { payoutStep, setPayoutMethods } = usePayoutContext()
 
-  const getAvailableMethods = useCallback(async () => {
+  const getAvailableMethodsAndDailyLimit = useCallback(async () => {
     const methods = await getPayoutMethods()
+    const { amount: payoutLimit } = await getPayoutDailyLimits()
+    userUpdate({ payoutLimit })
     setPayoutMethods(methods)
   }, [])
 
   useEffect(() => {
-    void getAvailableMethods()
+    void getAvailableMethodsAndDailyLimit()
   }, [])
   return (
     <>
@@ -24,15 +29,17 @@ export const Payout = () => {
         <div className='flex justify-between h-[50px] border-b border-solid border-darkGrey px-[8px]'>
           <Nav />
         </div>
-        <div className='px-[24px] py-[30px] '>
-          {payoutStep === 'amount'
-            ? <AmontPayout />
-            : payoutStep === 'method'
-              ? <MethodsPayout />
-              : <SummaryPayout />
-          }
+        <IsUserLogged>
+          <div className='px-[24px] py-[30px] '>
+            {payoutStep === 'amount'
+              ? <AmontPayout />
+              : payoutStep === 'method'
+                ? <MethodsPayout />
+                : <SummaryPayout />
+            }
+          </div>
+        </IsUserLogged>
 
-        </div>
       </div>
     </>
   )

@@ -1,21 +1,21 @@
 import { Nav } from '../controls/nav'
 import { Filters } from '../controls/filters'
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { NotLogged } from '../../../components/NotLogged/NotLogged'
+import { IsUserLogged } from '../../../components/IsUserLogged/IsUserLogged'
 import ItemCard from '../../../components/Content/ItemCard'
 import SellsBar from './SellsBar'
 import { type TInventoryCard } from '../../../types/Card'
 import { useAppContext } from '../../../context/AppContext'
 import { sortData } from '../../../helpers/sortData'
 import { useSort } from '../../../helpers/useSort'
-import { USER } from '../../../mock/user'
 import { getInventory } from '../../../services/inventory/inventory'
+import SymbolIcon from './SymbolIcon'
 
 export const Inventory = () => {
   const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])
   const [selectedCards, setSellectedCards] = useState<TInventoryCard[]>([])
   const [isSelectedAll, setSelectedAll] = useState(false)
-  const { user, userUpdate, gameId } = useAppContext()
+  const { user, gameId } = useAppContext()
   const { currentOption, toggleSort } = useSort()
 
   const sorted = useMemo(() => sortData(renderCards, 'price', currentOption), [renderCards, currentOption])
@@ -72,8 +72,9 @@ export const Inventory = () => {
             isAsc= { currentOption === 'ASC' }
           />
         </div>
-        {
-          user && renderCards.length
+        <IsUserLogged>
+          {
+          renderCards.length
             ? <div className='px-[24px] py-[30px] grid grid-cols-cards gap-1'>
               {sorted.map(card =>
                     <ItemCard
@@ -85,10 +86,12 @@ export const Inventory = () => {
               )
               }
               </div>
-            : <NotLogged
-              onLogIn={() => { userUpdate(USER) }}
-           />
-        }
+            : <div className='flex flex-col items-center justify-center w-full h-full text-skinwallerGray font-medium gap-4'>
+                <SymbolIcon />
+                <p>No items to select</p>
+              </div>
+          }
+        </IsUserLogged>
       </div>
       <SellsBar selectedCards={selectedCards} onClose={toggleSelect} />
     </div>

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import PaperPayout from './PaperPayout'
 import { usePayoutContext } from '../../../context/PayoutContext'
-import { format } from '../../../helpers/numberFormater'
+import { convertToBacks, format } from '../../../helpers/numberFormater'
 import { Button } from '../../../components/Navigation'
 import ExclamationStarIcon from '../../../components/icons/ExclamationStarIcon'
 import { PAYOUT_METHODS } from '../../../constants/payout-methods'
@@ -13,18 +13,17 @@ import { NavLink } from 'react-router-dom'
 import { REGEX } from '../../../constants/regex'
 import { payout } from '../../../services/payout/payout'
 import InputWithBtn from '../../../components/Content/InputWithBtn'
-
-type TMethodState = Record<string, { isSelected: boolean, methodAccount: string }>
+import { useAppContext } from '../../../context/AppContext'
 
 const MethodsPayout = () => {
   const [isAcceptedPolicy, setIsAcceptedPolicy] = useState(false)
-  const [methodsState, setSelecteMethod] = useState<TMethodState>(
-    PAYOUT_METHODS.reduce((acc, method) =>
-      ({ ...acc, [method.name]: { isSelected: false, methodAccount: '' } }), {})
-  )
+
+  const { userUpdate } = useAppContext()
   const {
     amount,
+    methodsState,
     availableMethods,
+    setSelecteMethod,
     setPayoutStep
   } = usePayoutContext()
 
@@ -64,8 +63,8 @@ const MethodsPayout = () => {
     })
   }
   const handleSubmit = async () => {
-    const data = await payout({ amount })
-    console.log(data, 'sddadas datad')
+    const { new_balance: balance } = await payout({ amount })
+    userUpdate({ balance })
     setPayoutStep('summary')
   }
   return (
@@ -93,7 +92,7 @@ const MethodsPayout = () => {
                     </div>
                     {PAYOUT_METHODS.map((method, idx) =>
                         <React.Fragment key={method.name}>
-                            {idx === 2 && amount < 50 &&
+                            {idx === 2 && convertToBacks(amount) < 50 &&
                                 <div className='w-full flex items-center gap-2 px-2 py-1 text-sm text-darkSecondary font-normal bg-yellow-1e '>
                                     <ExclamationTriangleFilled />
                                     Minimum payout amount is $50.00
@@ -101,7 +100,7 @@ const MethodsPayout = () => {
                             <div
                                 className={classNames('flex flex-col mb-2  text-swLime bg-gray-29 cta-clip-path',
                                   currentMethod === method.name ? 'border-2 border-swLime' : '',
-                                  Object.keys(availableMethods).includes(method.name) ? '' : 'opacity-30 grayscale pointer-events-none')}
+                                  Object.keys(availableMethods).includes(method.name) && !(idx === 2 && convertToBacks(amount) < 50) ? '' : 'opacity-30 grayscale pointer-events-none')}
                             >
                                 <div className='flex items-center justify-between p-4'>
                                     <div
@@ -187,9 +186,9 @@ const MethodsPayout = () => {
                         <Button
                             text={currentMethod ? `process payout [$${format(amount)}]` : 'select a payment method'}
                             onClick={() => { void handleSubmit() }}
-                            disabled={!isAcceptedPolicy || !methodsState[currentMethod].methodAccount }
+                            disabled={!isAcceptedPolicy || !methodsState[currentMethod]?.methodAccount }
                             className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest uppercase text-21 font-medium hover',
-                              isAcceptedPolicy && methodsState[currentMethod].methodAccount ? '' : 'pointer-events-none')}
+                              isAcceptedPolicy && methodsState[currentMethod]?.methodAccount ? '' : 'pointer-events-none opacity-50 grayscale')}
                         />
                     </div>
 

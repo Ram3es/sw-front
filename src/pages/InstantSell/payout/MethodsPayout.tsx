@@ -70,7 +70,7 @@ const MethodsPayout = () => {
   }
 
   useEffect(() => {
-    if (convertToBacks(amount) < 50 && currentMethod === 'crypto') {
+    if (convertToBacks(amount) < 50) {
       setIsCryptoErr(true)
       return
     }
@@ -195,9 +195,8 @@ const MethodsPayout = () => {
                         <Button
                             text={currentMethod ? `process payout [$${format(amount)}]` : 'select a payment method'}
                             onClick={() => { void handleSubmit() }}
-                            disabled={!isAcceptedPolicy || !methodsState[currentMethod]?.methodAccount || isCryptoErr }
                             className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest uppercase text-21 font-medium hover',
-                              isAcceptedPolicy && methodsState[currentMethod]?.methodAccount && !isCryptoErr ? '' : 'pointer-events-none opacity-50 grayscale')}
+                              isAcceptedPolicy && methodsState[currentMethod]?.methodAccount && !(isCryptoErr && currentMethod === 'crypto') ? '' : 'pointer-events-none opacity-50 grayscale')}
                         />
                     </div>
 

@@ -26,7 +26,7 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
 
   const totalWorth = selectedCards.reduce((acc, val) => acc + val.price, 0)
   return (
-        <div className={classNames('sticky flex flex-col  max-w-[429px] w-full gap-6 p-8 text-skinwallerGray font-Barlow side-bar-gradient cta-clip-path duration-100', shouldHide ? 'h-[calc(100vh-60px)] top-[60px]' : 'h-[calc(100vh-120px)] top-[120px]')}>
+        <div className={classNames('sticky flex flex-col max-w-[429px] w-full gap-6 p-8 text-skinwallerGray font-Barlow side-bar-gradient cta-clip-path duration-100', shouldHide ? ' max-h-[calc(100vh-60px)]  top-[60px]' : ' max-h-[calc(100vh-120px)] top-[120px]')}>
             <div className='relative'>
                 <input
                     type='text'
@@ -41,7 +41,7 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                     className='absolute top-0 right-0 h-full text-base font-medium text-darkGrey bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer cta-clip-path '
                 />
             </div>
-            <div className='flex-grow'>
+            <div className='flex-grow flex flex-col overflow-hidden h-1/2'>
                 <div className='flex items-center justify-between font-medium'>
                     <h5 className='text-lg uppercase tracking-widest'>Selection overview</h5>
                     <div className='flex items-center gap-2'>
@@ -49,23 +49,22 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                         <InformationIcon iconClasses='w-4 h-4' />
                     </div>
                 </div>
-                <div className=' relative flex flex-col gap-y-3 h-full max-h-[523px] show-scrollbar overflow-y-auto pt-5'>
+                <div className=' relative flex flex-col flex-grow show-scrollbar overflow-y-auto gap-y-3  py-2'>
                     {selectedCards.length
-                      ? selectedCards.map(card =>
-                            <ItemSelectedCard key={card.id} onClick={() => { onClose(card) }} {...card} />
-                      )
+                      ? (
+                          selectedCards.map(card => <ItemSelectedCard key={card.id} onClick={() => { onClose(card) }} {...card} />)
+                        )
                       : (
-                            <div className='flex flex-col items-center mx-auto mt-[40%] font-medium gap-4'>
+                            <div className='flex flex-col items-center my-auto font-medium gap-4'>
                                 <SymbolIcon />
                                 <p>Select items from your inventory.</p>
                                 <p className='text-center max-w-[230px]'>You can choose up to 100 items per single transaction</p>
-
                             </div>
                         )
                     }
                 </div>
             </div>
-            <div className=' border-b border-white/10 -mt-6' />
+            <div className=' border-b border-white/10 mt-6' />
             <div className='flex justify-between items-center text-sm font-medium'>
                 <h6 className='text-white tracking-widest uppercase'>$50 to next bonus tier</h6>
                 <div className='flex items-center gap-2 tracking-widest'>
@@ -99,7 +98,7 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                     </NavLink>.
                 </p>
             </div>
-            <div className='h-12 relative overflow-hidden'>
+            <div className='min-h-12 relative overflow-hidden'>
                 <Button
                     text={`GET $${format(totalWorth)}`}
                     onClick={() => { console.log('sell') }}

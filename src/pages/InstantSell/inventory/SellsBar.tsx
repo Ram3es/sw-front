@@ -41,7 +41,7 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                     className='absolute top-0 right-0 h-full text-base font-medium text-darkGrey bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer cta-clip-path '
                 />
             </div>
-            <div className='flex-grow flex flex-col '>
+            <div className='flex-grow flex flex-col overflow-hidden h-1/2'>
                 <div className='flex items-center justify-between font-medium'>
                     <h5 className='text-lg uppercase tracking-widest'>Selection overview</h5>
                     <div className='flex items-center gap-2'>
@@ -98,7 +98,7 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                     </NavLink>.
                 </p>
             </div>
-            <div className='h-12 relative overflow-hidden'>
+            <div className='min-h-12 relative overflow-hidden'>
                 <Button
                     text={`GET $${format(totalWorth)}`}
                     onClick={() => { console.log('sell') }}

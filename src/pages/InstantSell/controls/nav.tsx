@@ -7,7 +7,7 @@ export const Nav = () => {
   return (
     <div className='flex items-center'>
       <Link
-        to='/instant-sell'
+        to='/panel/instant-sell'
         text='your inventory'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
@@ -15,7 +15,7 @@ export const Nav = () => {
         withBorder
       />
       <Link
-        to='/instant-sell/payout'
+        to='/panel/instant-sell/payout'
         text='payout'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
@@ -23,7 +23,7 @@ export const Nav = () => {
         withBorder
       />
       <Link
-        to='/instant-sell/bonus'
+        to='/panel/instant-sell/bonus'
         text='bonus'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'

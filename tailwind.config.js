@@ -21,10 +21,11 @@ export default {
         swOrange:'#FF8F27',
         swLightOrange: '#FFD7BC',
         swLightYellow: '#FFE8AE',
+        swRed: '#ed2424',
         'yellow-1e':'#FFC01E',
         'gray-29':'#29292C',
         'gray-40':'#404043',
-        'gray-42':'#424242'
+        'gray-42':'#424242',
       },
       fontSize:{
         11: '0.6875rem',

@@ -1,4 +1,5 @@
 import Bar from '../../components/Bar/Bar'
+import MarketLanding from '../Market/MarketLanding'
 
 export default function Buy () {
   return (
@@ -9,6 +10,7 @@ export default function Buy () {
         </div>
       </Bar>
       <div className='text-white'>111</div>
+      <MarketLanding />
     </>
   )
 }

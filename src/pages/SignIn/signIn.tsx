@@ -26,7 +26,7 @@ export default function SignIn () {
       <div className=" flex flex-col items-center w-full max-w-[512px] py-20 text-white ">
         <h1 className="text-5xl uppercase mb-16 ">Welcome Back</h1>
         <Link
-          to={`${API_BASE_URL}/auth/steam?continue=/panel${location?.state?.from as string || getvalueFromSearchString(location?.search, 'continue') || ''}`}
+          to={`${API_BASE_URL}/auth/steam?continue=${location?.state?.from as string || getvalueFromSearchString(location?.search, 'continue') || ''}`}
           text='login with steam'
           icon
           wrapperStyles='w-full h-14 '

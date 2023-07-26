@@ -9,7 +9,7 @@ export default function InstantSell () {
           <h1 className='text-white font-["Barlow"] text-[21px] font-medium'>INSTANT SELL</h1>
         </div>
       </Bar>
-        <Outlet />
+      <Outlet />
     </>
   )
 }

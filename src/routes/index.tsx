@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         path: 'panel',
         children: [
           {
-            path: 'instant-sell',
+            path: 'deposit',
             element: <InstantSell />,
             children: [
               {
@@ -49,10 +49,6 @@ const router = createBrowserRouter([
             ]
           },
           {
-            path: 'sign-in',
-            element: <SignIn />
-          },
-          {
             path: 'profile',
             element: <Profile />
           },
@@ -68,12 +64,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'market',
-        children: [
-          {
-            path: 'buy',
-            element: <Buy />
-          }
-        ]
+        element: <Buy />
+      },
+      {
+        path: 'sign-in',
+        element: <SignIn />
       }
     ]
   }

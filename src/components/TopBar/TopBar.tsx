@@ -108,12 +108,12 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           </NavDropdown>
           <div className="p-0 border-l border-white h-[32px] opacity-10 mx-4"></div>
           <Link
-            to="/market/buy"
+            to="/market"
             className="font-medium text-skinwallerGray hover:text-white"
             wrapperStyles="h-[56px]"
             text="buy"
             icon
-            active={pathname.includes('/buy')}
+            active={pathname.includes('/market')}
             withBorder
           >
             <StoreIcon />
@@ -200,7 +200,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             : (
             <>
               <Link
-                to="/panel/sign-in"
+                to="/sign-in"
                 className="mr-[20px] font-medium text-skinwallerGray hover:text-white"
                 text="Log in"
                 state={{ from: pathname }}

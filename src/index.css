@@ -115,10 +115,14 @@ input[type='number'] {
 }
 .slick-slide {
   padding: 0 2px;
+  flex:auto;
+  height: auto;
 }
-.slide {
-  width: 200px;
-  background: red;
+.slick-slide > div {
+  height: 100%;
+}
+.slick-track {
+  display: flex;
 }
 /* .slick-active {
   width: fit-content;

@@ -12,6 +12,7 @@ import Footer from '../../components/footer/Footer'
 import SliderCard from '../../components/slider/Slider'
 import PlusIcon from '../../components/icons/PlusIcon'
 import { SETTINGS as hotSliderSettings, newlySliderSettings } from '../../constants/slider-settings'
+import { ECardVariant } from '../../types/Card'
 
 const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
   return (
@@ -87,7 +88,13 @@ const MarketLanding = () => {
                   totalSkins={34775}
                 />
                 <SliderCard settings={hotSliderSettings} >
-                  {USER_INVENTORY.map((card) => <ItemCard key={card.id} isSelected={false} onClick={() => { console.log('click') }} {...card} />)}
+                  {USER_INVENTORY.map((card) =>
+                    <ItemCard
+                      key={card.id}
+                      variant={ECardVariant.market}
+                      onClick={() => { console.log('click') }}
+                      submitFn={() => {}}
+                      {...card} />)}
                 </SliderCard>
               </div>
               <div className='w-full h-full flex flex-col mt-8 '>
@@ -98,7 +105,14 @@ const MarketLanding = () => {
                   totalSkins={51344}
                 />
                 <SliderCard settings={newlySliderSettings} >
-                  {USER_INVENTORY.map((card) => <ItemCard key={card.id} isSelected={false} onClick={() => { console.log('click') }} {...card} />)}
+                  {USER_INVENTORY.map((card) =>
+                    <ItemCard
+                      key={card.id}
+                      variant={ECardVariant.market}
+                      onClick={() => { console.log('click') }}
+                      submitFn={() => {}}
+                      {...card}
+                      />)}
                 </SliderCard>
               </div>
               <LandingInfo />

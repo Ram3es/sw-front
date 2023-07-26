@@ -1,6 +1,6 @@
 import { CONDITIONS } from '../../constants/item-conditions'
 import { format } from '../../helpers/numberFormater'
-import { type CardItem, type ConditionItem } from '../../types/Card'
+import { ECardVariant, type CardItem, type ConditionItem } from '../../types/Card'
 import { Button } from '../Navigation'
 import Checkbox from './Checkbox'
 import { ReactComponent as ClockIcon } from './images/clock.svg'
@@ -24,13 +24,26 @@ function classNames (...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const ItemCard = ({ isTradable, timeToTrade, image, isSelected, isNoFee, price, name, type, condition, onClick }: CardItem) => {
+const ItemCard = ({
+  isTradable,
+  timeToTrade,
+  image,
+  isSelected,
+  isNoFee,
+  price, name,
+  type,
+  condition,
+  onClick,
+  submitFn,
+  variant
+}: CardItem) => {
   const conditionObj = findNearestMaxValue(CONDITIONS, condition)
 
   return (
-    <div className={classNames('relative',
+    <div className={classNames('relative h-full group/card ',
       isTradable && !isSelected ? 'group hover:-translate-y-4 hover:z-20 duration-75' : '',
-      isSelected ? 'shadow-checkedCard' : ''
+      isSelected ? 'shadow-checkedCard' : '',
+      variant ?? ''
     )}>
       <div
         className={classNames('absolute left-0 top-0 w-full h-full border border-b-[3px] group-hover:border-0 group-hover:bg-darkGrey card-clip-path',
@@ -80,9 +93,9 @@ const ItemCard = ({ isTradable, timeToTrade, image, isSelected, isNoFee, price, 
                   : timeToTrade ? `${timeToTrade} hours` : "Can't trade"}
                 </span>}
             </div>
-            <div className='text-swViolet'>
+            <div className='text-swViolet group-[.market]/card:hidden'>
               <Checkbox
-                checked={isSelected}
+                checked={isSelected ?? false}
               />
             </div>
           </div>
@@ -131,8 +144,10 @@ const ItemCard = ({ isTradable, timeToTrade, image, isSelected, isNoFee, price, 
         </div>
       </div>
       <Button
-        className='justify-center z-10 hidden group-hover:flex absolute left-0 top-full mr-[20px] text-base w-full h-10 uppercase font-semibold text-darkSecondary border border-skinwalletPink bg-skinwalletPink cta-clip-path role-button'
-        text="add to sale"
+        className={classNames('justify-center z-10 hidden group-hover:flex  absolute left-0 top-full mr-[20px] text-base w-full h-[40px] uppercase font-semibold text-darkSecondary border border-skinwalletPink bg-skinwalletPink cta-clip-path role-button',
+          variant === ECardVariant.market ? 'hover:opacity-50' : '')}
+        text={variant === ECardVariant.market ? 'add to cart' : 'add to sale'}
+        onClick={submitFn}
       />
     </div>
   )

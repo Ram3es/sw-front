@@ -108,23 +108,23 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           </NavDropdown>
           <div className="p-0 border-l border-white h-[32px] opacity-10 mx-4"></div>
           <Link
-            to="/buy"
+            to="/market"
             className="font-medium text-skinwallerGray hover:text-white"
             wrapperStyles="h-[56px]"
             text="buy"
             icon
-            active={pathname.includes('/buy')}
+            active={pathname.includes('/market')}
             withBorder
           >
             <StoreIcon />
           </Link>
           <Link
-            to="/instant-sell"
+            to="/panel/deposit"
             className="font-medium text-skinwallerGray hover:text-white"
             wrapperStyles="h-[56px]"
             text="instant sell"
             icon
-            active={pathname.includes('/instant-sell')}
+            active={pathname.includes('/deposit')}
             withBorder
           >
             <USDCircleIcon />
@@ -188,7 +188,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                   className="uppercase font-medium text-skinwallerGray hover:text-white"
                 />
                 <Link
-                  to="/cart"
+                  to="/panel/cart"
                   className="font-medium text-skinwallerGray hover:text-white"
                   icon
                 >

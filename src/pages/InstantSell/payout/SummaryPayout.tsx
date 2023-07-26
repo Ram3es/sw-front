@@ -16,7 +16,7 @@ const SummaryPayout = () => {
   const navigate = useNavigate()
 
   const handleViewMore = () => {
-    navigate('/instant-sell', { replace: true })
+    navigate('/deposit', { replace: true })
     setPayoutStep('amount')
     setAmount(0)
   }

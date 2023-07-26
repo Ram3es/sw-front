@@ -1,5 +1,5 @@
 import Bar from '../../components/Bar/Bar'
-import MarketLanding from '../Market/MarketLanding'
+import { Outlet } from 'react-router-dom'
 
 export default function Buy () {
   return (
@@ -9,8 +9,7 @@ export default function Buy () {
           <h1 className='text-white font-["Barlow"] text-[21px] font-medium'>MARKET</h1>
         </div>
       </Bar>
-      <div className='text-white'>111</div>
-      <MarketLanding />
+      <Outlet />
     </>
   )
 }

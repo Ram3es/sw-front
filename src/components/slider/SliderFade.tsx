@@ -9,22 +9,22 @@ import { Link } from 'react-router-dom'
 const SliderFade = () => {
   return (
         <Slider {...fadeSliderSettings} >
-            <div>
-              <div className='w-full h-6 flex justify-center items-center gap-2 text-sm'>
+            <div className='h-full'>
+              <div className='w-full h-12 flex justify-center items-center gap-2 text-sm'>
                 <Support className='w-4 h-4' />
                 <span className='uppercase '> 24/7 support</span>
                 <span className='text-graySecondary'>Friendly customer service is there for you anytime you need.</span>
               </div>
             </div>
             <div>
-              <div className='w-full h-6 flex justify-center items-center gap-2 text-sm'>
+              <div className='w-full h-12 flex justify-center items-center gap-2 text-sm'>
                 <Shield />
                 <span className='uppercase'>100% secure</span>
                 <span className='text-graySecondary'>All transactions are thoroughly monitored, so your money and skins are safe.</span>
               </div>
             </div>
             <div>
-              <div className='w-full h-6 flex justify-center items-center gap-2 text-sm'>
+              <div className='w-full h-12 flex justify-center items-center gap-2 text-sm'>
                 <Gift />
                 <span className='uppercase'>+600 GIFT CARD PAYOUTS</span>
                 <span className='text-graySecondary'>Vanilla Visa, Amazon, PlayStation Store, Xbox Games Store, Best Buy and</span>
@@ -37,7 +37,7 @@ const SliderFade = () => {
               </div>
             </div>
             <div>
-              <div className='w-full flex justify-center items-center gap-2 text-sm'>
+              <div className='w-full h-12 flex justify-center items-center gap-2 text-sm'>
                 <span className='text-lg'>Average</span>
                 <span className='text-lg'>STARS</span>
               </div>

@@ -38,7 +38,7 @@ const MarketLanding = () => {
   return (
         <div className='flex flex-col items-center w-full'>
           <div className='w-full h-12 flex justify-center items-center bg-darkGrey text-white'>
-            <div className='w-[800px]'>
+            <div className='w-[800px] h-full '>
               <SliderFade />
             </div>
           </div>

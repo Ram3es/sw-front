@@ -7,27 +7,27 @@ export const Nav = () => {
   return (
     <div className='flex items-center'>
       <Link
-        to='/panel/instant-sell'
+        to='/panel/deposit'
         text='your inventory'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
-        active={ pathname === '/instant-sell' }
+        active={ pathname === '/deposit' }
         withBorder
       />
       <Link
-        to='/panel/instant-sell/payout'
+        to='/panel/deposit/payout'
         text='payout'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
-        active={ pathname === '/instant-sell/payout' }
+        active={ pathname === '/deposit/payout' }
         withBorder
       />
       <Link
-        to='/panel/instant-sell/bonus'
+        to='/panel/deposit/bonus'
         text='bonus'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
-        active={ pathname === '/instant-sell/bonus' }
+        active={ pathname === '/deposit/bonus' }
         withBorder
       />
     </div>

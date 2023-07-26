@@ -21,7 +21,7 @@ const router = createBrowserRouter([
         path: 'panel',
         children: [
           {
-            path: 'instant-sell',
+            path: 'deposit',
             element: <InstantSell />,
             children: [
               {

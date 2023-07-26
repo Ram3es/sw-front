@@ -119,12 +119,12 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             <StoreIcon />
           </Link>
           <Link
-            to="/panel/instant-sell"
+            to="/panel/deposit"
             className="font-medium text-skinwallerGray hover:text-white"
             wrapperStyles="h-[56px]"
             text="instant sell"
             icon
-            active={pathname.includes('/instant-sell')}
+            active={pathname.includes('/deposit')}
             withBorder
           >
             <USDCircleIcon />

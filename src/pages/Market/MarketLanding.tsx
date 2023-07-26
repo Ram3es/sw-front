@@ -5,11 +5,31 @@ import SellBaner from '../../assets/img/market/sell-instantly-banner.png'
 import { ReactComponent as HotIcon } from '../../assets/img/market/hot.svg'
 import { ReactComponent as ArrowRight } from '../../assets/img/market/arrow-right.svg'
 import { Button } from '../../components/Navigation'
-import SliderCard from '../../components/slider/Slider'
 import { USER_INVENTORY } from '../../mock/inventory'
 import ItemCard from '../../components/Content/ItemCard'
 import LandingInfo from './LandingInfo'
 import Footer from '../../components/footer/Footer'
+import SliderCard from '../../components/slider/Slider'
+import PlusIcon from '../../components/icons/PlusIcon'
+import { SETTINGS as hotSliderSettings, newlySliderSettings } from '../../constants/slider-settings'
+
+const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
+  return (
+    <div className=' w-full flex items-center justify-between text-graySecondary'>
+      <div className='flex items-center gap-2 text-swRed'>
+          <h2 className='text-24 uppercase tracking-[1.2px] text-white '>{title}</h2>
+          {icon}
+      </div>
+      <Link
+        to={path}
+        className='uppercase flex items-center gap-2 hover:text-white duration-200'
+      >
+          <span className='tracking-[1.12px]'>{`see all ${(totalSkins).toLocaleString('en-US')} skins`}</span>
+          <ArrowRight />
+      </Link>
+     </div>
+  )
+}
 
 const MarketLanding = () => {
   const navigate = useNavigate()
@@ -59,22 +79,26 @@ const MarketLanding = () => {
                 <img src={SellBaner} alt='SellBaner' className='w-full' />
             </div>
             <div className='w-full flex flex-col max-w-[1160px]'>
-              <div className=' w-full flex items-center justify-between text-graySecondary'>
-                  <div className='flex items-center gap-2 text-swRed'>
-                      <h2 className='text-24 uppercase tracking-[1.2px] text-white '>hot offers</h2>
-                      <HotIcon />
-                  </div>
-                  <Link
-                    to=''
-                    className='uppercase flex items-center gap-2 hover:text-white duration-200'
-                  >
-                      <span className='tracking-[1.12px]'>{`see all ${(513444).toLocaleString('en-US')} skins`}</span>
-                      <ArrowRight />
-                  </Link>
+              <div className='w-full h-full flex flex-col '>
+                <SkinsCategoriesTitle
+                  path='/'
+                  title='hot offers'
+                  icon={<HotIcon className='text-swRed' />}
+                  totalSkins={34775}
+                />
+                <SliderCard settings={hotSliderSettings} >
+                  {USER_INVENTORY.map((card) => <ItemCard key={card.id} isSelected={false} onClick={() => { console.log('click') }} {...card} />)}
+                </SliderCard>
               </div>
-              <div className='w-full h-full '>
-                <SliderCard length = {USER_INVENTORY.length}>
-                  {USER_INVENTORY.map((card) => <ItemCard key={card.id} isSelected={false} onClick={() => {}} {...card} />)}
+              <div className='w-full h-full flex flex-col mt-8 '>
+                <SkinsCategoriesTitle
+                  path='/'
+                  title='newly listed'
+                  icon={<PlusIcon />}
+                  totalSkins={51344}
+                />
+                <SliderCard settings={newlySliderSettings} >
+                  {USER_INVENTORY.map((card) => <ItemCard key={card.id} isSelected={false} onClick={() => { console.log('click') }} {...card} />)}
                 </SliderCard>
               </div>
               <LandingInfo />

@@ -6,7 +6,7 @@ import LanguagePicker from '../Content/LanguagePicker'
 
 const Footer = () => {
   return (
-        <div className=' w-full bg-black py-8 px-6 text-graySecondary'>
+        <div className=' w-full bg-black pt-8 pb-20 px-6 text-graySecondary'>
           <div className='grid grid-cols-[1fr_3fr_1fr] '>
             <div className='flex flex-col justify-between text-xs ' >
                <div className='min-w-[200px] mr-[120px]'>Powered by Steam. Not affiliated with Valve Corp.</div>

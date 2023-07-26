@@ -96,3 +96,35 @@ input[type='number'] {
 .each-capitalized:first-line {
   text-transform: capitalize;
 }
+
+/* react-slick styles */
+.slick-next::before,
+.slick-prev::before{
+  content: '';
+}
+.slick-prev{
+  top: 45%;
+  left: -40px;
+}
+.slick-next{
+  top: 45%;
+  right: -30px;
+}
+.slick-disabled {
+  visibility: hidden;
+}
+.slick-slide {
+  padding: 0 2px;
+}
+.slide {
+  width: 200px;
+  background: red;
+}
+/* .slick-active {
+  width: fit-content;
+} */
+/* .slick-initialized {
+  width: auto ;
+  display: flex;
+  flex-direction: row;
+} */

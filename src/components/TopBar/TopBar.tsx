@@ -108,7 +108,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           </NavDropdown>
           <div className="p-0 border-l border-white h-[32px] opacity-10 mx-4"></div>
           <Link
-            to="/buy"
+            to="/market/buy"
             className="font-medium text-skinwallerGray hover:text-white"
             wrapperStyles="h-[56px]"
             text="buy"
@@ -119,7 +119,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             <StoreIcon />
           </Link>
           <Link
-            to="/instant-sell"
+            to="/panel/instant-sell"
             className="font-medium text-skinwallerGray hover:text-white"
             wrapperStyles="h-[56px]"
             text="instant sell"
@@ -188,7 +188,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                   className="uppercase font-medium text-skinwallerGray hover:text-white"
                 />
                 <Link
-                  to="/cart"
+                  to="/panel/cart"
                   className="font-medium text-skinwallerGray hover:text-white"
                   icon
                 >
@@ -200,7 +200,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             : (
             <>
               <Link
-                to="/sign-in"
+                to="/panel/sign-in"
                 className="mr-[20px] font-medium text-skinwallerGray hover:text-white"
                 text="Log in"
                 state={{ from: pathname }}

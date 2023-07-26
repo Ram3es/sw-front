@@ -18,56 +18,65 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: '/instant-sell',
-        element: <InstantSell />,
+        path: 'panel',
         children: [
           {
-            index: true,
-            element: <Inventory />
-          },
-          {
-            path: 'payout',
-            element: <Payout />,
+            path: 'instant-sell',
+            element: <InstantSell />,
             children: [
               {
                 index: true,
-                element: <AmontPayout />
+                element: <Inventory />
               },
               {
-                path: 'method',
-                element: <MethodsPayout />
+                path: 'payout',
+                element: <Payout />,
+                children: [
+                  {
+                    index: true,
+                    element: <AmontPayout />
+                  },
+                  {
+                    path: 'method',
+                    element: <MethodsPayout />
+                  }
+                ]
+              },
+              {
+                path: 'bonus',
+                element: <Bonus />
               }
-
             ]
           },
           {
-            path: 'bonus',
-            element: <Bonus />
+            path: 'sign-in',
+            element: <SignIn />
+          },
+          {
+            path: 'profile',
+            element: <Profile />
+          },
+          {
+            path: 'payout',
+            element: <Payouts />
+          },
+          {
+            path: 'transactions',
+            element: <TransactionsPage />
           }
         ]
       },
       {
-        path: 'sign-in',
-        element: <SignIn />
-      },
-      {
-        path: 'profile',
-        element: <Profile />
-      },
-      {
-        path: 'payout',
-        element: <Payouts />
-      },
-      {
-        path: 'buy',
-        element: <Buy />
-      },
-      {
-        path: 'transactions',
-        element: <TransactionsPage />
+        path: 'market',
+        children: [
+          {
+            path: 'buy',
+            element: <Buy />
+          }
+        ]
       }
     ]
   }
-], { basename: '/panel' })
+], { basename: '/' })
 
 export default router

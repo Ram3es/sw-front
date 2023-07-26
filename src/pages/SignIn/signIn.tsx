@@ -29,6 +29,7 @@ export default function SignIn () {
           to={`${API_BASE_URL}/auth/steam?continue=${location?.state?.from as string || getvalueFromSearchString(location?.search, 'continue') || ''}`}
           text='login with steam'
           icon
+          reloadDocument={true}
           wrapperStyles='w-full h-14 '
           className=' justify-center text-lg text-white w-full h-full uppercase bg-darkBlue hover:opacity-80 gap-2 py-2 px-4 button'
         >

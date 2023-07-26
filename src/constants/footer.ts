@@ -2,7 +2,7 @@ export const FOOTER_LINKS = [
   [
     {
       title: 'instant sale',
-      path: '/panel/instant-sell'
+      path: '/instant-sell'
     },
     {
       title: 'market place',

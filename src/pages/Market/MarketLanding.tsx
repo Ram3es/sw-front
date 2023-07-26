@@ -9,10 +9,11 @@ import { USER_INVENTORY } from '../../mock/inventory'
 import ItemCard from '../../components/Content/ItemCard'
 import LandingInfo from './LandingInfo'
 import Footer from '../../components/footer/Footer'
-import SliderCard from '../../components/slider/Slider'
+import SliderCard from '../../components/slider/SliderCard'
 import PlusIcon from '../../components/icons/PlusIcon'
 import { SETTINGS as hotSliderSettings, newlySliderSettings } from '../../constants/slider-settings'
 import { ECardVariant } from '../../types/Card'
+import SliderFade from '../../components/slider/SliderFade'
 
 const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
   return (
@@ -36,7 +37,11 @@ const MarketLanding = () => {
   const navigate = useNavigate()
   return (
         <div className='flex flex-col items-center w-full'>
-          <div className='w-full h-12 bg-darkGrey'>info header</div>
+          <div className='w-full h-12 flex justify-center items-center bg-darkGrey text-white'>
+            <div className='w-[800px]'>
+              <SliderFade />
+            </div>
+          </div>
           <div
             className='w-full flex justify-center bg-black relative text-white'
           >

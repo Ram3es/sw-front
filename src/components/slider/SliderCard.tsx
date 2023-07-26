@@ -14,6 +14,9 @@ const SliderCard: FC<ISliderProps> = ({ children, settings }) => {
     if (sliderRef.current) {
       const slickList = sliderRef.current.innerSlider?.list
       slickList?.classList.add('py-8')
+
+      const slickTrackEl = slickList?.querySelector('.slick-track')
+      slickTrackEl?.classList.add('card')
     }
   }, [])
 
@@ -23,5 +26,4 @@ const SliderCard: FC<ISliderProps> = ({ children, settings }) => {
         </Slider>
   )
 }
-
 export default SliderCard

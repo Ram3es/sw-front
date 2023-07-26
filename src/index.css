@@ -121,7 +121,7 @@ input[type='number'] {
 .slick-slide > div {
   height: 100%;
 }
-.slick-track {
+.slick-track.card {
   display: flex;
 }
 /* .slick-active {

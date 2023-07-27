@@ -41,7 +41,7 @@ const LanguagePicker = () => {
                   // @ts-expect-error should be fixed
                   className={({ active }) =>
                     classNames(
-                      'relative cursor-default select-none py-2 pl-3 pr-9'
+                      'relative cursor-default select-none py-2 pl-3'
                     )
                   }
                   value={lang}

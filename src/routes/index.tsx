@@ -11,6 +11,7 @@ import { Payout } from '../pages/InstantSell/payout/payout'
 import { Bonus } from '../pages/InstantSell/bonus/bonus'
 import AmontPayout from '../pages/InstantSell/payout/AmontPayout'
 import MethodsPayout from '../pages/InstantSell/payout/MethodsPayout'
+import MarketLanding from '../pages/Market/MarketLanding'
 
 const router = createBrowserRouter([
   {
@@ -64,7 +65,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'market',
-        element: <Buy />
+        element: <MarketLanding />
       },
       {
         path: 'sign-in',

@@ -96,3 +96,37 @@ input[type='number'] {
 .each-capitalized:first-line {
   text-transform: capitalize;
 }
+
+/* react-slick styles */
+.card-slider .slick-list {
+  padding: 24px 0;
+}
+.card-slider .slick-track {
+  display: flex;
+  margin: 0 -2px;
+}
+.card-slider .slick-slide {
+  padding: 0 2px;
+  flex: auto;
+  height: auto;
+}
+.card-slider .slick-slide > div {
+  height: 100%;
+}
+.card-slider .slick-next::before,
+.card-slider .slick-prev::before {
+  content: '';
+}
+.card-slider .slick-prev {
+  top: 45%;
+  left: -40px;
+}
+.card-slider .slick-next {
+  top: 45%;
+  right: -30px;
+}
+.card-slider .slick-disabled {
+  visibility: hidden;
+}
+
+

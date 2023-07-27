@@ -1,11 +1,5 @@
 import { ReactComponent as SkinwalletLogo } from '../../assets/logo-skinwallet.inline.svg'
 import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
-import csgoBg from '../../assets/img/top-bar/csgo-bg.png'
-import csgoLogo from '../../assets/img/top-bar/csgo-logo.svg'
-import dotaBg from '../../assets/img/top-bar/dota-bg.png'
-import dotaLogo from '../../assets/img/top-bar/dota-logo.png'
-import tf2Bg from '../../assets/img/top-bar/tf2-bg.png'
-import tf2Logo from '../../assets/img/top-bar/tf2-logo.svg'
 
 import { StoreIcon } from '../StoreIcon/store'
 import { USDCircleIcon } from '../USDIcon/usd-circle'
@@ -22,6 +16,7 @@ import { Listbox } from '@headlessui/react'
 import { ESteamAppId } from '../../types/Inventory'
 import { format } from '../../helpers/numberFormater'
 import SearchModal from '../Content/SearcModal'
+import { gamesLinks } from '../../constants/games'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -42,27 +37,6 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     updateGameId
   } = useAppContext()
   const [, setSelected] = useState('')
-  const gamesLinks = [
-    {
-      name: 'CS:GO',
-      bg: csgoBg,
-      logo: csgoLogo,
-      id: ESteamAppId.CSGO,
-      description: 'The best knives, the coolest rifles, and many more skins!'
-    }, {
-      name: 'Dota 2',
-      bg: dotaBg,
-      logo: dotaLogo,
-      id: ESteamAppId.DOTA2,
-      description: 'Awesome wearables, bundles, gems, and more!'
-    }, {
-      name: 'Team Fortress 2',
-      bg: tf2Bg,
-      logo: tf2Logo,
-      id: ESteamAppId.TF2,
-      description: "Wearables! Armor! Weapons! We got'em all!"
-    }
-  ]
 
   return (
 <>
@@ -91,10 +65,14 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                   onClick={() => { updateGameId(game.id) }}
                 >
                   <div className={ classNames('relative w-full', gameId === game.id ? 'border border-swViolet' : '')}>
-                    <img className="w-full" src={game.bg} alt={game.name} />
-                    <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                    {game.bg
+                      ? <img className="w-full" src={game.bg} alt={game.name} />
+                      : <div className='w-[176px] h-[112px] bg-gray-500' />}
+                    {game.logo
+                      ? <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
                       <img src={game.logo} alt={game.name} />
                     </div>
+                      : ''}
                   </div>
                   <div className='uppercase text-base text-graySecondary font-["Barlow"] font-light'>
                     {game.name}

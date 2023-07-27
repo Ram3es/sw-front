@@ -14,6 +14,7 @@ import PlusIcon from '../../components/icons/PlusIcon'
 import { SETTINGS as hotSliderSettings, newlySliderSettings } from '../../constants/slider-settings'
 import { ECardVariant } from '../../types/Card'
 import SliderFade from '../../components/slider/SliderFade'
+import EmptyCard from '../../components/Content/EmptyCard'
 
 const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
   return (
@@ -100,6 +101,7 @@ const MarketLanding = () => {
                       onClick={() => { console.log('click') }}
                       submitFn={() => {}}
                       {...card} />)}
+                      <EmptyCard />
                 </SliderCard>
               </div>
               <div className='w-full h-full flex flex-col mt-8 '>
@@ -118,6 +120,7 @@ const MarketLanding = () => {
                       submitFn={() => {}}
                       {...card}
                       />)}
+                      <EmptyCard />
                 </SliderCard>
               </div>
               <LandingInfo />

@@ -123,6 +123,7 @@ input[type='number'] {
 }
 .slick-track.card {
   display: flex;
+  margin: 0 -2px;
 }
 /* .slick-active {
   width: fit-content;

@@ -1,6 +1,5 @@
-import React from 'react'
 import Slider from 'react-slick'
-import { fadeSliderSettings } from '../../constants/slider-settings'
+import { FADE_SLIDER_SETTINGS } from '../../constants/slider-settings'
 import { ReactComponent as Support } from '../../assets/img/profile/support.svg'
 import { ReactComponent as Shield } from '../../assets/img/market/shield-mark.svg'
 import { ReactComponent as Gift } from '../../assets/img/profile/gift-icon.svg'
@@ -8,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 const SliderFade = () => {
   return (
-        <Slider {...fadeSliderSettings} >
+        <Slider {...FADE_SLIDER_SETTINGS} >
             <div className='h-full'>
               <div className='w-full h-12 flex justify-center items-center gap-2 text-sm'>
                 <Support className='w-4 h-4' />

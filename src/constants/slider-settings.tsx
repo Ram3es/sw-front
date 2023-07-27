@@ -1,28 +1,28 @@
-import { type HTMLAttributes } from 'react'
 import { type Settings } from 'react-slick'
-import { ReactComponent as Chevron } from '../assets/chevron-down.svg'
+import SliderArrow from '../components/slider/SliderArrow'
 
-interface IArrowProps extends HTMLAttributes<HTMLDivElement> {
-  isLeftArrow?: boolean
+export const FADE_SLIDER_SETTINGS: Partial<Settings> = {
+  infinite: true,
+  speed: 300,
+  fade: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  draggable: false,
+  arrows: false,
+  autoplay: true,
+  autoplaySpeed: 3000,
+  cssEase: 'linear'
 }
 
-const CustomArrow = ({ className, style, onClick, isLeftArrow }: IArrowProps) => {
-  return <div
-            className={`${className ?? ''} `}
-            style={{ ...style }}
-            onClick={onClick}>
-               <Chevron className={`${isLeftArrow ? 'rotate-90 ' : '-rotate-90'} h-7 absolute top-0 fill-graySecondary hover:fill-white duration-200 cursor-pointer  ` }/>
-            </div>
-}
-
-export const SETTINGS: Partial<Settings> = {
+export const HOT_SLIDER_SETTINGS: Partial<Settings> = {
   infinite: false,
   speed: 200,
   slidesToShow: 4,
   slidesToScroll: 1,
   draggable: false,
-  nextArrow: <CustomArrow />,
-  prevArrow: <CustomArrow isLeftArrow />,
+  nextArrow: <SliderArrow />,
+  prevArrow: <SliderArrow isLeftArrow />,
+  className: 'card-slider',
   responsive: [
     {
       breakpoint: 1286,
@@ -39,9 +39,10 @@ export const SETTINGS: Partial<Settings> = {
   ]
 }
 
-export const newlySliderSettings = {
-  ...SETTINGS,
+export const NEWLY_SLIDER_SETTINGS = {
+  ...HOT_SLIDER_SETTINGS,
   slidesToShow: 6,
+  className: 'card-slider',
   responsive: [
     {
       breakpoint: 1286,
@@ -64,17 +65,4 @@ export const newlySliderSettings = {
       settings: { slidesToShow: 1 }
     }
   ]
-}
-
-export const fadeSliderSettings: Partial<Settings> = {
-  infinite: true,
-  speed: 300,
-  fade: true,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  draggable: false,
-  arrows: false,
-  autoplay: true,
-  autoplaySpeed: 3000,
-  cssEase: 'linear'
 }

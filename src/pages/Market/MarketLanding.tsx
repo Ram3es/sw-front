@@ -11,7 +11,7 @@ import LandingInfo from './LandingInfo'
 import Footer from '../../components/footer/Footer'
 import SliderCard from '../../components/slider/SliderCard'
 import PlusIcon from '../../components/icons/PlusIcon'
-import { SETTINGS as hotSliderSettings, newlySliderSettings } from '../../constants/slider-settings'
+import { NEWLY_SLIDER_SETTINGS, HOT_SLIDER_SETTINGS } from '../../constants/slider-settings'
 import { ECardVariant } from '../../types/Card'
 import SliderFade from '../../components/slider/SliderFade'
 import EmptyCard from '../../components/Content/EmptyCard'
@@ -93,7 +93,7 @@ const MarketLanding = () => {
                   icon={<HotIcon className='text-swRed' />}
                   totalSkins={34775}
                 />
-                <SliderCard settings={hotSliderSettings} >
+                <SliderCard settings={HOT_SLIDER_SETTINGS} >
                   {USER_INVENTORY.map((card) =>
                     <ItemCard
                       key={card.id}
@@ -111,7 +111,7 @@ const MarketLanding = () => {
                   icon={<PlusIcon />}
                   totalSkins={51344}
                 />
-                <SliderCard settings={newlySliderSettings} >
+                <SliderCard settings={NEWLY_SLIDER_SETTINGS} >
                   {USER_INVENTORY.map((card) =>
                     <ItemCard
                       key={card.id}

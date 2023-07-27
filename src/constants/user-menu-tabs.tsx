@@ -1,4 +1,3 @@
-import { ReactComponent as Wallet } from '../assets/img/profile/wallet-icon.svg'
 import { ReactComponent as PlusCircle } from '../assets/img/profile/circle-plus.svg'
 import { ReactComponent as MinusCircle } from '../assets/img/profile/circle-minus.svg'
 import { ReactComponent as GiftIcon } from '../assets/img/profile/gift-icon.svg'
@@ -21,52 +20,47 @@ export interface IUserMenu {
 export const USER_MENU: IUserMenu[][] = [
   [
     {
-      title: 'wallet',
-      path: '/',
-      icon: <Wallet />
-    },
-    {
       title: 'add funds',
-      path: '/',
+      path: '/wallet',
       icon: <PlusCircle />
     },
     {
       title: 'pay out',
-      path: '/deposit/payout',
+      path: 'panel/deposit/payout',
       icon: <MinusCircle />
     },
     {
       title: 'redeem gift card',
-      path: '/',
+      path: '/wallet',
       icon: <GiftIcon />
     }
   ],
   [
     {
       title: 'sell items',
-      path: '/',
+      path: '/inventory',
       icon: <Dollar />
     },
     {
       title: 'withdraw items',
-      path: '/',
+      path: '/inventory',
       icon: <Mark />
     },
     {
       title: 'my listed items',
-      path: '/',
+      path: '/inventory',
       icon: <List />
     },
     {
       title: 'redeem item',
-      path: '/',
+      path: '/redeem-item',
       icon: <Daggers />
     }
   ],
   [
     {
       title: 'transactions',
-      path: '/transactions',
+      path: '/panel/transactions',
       icon: <Arrows />
     }
   ],
@@ -78,7 +72,7 @@ export const USER_MENU: IUserMenu[][] = [
     },
     {
       title: 'settings',
-      path: '/',
+      path: '/settings',
       icon: <Setting />
     }
   ],
@@ -87,6 +81,7 @@ export const USER_MENU: IUserMenu[][] = [
       title: 'log out',
       handleFunction: () => {
         void logoutSteam()
+        location.reload()
       }
     }
   ]

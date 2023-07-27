@@ -12,6 +12,10 @@ import { Bonus } from '../pages/InstantSell/bonus/bonus'
 import AmontPayout from '../pages/InstantSell/payout/AmontPayout'
 import MethodsPayout from '../pages/InstantSell/payout/MethodsPayout'
 import MarketLanding from '../pages/Market/MarketLanding'
+import Settings from '../pages/Settings/Settings'
+import OnSiteInventory from '../pages/OnSiteInventory/OnSiteInventory'
+import AddFunds from '../pages/AddFunds/AddFunds'
+import Redeem from '../pages/Reedem/Redeem'
 
 const router = createBrowserRouter([
   {
@@ -68,8 +72,24 @@ const router = createBrowserRouter([
         element: <MarketLanding />
       },
       {
+        path: 'inventory',
+        element: <OnSiteInventory />
+      },
+      {
         path: 'sign-in',
         element: <SignIn />
+      },
+      {
+        path: 'settings',
+        element: <Settings />
+      },
+      {
+        path: 'wallet',
+        element: <AddFunds />
+      },
+      {
+        path: '/redeem-item',
+        element: <Redeem />
       }
     ]
   }

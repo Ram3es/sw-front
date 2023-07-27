@@ -1,4 +1,3 @@
-import React from 'react'
 import Bar from '../../components/Bar/Bar'
 
 const Settings = () => {

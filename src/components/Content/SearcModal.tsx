@@ -3,9 +3,20 @@ import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
 import { ReactComponent as CloseIcon } from '../../assets/close-icon.svg'
 import { classNames } from '../../helpers/className'
 import { useSearch } from '../../helpers/useSearch'
+import { gamesLinks } from '../../constants/games'
+import { type ESteamAppId } from '../../types/Inventory'
+import { useAppContext } from '../../context/AppContext'
 
 const SearchModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
   const { searchValue, isShownSuggestions, setSearchValue } = useSearch()
+  const {
+    gameId
+  } = useAppContext()
+
+  const getGameLinkNameById = (id: ESteamAppId) => {
+    return gamesLinks.find((game) => game.id === id)?.name ?? ''
+  }
+
   return (
     isOpen
       ? (
@@ -17,7 +28,7 @@ const SearchModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
                       <input
                         type='text'
                         value={searchValue}
-                        placeholder={'Search Dota 2 items'}
+                        placeholder={`Search ${getGameLinkNameById(gameId)} items`}
                         onChange={(e) => { setSearchValue(e.target.value) }}
                         className=' w-full bg-transparent outline-none text-lg placeholder:text-graySecondary/50 placeholder:font-Barlow '
                        />

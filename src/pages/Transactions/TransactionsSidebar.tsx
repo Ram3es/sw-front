@@ -130,7 +130,7 @@ const TransactionsSidebar = ({ setEndDate, setStartDate, endDate, startDate }: I
           <div className="font-['Barlow'] text-xs uppercase text-graySecondary">
             Follow us
           </div>
-          <div className="flex gap-6 flex-wrap">
+          <div className="flex gap-6 flex-wrap text-graySecondary">
             {SOCIAL_LINKS.map((item, index) => (
               <Link key={index} to={item.path}>
                 {item.icon}

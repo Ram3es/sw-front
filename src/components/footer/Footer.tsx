@@ -1,4 +1,3 @@
-import React from 'react'
 import { FOOTER_LINKS } from '../../constants/footer'
 import { Link, NavLink } from 'react-router-dom'
 import { PAYMENT_METHODS, SOCIAL_LINKS } from '../../constants/sidebar-links'

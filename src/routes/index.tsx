@@ -5,13 +5,16 @@ import Payouts from '../pages/Payouts/Payouts'
 import TransactionsPage from '../pages/Transactions/Transactions'
 import SignIn from '../pages/SignIn/signIn'
 import Profile from '../pages/Profile/Profile'
-import Buy from '../pages/Buy/Buy'
 import { Inventory } from '../pages/InstantSell/inventory/inventory'
 import { Payout } from '../pages/InstantSell/payout/payout'
 import { Bonus } from '../pages/InstantSell/bonus/bonus'
 import AmontPayout from '../pages/InstantSell/payout/AmontPayout'
 import MethodsPayout from '../pages/InstantSell/payout/MethodsPayout'
 import MarketLanding from '../pages/Market/MarketLanding'
+import Settings from '../pages/Settings/Settings'
+import OnSiteInventory from '../pages/OnSiteInventory/OnSiteInventory'
+import AddFunds from '../pages/AddFunds/AddFunds'
+import Redeem from '../pages/Reedem/Redeem'
 
 const router = createBrowserRouter([
   {
@@ -68,8 +71,24 @@ const router = createBrowserRouter([
         element: <MarketLanding />
       },
       {
+        path: 'inventory',
+        element: <OnSiteInventory />
+      },
+      {
         path: 'sign-in',
         element: <SignIn />
+      },
+      {
+        path: 'settings',
+        element: <Settings />
+      },
+      {
+        path: 'wallet',
+        element: <AddFunds />
+      },
+      {
+        path: '/redeem-item',
+        element: <Redeem />
       }
     ]
   }

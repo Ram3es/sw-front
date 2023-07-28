@@ -16,6 +16,7 @@ import SliderFade from '../../components/slider/SliderFade'
 import EmptyCard from '../../components/Content/EmptyCard'
 import { useCallback, useEffect, useState } from 'react'
 import { getOffers } from '../../services/market/market'
+import { IsUserLogged } from '../../components/IsUserLogged/IsUserLogged'
 
 const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
   return (
@@ -60,6 +61,7 @@ const MarketLanding = () => {
   }, [])
 
   return (
+      <IsUserLogged>
         <div className='flex flex-col items-center w-full'>
           <div className='w-full h-12 flex justify-center items-center bg-darkGrey text-white'>
             <div className='w-[800px] h-full '>
@@ -169,6 +171,7 @@ const MarketLanding = () => {
           </div>
           <Footer />
         </div>
+      </IsUserLogged>
   )
 }
 

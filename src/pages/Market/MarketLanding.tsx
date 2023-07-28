@@ -5,16 +5,18 @@ import SellBaner from '../../assets/img/market/sell-instantly-banner.png'
 import { ReactComponent as HotIcon } from '../../assets/img/market/hot.svg'
 import { ReactComponent as ArrowRight } from '../../assets/img/market/arrow-right.svg'
 import { Button } from '../../components/Navigation'
-import { USER_INVENTORY } from '../../mock/inventory'
 import ItemCard from '../../components/Content/ItemCard'
 import LandingInfo from './LandingInfo'
 import Footer from '../../components/footer/Footer'
 import SliderCard from '../../components/slider/SliderCard'
 import PlusIcon from '../../components/icons/PlusIcon'
 import { NEWLY_SLIDER_SETTINGS, HOT_SLIDER_SETTINGS } from '../../constants/slider-settings'
-import { ECardVariant } from '../../types/Card'
+import { ECardVariant, type IOffersCard } from '../../types/Card'
 import SliderFade from '../../components/slider/SliderFade'
 import EmptyCard from '../../components/Content/EmptyCard'
+import { useCallback, useEffect, useState } from 'react'
+import { getOffers } from '../../services/market/market'
+import { IsUserLogged } from '../../components/IsUserLogged/IsUserLogged'
 
 const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
   return (
@@ -34,9 +36,32 @@ const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string
   )
 }
 
+interface IOffersCardsState {
+  total: number
+  hot: IOffersCard[]
+  newest: IOffersCard[]
+}
+
 const MarketLanding = () => {
+  const [offerCards, setOfferCards] = useState<IOffersCardsState>()
   const navigate = useNavigate()
+
+  const getOfferCards = useCallback(async () => {
+    try {
+      const { total, offers: hot } = await getOffers('HotDeals')
+      const { offers: newest } = await getOffers('Newest')
+      setOfferCards({ total, hot, newest })
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
+  useEffect(() => {
+    void getOfferCards()
+  }, [])
+
   return (
+      <IsUserLogged>
         <div className='flex flex-col items-center w-full'>
           <div className='w-full h-12 flex justify-center items-center bg-darkGrey text-white'>
             <div className='w-[800px] h-full '>
@@ -95,16 +120,25 @@ const MarketLanding = () => {
                   path='/'
                   title='hot offers'
                   icon={<HotIcon className='text-swRed' />}
-                  totalSkins={34775}
+                  totalSkins={offerCards?.total ?? 0}
                 />
                 <SliderCard settings={HOT_SLIDER_SETTINGS} >
-                  {USER_INVENTORY.map((card) =>
+                  {offerCards?.hot.map(({ inventoryItemId, imageUrl, name, price, typeName, wearFloat, steamPrice }) =>
                     <ItemCard
-                      key={card.id}
+                      key={inventoryItemId}
+                      id={inventoryItemId}
                       variant={ECardVariant.market}
+                      isTradable={true}
+                      name={name}
+                      type={typeName}
+                      condition={wearFloat}
+                      price={price.amount}
+                      steamPrice={steamPrice.amount}
+                      image={ `https://community.akamai.steamstatic.com/economy/image/${imageUrl} `}
                       onClick={() => { console.log('click') }}
                       submitFn={() => {}}
-                      {...card} />)}
+                       />
+                  )}
                       <EmptyCard />
                 </SliderCard>
               </div>
@@ -113,17 +147,26 @@ const MarketLanding = () => {
                   path='/'
                   title='newly listed'
                   icon={<PlusIcon />}
-                  totalSkins={51344}
+                  totalSkins={offerCards?.total ?? 0}
                 />
                 <SliderCard settings={NEWLY_SLIDER_SETTINGS} >
-                  {USER_INVENTORY.map((card) =>
+                  {offerCards?.newest.map(({ inventoryItemId, imageUrl, name, price, typeName, wearFloat, steamPrice }) =>
                     <ItemCard
-                      key={card.id}
+                      key={inventoryItemId}
+                      id={inventoryItemId}
                       variant={ECardVariant.market}
+                      isTradable={true}
+                      timeToTrade={ 50}
+                      name={name}
+                      type={typeName}
+                      condition={wearFloat}
+                      price={price.amount}
+                      steamPrice={steamPrice.amount}
+                      image={ `https://community.akamai.steamstatic.com/economy/image/${imageUrl} `}
                       onClick={() => { console.log('click') }}
                       submitFn={() => {}}
-                      {...card}
-                      />)}
+                       />
+                  )}
                       <EmptyCard />
                 </SliderCard>
               </div>
@@ -132,6 +175,7 @@ const MarketLanding = () => {
           </div>
           <Footer />
         </div>
+      </IsUserLogged>
   )
 }
 

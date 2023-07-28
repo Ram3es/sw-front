@@ -129,4 +129,24 @@ input[type='number'] {
   visibility: hidden;
 }
 
+/* trust-pilot vidget */
+
+.trustpilot-widget {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.trustpilot-widget > iframe {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-40%);
+}
+
+
+
+
+
+
 

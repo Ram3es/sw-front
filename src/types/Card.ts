@@ -1,12 +1,13 @@
 
 export interface CardItem {
   id: string
-  isTradable: boolean
+  isTradable?: boolean
   timeToTrade?: number
   image: string
   isSelected?: boolean
-  isNoFee: boolean
+  isNoFee?: boolean
   price: number
+  steamPrice?: number
   name: string
   type: string
   condition: number
@@ -14,6 +15,20 @@ export interface CardItem {
   submitFn?: () => void
   variant?: keyof typeof ECardVariant
 }
+
+export interface IOffersCard {
+  appid: number
+  imageUrl: string
+  inventoryItemId: string
+  price: IOfferPrice
+  steamPrice: IOfferPrice
+  wearFloat: number
+  rarity: string
+  typeName: string
+  name: string
+}
+
+interface IOfferPrice { amount: number, currency: string }
 
 export interface ConditionItem {
   maxVal: number

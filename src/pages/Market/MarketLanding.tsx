@@ -1,5 +1,5 @@
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import BanerMain from '../../assets/img/market/rebranded-hero-artwork.jpg'
 import SellBaner from '../../assets/img/market/sell-instantly-banner.png'
 import { ReactComponent as HotIcon } from '../../assets/img/market/hot.svg'
@@ -61,11 +61,15 @@ const MarketLanding = () => {
                         <span>own for cash</span>
                     </div>
                     <div className='flex gap-3 h-12 text-21  mt-8'>
-                        <Button
-                          text='sell skins'
-                          onClick={() => { navigate('/') }}
-                          className=' h-full text-darkSecondary uppercase bg-swLightOrange cta-clip-path hover:opacity-80 '
-                        />
+                        <NavLink
+                          to='/market/inventory'
+                        >
+                          <Button
+                            text='sell skins'
+                            onClick={() => { navigate('/') }}
+                            className=' h-full text-darkSecondary uppercase bg-swLightOrange cta-clip-path hover:opacity-80 '
+                          />
+                        </NavLink>
                         <div className=' w-max relative overflow-hidden hover button'>
                           <Button
                             text='buy now'

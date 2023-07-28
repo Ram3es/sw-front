@@ -81,7 +81,7 @@ input[type='number'] {
 
 
 .button {
-  transition: .2s ease-in-out
+  transition: .2s linear
 }
 
 .hover:hover {

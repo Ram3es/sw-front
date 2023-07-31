@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import * as d3 from 'd3'
+import * as d3 from 'd3-selection'
 import Slider from 'react-slider'
 import { format } from '../../helpers/numberFormater'
 

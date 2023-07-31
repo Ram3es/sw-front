@@ -27,7 +27,6 @@ const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses
 
             <Transition
               show={isOpen}
-              as={Fragment}
             >
               { children }
             </Transition>

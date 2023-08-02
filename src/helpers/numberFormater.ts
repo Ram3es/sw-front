@@ -5,6 +5,11 @@ export const format = (num: number): string => {
   return balance.toFormat('0,0.00')
 }
 
+export const formatToThousands = (num: number): string => {
+  const balance = Dinero({ amount: num, precision: 3 })
+  return balance.toFormat('0,0.000')
+}
+
 export const convertToCents = (amount: number): number => {
   const dinero = Dinero({ amount }).multiply(100)
   return dinero.getAmount()

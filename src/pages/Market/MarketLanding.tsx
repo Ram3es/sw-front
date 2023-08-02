@@ -87,7 +87,7 @@ const MarketLanding = () => {
                     </div>
                     <div className='flex gap-3 h-12 text-21  mt-8'>
                         <NavLink
-                          to='/market/inventory'
+                          to='/'
                         >
                           <Button
                             text='sell skins'

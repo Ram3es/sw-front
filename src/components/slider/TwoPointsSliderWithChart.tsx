@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import * as d3 from 'd3-selection'
 import Slider from 'react-slider'
-import { format } from '../../helpers/numberFormater'
+import { format, formatToThousands } from '../../helpers/numberFormater'
 
-const TwoPointsSliderWithChart = ({ data, maxPrice }: { data: number[], maxPrice: number }) => {
+const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthArr, isCurrency = true }: { data: number[], maxPrice: number, maskId: string, colorsArr?: string[], barWidthArr?: number[], isCurrency?: boolean }) => {
   const maxValue = Math.max(...data)
   const [priceRange, setPriceRange] = useState([0, maxPrice])
 
@@ -12,14 +12,14 @@ const TwoPointsSliderWithChart = ({ data, maxPrice }: { data: number[], maxPrice
     const svgHeight = 51
     const barWidth = svgWidth / data.length
 
-    const svg = d3.select('#chartContainer')
+    const svg = d3.select(`#${maskId}Container`)
       .append('svg')
       .attr('width', svgWidth)
       .attr('height', svgHeight)
 
     // Create the mask element
     svg.append('mask')
-      .attr('id', 'chartMask')
+      .attr('id', maskId)
       .append('rect')
       .attr('x', 0)
       .attr('y', 0)
@@ -33,9 +33,17 @@ const TwoPointsSliderWithChart = ({ data, maxPrice }: { data: number[], maxPrice
       .enter()
       .append('rect')
       .attr('class', 'not-filled')
-      .attr('x', (_d: number, i: number) => i * barWidth)
+      .attr('x', (_d: number, i: number) => barWidthArr?.[i]
+        ? barWidthArr.reduce((prev, cur, curInd) => {
+          if (curInd < i) {
+            return prev + cur
+          } else {
+            return prev
+          }
+        }, 0) * svgWidth
+        : i * barWidth)
       .attr('y', (d: number) => svgHeight - (d / maxValue) * svgHeight)
-      .attr('width', barWidth)
+      .attr('width', (_d: number, i: number) => barWidthArr?.[i] ? barWidthArr[i] * svgWidth : barWidth)
       .attr('height', (d: number) => (d / maxValue) * svgHeight)
       .attr('fill', 'rgb(32, 32, 35)') // Color for not-filled part
 
@@ -45,12 +53,20 @@ const TwoPointsSliderWithChart = ({ data, maxPrice }: { data: number[], maxPrice
       .enter()
       .append('rect')
       .attr('class', 'bar')
-      .attr('x', (_d: number, i: number) => i * barWidth)
+      .attr('x', (_d: number, i: number) => barWidthArr?.[i]
+        ? barWidthArr.reduce((prev, cur, curInd) => {
+          if (curInd < i) {
+            return prev + cur
+          } else {
+            return prev
+          }
+        }, 0) * svgWidth
+        : i * barWidth)
       .attr('y', (d: number) => svgHeight - (d / maxValue) * svgHeight)
-      .attr('width', barWidth)
+      .attr('width', (_d: number, i: number) => barWidthArr?.[i] ? barWidthArr[i] * svgWidth : barWidth)
       .attr('height', (d: number) => (d / maxValue) * svgHeight)
-      .attr('fill', 'rgb(104, 66, 255)') // Default color (will be masked)
-      .attr('mask', 'url(#chartMask)') // Apply the mask
+      .attr('fill', (_d: number, i: number) => colorsArr?.[i] ?? 'rgb(104, 66, 255)') // Default color (will be masked)
+      .attr('mask', `url(#${maskId})`) // Apply the mask
 
     // Create the white lines to show the fill status
     svg.selectAll('rect.fill-status-line')
@@ -63,7 +79,7 @@ const TwoPointsSliderWithChart = ({ data, maxPrice }: { data: number[], maxPrice
       .attr('width', barWidth)
       .attr('height', 3) // Height of the white line (adjust as needed)
       .attr('fill', 'white') // Color for the white line
-      .attr('mask', 'url(#chartMask)') // Apply the mask
+      .attr('mask', `url(#${maskId})`) // Apply the mask
 
     // Clean up the SVG when the component is unmounted
     return () => {
@@ -73,14 +89,14 @@ const TwoPointsSliderWithChart = ({ data, maxPrice }: { data: number[], maxPrice
 
   const handleSliderChange = (value: number[]) => {
     setPriceRange(value)
-    d3.select('#chartMask').select('rect')
+    d3.select(`#${maskId}`).select('rect')
       .attr('x', `${value[0] / maxPrice * 100}%`)
       .attr('width', `${(value[1] / maxPrice * 100) - value[0] / maxPrice * 100}%`)
   }
 
   return (
     <div className='pt-5'>
-      <div id="chartContainer" style={{ width: '208px', height: '51px' }} />
+      <div id={`${maskId}Container`} style={{ width: '208px', height: '51px' }} />
       <Slider
           className="w-full bg-gray-300"
           min={0}
@@ -97,10 +113,10 @@ const TwoPointsSliderWithChart = ({ data, maxPrice }: { data: number[], maxPrice
             From
           </span>
           <div className='flex items-center gap-1 text-white text-[14px] font-["Barlow"]'>
-            $
+            {isCurrency ? '$' : ''}
             <input
               type="text"
-              value={format(priceRange[0] ?? 0)}
+              value={isCurrency ? format(priceRange[0] ?? 0) : formatToThousands(priceRange[0] ?? 0)}
               className='text-white text-[14px] font-["Barlow"] text-start w-full bg-transparent border-0'
               onChange={(e) => {
                 const amountCents = +e.target.value.replace(/[^0-9]/g, '')
@@ -120,10 +136,10 @@ const TwoPointsSliderWithChart = ({ data, maxPrice }: { data: number[], maxPrice
             To
           </span>
           <div className='flex items-center gap-1 text-white text-[14px] font-["Barlow"]'>
-            $
+            {isCurrency ? '$' : ''}
             <input
             type="text"
-            value={format(priceRange[1] ?? 0)}
+            value={isCurrency ? format(priceRange[1] ?? 0) : formatToThousands(priceRange[1] ?? 0)}
             className='text-white text-[14px] font-["Barlow"] text-start w-full bg-transparent border-0'
             onChange={(e) => {
               const amountCents = +e.target.value.replace(/[^0-9]/g, '')

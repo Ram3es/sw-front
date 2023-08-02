@@ -1,68 +1,116 @@
 import { useState } from 'react'
 import Dropbox from '../../components/Content/Dropbox'
-import Checkbox from '../../components/Content/Checkbox'
-import {
-  PAYMENT_METHODS,
-  SIDEBAR_LINKS,
-  SOCIAL_LINKS
-} from '../../constants/sidebar-links'
-import { Link } from 'react-router-dom'
-import LanguagePicker from '../../components/Content/LanguagePicker'
 import TwoPointsSliderWithChart from '../../components/slider/TwoPointsSliderWithChart'
+import SidebarLinks from '../../components/Navigation/SidebarLinks'
+import RadioGroup from '../../components/Content/RadioGroup'
+import { useAppContext } from '../../context/AppContext'
+import { ESteamAppId } from '../../types/Inventory'
+import InputWithCheckbox from '../../components/Content/InputWithCheckbox'
 
 const maxPrice = 1000
 
 const MarketWithdrawSidebar = () => {
+  const { updateGameId, gameId } = useAppContext()
   const [search, setSearch] = useState('')
-  const [type, setType] = useState([
+  const [category, setCategory] = useState([
     {
-      name: 'Instant Sell',
-      selected: false,
-      numberOfItems: 0
-    },
-    {
-      name: 'Purchase',
-      selected: false,
-      numberOfItems: 7
-    },
-    {
-      name: 'Withdraw',
-      selected: false,
-      numberOfItems: 2
-    },
-    {
-      name: 'Deposit',
-      selected: false,
-      numberOfItems: 1
-    },
-    {
-      name: 'Prize',
-      selected: false,
+      name: 'Knives',
+      selected: true,
       numberOfItems: 12
+    },
+    {
+      name: 'Pistols',
+      selected: true,
+      numberOfItems: 201
+    },
+    {
+      name: 'Heavy',
+      selected: true,
+      numberOfItems: 98
+    },
+    {
+      name: 'SMGs',
+      selected: true,
+      numberOfItems: 52
+    },
+    {
+      name: 'Rifles',
+      selected: true,
+      numberOfItems: 24
+    },
+    {
+      name: 'Gloves',
+      selected: true,
+      numberOfItems: 17
+    },
+    {
+      name: 'Keys',
+      selected: true,
+      numberOfItems: 1
+    }
+  ])
+  const [otherOptions, setOtherOptions] = useState([
+    {
+      name: 'StarTrak™',
+      selected: true
+    },
+    {
+      name: 'Souvenir',
+      selected: true
+    },
+    {
+      name: 'Sticker',
+      selected: true
     }
   ])
 
   return (
     <>
       <div className="p-6 w-full flex flex-col gap-8">
-        <Dropbox label="price">
-          <TwoPointsSliderWithChart
-            data={[120, 40, 160, 80, 0, 10, 150]}
-            maxPrice={maxPrice}
-          />
+        <Dropbox label="games">
+          <RadioGroup
+            options={Object.keys(ESteamAppId).map((key) => ({
+              id: ESteamAppId[
+                key as keyof typeof ESteamAppId
+              ] as unknown as number,
+              name: key
+            }))}
+            setOption={(id) => {
+              updateGameId(id as unknown as ESteamAppId)
+            }}
+            selectedOptionId={gameId as unknown as number}
+          >
+            <span className="text-graySecondary font-font-['Barlow'] text-xs">
+              0
+            </span>
+          </RadioGroup>
         </Dropbox>
-        <Dropbox label="type">
+        <div className="w-full border-t border-darkGrey" />
+        <div className="bg-darkGrey p-3">
+          <input
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value)
+            }}
+            type="text"
+            placeholder="Search in Inventory"
+            className="w-full bg-transparent border-none outline-none text-graySecondary font-['Barlow'] text-sm"
+          />
+        </div>
+        <div className="w-full border-t border-darkGrey" />
+        <Dropbox label="category">
           <div className="flex flex-col w-full gap-3 mt-6">
-            {type.map((item, index) => (
-              <div
+            {category.map((item, index) => (
+              <InputWithCheckbox
                 key={index}
-                onClick={() => {
-                  setType((prev) =>
+                isChecked={item.selected}
+                setter={(selected) => {
+                  setCategory((prev) =>
                     prev.map((item, i) => {
                       if (i === index) {
                         return {
                           ...item,
-                          selected: !item.selected
+                          selected
                         }
                       } else {
                         return item
@@ -70,77 +118,68 @@ const MarketWithdrawSidebar = () => {
                     })
                   )
                 }}
-                className="w-full cursor-pointer flex justify-between items-center"
+                label={item.name}
               >
-                <div className="flex items-center">
-                  <div className="mr-3">
-                    <Checkbox checked={item.selected} additionalClasses='pointer-events-none text-black' />
-                  </div>
-                  <h1 className="font-['Barlow'] text-sm">{item.name}</h1>
-                </div>
                 <span className="font-['Barlow'] text-xs text-graySecondary font-medium uppercase">
                   {item.numberOfItems}
                 </span>
-              </div>
+              </InputWithCheckbox>
             ))}
           </div>
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />
-        <div className="bg-darkGrey p-3">
-          <input
-            value={search}
-            onChange={(e) => { setSearch(e.target.value) }}
-            type="text"
-            placeholder="Search items"
-            className="w-full bg-transparent border-none outline-none text-graySecondary font-['Barlow'] text-sm"
+        <Dropbox label="price">
+          <TwoPointsSliderWithChart
+            data={[120, 40, 160, 80, 0, 10, 150]}
+            maxPrice={maxPrice}
+            maskId="priceMask"
           />
-        </div>
+        </Dropbox>
         <div className="w-full border-t border-darkGrey" />
-      </div>
-      <div className="w-full border-t border-darkGrey" />
-      <div className="p-6 w-full flex flex-col gap-8">
-        <div className="flex gap-4 items-center flex-wrap">
-          {SIDEBAR_LINKS.map((item, index) => (
-            <div key={index} className="flex items-center gap-4">
-              <div className="font-['Barlow'] text-xs uppercase text-graySecondary">
-                {item.title}
-              </div>
-              {index !== SIDEBAR_LINKS.length - 1 && (
-                <div className="w-[3px] h-[3px] rounded-full bg-graySecondary" />
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col gap-3">
-          <div className="font-['Barlow'] text-xs uppercase text-graySecondary">
-            Follow us
-          </div>
-          <div className="flex gap-6 flex-wrap text-graySecondary">
-            {SOCIAL_LINKS.map((item, index) => (
-              <Link key={index} to={item.path}>
-                {item.icon}
-              </Link>
+        <Dropbox label="wear">
+          <TwoPointsSliderWithChart
+            data={[120, 40, 160, 80, 130]}
+            maxPrice={1000}
+            barWidthArr={[0.07, 0.08, 0.22, 0.07, 0.56]}
+            colorsArr={[
+              'rgba(24,232,107,1)',
+              'rgba(61,178,110,1)',
+              'rgba(250,203,83,1)',
+              'rgba(151,96,45,1)',
+              'rgba(66,66,66,1)'
+            ]}
+            maskId="wearMask"
+            isCurrency={false}
+          />
+        </Dropbox>
+        <div className="w-full border-t border-darkGrey" />
+        <Dropbox label="other">
+          <div className="flex flex-col w-full gap-3 mt-6">
+            {otherOptions.map((item, index) => (
+              <InputWithCheckbox
+                key={index}
+                isChecked={item.selected}
+                setter={(selected) => {
+                  setOtherOptions((prev) =>
+                    prev.map((item, i) => {
+                      if (i === index) {
+                        return {
+                          ...item,
+                          selected
+                        }
+                      } else {
+                        return item
+                      }
+                    })
+                  )
+                }}
+                label={item.name}
+              />
             ))}
           </div>
-        </div>
-        <LanguagePicker />
-        <div className="flex gap-6 items-center flex-wrap">
-          {PAYMENT_METHODS.map((item, index) => (
-            <div key={index}>{item.icon}</div>
-          ))}
-        </div>
-        <p className="font-['Barlow'] text-xs text-graySecondary leading-[18px]">
-          Powered by Steam.
-          <br />
-          Not affiliated with Valve Corp.
-        </p>
-        <p className="font-['Barlow'] text-xs text-graySecondary leading-[18px]">
-          Skinwallet MT Limited 99, Sir Adrian Dingli Street, Sliema, Malta
-        </p>
-        <p className="font-['Barlow'] text-xs text-graySecondary leading-[18px]">
-          © 2021 Skinwallet
-        </p>
+        </Dropbox>
       </div>
+      <SidebarLinks />
     </>
   )
 }

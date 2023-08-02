@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import Bullhorn from '../../../components/icons/Bullhorn'
+import { useState } from 'react'
+import Bullhorn from '../../icons/Bullhorn'
 import { NavLink } from 'react-router-dom'
-import MinusIcon from '../../../components/icons/MinusIcon'
-import PlusIcon from '../../../components/icons/PlusIcon'
+import MinusIcon from '../../icons/MinusIcon'
+import PlusIcon from '../../icons/PlusIcon'
 
 const Readme = () => {
-  const [isOpen, setIsOpen] = useState(true)
+  const [isOpen, setIsOpen] = useState(false)
   return (
         <div className='flex flex-col gap-4 p-6 bg-dark-14 text-graySecondary text-sm  '>
             <div

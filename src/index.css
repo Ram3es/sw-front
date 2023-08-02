@@ -97,6 +97,24 @@ input[type='number'] {
   text-transform: capitalize;
 }
 
+.marked-list p {
+  position: relative;
+  color:white;
+  margin-left: 20px;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.marked-list p::before {
+  content: '';
+  background-image: url(assets/img/funds/checked.svg);
+  width: 13px;
+  height: 10px;
+  position: absolute;
+  left: -20px;
+  top: 3px
+}
+
 /* react-slick styles */
 .card-slider .slick-list {
   padding: 24px 0;
@@ -137,12 +155,12 @@ input[type='number'] {
   width: 100%;
 }
 
-.trustpilot-widget > iframe {
+/* .trustpilot-widget > iframe {
   position: absolute;
   left: 0;
   top: 50%;
   transform: translateY(-40%);
-}
+} */
 
 
 

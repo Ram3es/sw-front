@@ -13,8 +13,8 @@ const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses
       {() => (
         <>
           <div className="relative">
-            <Listbox.Button onClick={toggle} className={classNames('relative w-full cursor-pointer flex justify-between items-center',
-              additionalClasses ?? 'text-sm text-white uppercase')}>
+            <Listbox.Button onClick={toggle} className={classNames('relative w-full cursor-pointer ',
+              additionalClasses ?? 'text-sm text-white uppercase flex justify-between items-center')}>
                     <div className="flex items-center gap-2">
                       <span>{label}</span>
                       {isOpen && renderSubHeader}

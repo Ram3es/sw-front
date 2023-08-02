@@ -37,7 +37,7 @@ const SliderFade = () => {
               </div>
             </div>
             <div>
-              <div className='w-full h-12 flex justify-center items-center gap-2 text-sm'>
+              <div className=' pt-3 '>
                 <TrustBox />
               </div>
             </div>

@@ -4,16 +4,18 @@ import { ReactComponent as Mark } from '../../assets/img/funds/mark.svg'
 import { ReactComponent as CloseIcon } from '../../assets/close-icon.svg'
 import ExclamationTriangleIcon from '../icons/ExclamationTriangle'
 
-interface IInputWithButton extends InputHTMLAttributes<HTMLInputElement> {
+interface IInputWithErrors extends InputHTMLAttributes<HTMLInputElement> {
   handleChange: (value: string) => void
   onClear: () => void
   handleBlur: () => void
   isError?: boolean
   errorBorder: string
   error?: any
+  variant?: string
+  label?: string
 }
 
-const InputAmount: FC<IInputWithButton> = ({ value, isError, error, errorBorder, onClear, handleChange, handleBlur, ...rest }) => {
+const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isError, error, errorBorder, variant = 'amount', onClear, handleChange, handleBlur, ...rest }) => {
   const [isFocused, setIsFocused] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -45,9 +47,9 @@ const InputAmount: FC<IInputWithButton> = ({ value, isError, error, errorBorder,
             error?.status && !isFocused ? errorBorder : 'focus-within:border-white')}
         >
           <div className='w-full flex flex-col'>
-            <label className='w-full text-graySecondary text-11 leading-[11px] capitalize pointer-events-none'>amount</label>
+            <label className='w-full text-graySecondary text-11 leading-[11px] capitalize pointer-events-none'>{label ?? 'amount'}</label>
             <div className='w-full flex items-center text-lg leading-[18px]'>
-              $
+            {variant === 'amount' && <span>$</span>}
               <input
                 ref={inputRef}
                 type='text'
@@ -60,8 +62,12 @@ const InputAmount: FC<IInputWithButton> = ({ value, isError, error, errorBorder,
           </div>
           <div>
             <CloseIcon onMouseDown={handleClear} className=' hidden group-focus-within:block w-3 h-[18px] cursor-pointer text-graySecondary hover:text-white duration-200' />
-            { !error?.status && <Mark className='block group-focus-within:hidden text-swLime w-4 h-[18px]' />}
+            { !error?.status && variant === 'amount' && <Mark className='block group-focus-within:hidden text-swLime w-4 h-[18px]' />}
           </div>
+          {variant === 'base' && !isFocused && !value &&
+            <div className='absolute inset-0 bg-darkSecondary '>
+              <div className='w-full h-full flex px-6 items-center text-lg '>Coupon Code</div>
+            </div> }
         </div>
         {error?.status && !isFocused &&
             <div className={classNames('py-1 px-3 group-focus-within:hidden',
@@ -74,4 +80,4 @@ const InputAmount: FC<IInputWithButton> = ({ value, isError, error, errorBorder,
   )
 }
 
-export default InputAmount
+export default InputWithErrors

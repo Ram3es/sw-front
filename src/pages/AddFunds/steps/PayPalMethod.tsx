@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ReactComponent as PayPal } from '../../../assets/img/payout/logo-ppcom-white.svg'
 import { format, formatToDecimal } from '../../../helpers/numberFormater'
 import InformationIcon from '../../../components/icons/InformationIcon'
-import { Link } from 'react-router-dom'
-import InputAmount from '../../../components/Content/InputAmount'
+import InputWithErrors from '../../../components/Content/InputWithErrors'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
 import AddCoupon from '../../../components/funds/AddCoupon'
@@ -34,7 +34,6 @@ const PayPalMethod = () => {
     setAmountInputValue(value)
   }
 
-  console.log(Object.values(errorsState).filter(obj => obj.status)[0])
   const handleBlur = () => {
     setErrorsState(prev => {
       let copy = { ...prev }
@@ -55,12 +54,14 @@ const PayPalMethod = () => {
     }
     setAmountInputValue(parseFloat(amountInputValue).toFixed(2))
   }
+
   useEffect(() => {
     setErrorsState(prev => ({ ...prev, limit: { ...prev.excededAmount, status: false } }))
     if (amountInputValue && (+amountInputValue) >= 100) {
       setErrorsState(prev => ({ ...prev, limit: { ...prev.excededAmount, status: true } }))
     }
   }, [amountInputValue])
+
   return (
         <div className='w-full text-white flex flex-col gap-8'>
           <div className='flex items-center justify-between'>
@@ -92,7 +93,7 @@ const PayPalMethod = () => {
                  </div>
               </div>
             </div>
-            <InputAmount
+            <InputWithErrors
               value={amountInputValue}
               handleChange={(value: string) => { handleChange(value) }}
               onClear={() => { setAmountInputValue('') } }
@@ -101,7 +102,9 @@ const PayPalMethod = () => {
               errorBorder='border-swOrange'
               autoFocus
              />
-            <AddCoupon />
+            <AddCoupon
+              amount={ Number(amountInputValue) * 100 || 0 }
+            />
             <Button
               text='go to summary'
             //   onClick={setStep}

@@ -3,6 +3,7 @@ import { classNames } from '../../helpers/className'
 import { useHideOnScroll } from '../../helpers/useHideOnScroll'
 import { Filters } from '../InstantSell/controls/filters'
 import MarketWithdrawSidebar from './MarketWithdrawSidebar'
+import SelectBottomBar from './SelectBottomBar'
 
 const MarketWithdraw = () => {
   const shouldHide = useHideOnScroll()
@@ -59,6 +60,12 @@ const MarketWithdraw = () => {
           </div>
         </div>
       </div>
+      <SelectBottomBar
+        selectedItemsQty={0}
+        onShowSelected={() => { console.log('show selected') }}
+        onCancel={() => { console.log('cancel') }}
+        onWithdraw={() => { console.log('onWithdraw') }}
+      />
     </div>
   )
 }

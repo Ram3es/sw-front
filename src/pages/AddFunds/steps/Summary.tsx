@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import RoundedMark from '../../../components/icons/RoundedMark'
 import { Link } from 'react-router-dom'
 import { useFundsContext } from '../../../context/FundsContext'

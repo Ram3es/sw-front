@@ -1,4 +1,3 @@
-import React from 'react'
 import ExclamationTriangleIcon from '../icons/ExclamationTriangle'
 import { classNames } from '../../helpers/className'
 

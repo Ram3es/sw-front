@@ -1,4 +1,3 @@
-import React from 'react'
 import Kinguin from '../../../assets/img/funds/kinguin.png'
 
 const GiftContent = () => {

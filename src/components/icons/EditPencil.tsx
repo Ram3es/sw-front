@@ -1,4 +1,3 @@
-import React from 'react'
 
 const EditPencil = ({ className }: { className?: string }) => {
   return (

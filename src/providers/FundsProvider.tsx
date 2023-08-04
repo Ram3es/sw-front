@@ -3,7 +3,7 @@ import { FundsContext } from '../context/FundsContext'
 import { type ISelectedMethod } from '../types/Funds'
 import { formatToDecimal } from '../helpers/numberFormater'
 import { ERRORS, type TErrors } from '../constants/fundsMethods'
-import { sendCouponCode } from '../services/funds/funds'
+// import { sendCouponCode } from '../services/funds/funds'
 import axios from 'axios'
 
 export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -41,7 +41,7 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
   const handleBlurInputCoupon = async () => {
     setErrorsState(prev => ({ ...prev, wrongCoupon: { ...prev.wrongCoupon, status: false } }))
     try {
-      const data = couponInputValue && await sendCouponCode({ coupon: couponInputValue })
+      // const data = couponInputValue && await sendCouponCode({ coupon: couponInputValue })
       setCouponInfo(prev => prev + 500)
     } catch (error) {
       if (axios.isAxiosError(error)) {

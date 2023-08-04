@@ -9,17 +9,19 @@ interface IButton {
   className?: string
   icon?: any
   iconRight?: boolean
+  heightClass?: string
   disabled?: boolean
   children?: ReactNode
   onClick?: () => void
 }
 
-export const Button = ({ text = '', className = '', icon, iconRight = false, onClick, disabled, children }: IButton) => {
+export const Button = ({ text = '', className = '', heightClass, icon, iconRight = false, onClick, disabled, children }: IButton) => {
   return (
     <button
       className={classNames(
-        'button font-["Barlow"] h-[32px] px-[16px] tracking-[1.12px] flex',
-        className ?? ' text-[14px] '
+        'button font-["Barlow"] px-[16px] tracking-[1.12px] flex',
+        className ?? ' text-[14px] ',
+        heightClass ?? 'h-[32px]'
       )}
       onClick={onClick}
       disabled={disabled}

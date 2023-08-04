@@ -1,5 +1,5 @@
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import BanerMain from '../../assets/img/market/rebranded-hero-artwork.jpg'
 import SellBaner from '../../assets/img/market/sell-instantly-banner.png'
 import { ReactComponent as HotIcon } from '../../assets/img/market/hot.svg'
@@ -15,7 +15,7 @@ import { ECardVariant, type IOffersCard } from '../../types/Card'
 import SliderFade from '../../components/slider/SliderFade'
 import EmptyCard from '../../components/Content/EmptyCard'
 import { useCallback, useEffect, useState } from 'react'
-import { getOffers } from '../../services/market/market'
+import { buyItems, getOffers } from '../../services/market/market'
 import { IsUserLogged } from '../../components/IsUserLogged/IsUserLogged'
 
 const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
@@ -86,11 +86,15 @@ const MarketLanding = () => {
                         <span>own for cash</span>
                     </div>
                     <div className='flex gap-3 h-12 text-21  mt-8'>
-                        <Button
-                          text='sell skins'
-                          onClick={() => { navigate('/') }}
-                          className=' h-full text-darkSecondary uppercase bg-swLightOrange cta-clip-path hover:opacity-80 '
-                        />
+                        <NavLink
+                          to='/'
+                        >
+                          <Button
+                            text='sell skins'
+                            onClick={() => { navigate('/') }}
+                            className=' h-full text-darkSecondary uppercase bg-swLightOrange cta-clip-path hover:opacity-80 '
+                          />
+                        </NavLink>
                         <div className=' w-max relative overflow-hidden hover button'>
                           <Button
                             text='buy now'
@@ -131,7 +135,15 @@ const MarketLanding = () => {
                       price={price.amount}
                       steamPrice={steamPrice.amount}
                       image={ `https://community.akamai.steamstatic.com/economy/image/${imageUrl} `}
-                      onClick={() => { console.log('click') }}
+                      onClick={() => {
+                        void buyItems({
+                          assetIds: [
+                            '100000001',
+                            '100000002',
+                            '100000003'
+                          ]
+                        })
+                      }}
                       submitFn={() => {}}
                        />
                   )}

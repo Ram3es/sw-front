@@ -3,16 +3,17 @@ import { ReactComponent as Crypto } from '../assets/img/funds/crypto.svg'
 import { ReactComponent as Card } from '../assets/img/funds/visa-mastercard.svg'
 import { ReactComponent as Bitcoin } from '../assets/img/funds/bitcoin-logo.svg'
 import { ReactComponent as Skinwallet } from '../assets/img/funds/skinwallet-instant.svg'
-import GiftMethodTitle from '../components/funds/methods/GiftMethodTitle'
 import GiftContent from '../components/funds/methods/GiftContent'
 import MethodFee from '../components/funds/methods/MethodFee'
 import { format } from '../helpers/numberFormater'
 import PayPalContent from '../components/funds/methods/PayPalContent'
 import G2AContent from '../components/funds/methods/G2AContent'
+import GiftMethodTitleLabel from '../components/funds/methods/GiftMethodTitle'
 
 export interface IMethod {
   methodName: string
-  title: string | JSX.Element
+  title: string
+  titleLabel?: JSX.Element
   content?: JSX.Element
   logo?: JSX.Element
   label?: string
@@ -23,7 +24,8 @@ export interface IMethod {
 export const FUND_METHODS: IMethod[] = [
   {
     methodName: 'gift',
-    title: <GiftMethodTitle />,
+    title: 'Skinwallet Gift Cards',
+    titleLabel: <GiftMethodTitleLabel />,
     label: 'select to redeem gift card',
     content: <GiftContent/>
   },
@@ -63,3 +65,34 @@ export const FUND_METHODS: IMethod[] = [
     summary: 'Use this method to transfer existing Balance from Skinwallet Instant or to sell virtual items instantly. After confirming this method, you will be redirected to the Skinwallet Instant website where you can finish the transaction.'
   }
 ]
+
+export type TErrors = Record<string, { status: boolean, message?: string, errorClass?: string, relative?: string }>
+
+export const ERRORS: TErrors = {
+  excededAmount: {
+    status: false,
+    errorClass: 'flex items gap-2 center text-swOrange text-sm font-normal leading-[14px]',
+    message: 'The amount you have entered exceeded the monthly limit. We set the maximum value for you.',
+    relative: 'amount'
+  },
+  lowAmount: {
+    status: false,
+    errorClass: 'flex items gap-2 center text-swOrange text-sm font-normal leading-[14px]',
+    message: 'The amount you have entered is below the minimum. We set the minimum value for you.',
+    relative: 'amount'
+  },
+  limit: {
+    status: false,
+    relative: 'amount'
+  },
+  wrongCoupon: {
+    status: false,
+    errorClass: 'flex items gap-2 center text-swRed text-sm font-normal leading-[14px]',
+    message: 'Invalid or wrong code. Please check the spelling or use a different code.',
+    relative: 'coupon'
+  },
+  excededMonthly: {
+    status: false,
+    message: 'top-up limit exceeded'
+  }
+}

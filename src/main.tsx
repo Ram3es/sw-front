@@ -6,12 +6,15 @@ import router from './routes'
 import './index.css'
 import './variables.css'
 import PayoutProvider from './providers/PayoutProvider'
+import { FundsProvider } from './providers/FundsProvider'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <AppProvider>
       <PayoutProvider>
-        <RouterProvider router={router} />
+        <FundsProvider>
+          <RouterProvider router={router} />
+        </FundsProvider>
       </PayoutProvider>
     </AppProvider>
   </React.StrictMode>

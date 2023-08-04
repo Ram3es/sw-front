@@ -1,12 +1,14 @@
 import Bar from '../../components/Bar/Bar'
 import { ReactComponent as GiftIcon } from '../../assets/img/profile/gift-icon.svg'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import Readme from '../../components/funds/readme/Readme'
 import TrustBox from '../../components/Content/TrustBox'
 import SelectMethod from './steps/SelectMethod'
-import { useState } from 'react'
 import PayPalMethod from './steps/PayPalMethod'
 import CryptoMethod from './steps/CryptoMethod'
+import { useFundsContext } from '../../context/FundsContext'
+import Summary from './steps/Summary'
+import { ReactComponent as Arrow } from '../../assets/img/market/arrow-right.svg'
 
 const getMethod = (method: string) => {
   switch (method) {
@@ -17,16 +19,21 @@ const getMethod = (method: string) => {
   }
 }
 const AddFunds = () => {
-  const [step, setStep] = useState<number>(1)
-  const [selectedMethod, setSelectedMethod] = useState<string>()
+  const { selectedMethod, addFundsStep, setAddFundsStep } = useFundsContext()
 
   return (
-    <>
+    <div className='relative'>
       <Bar>
-        <div className="flex justify-between items-center h-full px-6">
-          <h1 className='text-white font-["Barlow"] text-[21px] font-medium uppercase'>
+        <div className="flex justify-between items-center h-full px-6  ">
+          <div className='flex gap-4 items-center text-white font-["Barlow"] text-[21px] font-medium uppercase'>
+              { addFundsStep > 1 &&
+              <div
+                onClick={() => { setAddFundsStep(prev => prev - 1) }}
+                className=' hover:opacity-50 duration-200 cursor-pointer '>
+                <Arrow className='h-6 w-auto rotate-180  ' />
+              </div> }
             Add Funds
-          </h1>
+          </div>
         </div>
       </Bar>
       <header className='w-full flex items-center h-12 border-b border-darkGrey mt-5 px-3 sm:px-6  relative' >
@@ -40,23 +47,20 @@ const AddFunds = () => {
           <span className='uppercase tracking-[1.12px]' >redeem gift card</span>
         </NavLink>
       </header>
-      <div className='w-full flex justify-center px-6 py-12'>
-          <div className='w-full max-w-[672px] flex flex-col gap-12'>
-            <Readme />
-            {/* <Outlet/> */}
-            {step === 1
-              ? <SelectMethod
-                  setStep={() => { setStep(2) } }
-                  selectedMethod={selectedMethod}
-                  onSelectMethod={(method) => { setSelectedMethod(method) }}
-                  />
-              : step === 2
-                ? selectedMethod && getMethod(selectedMethod)
-                : step === 3 && <></> }
-
+      {addFundsStep === 3
+        ? <Summary />
+        : <div className='w-full flex justify-center px-6 py-12'>
+            <div className='w-full max-w-[672px] flex flex-col gap-12'>
+              <Readme />
+              {addFundsStep === 1
+                ? <SelectMethod />
+                : addFundsStep === 2
+                  ? selectedMethod?.methodName && getMethod(selectedMethod.methodName)
+                  : null }
+            </div>
           </div>
-        </div>
-    </>
+          }
+    </div>
   )
 }
 

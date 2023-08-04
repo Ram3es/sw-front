@@ -1,13 +1,13 @@
 
-import Dropbox from '../Content/Dropbox'
-import { SOCIAL_LINKS } from '../../constants/sidebar-links'
+import Dropbox from '../../Content/Dropbox'
+import { SOCIAL_LINKS } from '../../../constants/sidebar-links'
 import { Link } from 'react-router-dom'
-import { format } from '../../helpers/numberFormater'
-import InputWithErrors from '../Content/InputWithErrors'
-import { useState } from 'react'
+import { format } from '../../../helpers/numberFormater'
+import InputWithErrors from '../../Content/InputWithErrors'
+import { useFundsContext } from '../../../context/FundsContext'
 
-const AddCoupon = ({ amount }: { amount: number }) => {
-  const [inputValue, setInputValue] = useState<string>('')
+const AddCoupon = () => {
+  const { couponInfo, couponInputValue, amountInputValue, errorsState, setCouponInputValue, handleBlurInputCoupon } = useFundsContext()
   return (
     <Dropbox
     label='add coupon code'
@@ -16,12 +16,13 @@ const AddCoupon = ({ amount }: { amount: number }) => {
     <div className='flex flex-col gap-6 mt-4 text-graySecondary ' >
       <InputWithErrors
         label='coupon code'
-        value={inputValue}
-        handleChange={(value) => { setInputValue(value) }}
-        onClear={() => { setInputValue('') }}
-        handleBlur={() => {}}
+        value={couponInputValue}
+        handleChange={(value) => { setCouponInputValue(value) }}
+        onClear={() => { setCouponInputValue('') }}
+        handleBlur={() => { void handleBlurInputCoupon() }}
         errorBorder='border-swRed'
-        variant='base'
+        error={errorsState.wrongCoupon}
+        variant='coupon'
         />
       <div className='w-full flex flex-col sm:flex-row gap-6 pb-6 border-b border-darkGrey'>
         <div className=' w-full sm:w-1/2 text-sm font-normal px-0 sm:px-2' >{'Follow us on social media and join our mailing list to make sure you won\'t miss any codes in the future!'}</div>
@@ -49,15 +50,15 @@ const AddCoupon = ({ amount }: { amount: number }) => {
           <div className='flex flex-col gap-2'>
             <div className='w-full flex justify-between items-center text-sm '>
               <div className='uppercase tracking-[1.12px]'>amount</div>
-              <span className='text-white'>${format(amount)}</span>
+              <span className='text-white'>${format(Number(amountInputValue) * 100 || 0)}</span>
             </div>
             <div className='w-full flex justify-between items-center text-sm '>
               <div className='uppercase tracking-[1.12px]'>active coupon</div>
-              <span className=''>+${format(0)}</span>
+              <span className={couponInfo ? 'text-swLime' : ''}>+${format(couponInfo)}</span>
             </div>
             <div className='w-full flex justify-between items-center text-sm '>
               <div className='uppercase tracking-[1.12px]'>final top-up</div>
-              <span className=' text-2xl leading-6  text-white '>${format(amount)}</span>
+              <span className=' text-2xl leading-6  text-white '>${format((Number(amountInputValue) * 100 || 0) + couponInfo)}</span>
             </div>
           </div>
         </div>

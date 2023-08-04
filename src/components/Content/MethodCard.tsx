@@ -8,7 +8,7 @@ interface IMethodCardProps extends IMethod {
 
 }
 
-const MethodCard: FC<IMethodCardProps> = ({ title, logo, isSelected, content, label, summary, onSelect }) => {
+const MethodCard: FC<IMethodCardProps> = ({ title, titleLabel, logo, isSelected, content, label, summary, onSelect }) => {
   return (
         <CardWrapper
           onSelect={onSelect}
@@ -17,7 +17,10 @@ const MethodCard: FC<IMethodCardProps> = ({ title, logo, isSelected, content, la
           >
             <div className='flex flex-col h-full w-full p-6 ' >
                 <div className='flex items-center justify-between'>
-                    <div className='text-lg font-normal capitalize'>{title}</div>
+                    <div className='flex gap-3 items-center' >
+                     <div className='text-lg font-normal capitalize'>{title}</div>
+                     {titleLabel}
+                    </div>
                     <div>{logo}</div>
                 </div>
                 <div className=' flex-grow flex flex-col justify-between text-xs'>

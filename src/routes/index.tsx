@@ -15,7 +15,6 @@ import Settings from '../pages/Settings/Settings'
 import OnSiteInventory from '../pages/OnSiteInventory/OnSiteInventory'
 import AddFunds from '../pages/AddFunds/AddFunds'
 import Redeem from '../pages/Reedem/Redeem'
-import SelectMethod from '../pages/AddFunds/steps/SelectMethod'
 
 const router = createBrowserRouter([
   {
@@ -85,14 +84,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'wallet',
-        element: <AddFunds />,
-        children: [
-          {
-            index: true
-            // element: <SelectMethod />
-
-          }
-        ]
+        element: <AddFunds />
       },
       {
         path: '/redeem-item',

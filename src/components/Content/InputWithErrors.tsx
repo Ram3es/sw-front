@@ -62,9 +62,9 @@ const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isError, error, e
           </div>
           <div>
             <CloseIcon onMouseDown={handleClear} className=' hidden group-focus-within:block w-3 h-[18px] cursor-pointer text-graySecondary hover:text-white duration-200' />
-            { !error?.status && variant === 'amount' && <Mark className='block group-focus-within:hidden text-swLime w-4 h-[18px]' />}
+            { !error?.status && value !== '' && <Mark className='block group-focus-within:hidden text-swLime w-4 h-[18px]' />}
           </div>
-          {variant === 'base' && !isFocused && !value &&
+          {variant === 'coupon' && !isFocused && value === '' &&
             <div className='absolute inset-0 bg-darkSecondary '>
               <div className='w-full h-full flex px-6 items-center text-lg '>Coupon Code</div>
             </div> }

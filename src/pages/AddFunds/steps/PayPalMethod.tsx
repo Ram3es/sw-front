@@ -1,59 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ReactComponent as PayPal } from '../../../assets/img/payout/logo-ppcom-white.svg'
-import { format, formatToDecimal } from '../../../helpers/numberFormater'
+import { format } from '../../../helpers/numberFormater'
 import InformationIcon from '../../../components/icons/InformationIcon'
 import InputWithErrors from '../../../components/Content/InputWithErrors'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
-import AddCoupon from '../../../components/funds/AddCoupon'
-
-type TErrors = Record<string, { status: boolean, message?: string, errorClass?: string }>
-
-const ERRORS: TErrors = {
-  excededAmount: {
-    status: false,
-    errorClass: 'flex items gap-2 center text-swOrange text-sm font-normal leading-[14px]',
-    message: 'The amount you have entered exceeded the monthly limit. We set the maximum value for you.'
-  },
-  lowAmount: {
-    status: false,
-    errorClass: 'flex items gap-2 center text-swOrange text-sm font-normal leading-[14px]',
-    message: 'The amount you have entered is below the minimum. We set the minimum value for you.'
-  },
-  limit: {
-    status: false
-  }
-}
+import AddCoupon from '../../../components/funds/coupon/AddCoupon'
+import { useFundsContext } from '../../../context/FundsContext'
+import ErrorLabelRounded from '../../../components/funds/ErrorLabelRounded'
+import { ReactComponent as Arrow } from '../../../assets/img/market/arrow-right.svg'
 
 const PayPalMethod = () => {
-  const [amountInputValue, setAmountInputValue] = useState<string>(formatToDecimal(500))
-  const [errorsState, setErrorsState] = useState<TErrors>(ERRORS)
-
-  const handleChange = (value: string) => {
-    setAmountInputValue(value)
-  }
-
-  const handleBlur = () => {
-    setErrorsState(prev => {
-      let copy = { ...prev }
-      Object.keys(copy).forEach(key => {
-        copy = { ...copy, [key]: { ...copy[key], status: false } }
-      })
-      return { ...copy }
-    })
-    if (amountInputValue && ((+amountInputValue) < 5 || !Number(amountInputValue))) {
-      setErrorsState(prev => ({ ...prev, lowAmount: { ...prev.lowAmount, status: true } }))
-      setAmountInputValue(parseFloat('5').toFixed(2))
-      return
-    }
-    if (amountInputValue && (+amountInputValue) > 100) {
-      setErrorsState(prev => ({ ...prev, lowAmount: { ...prev.excededAmount, status: true } }))
-      setAmountInputValue(parseFloat('100').toFixed(2))
-      return
-    }
-    setAmountInputValue(parseFloat(amountInputValue).toFixed(2))
-  }
+  const {
+    amountInputValue,
+    errorsState,
+    monthlyLimit,
+    setAmountInputValue,
+    setAddFundsStep,
+    setErrorsState,
+    handleBlurInputAmount
+  } = useFundsContext()
 
   useEffect(() => {
     setErrorsState(prev => ({ ...prev, limit: { ...prev.excededAmount, status: false } }))
@@ -71,10 +38,14 @@ const PayPalMethod = () => {
             </div>
             <PayPal />
           </div>
+          <ErrorLabelRounded
+            isError={errorsState.excededMonthly.status}
+            message={errorsState.excededMonthly.message}
+           />
           <div className='flex flex-col '>
               <h3 className='tracking-[1.12px] text-graySecondary uppercase text-sm'>top-up limit</h3>
               <div className='text-graySecondary font-normal '>
-                <span className={`${errorsState?.limit.status ? 'text-swOrange' : 'text-white'} font-medium mr-1`}>${format(10000)}</span>
+                <span className={`${errorsState?.limit.status ? 'text-swOrange' : 'text-white'} font-medium mr-1`}>${format(monthlyLimit)}</span>
                  left for this month
                  <div className='flex  mt-2' >
                    <InformationIcon iconClasses='w-4 h-4 shrink-0 mr-2 mt-[2px]' />
@@ -93,22 +64,31 @@ const PayPalMethod = () => {
                  </div>
               </div>
             </div>
+            <div className={errorsState.excededMonthly.status ? 'pointer-events-none opacity-50' : '' } >
             <InputWithErrors
               value={amountInputValue}
-              handleChange={(value: string) => { handleChange(value) }}
+              handleChange={(value: string) => { setAmountInputValue(value) }}
               onClear={() => { setAmountInputValue('') } }
-              handleBlur={handleBlur}
-              error={Object.values(errorsState).filter(obj => obj.status)[0]}
+              handleBlur={handleBlurInputAmount}
+              error={Object.values(errorsState).filter(obj => obj.status && obj.relative === 'amount')[0]}
               errorBorder='border-swOrange'
-              autoFocus
+              autoFocus={!errorsState.excededMonthly.status}
              />
-            <AddCoupon
-              amount={ Number(amountInputValue) * 100 || 0 }
-            />
+             </div>
+             {errorsState.excededMonthly.status
+               ? <div
+                 onClick={() => { setAddFundsStep(1) }}
+                 className='flex items-center gap-2 text-graySecondary hover:text-white duration-200  cursor-pointer'>
+                  <Arrow className='h-6 w-auto rotate-180  ' />
+                  <span className='uppercase tracking-[1.28px]'>back to wallet</span>
+               </div>
+               : <AddCoupon /> }
+
             <Button
               text='go to summary'
-            //   onClick={setStep}
-              className={classNames('bg-skinwalletPink justify-center items-center w-[208px] h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path')}
+              onClick={() => { setAddFundsStep(3) }}
+              className={classNames('bg-skinwalletPink justify-center items-center w-[208px] h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
+                errorsState.excededMonthly.status ? 'pointer-events-none grayscale opacity-50' : '')}
              />
         </div>
   )

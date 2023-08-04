@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import RoundedMark from '../../../components/icons/RoundedMark'
 import { Link } from 'react-router-dom'
 import { useFundsContext } from '../../../context/FundsContext'
@@ -141,7 +141,7 @@ const Summary = () => {
                   <div className='uppercase tracking-[1.12px]'>amount</div>
                   <span className='text-white'>${format(Number(amountInputValue) * 100 || 0)}</span>
                 </div>
-                {couponInfo &&
+                {!!couponInfo &&
                   <div className='flex flex-col gap-2 pb-6 mb-4 border-b border-white/10'>
                     <div className='w-full flex justify-between items-center text-sm '>
                       <div className='uppercase tracking-[1.12px]'>active coupon</div>

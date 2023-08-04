@@ -2,12 +2,22 @@
 import Dropbox from '../../Content/Dropbox'
 import { SOCIAL_LINKS } from '../../../constants/sidebar-links'
 import { Link } from 'react-router-dom'
-import { format } from '../../../helpers/numberFormater'
+import { format, formatToDecimal } from '../../../helpers/numberFormater'
 import InputWithErrors from '../../Content/InputWithErrors'
 import { useFundsContext } from '../../../context/FundsContext'
 
 const AddCoupon = () => {
-  const { couponInfo, couponInputValue, amountInputValue, errorsState, setCouponInputValue, handleBlurInputCoupon } = useFundsContext()
+  const {
+    couponInfo,
+    couponInputValue,
+    amountInputValue,
+    errorsState,
+    setCouponInputValue,
+    handleBlurInputCoupon
+  } = useFundsContext()
+
+  console.log(amountInputValue, 'amountInputValue')
+
   return (
     <Dropbox
     label='add coupon code'
@@ -50,7 +60,7 @@ const AddCoupon = () => {
           <div className='flex flex-col gap-2'>
             <div className='w-full flex justify-between items-center text-sm '>
               <div className='uppercase tracking-[1.12px]'>amount</div>
-              <span className='text-white'>${format(Number(amountInputValue) * 100 || 0)}</span>
+              <span className='text-white'>${formatToDecimal(+amountInputValue)}</span>
             </div>
             <div className='w-full flex justify-between items-center text-sm '>
               <div className='uppercase tracking-[1.12px]'>active coupon</div>

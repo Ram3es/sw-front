@@ -40,12 +40,14 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const handleBlurInputCoupon = async () => {
     setErrorsState(prev => ({ ...prev, wrongCoupon: { ...prev.wrongCoupon, status: false } }))
-    try {
-      const data = couponInputValue && await sendCouponCode({ coupon: couponInputValue })
-      setCouponInfo(prev => prev + 500)
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 400) { setErrorsState(prev => ({ ...prev, wrongCoupon: { ...prev.wrongCoupon, status: true } })) }
+    if (couponInputValue) {
+      try {
+        const data = await sendCouponCode({ coupon: couponInputValue })
+        setCouponInfo(prev => prev + 500)
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 400) { setErrorsState(prev => ({ ...prev, wrongCoupon: { ...prev.wrongCoupon, status: true } })) }
+        }
       }
     }
   }

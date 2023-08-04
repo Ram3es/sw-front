@@ -64,7 +64,7 @@ const MarketLanding = () => {
       <IsUserLogged>
         <div className='flex flex-col items-center w-full'>
           <div className='w-full h-12 flex justify-center items-center bg-darkGrey text-white'>
-            <div className='w-[800px] h-full '>
+            <div className='w-full h-full'>
               <SliderFade />
             </div>
           </div>

@@ -85,7 +85,7 @@ input[type='number'] {
 
 
 .button {
-  transition: .2s ease-in-out
+  transition: .2s linear
 }
 
 .hover:hover {
@@ -99,6 +99,24 @@ input[type='number'] {
 }
 .each-capitalized:first-line {
   text-transform: capitalize;
+}
+
+.marked-list p {
+  position: relative;
+  color:white;
+  margin-left: 20px;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.marked-list p::before {
+  content: '';
+  background-image: url(assets/img/funds/checked.svg);
+  width: 13px;
+  height: 10px;
+  position: absolute;
+  left: -20px;
+  top: 3px
 }
 
 /* react-slick styles */
@@ -140,14 +158,6 @@ input[type='number'] {
   position: relative;
   width: 100%;
 }
-
-.trustpilot-widget > iframe {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-40%);
-}
-
 
 
 

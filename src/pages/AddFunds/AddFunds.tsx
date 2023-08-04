@@ -25,7 +25,7 @@ const AddFunds = () => {
   const { selectedMethod, addFundsStep, setAddFundsStep } = useFundsContext()
 
   return (
-    <div className='relative'>
+    <>
       <Bar>
         <div className="flex justify-between items-center h-full px-6  ">
           <div className='flex gap-4 items-center text-white font-["Barlow"] text-[21px] font-medium uppercase'>
@@ -65,7 +65,7 @@ const AddFunds = () => {
             </div>
           </div>
           }
-    </div>
+    </>
   )
 }
 

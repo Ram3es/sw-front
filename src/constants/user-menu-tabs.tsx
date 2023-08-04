@@ -43,7 +43,7 @@ export const USER_MENU: IUserMenu[][] = [
     },
     {
       title: 'withdraw items',
-      path: '/inventory',
+      path: '/market/inventory',
       icon: <Mark />
     },
     {

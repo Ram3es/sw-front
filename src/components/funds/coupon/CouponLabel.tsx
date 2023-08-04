@@ -1,4 +1,3 @@
-import React from 'react'
 import RoundedPlus from '../../icons/RoundedPlus'
 
 const CouponLabel = ({ submitFn }: { submitFn: () => void }) => {

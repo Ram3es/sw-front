@@ -1,4 +1,3 @@
-import React from 'react'
 import MethodFee from './MethodFee'
 import { Link } from 'react-router-dom'
 import { format } from '../../../helpers/numberFormater'

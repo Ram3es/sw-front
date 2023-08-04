@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
 import { classNames } from '../../helpers/className'
@@ -27,7 +27,6 @@ const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses
 
             <Transition
               show={isOpen}
-              as={Fragment}
             >
               { children }
             </Transition>

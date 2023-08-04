@@ -1,4 +1,3 @@
-import React from 'react'
 import { format } from '../../../helpers/numberFormater'
 
 const MethodFee = ({ topUpFee }: { topUpFee: string }) => {

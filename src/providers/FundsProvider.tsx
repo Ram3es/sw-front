@@ -3,8 +3,9 @@ import { FundsContext } from '../context/FundsContext'
 import { type ISelectedMethod } from '../types/Funds'
 import { formatToDecimal } from '../helpers/numberFormater'
 import { ERRORS, type TErrors } from '../constants/fundsMethods'
-import { sendCouponCode } from '../services/funds/funds'
+// import { sendCouponCode } from '../services/funds/funds'
 import axios from 'axios'
+import { sendCouponCode } from '../services/funds/funds'
 
 export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [amountInputValue, setAmountInputValue] = useState<string>(formatToDecimal(500))

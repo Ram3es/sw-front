@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ReactComponent as Crypto } from '../../../assets/img/funds/crypto.svg'
 import { ReactComponent as Bitcoin } from '../../../assets/img/funds/rounded-bitcoin.svg'
 import { ReactComponent as Ethereum } from '../../../assets/img/funds/rounded-ethereum.svg'

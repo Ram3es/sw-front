@@ -3,6 +3,10 @@
 @tailwind utilities;  
 
 @layer utilities {
+  .thumb-corners-polygon {
+    clip-path: polygon(50% 0, 100% 33%, 100% 100%, 0 100%, 0% 33%);
+  }
+
   .cta-clip-path {
     clip-path: polygon(100% 0, 100% 100%, calc(0% + 8px) 100%, 0 calc(100% - 8px), 0 0);
   }
@@ -154,14 +158,6 @@ input[type='number'] {
   position: relative;
   width: 100%;
 }
-
-/* .trustpilot-widget > iframe {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-40%);
-} */
-
 
 
 

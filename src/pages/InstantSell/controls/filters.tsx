@@ -8,16 +8,17 @@ function classNames (...classes: string[]) {
 
 interface IFilters {
   onSelectAll: () => void
-  toggleSort: () => void
-  isAsc: boolean
+  toggleSort?: () => void
+  isAsc?: boolean
   isSelectedAll: boolean
-
+  onReaload?: () => void
 }
 
-export const Filters = ({ onSelectAll, toggleSort, isAsc, isSelectedAll }: IFilters) => {
+export const Filters = ({ onSelectAll, toggleSort, isAsc, isSelectedAll, onReaload }: IFilters) => {
   return (
     <div className='flex items-center relative'>
-      <Button
+      {toggleSort
+        ? <Button
         text={`price ${isAsc ? 'ascending' : 'descending'}`}
         onClick={toggleSort}
         className=' text-graySecondary  uppercase text-sm hover:text-white '
@@ -31,6 +32,7 @@ export const Filters = ({ onSelectAll, toggleSort, isAsc, isSelectedAll }: IFilt
         }
         iconRight
       />
+        : ''}
       <Button
         className='font-medium text-skinwallerGray hover:text-white'
         text='Select All'
@@ -42,11 +44,13 @@ export const Filters = ({ onSelectAll, toggleSort, isAsc, isSelectedAll }: IFilt
             />
         }
       />
-      <Button
+      {onReaload
+        ? <Button
         className='font-medium text-skinwallerGray hover:text-white'
         text='Reload'
-
+        onClick={onReaload}
       />
+        : ''}
 
     </div>
   )

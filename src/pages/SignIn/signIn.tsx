@@ -16,8 +16,12 @@ export default function SignIn () {
   }
 
   useEffect(() => {
-    if (user?.username) {
-      navigate('/')
+    const redirectUrl = localStorage.getItem('continueUrl')
+    if (user?.username && redirectUrl) {
+      localStorage.setItem('continueUrl', '')
+      navigate(redirectUrl)
+    } else if (!redirectUrl) {
+      localStorage.setItem('continueUrl', location?.state?.from as string || getvalueFromSearchString(location?.search, 'continue') || '')
     }
   }, [user])
 

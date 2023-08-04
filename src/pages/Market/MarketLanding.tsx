@@ -137,11 +137,7 @@ const MarketLanding = () => {
                       image={ `https://community.akamai.steamstatic.com/economy/image/${imageUrl} `}
                       onClick={() => {
                         void buyItems({
-                          assetIds: [
-                            '100000001',
-                            '100000002',
-                            '100000003'
-                          ]
+                          assetIds: [inventoryItemId]
                         })
                       }}
                       submitFn={() => {}}

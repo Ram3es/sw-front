@@ -6,7 +6,7 @@ import { Filters } from '../InstantSell/controls/filters'
 import MarketWithdrawSidebar from './MarketWithdrawSidebar'
 import SelectBottomBar from './SelectBottomBar'
 import { getItemsToWithdraw } from '../../services/market/market'
-import { type TInventoryCard } from '../../types/Card'
+import { ECardVariant, type TInventoryCard } from '../../types/Card'
 import CardsListWrapper from '../InstantSell/inventory/CardsListWrapper'
 
 const MarketWithdraw = () => {
@@ -34,7 +34,19 @@ const MarketWithdraw = () => {
     try {
       const items = await getItemsToWithdraw()
       console.log('items', items)
-      setRenderCards(() => items.map((item: any) => ({ ...item, isTradable: true, isChecked: false })))
+      setRenderCards(() => items.map((item: any) => ({
+        id: item.inventoryItemId,
+        name: item.name,
+        type: item.typeName,
+        variant: ECardVariant.market,
+        condition: item.wearFloat,
+        price: item.price.amount,
+        steamPrice: item.steamPrice.amount,
+        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+        image: item.imageUrl ? `https://community.akamai.steamstatic.com/economy/image/${item.imageUrl}` : '',
+        isTradable: true,
+        isChecked: false
+      })))
     } catch (error) {
       console.log(error)
     }

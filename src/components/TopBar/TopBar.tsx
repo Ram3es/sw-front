@@ -55,7 +55,9 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
         )}
       >
         <nav className="flex items-center">
-          <Link to={window.location.origin} text={<SkinwalletLogo />} />
+          <a href={window.location.origin}>
+            <SkinwalletLogo />
+          </a>
           <NavDropdown title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
             <div className="flex w-full mx-10 gap-10 flex-wrap">
               {gamesLinks.map((game) => (

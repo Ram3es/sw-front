@@ -15,7 +15,7 @@ import { ECardVariant, type IOffersCard } from '../../types/Card'
 import SliderFade from '../../components/slider/SliderFade'
 import EmptyCard from '../../components/Content/EmptyCard'
 import { useCallback, useEffect, useState } from 'react'
-import { getOffers } from '../../services/market/market'
+import { buyItems, getOffers } from '../../services/market/market'
 import { IsUserLogged } from '../../components/IsUserLogged/IsUserLogged'
 
 const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
@@ -135,7 +135,15 @@ const MarketLanding = () => {
                       price={price.amount}
                       steamPrice={steamPrice.amount}
                       image={ `https://community.akamai.steamstatic.com/economy/image/${imageUrl} `}
-                      onClick={() => { console.log('click') }}
+                      onClick={() => {
+                        void buyItems({
+                          assetIds: [
+                            '100000001',
+                            '100000002',
+                            '100000003'
+                          ]
+                        })
+                      }}
                       submitFn={() => {}}
                        />
                   )}

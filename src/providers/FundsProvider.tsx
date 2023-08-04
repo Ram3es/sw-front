@@ -1,14 +1,14 @@
 import { useState, type FC, type PropsWithChildren, useEffect } from 'react'
 import { FundsContext } from '../context/FundsContext'
 import { type ISelectedMethod } from '../types/Funds'
-import { formatToDecimal } from '../helpers/numberFormater'
 import { ERRORS, type TErrors } from '../constants/fundsMethods'
 // import { sendCouponCode } from '../services/funds/funds'
 import axios from 'axios'
 import { sendCouponCode } from '../services/funds/funds'
+import { formatToDecimal } from '../helpers/numberFormater'
 
 export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [amountInputValue, setAmountInputValue] = useState<string>(formatToDecimal(500))
+  const [amountInputValue, setAmountInputValue] = useState<string>(() => formatToDecimal('5'))
   const [couponInputValue, setCouponInputValue] = useState<string>('')
   const [addFundsStep, setAddFundsStep] = useState<number>(1)
   const [selectedMethod, setSelectedMethod] = useState<ISelectedMethod>()
@@ -44,7 +44,7 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
     if (couponInputValue) {
       try {
         const data = await sendCouponCode({ coupon: couponInputValue })
-        setCouponInfo(prev => prev + 500)
+        setCouponInfo(prev => prev + 5)
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 400) { setErrorsState(prev => ({ ...prev, wrongCoupon: { ...prev.wrongCoupon, status: true } })) }

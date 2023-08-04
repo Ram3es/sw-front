@@ -2,7 +2,7 @@
 import Dropbox from '../../Content/Dropbox'
 import { SOCIAL_LINKS } from '../../../constants/sidebar-links'
 import { Link } from 'react-router-dom'
-import { format, formatToDecimal } from '../../../helpers/numberFormater'
+import { formatToDecimal } from '../../../helpers/numberFormater'
 import InputWithErrors from '../../Content/InputWithErrors'
 import { useFundsContext } from '../../../context/FundsContext'
 
@@ -15,8 +15,6 @@ const AddCoupon = () => {
     setCouponInputValue,
     handleBlurInputCoupon
   } = useFundsContext()
-
-  console.log(amountInputValue, 'amountInputValue')
 
   return (
     <Dropbox
@@ -60,15 +58,15 @@ const AddCoupon = () => {
           <div className='flex flex-col gap-2'>
             <div className='w-full flex justify-between items-center text-sm '>
               <div className='uppercase tracking-[1.12px]'>amount</div>
-              <span className='text-white'>${formatToDecimal(+amountInputValue)}</span>
+              <span className='text-white'>${formatToDecimal(amountInputValue)}</span>
             </div>
             <div className='w-full flex justify-between items-center text-sm '>
               <div className='uppercase tracking-[1.12px]'>active coupon</div>
-              <span className={couponInfo ? 'text-swLime' : ''}>+${format(couponInfo)}</span>
+              <span className={couponInfo ? 'text-swLime' : ''}>+${formatToDecimal(couponInfo.toString())}</span>
             </div>
             <div className='w-full flex justify-between items-center text-sm '>
               <div className='uppercase tracking-[1.12px]'>final top-up</div>
-              <span className=' text-2xl leading-6  text-white '>${format((Number(amountInputValue) * 100 || 0) + couponInfo)}</span>
+              <span className=' text-2xl leading-6  text-white '>${formatToDecimal((+amountInputValue + couponInfo).toString())}</span>
             </div>
           </div>
         </div>

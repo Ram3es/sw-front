@@ -3,7 +3,7 @@ import RoundedMark from '../../../components/icons/RoundedMark'
 import { Link } from 'react-router-dom'
 import { useFundsContext } from '../../../context/FundsContext'
 import EditPencil from '../../../components/icons/EditPencil'
-import { format } from '../../../helpers/numberFormater'
+import { format, formatToDecimal } from '../../../helpers/numberFormater'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
 import CouponLabel from '../../../components/funds/coupon/CouponLabel'
@@ -33,7 +33,7 @@ const Summary = () => {
           <div className='w-full h-[500px] sm:h-auto max-w-[672px] flex flex-col gap-4 px-6 sm:px-0 text-white overflow-scroll'>
             <div className='w-full flex items-start px-6 py-4 bg-darkGrey relative'>
               <div className='w-1/3 flex items-center gap-2'>
-                <RoundedMark className='text-swLime w-[18px] h-auto ' />
+                <RoundedMark className='text-swLime w-[18px] h-auto shrink-0 ' />
                 <span className='text-lg text-graySecondary uppercase tracking-[1.44px]' >method</span>
               </div>
               <div className='flex flex-col text-sm font-normal text-graySecondary'>
@@ -139,17 +139,17 @@ const Summary = () => {
               <div className='flex flex-col gap-2'>
                 <div className='w-full flex justify-between items-center text-sm '>
                   <div className='uppercase tracking-[1.12px]'>amount</div>
-                  <span className='text-white'>${format(Number(amountInputValue) * 100 || 0)}</span>
+                  <span className='text-white'>${formatToDecimal(amountInputValue)}</span>
                 </div>
                 {!!couponInfo &&
                   <div className='flex flex-col gap-2 pb-6 mb-4 border-b border-white/10'>
                     <div className='w-full flex justify-between items-center text-sm '>
                       <div className='uppercase tracking-[1.12px]'>active coupon</div>
-                      <span className='text-swLime'>+${format(couponInfo)}</span>
+                      <span className='text-swLime'>+${formatToDecimal(couponInfo.toString())}</span>
                     </div>
                     <div className='w-full flex justify-between items-center text-sm '>
                       <div className='uppercase tracking-[1.12px]'>final top-up</div>
-                      <span >${format(couponInfo + (Number(amountInputValue) * 100 || 0))}</span>
+                      <span >${formatToDecimal((couponInfo + +amountInputValue).toString())}</span>
                     </div>
                   </div>
                     }
@@ -159,7 +159,7 @@ const Summary = () => {
                 </div>
                 <div className='w-full flex justify-between items-center text-sm '>
                   <div className='uppercase tracking-[1.12px]'>total payment</div>
-                  <span className=' text-2xl leading-6  text-white '>${format(Number(amountInputValue) * 100 || 0)}</span>
+                  <span className=' text-2xl leading-6  text-white '>${formatToDecimal(amountInputValue)}</span>
                 </div>
               </div>
             </div>

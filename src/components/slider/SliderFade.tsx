@@ -4,6 +4,7 @@ import { ReactComponent as Support } from '../../assets/img/profile/support.svg'
 import { ReactComponent as Shield } from '../../assets/img/market/shield-mark.svg'
 import { ReactComponent as Gift } from '../../assets/img/profile/gift-icon.svg'
 import { Link } from 'react-router-dom'
+import TrustBox from '../Content/TrustBox'
 
 const SliderFade = () => {
   return (
@@ -36,9 +37,8 @@ const SliderFade = () => {
               </div>
             </div>
             <div>
-              <div className='w-full h-12 flex justify-center items-center gap-2 text-sm'>
-                <span className='text-lg'>Average</span>
-                <span className='text-lg'>STARS</span>
+              <div className=' pt-3 '>
+                <TrustBox />
               </div>
             </div>
         </Slider>

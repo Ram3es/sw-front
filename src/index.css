@@ -3,6 +3,10 @@
 @tailwind utilities;  
 
 @layer utilities {
+  .thumb-corners-polygon {
+    clip-path: polygon(50% 0, 100% 33%, 100% 100%, 0 100%, 0% 33%);
+  }
+
   .cta-clip-path {
     clip-path: polygon(100% 0, 100% 100%, calc(0% + 8px) 100%, 0 calc(100% - 8px), 0 0);
   }
@@ -81,7 +85,7 @@ input[type='number'] {
 
 
 .button {
-  transition: .2s ease-in-out
+  transition: .2s linear
 }
 
 .hover:hover {
@@ -95,6 +99,24 @@ input[type='number'] {
 }
 .each-capitalized:first-line {
   text-transform: capitalize;
+}
+
+.marked-list p {
+  position: relative;
+  color:white;
+  margin-left: 20px;
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.marked-list p::before {
+  content: '';
+  background-image: url(assets/img/funds/checked.svg);
+  width: 13px;
+  height: 10px;
+  position: absolute;
+  left: -20px;
+  top: 3px
 }
 
 /* react-slick styles */
@@ -128,5 +150,17 @@ input[type='number'] {
 .card-slider .slick-disabled {
   visibility: hidden;
 }
+
+/* trust-pilot vidget */
+
+.trustpilot-widget {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+
+
+
 
 

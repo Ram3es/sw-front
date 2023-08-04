@@ -15,6 +15,8 @@ import Settings from '../pages/Settings/Settings'
 import OnSiteInventory from '../pages/OnSiteInventory/OnSiteInventory'
 import AddFunds from '../pages/AddFunds/AddFunds'
 import Redeem from '../pages/Reedem/Redeem'
+import MarketInventory from '../pages/Market/MarketInventory'
+import MarketWithdraw from '../pages/Market/MarketWithdraw'
 
 const router = createBrowserRouter([
   {
@@ -68,7 +70,22 @@ const router = createBrowserRouter([
       },
       {
         path: 'market',
-        element: <MarketLanding />
+        children: [
+          {
+            index: true,
+            element: <MarketLanding />
+          },
+          {
+            path: 'inventory',
+            element: <MarketInventory />,
+            children: [
+              {
+                index: true,
+                element: <MarketWithdraw />
+              }
+            ]
+          }
+        ]
       },
       {
         path: 'inventory',

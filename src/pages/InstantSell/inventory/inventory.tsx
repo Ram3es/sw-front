@@ -2,14 +2,13 @@ import { Nav } from '../controls/nav'
 import { Filters } from '../controls/filters'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { IsUserLogged } from '../../../components/IsUserLogged/IsUserLogged'
-import ItemCard from '../../../components/Content/ItemCard'
 import SellsBar from './SellsBar'
 import { type TInventoryCard } from '../../../types/Card'
 import { useAppContext } from '../../../context/AppContext'
 import { sortData } from '../../../helpers/sortData'
 import { useSort } from '../../../helpers/useSort'
 import { getInventory } from '../../../services/inventory/inventory'
-import SymbolIcon from './SymbolIcon'
+import CardsListWrapper from './CardsListWrapper'
 
 export const Inventory = () => {
   const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])
@@ -70,27 +69,14 @@ export const Inventory = () => {
             isSelectedAll={isSelectedAll}
             toggleSort ={toggleSort}
             isAsc= { currentOption === 'ASC' }
+            onReaload={() => { console.log('reload') }}
           />
         </div>
         <IsUserLogged>
-          {
-          renderCards.length
-            ? <div className='px-[24px] py-[30px] grid grid-cols-cards gap-1'>
-              {sorted.map(card =>
-                    <ItemCard
-                      key={card.id}
-                      onClick={() => { toggleSelect(card) }}
-                      isSelected={card.isChecked}
-                      {...card}
-                    />
-              )
-              }
-              </div>
-            : <div className='flex flex-col items-center justify-center w-full h-full text-skinwallerGray font-medium gap-4'>
-                <SymbolIcon />
-                <p>No items to select</p>
-              </div>
-          }
+          <CardsListWrapper
+            renderCards={sorted}
+            toggleSelect={toggleSelect}
+          />
         </IsUserLogged>
       </div>
       <SellsBar selectedCards={selectedCards} onClose={toggleSelect} />

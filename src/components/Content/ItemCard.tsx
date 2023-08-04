@@ -2,6 +2,7 @@ import { CONDITIONS } from '../../constants/item-conditions'
 import { format } from '../../helpers/numberFormater'
 import { ECardVariant, type CardItem, type ConditionItem } from '../../types/Card'
 import { Button } from '../Navigation'
+import SteamIcon from '../icons/SteamIcon'
 import Checkbox from './Checkbox'
 import { ReactComponent as ClockIcon } from './images/clock.svg'
 
@@ -31,6 +32,7 @@ const ItemCard = ({
   isSelected,
   isNoFee,
   price, name,
+  steamPrice,
   type,
   condition,
   onClick,
@@ -105,8 +107,12 @@ const ItemCard = ({
             alt={name}
           />
           <div className="flex flex-col w-full relative mb-2">
-            <div className='text-graySecondary uppercase text-sm font-["Barlow"] font-light'>estimated value</div>
-            <div className='text-whote uppercase text-2xl font-["Barlow"] text-white font-bold'>${format(price)}</div>
+            <div className='text-graySecondary uppercase text-sm font-["Barlow"] font-light group-[.market]/card:hidden'>estimated value</div>
+            <div className='uppercase text-2xl font-["Barlow"] text-white font-bold'>${format(price)}</div>
+            <div className='hidden group-[.market]/card:flex items-center gap-2 py-1 text-sm text-graySecondary'>
+              <SteamIcon className='w-4 h-auto'/>
+              <span>${format(steamPrice ?? 0)}</span>
+            </div>
             {isNoFee
               ? <span className="px-1 absolute bottom-[110%] left-0 bg-[#FFD7BC] text-darkSecondary text-xs font-['Barlow']">
               0% Fee

@@ -17,6 +17,7 @@ import AddFunds from '../pages/AddFunds/AddFunds'
 import Redeem from '../pages/Reedem/Redeem'
 import MarketInventory from '../pages/Market/MarketInventory'
 import MarketWithdraw from '../pages/Market/MarketWithdraw'
+import ListedItems from '../pages/Market/ListedItems'
 
 const router = createBrowserRouter([
   {
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
                 element: <MarketWithdraw />
               }
             ]
+          },
+          {
+            path: 'withdraw',
+            element: <ListedItems />
           }
         ]
       },

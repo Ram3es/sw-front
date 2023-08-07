@@ -19,8 +19,8 @@ const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange, activeClass, add
 
   return (
     <label className={classNames('relative w-[18px] h-[18px] border flex justify-center items-center cursor-pointer',
-      additionalClasses ?? '',
-      activeClass ?? (checked ? 'bg-white border-white' : 'border-graySecondary'))
+      activeClass ?? (checked ? 'bg-white border-white' : 'border-graySecondary'),
+      additionalClasses ?? '')
        }>
       <input
         className="opacity-0 absolute left-0 top-0 -z-10"

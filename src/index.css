@@ -119,6 +119,10 @@ input[type='number'] {
   top: 3px
 }
 
+.small-caps {
+  font-variant-caps:  all-small-caps;
+}
+
 /* react-slick styles */
 .card-slider .slick-list {
   padding: 24px 0;

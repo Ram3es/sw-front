@@ -55,7 +55,8 @@ export default {
       gridTemplateColumns: {
         cards: "repeat(auto-fill,minmax(190px,1fr))",
         categories:"repeat(auto-fill,minmax(150px, 1fr))",
-        footer:'repeat(auto-fill,minmax(150px, 1fr))'
+        footer:'repeat(auto-fill,minmax(150px, 1fr))',
+        methods: 'repeat(auto-fill,328px)'
       },
       boxShadow: {
         'checkedCard': '0px 0px 20px 0px rgba(0, 0, 0, 0.50)',

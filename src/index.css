@@ -64,6 +64,10 @@
   clip-path: polygon(calc(100% - 8px) 0, 100% calc(0% + 8px), 100% 100%, 0% 100%, 0 100%, 0 0);
 }
 
+.card-top-bar-clip-path {
+  clip-path: polygon(calc(100% - 8px) 0, 100% calc(0% + 8px), 100% 100%, calc(0% + 0px) 100%, 0 calc(100% - 0px), 0 0);
+}
+
 @font-face {
   font-family: 'Barlow';
   src:

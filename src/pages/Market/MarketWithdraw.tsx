@@ -38,7 +38,7 @@ const MarketWithdraw = () => {
         id: item.inventoryItemId,
         name: item.name,
         type: item.typeName,
-        variant: ECardVariant.market,
+        variant: ECardVariant.withdraw,
         condition: item.wearFloat,
         price: item.price.amount,
         steamPrice: item.steamPrice.amount,

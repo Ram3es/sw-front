@@ -38,7 +38,8 @@ export interface ConditionItem {
 
 export enum ECardVariant {
   sell = 'sell',
-  market = 'market'
+  market = 'market',
+  withdraw = 'withdraw'
 }
 
 export interface IItemSelectedCard extends Pick<CardItem, 'id' | 'condition' | 'image' | 'name' | 'onClick' | 'price'> {

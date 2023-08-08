@@ -44,7 +44,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     <header
       id="top-bar"
       className={classNames(
-        'pointer-events-none cursor-default w-full duration-100 h-[56px] sticky top-0 z-40',
+        'pointer-events-none cursor-default w-full duration-100 h-[56px] sticky top-0 z-50',
         isHidableOnScroll && shouldHide
           ? 'transform-gpu translate-x-0 lg:translate-y-[-56px] translate-z-0'
           : 'transform-gpu translate-x-0 translate-y-0 translate-z-0'

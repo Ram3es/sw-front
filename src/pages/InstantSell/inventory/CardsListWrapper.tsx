@@ -13,7 +13,7 @@ const CardsListWrapper = ({
     <>
       {renderCards.length
         ? (
-        <div className="px-[24px] py-[30px] grid grid-cols-cards gap-1">
+        <div className="px-[24px] py-[30px] grid grid-cols-2 sm:grid-cols-cards gap-1">
           {renderCards.map((card) => (
             <ItemCard
               key={card.id}

@@ -72,15 +72,17 @@ const MarketWithdraw = () => {
         />
       </div>
       <div className="flex text-white">
-        <div
-          className={classNames(
-            'flex flex-col flex-grow max-w-[256px] max-h-screen sticky overflow-auto bottom-0',
-            shouldHide
-              ? 'h-[calc(100vh-60px)] top-[60px]'
-              : 'h-[calc(100vh-120px)] top-[120px]'
-          )}
-        >
-          <MarketWithdrawSidebar />
+        <div className='w-full lg:max-w-[256px] bg-darkSecondary lg:bg-transparent fixed lg:sticky justify-center flex -left-full top-[56px] z-30 '>
+          <div
+            className={classNames(
+              'flex flex-col flex-grow max-w-[256px] max-h-screen overflow-auto',
+              shouldHide
+                ? 'h-[calc(100vh-60px)] top-[60px]'
+                : 'h-[calc(100vh-120px)] top-[120px]'
+            )}
+          >
+            <MarketWithdrawSidebar />
+          </div>
         </div>
         <div className="w-full flex flex-col pt-6">
           <div className="flex flex-col flex-grow">

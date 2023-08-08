@@ -1,6 +1,6 @@
 import { type FC } from 'react'
 import { type IMethod } from '../../constants/fundsMethods'
-import CardWrapper from '../../container/CardWrapper'
+import CardWrapper from '../../containers/CardWrapper'
 
 interface IMethodCardProps extends IMethod {
   isSelected: boolean

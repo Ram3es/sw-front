@@ -13,6 +13,7 @@ const MarketWithdraw = () => {
   const shouldHide = useHideOnScroll()
   const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])
   const [isSelectedAll, setSelectedAll] = useState(false)
+  const [isOnlySelectedShown, setIsOnlySelectedShown] = useState(false)
 
   const toggleSelect = (card: TInventoryCard) => {
     setRenderCards(prev => [...prev.map(item => card.id === item.id ? { ...item, isChecked: !item.isChecked } : item)])
@@ -29,6 +30,7 @@ const MarketWithdraw = () => {
   }
 
   const selectedItemsQty = useMemo(() => renderCards.reduce((prev, cur) => cur.isChecked ? prev + 1 : prev, 0), [renderCards])
+  const cardsToShow = useMemo(() => isOnlySelectedShown ? [...renderCards].filter(c => c.isChecked) : renderCards, [isOnlySelectedShown, renderCards])
 
   const getItems = useCallback(async () => {
     try {
@@ -84,9 +86,19 @@ const MarketWithdraw = () => {
         </div>
         <div className="w-full flex flex-col pt-6">
           <div className="flex flex-col flex-grow">
+            {isOnlySelectedShown
+              ? <div className='px-[24px]'>
+                  <div className='flex gap-3 items-center px-3 h-[25px] border border-swViolet rounded-3xl w-max'>
+                    <span className='text-white font-["Barlow"] text-sm'>Selected</span>
+                    <svg className='cursor-pointer' onClick={() => { setIsOnlySelectedShown(false) }} width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M6.22363 4.92432L9.04004 2.13525L9.61426 1.56104C9.69629 1.479 9.69629 1.34229 9.61426 1.23291L9.0127 0.631348C8.90332 0.549316 8.7666 0.549316 8.68457 0.631348L5.32129 4.02197L1.93066 0.631348C1.84863 0.549316 1.71191 0.549316 1.60254 0.631348L1.00098 1.23291C0.918945 1.34229 0.918945 1.479 1.00098 1.56104L4.3916 4.92432L1.00098 8.31494C0.918945 8.39697 0.918945 8.53369 1.00098 8.64307L1.60254 9.24463C1.71191 9.32666 1.84863 9.32666 1.93066 9.24463L5.32129 5.854L8.11035 8.67041L8.68457 9.24463C8.7666 9.32666 8.90332 9.32666 9.0127 9.24463L9.61426 8.64307C9.69629 8.53369 9.69629 8.39697 9.61426 8.31494L6.22363 4.92432Z" fill="#A4A4A4"/>
+                    </svg>
+                  </div>
+                </div>
+              : ''}
             <IsUserLogged>
               <CardsListWrapper
-                renderCards={renderCards}
+                renderCards={cardsToShow}
                 toggleSelect={toggleSelect}
               />
             </IsUserLogged>
@@ -95,7 +107,7 @@ const MarketWithdraw = () => {
       </div>
       <SelectBottomBar
         selectedItemsQty={selectedItemsQty}
-        onShowSelected={() => { console.log('show selected') }}
+        onShowSelected={() => { setIsOnlySelectedShown(prev => !prev) }}
         onCancel={() => { setRenderCards(prev => [...prev.map(item => item.isTradable ? { ...item, isChecked: false } : item)]) }}
         onWithdraw={() => { console.log('onWithdraw') }}
       />

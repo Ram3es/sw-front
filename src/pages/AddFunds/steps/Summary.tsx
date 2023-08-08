@@ -31,7 +31,7 @@ const Summary = () => {
     <div className='w-full flex justify-center  pt-6 sm:py-12 '>
         <div className='w-full max-w-[1024px] flex flex-col sm:flex-row  sm:gap-8 '>
           <div className='w-full h-[500px] sm:h-auto max-w-[672px] flex flex-col gap-4 px-6 sm:px-0 text-white overflow-scroll'>
-            <div className='w-full flex items-start px-6 py-4 bg-darkGrey relative'>
+            <div className='w-full flex flex-col sm:flex-row items-start px-6 py-4 bg-darkGrey relative'>
               <div className='w-1/3 flex items-center gap-2'>
                 <RoundedMark className='text-swLime w-[18px] h-auto ' />
                 <span className='text-lg text-graySecondary uppercase tracking-[1.44px]' >method</span>

@@ -36,13 +36,13 @@ const AddFunds = () => {
           </div>
         </div>
       </Bar>
-      <header className='w-full flex items-center h-12 border-b border-darkGrey mt-5 px-3 sm:px-6  relative' >
+      <header className='w-full flex flex-col sm:flex-row items-center gap-2 sm:gap-0 pb-2 sm:pb-0 sm:h-12 border-b border-darkGrey mt-5 px-3 sm:px-6  relative' >
         <div className='w-full pt-1'>
           <TrustBox />
         </div>
         <NavLink
           to={'/'}
-          className='flex shrink-0 items-center gap-2.5 ml-auto text-sm text-graySecondary uppercase  hover:text-white button'>
+          className='flex shrink-0 items-center gap-2.5 sm:ml-auto text-sm text-graySecondary uppercase  hover:text-white button'>
           <GiftIcon />
           <span className='uppercase tracking-[1.12px]' >redeem gift card</span>
         </NavLink>

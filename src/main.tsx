@@ -9,7 +9,7 @@ import PayoutProvider from './providers/PayoutProvider'
 import { FundsProvider } from './providers/FundsProvider'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <AppProvider>
       <PayoutProvider>
         <FundsProvider>
@@ -17,5 +17,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         </FundsProvider>
       </PayoutProvider>
     </AppProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 )

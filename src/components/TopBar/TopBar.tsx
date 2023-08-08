@@ -67,7 +67,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               <SkinwalletLogoSmall />
             </a>
           </div>
-          <NavDropdown wrapperClasses='hidden lg:block' title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
+          <NavDropdown wrapperClasses='hidden lg:flex' title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
             <div className="flex w-full mx-10 gap-10 flex-wrap">
               {gamesLinks.map((game) => (
                 <div
@@ -172,10 +172,13 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           {user
             ? (
               <>
-                <Button
-                  text={`$${format(user.balance)}`}
-                  className="uppercase font-medium text-skinwallerGray hover:text-white"
-                />
+                <div className='relative'>
+                  <div className='absolute left-0 top-0 w-full h-full bg-darkSecondary lg:bg-transparent cta-clip-path' />
+                  <Button
+                    text={`$${format(user.balance)}`}
+                    className="uppercase font-medium z-10 relative text-skinwallerGray hover:text-white"
+                  />
+                </div>
                 <Link
                   to="/panel/cart"
                   className="font-medium text-skinwallerGray hover:text-white"

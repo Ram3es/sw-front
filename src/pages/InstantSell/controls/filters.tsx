@@ -16,12 +16,12 @@ interface IFilters {
 
 export const Filters = ({ onSelectAll, toggleSort, isAsc, isSelectedAll, onReaload }: IFilters) => {
   return (
-    <div className='flex items-center relative'>
+    <div className='flex items-center justify-between relative w-full xl:w-auto'>
       {toggleSort
         ? <Button
         text={`price ${isAsc ? 'ascending' : 'descending'}`}
         onClick={toggleSort}
-        className=' text-graySecondary  uppercase text-sm hover:text-white '
+        className=' text-graySecondary w-max uppercase text-xs sm:text-sm hover:text-white '
         icon={
           <Chevron
             className={classNames(
@@ -34,7 +34,7 @@ export const Filters = ({ onSelectAll, toggleSort, isAsc, isSelectedAll, onRealo
       />
         : ''}
       <Button
-        className='font-medium text-skinwallerGray hover:text-white'
+        className='text-sm md:text-base font-medium w-max text-skinwallerGray hover:text-white'
         text='Select All'
         onClick={onSelectAll}
         icon={
@@ -46,7 +46,7 @@ export const Filters = ({ onSelectAll, toggleSort, isAsc, isSelectedAll, onRealo
       />
       {onReaload
         ? <Button
-        className='font-medium text-skinwallerGray hover:text-white'
+        className='text-sm md:text-base font-medium text-skinwallerGray hover:text-white'
         text='Reload'
         onClick={onReaload}
       />

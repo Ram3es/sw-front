@@ -15,6 +15,7 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [couponInfo, setCouponInfo] = useState<number>(0)
   const [errorsState, setErrorsState] = useState<TErrors>(ERRORS)
   const [monthlyLimit, setMonthlyLimit] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleBlurInputAmount = () => {
     setErrorsState(prev => {
@@ -42,9 +43,11 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
   const handleBlurInputCoupon = async () => {
     setErrorsState(prev => ({ ...prev, wrongCoupon: { ...prev.wrongCoupon, status: false } }))
     if (couponInputValue) {
+      setIsLoading(true)
       try {
         const data = await sendCouponCode({ coupon: couponInputValue })
         setCouponInfo(prev => prev + 5)
+        setIsLoading(false)
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (error.response?.status === 400) { setErrorsState(prev => ({ ...prev, wrongCoupon: { ...prev.wrongCoupon, status: true } })) }
@@ -72,6 +75,7 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
           couponInfo,
           errorsState,
           monthlyLimit,
+          isLoading,
           setAddFundsStep,
           setSelectedMethod,
           setAmountInputValue,

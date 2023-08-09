@@ -19,6 +19,7 @@ const Summary = () => {
     couponInfo,
     selectedMethod,
     errorsState,
+    isLoading,
     setAddFundsStep,
     setAmountInputValue,
     setCouponInputValue,
@@ -29,7 +30,7 @@ const Summary = () => {
 
   return (
     <div className='w-full flex flex-grow justify-center pt-6 sm:py-12 '>
-        <div className='w-full h-[calc(100vh_-_212px)] sm:h-full max-w-[1024px] flex flex-col justify-between sm:flex-row sm:gap-8 '>
+        <div className='w-full h-[calc(100vh_-_234px)] sm:h-full max-w-[1024px] flex flex-col justify-between sm:flex-row sm:gap-8 '>
           <div className='w-full  h-full max-w-[672px] flex flex-col gap-4 pb-10 px-6 sm:px-0 text-white overflow-y-scroll relative '>
             <div className='w-full flex flex-col gap-y-3 sm:flex-row items-start px-6 py-4 bg-darkGrey relative'>
               <div className='w-full sm:w-1/3 flex items-center gap-2'>
@@ -112,7 +113,8 @@ const Summary = () => {
                       onClear={() => { setCouponInputValue('') }}
                       handleBlur={() => { void handleBlurInputCoupon() }}
                       errorBorder='border-swRed'
-                      error={errorsState.wrongCoupon}
+                      error={errorsState.wrongCoupon }
+                      isLoading={isLoading}
                       autoFocus
                       variant='coupon'
                     />

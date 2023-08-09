@@ -12,6 +12,7 @@ const AddCoupon = () => {
     couponInputValue,
     amountInputValue,
     errorsState,
+    isLoading,
     setCouponInputValue,
     handleBlurInputCoupon
   } = useFundsContext()
@@ -30,6 +31,7 @@ const AddCoupon = () => {
         handleBlur={() => { void handleBlurInputCoupon() }}
         errorBorder='border-swRed'
         error={errorsState.wrongCoupon}
+        isLoading={isLoading}
         variant='coupon'
         />
       <div className='w-full flex flex-col sm:flex-row gap-6 pb-6 border-b border-darkGrey'>

@@ -10,6 +10,7 @@ export interface IFundsContext {
   couponInfo: number
   errorsState: TErrors
   monthlyLimit: number
+  isLoading: boolean
   setAddFundsStep: Dispatch<React.SetStateAction<number>>
   setSelectedMethod: Dispatch<React.SetStateAction<ISelectedMethod | undefined>>
   setAmountInputValue: Dispatch<React.SetStateAction<string>>
@@ -29,6 +30,7 @@ export const FundsContext = createContext<IFundsContext>({
   couponInfo: 0,
   errorsState: {},
   monthlyLimit: 0,
+  isLoading: false,
   setAddFundsStep: () => {},
   setSelectedMethod: () => {},
   setAmountInputValue: () => {},

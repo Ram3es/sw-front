@@ -2,11 +2,12 @@ import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import ListBoxWrapper from '../../containers/ListboxWrapper'
 
-const NavDropdown = ({ title, setSelected, children }: { title: string, setSelected: (select: any) => void, children: JSX.Element }) => {
+const NavDropdown = ({ title, setSelected, children, wrapperClasses }: { title: string, setSelected: (select: any) => void, children: JSX.Element, wrapperClasses?: string }) => {
   return (
         <ListBoxWrapper
             title={title}
             onChange={setSelected}
+            className={wrapperClasses}
         >
             <Transition
                  as={Fragment}

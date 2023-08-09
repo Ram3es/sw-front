@@ -5,3 +5,5 @@ export const TRNS_STRING = {
     you will receive an email with the status of
     your transaction. Thank you for your patience.`
 }
+
+export const IMAGE_ROOT_URL = 'https://community.akamai.steamstatic.com/economy/image/'

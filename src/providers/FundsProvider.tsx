@@ -1,19 +1,21 @@
 import { useState, type FC, type PropsWithChildren, useEffect } from 'react'
 import { FundsContext } from '../context/FundsContext'
 import { type ISelectedMethod } from '../types/Funds'
-import { formatToDecimal } from '../helpers/numberFormater'
 import { ERRORS, type TErrors } from '../constants/fundsMethods'
 // import { sendCouponCode } from '../services/funds/funds'
 import axios from 'axios'
+import { sendCouponCode } from '../services/funds/funds'
+import { formatToDecimal } from '../helpers/numberFormater'
 
 export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
-  const [amountInputValue, setAmountInputValue] = useState<string>(formatToDecimal(500))
+  const [amountInputValue, setAmountInputValue] = useState<string>(() => formatToDecimal('5'))
   const [couponInputValue, setCouponInputValue] = useState<string>('')
   const [addFundsStep, setAddFundsStep] = useState<number>(1)
   const [selectedMethod, setSelectedMethod] = useState<ISelectedMethod>()
   const [couponInfo, setCouponInfo] = useState<number>(0)
   const [errorsState, setErrorsState] = useState<TErrors>(ERRORS)
   const [monthlyLimit, setMonthlyLimit] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleBlurInputAmount = () => {
     setErrorsState(prev => {
@@ -40,12 +42,16 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const handleBlurInputCoupon = async () => {
     setErrorsState(prev => ({ ...prev, wrongCoupon: { ...prev.wrongCoupon, status: false } }))
-    try {
-      // const data = couponInputValue && await sendCouponCode({ coupon: couponInputValue })
-      setCouponInfo(prev => prev + 500)
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 400) { setErrorsState(prev => ({ ...prev, wrongCoupon: { ...prev.wrongCoupon, status: true } })) }
+    if (couponInputValue) {
+      setIsLoading(true)
+      try {
+        const data = await sendCouponCode({ coupon: couponInputValue })
+        setCouponInfo(prev => prev + 5)
+        setIsLoading(false)
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          if (error.response?.status === 400) { setErrorsState(prev => ({ ...prev, wrongCoupon: { ...prev.wrongCoupon, status: true } })) }
+        }
       }
     }
   }
@@ -69,6 +75,7 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
           couponInfo,
           errorsState,
           monthlyLimit,
+          isLoading,
           setAddFundsStep,
           setSelectedMethod,
           setAmountInputValue,

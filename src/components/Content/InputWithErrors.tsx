@@ -8,14 +8,14 @@ interface IInputWithErrors extends InputHTMLAttributes<HTMLInputElement> {
   handleChange: (value: string) => void
   onClear: () => void
   handleBlur: () => void
-  isError?: boolean
+  isLoading?: boolean
   errorBorder: string
   error?: any
   variant?: string
   label?: string
 }
 
-const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isError, error, errorBorder, variant = 'amount', onClear, handleChange, handleBlur, ...rest }) => {
+const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isLoading, error, errorBorder, variant = 'amount', onClear, handleChange, handleBlur, ...rest }) => {
   const [isFocused, setIsFocused] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -55,14 +55,14 @@ const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isError, error, e
                 type='text'
                 value={value}
                 onChange={(e) => { handleChange(e.target.value) }}
-                className='w-0 grow bg-transparent outline-none'
+                className='w-0 grow bg-transparent outline-none pr-4'
                 {...rest}
               />
             </div>
           </div>
           <div>
             <CloseIcon onMouseDown={handleClear} className=' hidden group-focus-within:block w-3 h-[18px] cursor-pointer text-graySecondary hover:text-white duration-200' />
-            { !error?.status && value !== '' && <Mark className='block group-focus-within:hidden text-swLime w-4 h-[18px]' />}
+            { !error?.status && !isLoading && value !== '' && <Mark className='block group-focus-within:hidden text-swLime w-4 h-[18px]' />}
           </div>
           {variant === 'coupon' && !isFocused && value === '' &&
             <div className='absolute inset-0 bg-darkSecondary '>

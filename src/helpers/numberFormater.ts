@@ -20,7 +20,9 @@ export const convertToBacks = (amount: number): number => {
   return dinero.getAmount()
 }
 
-export const formatToDecimal = (amount: number) => {
-  const dinero = Dinero({ amount })
-  return dinero.toFormat('0.00')
+export const formatToDecimal = (amount: string): string => {
+  if (!Number.isNaN(Number(amount))) {
+    return parseFloat(Number(amount).toString()).toFixed(2)
+  }
+  return parseFloat('0').toFixed(2)
 }

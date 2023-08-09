@@ -86,7 +86,7 @@ const PayPalMethod = () => {
 
             <Button
               text='go to summary'
-              onClick={() => { setAddFundsStep(3) }}
+              onClick={() => { setAddFundsStep(5) }}
               className={classNames('bg-skinwalletPink justify-center items-center w-[208px] h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
                 errorsState.excededMonthly.status ? 'pointer-events-none grayscale opacity-50' : '')}
              />

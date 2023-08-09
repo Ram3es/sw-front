@@ -3,7 +3,7 @@ import { Listbox, Transition } from '@headlessui/react'
 import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
 import { classNames } from '../../helpers/className'
 
-const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses }: { label: string, onChange?: (value: any) => void, children?: JSX.Element, renderSubHeader?: JSX.Element, additionalClasses?: string }) => {
+const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses }: { label: string | ((isOpen?: boolean) => JSX.Element), onChange?: (value: any) => void, children?: JSX.Element, renderSubHeader?: JSX.Element, additionalClasses?: string }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggle = () => { setIsOpen(!isOpen) }
@@ -15,8 +15,8 @@ const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses
           <div className="relative">
             <Listbox.Button onClick={toggle} className={classNames('relative w-full cursor-pointer ',
               additionalClasses ?? 'text-sm text-white uppercase flex justify-between items-center')}>
-                    <div className="flex items-center gap-2">
-                      <span>{label}</span>
+                    <div className="flex items-center gap-2 label-wrap">
+                      {typeof label === 'function' ? label(isOpen) : label }
                       {isOpen && renderSubHeader}
                     </div>
 

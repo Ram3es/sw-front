@@ -46,10 +46,11 @@ const ItemCard = ({
       isTradable && !isSelected ? 'group hover:-translate-y-4 hover:z-20 duration-75' : '',
       isSelected ? 'shadow-checkedCard' : '',
       variant ?? ''
-    )}>
+    )}
+    onClick={() => { if (isTradable) onClick() }}>
       <div
         className={classNames('absolute left-0 top-0 w-full h-full border border-b-[3px] group-hover:border-0 group-hover:bg-darkGrey card-clip-path',
-          isSelected ? 'border-swViolet' : 'border-darkGrey'
+          isSelected ? 'border-swViolet z-10' : 'border-darkGrey'
         )}
       >
         <span className={classNames('absolute group-hover:hidden -right-[2px] top-[3px] w-[10px] rotate-45',
@@ -69,15 +70,28 @@ const ItemCard = ({
       </div>
         : ''}
       <div
-        className={classNames('relative min-h-[200px] cursor-pointer overflow-hidden h-full', !isTradable ? 'grayscale' : '')}
-        onClick={() => { onClick() }}
+        className={classNames('relative min-h-[200px] cursor-pointer overflow-hidden', !isTradable ? 'grayscale' : '')}
       >
         <span
-          className="absolute left-1/2 -translate-x-1/2 top-24 h-0 w-1/2"
+          className={classNames('absolute left-1/2 -translate-x-1/2  h-0 w-1/2',
+            variant !== ECardVariant.withdraw ? ' top-24 ' : ' top-32 ')}
           style={{
             boxShadow: 'rgba(255, 255, 255, 0.7) 0px 0px 55px 13px'
           }}
         />
+        {variant === ECardVariant.withdraw
+          ? <div className='flex w-full justify-between bg-darkGrey px-4 py-3 card-top-bar-clip-path'>
+            <span className='uppercase text-xs font-["Barlow"] font-extralight'>in skinwallet</span>
+            {isTradable
+              ? <span className='text-swViolet'>
+              <Checkbox
+                checked={isSelected ?? false}
+              />
+              </span>
+              : ''
+            }
+          </div>
+          : ''}
         <div className="p-4 pb-6 relative z-10 flex flex-col justify-between items-center w-full h-full">
           <div
             className="flex w-full justify-between"
@@ -95,7 +109,7 @@ const ItemCard = ({
                   : timeToTrade ? `${timeToTrade} hours` : "Can't trade"}
                 </span>}
             </div>
-            <div className='text-swViolet group-[.market]/card:hidden'>
+            <div className='text-swViolet group-[.market]/card:hidden group-[.withdraw]/card:hidden'>
               <Checkbox
                 checked={isSelected ?? false}
               />
@@ -108,8 +122,8 @@ const ItemCard = ({
           />
           <div className="flex flex-col w-full relative mb-2">
             <div className='text-graySecondary uppercase text-sm font-["Barlow"] font-light group-[.market]/card:hidden'>estimated value</div>
-            <div className='uppercase text-2xl font-["Barlow"] text-white font-bold'>${format(price)}</div>
-            <div className='hidden group-[.market]/card:flex items-center gap-2 py-1 text-sm text-graySecondary'>
+            <div className='uppercase text-2xl group-[.withdraw]/card:hidden font-["Barlow"] text-white font-bold'>${format(price)}</div>
+            <div className='hidden group-[.market]/card:flex group-[.withdraw]/card:flex items-center gap-2 py-1 text-sm text-graySecondary'>
               <SteamIcon className='w-4 h-auto'/>
               <span>${format(steamPrice ?? 0)}</span>
             </div>
@@ -149,12 +163,14 @@ const ItemCard = ({
 
         </div>
       </div>
-      <Button
-        className={classNames('justify-center z-10 hidden group-hover:flex  absolute left-0 top-full mr-[20px] text-base w-full h-[40px] uppercase font-semibold text-darkSecondary border border-skinwalletPink bg-skinwalletPink cta-clip-path role-button',
-          variant === ECardVariant.market ? 'hover:opacity-50' : '')}
-        text={variant === ECardVariant.market ? 'add to cart' : 'add to sale'}
-        onClick={submitFn}
-      />
+      {variant !== ECardVariant.withdraw
+        ? <Button
+            className={classNames('justify-center z-10 hidden group-hover:flex  absolute left-0 top-full mr-[20px] text-base w-full h-[40px] uppercase font-semibold text-darkSecondary border border-skinwalletPink bg-skinwalletPink cta-clip-path role-button',
+              variant === ECardVariant.market ? ' hover:opacity-50 ' : '')}
+            text={variant === ECardVariant.market ? 'add to cart' : 'add to sale'}
+            onClick={submitFn}
+          />
+        : ''}
     </div>
   )
 }

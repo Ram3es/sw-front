@@ -5,13 +5,13 @@ export const Nav = () => {
   const { pathname } = useLocation()
 
   return (
-    <div className='flex items-center'>
+    <div className='flex items-center w-full h-max border-b xl:border-0 mb-4 xl:mb-0 border-solid border-darkGrey'>
       <Link
         to='/panel/deposit'
         text='your inventory'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
-        active={ pathname === '/deposit' }
+        active={ pathname === '/panel/deposit' }
         withBorder
       />
       <Link
@@ -19,7 +19,7 @@ export const Nav = () => {
         text='payout'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
-        active={ pathname === '/deposit/payout' }
+        active={ pathname === '/panel/deposit/payout' }
         withBorder
       />
       <Link
@@ -27,7 +27,7 @@ export const Nav = () => {
         text='bonus'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
-        active={ pathname === '/deposit/bonus' }
+        active={ pathname === '/panel/deposit/bonus' }
         withBorder
       />
     </div>

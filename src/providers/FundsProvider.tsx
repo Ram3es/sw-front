@@ -45,7 +45,7 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
     if (couponInputValue) {
       setIsLoading(true)
       try {
-        const data = await sendCouponCode({ coupon: couponInputValue })
+        await sendCouponCode({ coupon: couponInputValue })
         setCouponInfo(prev => prev + 5)
         setIsLoading(false)
       } catch (error) {

@@ -33,7 +33,7 @@ const ListedItems = () => {
         </div>
       </Bar>
       <IsUserLogged>
-        <div className='w-full flex flex-col pt-12 pb-20 max-w-[672px] mx-auto'>
+        <div className='w-full flex flex-col pt-12 pb-44 md:pb-20 max-w-[672px] mx-auto px-7 md:px-0'>
           <Readme>
             <>
               <p>To transfer items you have to accept Trade Offer(s) sent to you by our Skinwallet Bot(s). Please remember to trade according to Security Guidelines and check every Trade Offer to avoid getting scammed. If you encounter any suspicious actions contact our Customer Support immediately.</p>
@@ -64,7 +64,7 @@ const ListedItems = () => {
                />)}
           </div>
 
-          <div className="fixed left-0 bottom-0 w-full p-6 flex gap-12 font-['Barlow'] items-center bg-graySecondary text-darkSecondary">
+          <div className="fixed left-0 bottom-0 w-full z-40 p-6 flex flex-col lg:flex-row gap-2 lg:gap-12 font-['Barlow'] items-center bg-graySecondary text-darkSecondary">
             <div className="flex flex-col w-max">
               <span className="text-18 font-medium w-max">0/3 Trade Offers accepted</span>
             </div>

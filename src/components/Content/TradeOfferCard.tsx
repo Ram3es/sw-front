@@ -56,7 +56,7 @@ const TradeOfferCard = ({ status = 'pending', botName, items, token, createdAt, 
       case 'pending':
         return (
           <div className='flex flex-col sm:flex-row justify-between'>
-            <div className='flex flex-col sm:flex-row gap-4'>
+            <div className='flex flex-col sm:flex-row gap-4 mb-4 md:mb-0'>
               <Button
                 text='accept in steam'
                 className='w-full sm:w-max justify-center bg-skinwalletPink text-darkSecondary uppercase hover:opacity-70 cta-clip-path '
@@ -70,7 +70,7 @@ const TradeOfferCard = ({ status = 'pending', botName, items, token, createdAt, 
                 <span className='absolute -left-[3px] bottom-[3px] border-t border-graySecondary group-hover:border-white duration-200 rotate-45 w-3 '/>
               </Button>
             </div>
-            <span className='text-2xl text-white uppercase font-semibold tracking-[1.2px] '>{formatDate(new Date(timer), 'mm:ss ')}</span>
+            <span className='text-2xl text-white text-center md:text-start uppercase font-semibold tracking-[1.2px] '>{formatDate(new Date(timer), 'mm:ss ')}</span>
           </div>)
       case 'accepted':
         return (
@@ -115,12 +115,12 @@ const TradeOfferCard = ({ status = 'pending', botName, items, token, createdAt, 
           </Dropbox>
           <div className='w-full border border-b border-white/10 my-6'/>
           <h2 className='uppercase text-lg tracking-[1.44px] small-caps mb-4'>trade offer details</h2>
-          <div className='flex justify-between items-start '>
-            <div className='flex items-center gap-2'>
+          <div className='flex flex-col md:flex-row justify-between items-start '>
+            <div className='flex items-center gap-2 mb-2 md:mb-0'>
               <span className='text-white'>Skinwallet Bot {botName}</span>
               <InformationIcon iconClasses='w-[14px]  h-auto' />
             </div>
-            <div className='flex flex-col items-end [&_span]:text-white'>
+            <div className='flex flex-col md:items-end [&_span]:text-white'>
               <div className='flex gap-1'> On Steam since:<span>{formatDate(new Date(createdAt), 'MMMM d, yyyy')}</span></div>
               <div className='flex gap-1'> Security token:<span className='w-20 truncate'>{token}</span></div>
             </div>

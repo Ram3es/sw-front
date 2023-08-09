@@ -60,6 +60,10 @@ export default {
       },
       boxShadow: {
         'checkedCard': '0px 0px 20px 0px rgba(0, 0, 0, 0.50)',
+      },
+      backgroundImage: {
+        'sideBarGradient': 'linear-gradient(180deg, rgba(32, 32, 35, 0.74) 0%, #202023 100%)',
+        'sideBarGradientSmall': 'linear-gradient(180deg, #1B1B1D 0%, #212023 100%)'
       }
     },
   },

@@ -1,4 +1,5 @@
 import { ReactComponent as SkinwalletLogo } from '../../assets/logo-skinwallet.inline.svg'
+import { ReactComponent as SkinwalletLogoSmall } from '../../assets/logo-small.svg'
 import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
 
 import { StoreIcon } from '../StoreIcon/store'
@@ -43,9 +44,9 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     <header
       id="top-bar"
       className={classNames(
-        'pointer-events-none cursor-default w-full duration-100 h-[56px] sticky top-0 z-40',
+        'pointer-events-none cursor-default w-full duration-100 h-[56px] sticky top-0 z-50',
         isHidableOnScroll && shouldHide
-          ? 'transform-gpu translate-x-0 translate-y-[-56px] translate-z-0'
+          ? 'transform-gpu translate-x-0 lg:translate-y-[-56px] translate-z-0'
           : 'transform-gpu translate-x-0 translate-y-0 translate-z-0'
       )}
     >
@@ -55,10 +56,18 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
         )}
       >
         <nav className="flex items-center">
-          <a href={window.location.origin}>
+          <a className='hidden lg:block' href={window.location.origin}>
             <SkinwalletLogo />
           </a>
-          <NavDropdown title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
+          <div className='flex lg:hidden items-center gap-3'>
+            <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.47119 5.80446V4.76099H21.2103V5.80446H3.47119ZM21.2103 9.97838V11.0219H3.47119V9.97838H21.2103ZM3.47119 15.1958H21.2103V16.2392H3.47119V15.1958Z" fill="white"/>
+            </svg>
+            <a href={window.location.origin}>
+              <SkinwalletLogoSmall />
+            </a>
+          </div>
+          <NavDropdown wrapperClasses='hidden lg:flex' title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
             <div className="flex w-full mx-10 gap-10 flex-wrap">
               {gamesLinks.map((game) => (
                 <div
@@ -86,10 +95,10 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               ))}
             </div>
           </NavDropdown>
-          <div className="p-0 border-l border-white h-[32px] opacity-10 mx-4"></div>
+          <div className="p-0 border-l border-white h-[32px] opacity-10 mx-4 hidden lg:block"></div>
           <Link
             to="/market"
-            className="font-medium text-skinwallerGray hover:text-white"
+            className="hidden lg:flex font-medium text-skinwallerGray hover:text-white"
             wrapperStyles="h-[56px]"
             text="buy"
             icon
@@ -100,7 +109,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           </Link>
           <Link
             to="/panel/deposit"
-            className="font-medium text-skinwallerGray hover:text-white"
+            className="hidden lg:flex font-medium text-skinwallerGray hover:text-white"
             wrapperStyles="h-[56px]"
             text="instant sell"
             icon
@@ -111,7 +120,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           </Link>
         </nav>
         <nav className="flex items-center">
-          <NavDropdown title="categories" setSelected={setSelected}>
+          <NavDropdown wrapperClasses='hidden lg:flex ' title="categories" setSelected={setSelected}>
             <div className="grid grid-cols-categories max-w-[1124px] mx-auto">
               {Object.values(CATEGORIES).map((ctegory) => (
                 <div className="mb-5" key={ctegory.name}>
@@ -150,7 +159,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             </div>
           </NavDropdown>
           <Button
-            className="uppercase font-medium text-skinwallerGray hover:text-white"
+            className="hidden lg:flex uppercase font-medium text-skinwallerGray hover:text-white"
             text="search"
             icon={
               <SearchIcon
@@ -159,14 +168,17 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             }
             onClick={changeSearchState}
           />
-          <div className="p-0 border-l border-white h-[32px] opacity-10 mx-4"></div>
+          <div className="hidden lg:block p-0 border-l border-white h-[32px] opacity-10 mx-4"></div>
           {user
             ? (
               <>
-                <Button
-                  text={`$${format(user.balance)}`}
-                  className="uppercase font-medium text-skinwallerGray hover:text-white"
-                />
+                <div className='relative'>
+                  <div className='absolute left-0 top-0 w-full h-full bg-darkSecondary lg:bg-transparent cta-clip-path' />
+                  <Button
+                    text={`$${format(user.balance)}`}
+                    className="uppercase font-medium z-10 relative text-skinwallerGray hover:text-white"
+                  />
+                </div>
                 <Link
                   to="/panel/cart"
                   className="font-medium text-skinwallerGray hover:text-white"
@@ -174,7 +186,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 >
                   <CartIcon />
                 </Link>
-                <UserMenu name={user.username} balance={user.balance} />
+                <UserMenu name={user.username} balance={user.balance} wrapperClasses='hidden lg:block' />
               </>
               )
             : (

@@ -19,7 +19,7 @@ export const Button = ({ text = '', className = '', heightClass, icon, iconRight
   return (
     <button
       className={classNames(
-        'button font-["Barlow"] px-[16px] tracking-[1.12px] flex',
+        'button font-["Barlow"] px-4 lg:px-0 xl:px-4 tracking-[1.12px] flex',
         className ?? ' text-[14px] ',
         heightClass ?? 'h-[32px]'
       )}
@@ -27,7 +27,7 @@ export const Button = ({ text = '', className = '', heightClass, icon, iconRight
       disabled={disabled}
     >
       { icon && !iconRight && <span className="pr-[8px]">{icon}</span> }
-      { text }
+      <span className='text'>{ text }</span>
       { children }
       { icon && iconRight && <span className="pl-[8px]">{icon}</span> }
     </button>

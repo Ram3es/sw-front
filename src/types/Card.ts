@@ -38,13 +38,16 @@ export interface ConditionItem {
 
 export enum ECardVariant {
   sell = 'sell',
+  offer = 'offer',
   market = 'market',
   withdraw = 'withdraw'
 }
 
-export interface IItemSelectedCard extends Pick<CardItem, 'id' | 'condition' | 'image' | 'name' | 'onClick' | 'price'> {
-
+export interface IItemSelectedCard extends Pick<CardItem, 'id' | 'condition' | 'image' | 'name' | 'variant' > {
+  price?: number
+  onClick?: () => void
 }
 
 export type TItemInventory = Omit<CardItem, 'onClick' | 'isSelected'>
 export type TInventoryCard = TItemInventory & { isChecked: boolean }
+export type TTradeOfferCard = Omit<IItemSelectedCard, 'onClick' | 'price' >

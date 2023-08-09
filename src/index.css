@@ -55,6 +55,9 @@
 .card-clip-path {
   clip-path: polygon(calc(100% - 8px) 0, 100% calc(0% + 8px), 100% 100%, calc(0% + 8px) 100%, 0 calc(100% - 8px), 0 0);
 }
+.corner-lb-clip-4 {
+  clip-path: polygon(100% 0, 100% 100%, calc(0% + 16px) 100%, 0 calc(100% - 16px), 0 0);
+}
 
 .group:hover .card-clip-path {
   clip-path: polygon(calc(100% - 8px) 0, 100% calc(0% + 8px), 100% 100%, 0% 100%, 0 100%, 0 0);

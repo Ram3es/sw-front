@@ -5,7 +5,7 @@ import { useHideOnScroll } from '../../helpers/useHideOnScroll'
 import { Filters } from '../InstantSell/controls/filters'
 import MarketWithdrawSidebar from './MarketWithdrawSidebar'
 import SelectBottomBar from './SelectBottomBar'
-import { getItemsToWithdraw } from '../../services/market/market'
+import { getItemsToWithdraw, withdrawItems } from '../../services/market/market'
 import { ECardVariant, type TInventoryCard } from '../../types/Card'
 import CardsListWrapper from '../InstantSell/inventory/CardsListWrapper'
 
@@ -54,6 +54,15 @@ const MarketWithdraw = () => {
       console.log(error)
     }
   }, [])
+
+  const withdtraw = async () => {
+    const assetIds = renderCards.filter(card => card.isChecked).map(filteredCard => filteredCard.id)
+    try {
+      await withdrawItems({ assetIds })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     void getItems()
@@ -134,7 +143,7 @@ const MarketWithdraw = () => {
         selectedItemsQty={selectedItemsQty}
         onShowSelected={() => { setIsOnlySelectedShown(prev => !prev) }}
         onCancel={() => { setRenderCards(prev => [...prev.map(item => item.isTradable ? { ...item, isChecked: false } : item)]) }}
-        onWithdraw={() => { console.log('onWithdraw') }}
+        onWithdraw={() => { void withdtraw() }}
       />
     </div>
   )

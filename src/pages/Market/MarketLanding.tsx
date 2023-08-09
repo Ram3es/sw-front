@@ -17,6 +17,7 @@ import EmptyCard from '../../components/Content/EmptyCard'
 import { useCallback, useEffect, useState } from 'react'
 import { buyItems, getOffers } from '../../services/market/market'
 import { IsUserLogged } from '../../components/IsUserLogged/IsUserLogged'
+import { IMAGE_ROOT_URL } from '../../constants/strings'
 
 const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
   return (
@@ -134,7 +135,7 @@ const MarketLanding = () => {
                       condition={wearFloat}
                       price={price.amount}
                       steamPrice={steamPrice.amount}
-                      image={ `https://community.akamai.steamstatic.com/economy/image/${imageUrl} `}
+                      image={IMAGE_ROOT_URL.concat(imageUrl)}
                       onClick={() => {
                         void buyItems({
                           assetIds: [inventoryItemId]

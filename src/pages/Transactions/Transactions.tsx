@@ -35,7 +35,7 @@ export default function TransactionsPage () {
   const [rawArrayTrx, setRawArrayTrx] = useState<TransactionItem[]>([])
   const [startDate, setStartDate] = useState<Date>()
   const [endDate, setEndDate] = useState<Date>()
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const download = (e: MouseEvent) => {
     e.stopPropagation()
@@ -101,7 +101,7 @@ export default function TransactionsPage () {
           </h1>
         </div>
       </Bar>
-      {Object.keys(transactions).length
+      {!Object.keys(transactions).length
         ? <NoTransactionPage />
         : (
       <div className="flex text-white pt-5">
@@ -116,7 +116,7 @@ export default function TransactionsPage () {
                 : 'h-[calc(100vh-120px)] top-[120px]'
             )}
           >
-            <div className={classNames('flex py-6 lg:hidden items-center gap-2',
+            <div className={classNames('flex py-6 lg:hidden items-center gap-2 cursor-pointer',
               isSidebarOpen ? 'text-white' : 'text-graySecondary'
             )}
             onClick={() => { setIsSidebarOpen(prev => !prev) }}>
@@ -134,7 +134,7 @@ export default function TransactionsPage () {
           </div>
         </div>
         <div className="w-full flex flex-col px-6 lg:px-0 pt-6">
-          <div className={classNames('flex lg:hidden items-center mb-6 gap-2',
+          <div className={classNames('flex lg:hidden items-center mb-6 gap-2 cursor-pointer',
             isSidebarOpen ? 'text-white' : 'text-graySecondary'
           )}
             onClick={() => { setIsSidebarOpen(prev => !prev) }}

@@ -21,7 +21,7 @@ import { IMAGE_ROOT_URL } from '../../constants/strings'
 
 const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
   return (
-    <div className=' w-full flex items-center justify-between text-graySecondary'>
+    <div className=' w-full flex flex-col md:flex-row items-center justify-between text-graySecondary'>
       <div className='flex items-center gap-2 text-swRed'>
           <h2 className='text-24 uppercase tracking-[1.2px] text-white '>{title}</h2>
           {icon}
@@ -64,24 +64,24 @@ const MarketLanding = () => {
   return (
       <IsUserLogged>
         <div className='flex flex-col items-center w-full'>
-          <div className='w-full h-12 flex justify-center items-center bg-darkGrey text-white'>
+          <div className='w-full h-auto md:h-12 flex justify-center items-center bg-darkGrey text-white'>
             <div className='w-full h-full'>
               <SliderFade />
             </div>
           </div>
           <div
-            className='w-full flex justify-center bg-black relative text-white'
+            className='w-full flex justify-center bg-black relative text-white overflow-hidden'
           >
             <div
-              className='h-[600px] w-[1850px] mx-auto '
+              className='h-[600px] w-[1850px] mx-auto bg-center lg:bg-cover flex items-center'
               style={{
                 backgroundImage: `url(${BanerMain})`,
                 backgroundRepeat: 'no-repeat'
               }}
             >
-                <div className=' w-full px-28 py-16 flex flex-col justify-center'>
+                <div className=' w-full px-6 md:px-28 py-4 md:py-16 flex flex-col justify-center'>
                     <h3 className='text-21 uppercase tracking-[1.68px]'>paint the battlefield</h3>
-                    <div className='flex flex-col leading-[70px] text-[64px] uppercase '>
+                    <div className='flex flex-col leading-[40px] text-[36px] md:leading-[70px] md:text-[64px] uppercase '>
                         <span>buy new skins</span>
                         <span>or sell your</span>
                         <span>own for cash</span>

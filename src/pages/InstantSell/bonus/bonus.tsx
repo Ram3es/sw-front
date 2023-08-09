@@ -14,7 +14,7 @@ export const Bonus = () => {
   return (
     <>
       <div className='flex flex-col flex-grow py-5'>
-        <div className='flex justify-between h-[50px] border-b border-solid border-darkGrey px-[8px]'>
+        <div className='flex justify-between h-[50px] xl:border-b border-solid border-darkGrey px-0 xl:px-[8px]'>
           <Nav />
         </div>
         <IsUserLogged>

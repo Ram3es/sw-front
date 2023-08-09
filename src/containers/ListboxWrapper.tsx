@@ -6,7 +6,7 @@ import { classNames } from '../helpers/className'
 const ListBoxWrapper = ({ title, className, children, onChange }: { children: JSX.Element, title: string, className?: string, onChange?: (value: string) => void }) => {
   return (
         <Listbox onChange={onChange}>
-            <Listbox.Button className={classNames(className ?? 'full flex gap-2 px-4 items-center text-graySecondary hover:text-white button tracking-[1.12px] uppercase')}>
+            <Listbox.Button className={classNames(className ?? '', 'full flex gap-2 px-4 items-center text-graySecondary hover:text-white button tracking-[1.12px] uppercase')}>
                 {({ open }) => (
                     <>
                         <span>{title}</span>

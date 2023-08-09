@@ -49,10 +49,6 @@
     /* border: 0; */
     outline: none;
   }
-
-  .side-bar-gradient {
-    background: linear-gradient(180deg, rgba(32, 32, 35, 0.74) 0%, #202023 100%);
-  }
   
 }
 
@@ -124,6 +120,10 @@ input[type='number'] {
   position: absolute;
   left: -20px;
   top: 3px
+}
+
+.small-caps {
+  font-variant-caps:  all-small-caps;
 }
 
 /* react-slick styles */

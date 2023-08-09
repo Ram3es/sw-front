@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import RoundedMark from '../../../components/icons/RoundedMark'
-import { Link } from 'react-router-dom'
 import { useFundsContext } from '../../../context/FundsContext'
 import EditPencil from '../../../components/icons/EditPencil'
-import { format } from '../../../helpers/numberFormater'
+import { format, formatToDecimal } from '../../../helpers/numberFormater'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
 import CouponLabel from '../../../components/funds/coupon/CouponLabel'
 import { ReactComponent as CloseIcon } from '../../../assets/close-icon.svg'
 import InputWithErrors from '../../../components/Content/InputWithErrors'
+import { ImportantNotice, NoticeContent } from '../../../components/funds/ImportantNotice'
 
 const Summary = () => {
   const [isEditAmount, setIsEditAmount] = useState(false)
@@ -19,6 +19,7 @@ const Summary = () => {
     couponInfo,
     selectedMethod,
     errorsState,
+    isLoading,
     setAddFundsStep,
     setAmountInputValue,
     setCouponInputValue,
@@ -28,33 +29,18 @@ const Summary = () => {
   } = useFundsContext()
 
   return (
-    <div className='w-full flex justify-center  pt-6 sm:py-12 '>
-        <div className='w-full max-w-[1024px] flex flex-col sm:flex-row  sm:gap-8 '>
-          <div className='w-full h-[500px] sm:h-auto max-w-[672px] flex flex-col gap-4 px-6 sm:px-0 text-white overflow-scroll'>
-            <div className='w-full flex flex-col sm:flex-row items-start px-6 py-4 bg-darkGrey relative'>
-              <div className='w-1/3 flex items-center gap-2'>
-                <RoundedMark className='text-swLime w-[18px] h-auto ' />
+    <div className='w-full flex flex-grow justify-center pt-6 sm:py-12 '>
+        <div className='w-full h-[calc(100vh_-_234px)] sm:h-full max-w-[1024px] flex flex-col justify-between sm:flex-row sm:gap-8 '>
+          <div className='w-full  h-full max-w-[672px] flex flex-col gap-4 pb-10 px-6 sm:px-0 text-white overflow-y-scroll relative '>
+            <div className='w-full flex flex-col gap-y-3 sm:flex-row items-start px-6 py-4 bg-darkGrey relative'>
+              <div className='w-full sm:w-1/3 flex items-center gap-2'>
+                <RoundedMark className='text-swLime w-[18px] h-auto shrink-0 ' />
                 <span className='text-lg text-graySecondary uppercase tracking-[1.44px]' >method</span>
               </div>
               <div className='flex flex-col text-sm font-normal text-graySecondary'>
                 <h3 className='text-white text-lg font-medium mb-4'>{selectedMethod?.title}</h3>
-                <div className='flex flex-col gap-4 mb-2 max-w-[388px] [&>p>span]:text-white [&>p>span]:font-medium '>
-                  <p>Make sure you have a
-                    <span> verified PayPal account</span>, otherwise your payment won’t be accepted.
-                    <Link
-                      to={'/'}
-                      className='text-skinwalletPink font-medium underline hover:no-underline ml-1'
-                    >
-                      Read how to perform the verification process.
-                    </Link>
-                  </p>
-                  <p>Only the payments from
-                    <span> verified accounts </span>
-                    will be accepted. Transfer verification
-                    <span> may take longer </span> than usual.
-                  </p>
-                  <p>You will be redirected to Conotoxia Pay website, where you can finish the transaction.</p>
-                   </div>
+                <NoticeContent className='hidden sm:flex' />
+                <ImportantNotice className='sm:hidden' />
               </div>
               <div
                 onClick={() => { setAddFundsStep(1) } }
@@ -127,29 +113,30 @@ const Summary = () => {
                       onClear={() => { setCouponInputValue('') }}
                       handleBlur={() => { void handleBlurInputCoupon() }}
                       errorBorder='border-swRed'
-                      error={errorsState.wrongCoupon}
+                      error={errorsState.wrongCoupon }
+                      isLoading={isLoading}
                       autoFocus
                       variant='coupon'
                     />
                     )
               : <CouponLabel submitFn={() => { setIsEditCoupon(true) }} />}
           </div>
-          <div className=' h-max w-full sm:w-[320px] text-graySecondary bg-darkGrey p-6 sm:cta-clip-path'>
+          <div className=' h-max w-full sm:w-[320px] text-graySecondary bg-darkGrey p-6 sm:cta-clip-path relative'>
             <div className='w-full '>
               <div className='flex flex-col gap-2'>
                 <div className='w-full flex justify-between items-center text-sm '>
                   <div className='uppercase tracking-[1.12px]'>amount</div>
-                  <span className='text-white'>${format(Number(amountInputValue) * 100 || 0)}</span>
+                  <span className='text-white'>${formatToDecimal(amountInputValue)}</span>
                 </div>
-                {couponInfo &&
+                {!!couponInfo &&
                   <div className='flex flex-col gap-2 pb-6 mb-4 border-b border-white/10'>
                     <div className='w-full flex justify-between items-center text-sm '>
                       <div className='uppercase tracking-[1.12px]'>active coupon</div>
-                      <span className='text-swLime'>+${format(couponInfo)}</span>
+                      <span className='text-swLime'>+${formatToDecimal(couponInfo.toString())}</span>
                     </div>
                     <div className='w-full flex justify-between items-center text-sm '>
                       <div className='uppercase tracking-[1.12px]'>final top-up</div>
-                      <span >${format(couponInfo + (Number(amountInputValue) * 100 || 0))}</span>
+                      <span >${formatToDecimal((couponInfo + +amountInputValue).toString())}</span>
                     </div>
                   </div>
                     }
@@ -159,7 +146,7 @@ const Summary = () => {
                 </div>
                 <div className='w-full flex justify-between items-center text-sm '>
                   <div className='uppercase tracking-[1.12px]'>total payment</div>
-                  <span className=' text-2xl leading-6  text-white '>${format(Number(amountInputValue) * 100 || 0)}</span>
+                  <span className=' text-2xl leading-6  text-white '>${formatToDecimal(amountInputValue)}</span>
                 </div>
               </div>
             </div>
@@ -169,6 +156,7 @@ const Summary = () => {
               className={classNames('bg-skinwalletPink justify-center items-center w-full h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
                 selectedMethod?.methodName ? '' : 'pointer-events-none grayscale opacity-50')}
              />
+             <div className='w-full absolute left-0 -top-10 h-10 sm:hidden' style={{ background: 'linear-gradient(180deg, rgba(20, 20, 21, 0.00) 0%, #0D0D0D 100%)' }}/>
           </div>
         </div>
       </div>

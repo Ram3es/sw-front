@@ -6,6 +6,7 @@ import { ReactComponent as Litecoin } from '../../../assets/img/funds/rounded-li
 import CardWrapper from '../../../containers/CardWrapper'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
+import { useFundsContext } from '../../../context/FundsContext'
 
 const cryptoMethods = [
   {
@@ -22,7 +23,8 @@ const cryptoMethods = [
   }
 ]
 
-const CryptoMethod = () => {
+const SelectCryptoMethod = () => {
+  const { setAddFundsStep } = useFundsContext()
   const [selectedCryptoMethod, setSelectedCryptoMethod] = useState<string>()
   return (
         <div className='flex flex-col gap-8'>
@@ -50,7 +52,7 @@ const CryptoMethod = () => {
           </div>
           <Button
               text='Next'
-            //   onClick={setStep}
+              onClick={() => { setAddFundsStep(3) }}
               className={classNames('bg-skinwalletPink justify-center items-center w-[100px] h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
                 selectedCryptoMethod ? '' : 'pointer-events-none grayscale opacity-50')}
              />
@@ -58,4 +60,4 @@ const CryptoMethod = () => {
   )
 }
 
-export default CryptoMethod
+export default SelectCryptoMethod

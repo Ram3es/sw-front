@@ -11,7 +11,7 @@ export const Nav = () => {
         text='your inventory'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
-        active={ pathname === '/deposit' }
+        active={ pathname === '/panel/deposit' }
         withBorder
       />
       <Link
@@ -19,7 +19,7 @@ export const Nav = () => {
         text='payout'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
-        active={ pathname === '/deposit/payout' }
+        active={ pathname === '/panel/deposit/payout' }
         withBorder
       />
       <Link
@@ -27,7 +27,7 @@ export const Nav = () => {
         text='bonus'
         className='uppercase font-medium text-skinwallerGray hover:text-white'
         wrapperStyles='h-[50px]'
-        active={ pathname === '/deposit/bonus' }
+        active={ pathname === '/panel/deposit/bonus' }
         withBorder
       />
     </div>

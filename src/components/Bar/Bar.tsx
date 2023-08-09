@@ -42,7 +42,7 @@ export default function Bar ({ children }: IBar) {
   return (
     <div className={classNames('cursor-default z-40 w-full sticky duration-100', isTopBarHidden ? 'top-0 transform-gpu translate-x-0 translate-z-0' : 'top-[56px]')}>
       <div className={classNames(
-        'flex max-w-[1440px] min-w-full h-[64px] bg-darkGrey z-30 transition-transform delay-[150ms] ease-in-out',
+        'flex max-w-[1440px] min-w-full h-14  bg-darkGrey z-30 transition-transform delay-[150ms] ease-in-out',
         isTopBarHidden ? 'transform-gpu translate-x-0 translate-z-0' : ''
       )}>
         <div className={classNames('w-full h-full relative ', isTopBarHidden ? '' : 'pt-[10px]')}>

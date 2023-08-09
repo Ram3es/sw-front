@@ -43,15 +43,17 @@ const TransactionCard: FC<TransactionItem> = ({ hash, amount, date, paypalId, st
 
   return (
         <div className="w-full max-w-[672px] p-6 bg-darkGrey cta-clip-path relative ">
-            <div className="grid grid-cols-4 grid-rows-2 gap-y-2 " >
-                <div className="col-span-3 flex items-center text-graySecondary gap-2">
-                    <span className="text-lg tracking-[1.12px]  uppercase ">sale no.</span>
-                    <div ref={hashRef} className="text-white">{hash}</div>
-                    <div onClick={() => { void handleCopy(hashRef) }} className="hover button" >
-                        <CopyIcon />
+            <div className=" flex flex-col lg:grid grid-cols-4 grid-rows-2 lg:gap-y-2 " >
+                <div className="order-1 lg:order-none col-span-3 flex flex-col lg:flex-row  lg:items-center text-graySecondary gap-x-2">
+                    <span className="text-lg tracking-[1.12px]  uppercase  ">sale no.</span>
+                    <div className='flex items-center gap-2'>
+                        <div ref={hashRef} className="text-white">{hash}</div>
+                        <div onClick={() => { void handleCopy(hashRef) }} className="hover button" >
+                            <CopyIcon />
+                        </div>
                     </div>
                 </div>
-                <div className="flex justify-end items-center gap-2 cursor-pointer" onClick={toggle} >
+                <div className=" flex justify-end items-center gap-2 cursor-pointer" onClick={toggle} >
                     <span className="text-sm tracking-[1.12px] text-graySecondary uppercase ">{isOpen ? 'hide details' : 'show details'}</span>
                     <div
                         className=' hover button'
@@ -59,20 +61,24 @@ const TransactionCard: FC<TransactionItem> = ({ hash, amount, date, paypalId, st
                         <Chevron className={classNames('fill-graySecondary h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')} />
                     </div>
                 </div>
-                <div className="col-span-2 " >
-                    {status === 'completed'
-                      ? <div className='flex items-center gap-2 text-swLime ' >
-                            <RoundedMark />
-                            <p>Sold - Payout of funds to PayPal</p>
-                          </div>
-                      : <div className='flex items-center gap-2 text-swOrange'>
-                            <ReloadIcon />
-                            <p>Payout of funds to PayPal</p>
-                          </div>
-                    }
+                <div className=' order-2 mt-4 lg:mt-0 lg:order-none col-span-4 flex lg:items-center justify-between  '>
+                    <div className=" w-full mr-2" >
+                        {status === 'completed'
+                          ? <div className='flex items-start gap-2 text-swLime ' >
+                                <RoundedMark className='shrink-0' />
+                                <p className='leading-4'>Sold - Payout of funds to PayPal</p>
+                            </div>
+                          : <div className='flex items-start gap-2 text-swOrange'>
+                                <ReloadIcon className='shrink-0 ' />
+                                <p className='leading-4'>Payout of funds to PayPal</p>
+                            </div>
+                        }
+                    </div>
+                    <div className=' w-full flex flex-col items-end lg:flex-row   lg:justify-between'>
+                        <span className=" text-end font-normal text-graySecondary">{formatCustomDate(date)}</span>
+                        <div className="" >+${format(amount)}</div>
+                    </div>
                 </div>
-                <div className="flex justify-center font-normal text-graySecondary">{formatCustomDate(date)}</div>
-                <div className="flex justify-end" >+${format(amount)}</div>
             </div>
             {isOpen &&
                     <div className=''>
@@ -92,27 +98,28 @@ const TransactionCard: FC<TransactionItem> = ({ hash, amount, date, paypalId, st
                             </div>}
                         </div>
                         <div className=' absolute left-0 w-full  border border-b border-white/10' />
-                        <div className='grid grid-cols-4 pt-6'>
-                            <div className='col-span-2'>
-                                <div className='flex flex-col gap-2'>
-                                    <div className='flex flex-col'>
-                                        <span className='text-sm leading-[14px] font-normal text-graySecondary '>Payout Status</span>
-                                        <span>{status === 'completed' ? 'Complete' : 'In Progress '}</span>
+                        <div className='flex flex-col gap-6 sm:gap-2'>
+                            <div className='grid grid-cols-4 gap-y-4 pt-6'>
+                                <div className='col-span-2'>
+                                    <div className='flex flex-col gap-2'>
+                                        <div className='flex flex-col'>
+                                            <span className='text-sm leading-[14px] font-normal text-graySecondary '>Payout Status</span>
+                                            <span>{status === 'completed' ? 'Complete' : 'In Progress '}</span>
+                                        </div>
                                     </div>
-                                    <p className=' max-w-[90%] text-sm font-normal text-graySecondary '>{status === 'completed' ? TRNS_STRING.ps_done : TRNS_STRING.ps_pending} </p>
+                                </div>
+                                <div className='col-span-2 sm:col-span-1 flex justify-center '>
+                                    <div className='flex flex-col'>
+                                        <span className='text-sm leading-[14px] font-normal text-graySecondary '>Wallet Funds Impact</span>
+                                        <span>-${format(amount)}</span>
+                                    </div>
+                                </div>
+                                <div className='col-span-4 sm:col-span-1 flex flex-col sm:items-end'>
+                                    <span className='text-sm leading-[14px] font-normal text-graySecondary '>Payout Value</span>
+                                    <span>${format(amount)}</span>
                                 </div>
                             </div>
-                            <div className='flex justify-center '>
-                                <div className='flex flex-col'>
-                                    <span className='text-sm leading-[14px] font-normal text-graySecondary '>Wallet Funds Impact</span>
-                                    <span>-${format(amount)}</span>
-                                </div>
-                            </div>
-                            <div className='flex flex-col items-end'>
-                                <span className='text-sm leading-[14px] font-normal text-graySecondary '>Payout Value</span>
-                                <span>${format(amount)}</span>
-                            </div>
-
+                            <p className=' w-full sm:max-w-[40%] text-sm font-normal text-graySecondary '>{status === 'completed' ? TRNS_STRING.ps_done : TRNS_STRING.ps_pending} </p>
                         </div>
                     </div>
                 }

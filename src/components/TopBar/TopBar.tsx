@@ -109,7 +109,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           </Link>
           <Link
             to="/panel/deposit"
-            className="hidden lg:flex font-medium text-skinwallerGray hover:text-white"
+            className="hidden lg:flex font-medium text-skinwallerGray hover:text-white w-max"
             wrapperStyles="h-[56px]"
             text="instant sell"
             icon

@@ -6,9 +6,9 @@ import { type IUserMenu, USER_MENU } from '../../constants/user-menu-tabs'
 import { NavLink } from 'react-router-dom'
 import { format } from '../../helpers/numberFormater'
 
-const UserMenu = ({ name, balance }: { name: string, balance: number }) => {
+const UserMenu = ({ name, balance, wrapperClasses }: { name: string, balance: number, wrapperClasses?: string }) => {
   return (
-    <Menu as="div">
+    <Menu className={wrapperClasses} as="div">
       <Menu.Button className="relative w-full flex gap-2 items-center text-graySecondary uppercase group hover:text-white button tracking-[1.12px] cursor-pointer">
         {({ open }) => (
           <>

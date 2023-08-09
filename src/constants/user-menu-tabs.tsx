@@ -48,7 +48,7 @@ export const USER_MENU: IUserMenu[][] = [
     },
     {
       title: 'my listed items',
-      path: '/inventory',
+      path: '/market/withdraw',
       icon: <List />
     },
     {

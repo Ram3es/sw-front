@@ -49,10 +49,6 @@
     /* border: 0; */
     outline: none;
   }
-
-  .side-bar-gradient {
-    background: linear-gradient(180deg, rgba(32, 32, 35, 0.74) 0%, #202023 100%);
-  }
   
 }
 
@@ -62,6 +58,10 @@
 
 .group:hover .card-clip-path {
   clip-path: polygon(calc(100% - 8px) 0, 100% calc(0% + 8px), 100% 100%, 0% 100%, 0 100%, 0 0);
+}
+
+.card-top-bar-clip-path {
+  clip-path: polygon(calc(100% - 8px) 0, 100% calc(0% + 8px), 100% 100%, calc(0% + 0px) 100%, 0 calc(100% - 0px), 0 0);
 }
 
 @font-face {
@@ -117,6 +117,10 @@ input[type='number'] {
   position: absolute;
   left: -20px;
   top: 3px
+}
+
+.small-caps {
+  font-variant-caps:  all-small-caps;
 }
 
 /* react-slick styles */

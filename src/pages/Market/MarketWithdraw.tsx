@@ -67,8 +67,8 @@ const MarketWithdraw = () => {
 
   return (
     <div className="flex flex-col flex-grow py-5">
-      <div className="flex justify-between items-center h-[50px] border-b border-solid border-darkGrey px-6">
-        <div className='uppercase text-white font-["Barlow"] text-sm'>withdraw items</div>
+      <div className=" flex justify-between items-center h-[50px] border-b border-solid border-darkGrey px-6">
+        <div className='uppercase text-white font-["Barlow"] text-sm shrink-0 mr-4'>withdraw items</div>
         <Filters
           onSelectAll={toggleAllSelected}
           isSelectedAll={isSelectedAll}

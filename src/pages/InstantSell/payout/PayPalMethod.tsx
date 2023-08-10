@@ -85,7 +85,7 @@ const PayPalMethod = () => {
                                     <p>Provider may take additional free.</p>
                                 </div>
                             </div>
-                          : <div className=" flex items-center justify-between pt-4 pb-8 pr-4  pl-12 text-white">
+                          : <div className=" flex items-center justify-between pt-4 pb-8 px-6 sm:px-0 sm:pr-4 sm:pl-12 text-white">
                                 <div className="flex flex-col">
                                     <p className="text-graySecondary">PayPal email</p>
                                     <p className="text-base">{emailPayPal}</p>

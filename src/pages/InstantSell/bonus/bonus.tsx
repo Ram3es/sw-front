@@ -18,7 +18,7 @@ export const Bonus = () => {
           <Nav />
         </div>
         <IsUserLogged>
-          <div className='flex flex-col lg:flex-row gap-y-12 px-3 sm:px-6 py-[30px] text-white '>
+          <div className='flex flex-col lg:flex-row gap-y-12 px-6 py-[30px] text-white '>
             <div className='w-full md:w-2/3 lg:w-2/5 flex flex-col gap-4 pl-0  llg:pl-16 pr-0 sm:pr-16 '>
               <h2 className='text-2xl font-medium'>BONUSES</h2>
               <div className='relative'>

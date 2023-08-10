@@ -11,6 +11,7 @@ interface ILink extends LinkProps {
   wrapperStyles?: string
   active?: boolean
   withBorder?: boolean
+  borderStyle?: string
 }
 
 function classNames (...classes: string[]) {
@@ -27,16 +28,17 @@ export const Link = ({
   wrapperStyles,
   active,
   withBorder,
+  borderStyle,
   ...linkProps
 }: ILink) => {
   return (
     <span
       className={
         classNames(
-          'inline-flex items-center mx-[16px]',
+          'inline-flex items-center mx-4',
           active ? ' pointer-events-none' : '',
           wrapperStyles ?? '',
-          withBorder && active ? 'border-b border-solid border-swViolet' : ''
+          withBorder && active ? borderStyle ?? 'border-b border-solid border-swViolet' : ''
         )
       }
     >

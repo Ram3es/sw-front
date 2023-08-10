@@ -18,6 +18,7 @@ import { ESteamAppId } from '../../types/Inventory'
 import { format } from '../../helpers/numberFormater'
 import SearchModal from '../Content/SearcModal'
 import { gamesLinks } from '../../constants/games'
+import MobileNavBar from '../Navigation/MobileNavBar'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -38,7 +39,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     updateGameId
   } = useAppContext()
   const [, setSelected] = useState('')
-
+  const [isOpenNavBar, setIsOpenNavBar] = useState(false)
   return (
 <>
     <header
@@ -60,9 +61,11 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             <SkinwalletLogo />
           </a>
           <div className='flex lg:hidden items-center gap-3'>
-            <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3.47119 5.80446V4.76099H21.2103V5.80446H3.47119ZM21.2103 9.97838V11.0219H3.47119V9.97838H21.2103ZM3.47119 15.1958H21.2103V16.2392H3.47119V15.1958Z" fill="white"/>
-            </svg>
+            <div onClick={() => { setIsOpenNavBar(boolean => !boolean) }} className='cursor-pointer' >
+              <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.47119 5.80446V4.76099H21.2103V5.80446H3.47119ZM21.2103 9.97838V11.0219H3.47119V9.97838H21.2103ZM3.47119 15.1958H21.2103V16.2392H3.47119V15.1958Z" fill="white"/>
+              </svg>
+            </div>
             <a href={window.location.origin}>
               <SkinwalletLogoSmall />
             </a>
@@ -213,6 +216,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
       </div>
     </header>
     <SearchModal isOpen={searchOpened} onClose={changeSearchState} />
+    <MobileNavBar isOpen={isOpenNavBar} />
     </>
   )
 }

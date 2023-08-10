@@ -1,16 +1,17 @@
 
-import Dropbox from '../../Content/Dropbox'
 import { classNames } from '../../../helpers/className'
 import { ReactComponent as Chevron } from '../../../assets/chevron-down.svg'
 import { gamesLinks } from '../../../constants/games'
 import { useAppContext } from '../../../context/AppContext'
 import { ESteamAppId } from '../../../types/Inventory'
+import ListBoxWrapper from '../../../containers/ListboxWrapper'
+import { Listbox } from '@headlessui/react'
 
 const DropdownGames = () => {
   const { gameId, updateGameId } = useAppContext()
   return (
-    <Dropbox
-        label={(isOpen) => (
+    <ListBoxWrapper
+        title={(isOpen) => (
         <div className={classNames('w-full flex items-center justify-between duration-100',
           isOpen ? 'text-white' : 'text-graySecondary'
         )}>
@@ -19,12 +20,13 @@ const DropdownGames = () => {
                 className={classNames('fill-current h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')}
             />
         </div>)}
-        additionalClasses='px-[0px] [&>svg]:hidden'
+        className='px-[0px] [&>svg]:hidden'
     >
-            <div className='flex flex-col gap-5 mt-6 mb-10 p-6 bg-darkGrey corner-lb-clip-4'>
+            <Listbox.Options className='flex flex-col gap-5 mt-6 mb-10 p-6 bg-darkGrey corner-lb-clip-4'>
                 {gamesLinks.map((game) => (
-                     <div
+                     <Listbox.Option
                        key={game.id}
+                       value={game.name}
                        className="flex flex-col items-center gap-3 w-full cursor-pointer"
                        onClick={() => { updateGameId(game.id) }}
                       >
@@ -44,11 +46,11 @@ const DropdownGames = () => {
                      <div className='text-graySecondary text-center text-sm font-["Barlow"] font-light'>
                        {game.description}
                      </div>
-                   </div>
+                   </Listbox.Option>
                 ))}
 
-            </div>
-        </Dropbox>
+            </Listbox.Options>
+        </ListBoxWrapper>
   )
 }
 

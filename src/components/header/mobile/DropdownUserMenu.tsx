@@ -23,7 +23,7 @@ const DropdownUserMenu = () => {
         </div>)}
     className='px-[0px] [&>svg]:hidden w-full flex justify-between'
   >
-     <Listbox.Options className='flex flex-col gap-4 p-6 mx-6 my-5 mb-20 bg-darkGrey corner-lb-clip-4'>
+     <Listbox.Options className='flex flex-col gap-4 p-6 mx-6 my-5 bg-darkGrey corner-lb-clip-4'>
        <div className="flex justify-between items-center text-sm text-graySecondary uppercase">
             Balance
             <span className="text-white text-base">$ {format(user?.balance ?? 0)}</span>

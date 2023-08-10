@@ -12,7 +12,7 @@ import DropdownUserMenu from '../header/mobile/DropdownUserMenu'
 const MobileNavBar = ({ isOpen }: { isOpen: boolean }) => {
   const { pathname } = useLocation()
   return (
-        <div className={classNames('w-full h-full flex flex-col fixed lg:hidden z-50 top-14 duration-100 bg-almostBlack overflow-y-scroll',
+        <div className={classNames('w-full h-[calc(100%_-_54px)] flex flex-col fixed lg:hidden z-50 top-14 duration-100 bg-almostBlack overflow-y-scroll',
           isOpen ? 'left-0' : '-left-full')}>
             <div className='w-full flex items-center justify-between  p-6 border-y border-darkGrey text-graySecondary cursor-pointer' >
                 <span className='text-lg uppercase tracking-[1.44px]'>search</span>

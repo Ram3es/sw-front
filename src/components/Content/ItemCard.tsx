@@ -27,6 +27,7 @@ function classNames (...classes: string[]) {
 
 const ItemCard = ({
   isTradable,
+  isInWithdraw,
   timeToTrade,
   image,
   isSelected,
@@ -63,9 +64,11 @@ const ItemCard = ({
       {!isTradable
         ? <div className="bg-darkSecondary bg-opacity-50 absolute left-0 top-0 w-full h-full z-20">
         <span
-          className="absolute left-1/2 -translate-x-1/2 top-[84px] uppercase flex w-max text-14 font-['Barlow'] text-white py-1 px-3 border rounded-[24px]"
+          className={classNames("absolute left-1/2 -translate-x-1/2 uppercase flex w-max text-14 font-['Barlow'] text-white py-1 px-3 border rounded-[24px]",
+            variant === ECardVariant.withdraw ? ' top-[114px] ' : ' top-[84px] '
+          )}
         >
-          trade locked
+          {isInWithdraw ? 'in withdraw' : 'trade locked'}
         </span>
       </div>
         : ''}

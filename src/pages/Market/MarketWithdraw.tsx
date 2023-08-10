@@ -47,7 +47,8 @@ const MarketWithdraw = () => {
         steamPrice: item.steamPrice.amount,
         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
         image: item.imageUrl ? `https://community.akamai.steamstatic.com/economy/image/${item.imageUrl}` : '',
-        isTradable: true,
+        isInWithdraw: item.withdrawn,
+        isTradable: !item.withdrawn,
         isChecked: false
       })))
     } catch (error) {

@@ -2,6 +2,7 @@
 export interface CardItem {
   id: string
   isTradable?: boolean
+  isInWithdraw?: boolean
   timeToTrade?: number
   image: string
   isSelected?: boolean

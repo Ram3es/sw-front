@@ -87,7 +87,7 @@ const MethodsPayout = () => {
                     <Button
                         text='CHANGE'
                         onClick={() => { setPayoutStep('amount') }}
-                        className='justify-center text-graySecondary font-semibold border border-graySecondary cta-clip-path '
+                        className='w-[130px] justify-center text-graySecondary font-semibold border border-graySecondary cta-clip-path '
                     />
                     <div className=' w-4 absolute -left-1 bottom-1  border-b border-graySecondary rotate-45' />
                 </div>
@@ -119,12 +119,12 @@ const MethodsPayout = () => {
                                         <Checkbox
                                             checked={methodsState[method.name].isSelected}
                                             activeClass=''
-                                            additionalClasses='bg-gray-40 border-none pointer-events-none'
+                                            additionalClasses='bg-gray-40 border-none pointer-events-none shrink-0'
                                         />
                                         <img src={method.logo} alt="method-logo" />
                                     </div>
 
-                                    <div className={classNames('flex items-center gap-4 ',
+                                    <div className={classNames('flex items-center gap-1.5 text-xs sm:text-sm ',
                                       idx % 3 ? 'text-graySecondary' : '')}>
                                         <ClockIcon />
                                         {method.timeline}
@@ -138,7 +138,7 @@ const MethodsPayout = () => {
                                               placeholder={method.placeholder}
                                               submitFn={(inputValue: string) => { handleSetMethodRequirments(method.name, inputValue) }} />
                                             </div>
-                                          : <div className=" flex items-center justify-between pt-4 pb-8 pr-4  pl-12 text-white">
+                                          : <div className=" flex items-center justify-between  pb-4 sm:pb-8 px-4 sm:px-0 sm:pr-4 sm:pl-12 text-white">
                                                 <div className="flex flex-col">
                                                     <p className="text-graySecondary">{method.methodTitle}</p>
                                                     <p className="text-base">{methodsState[method.name].methodAccount}</p>
@@ -153,13 +153,13 @@ const MethodsPayout = () => {
                                                             [method.name]: { ...prev[method.name], methodAccount: '' }
                                                           }))
                                                         }}
-                                                        className='justify-center text-graySecondary px-[36px] font-semibold border uppercase border-graySecondary cta-clip-path '
+                                                        className='justify-center text-graySecondary w-20 sm:w-28 font-semibold border uppercase border-graySecondary cta-clip-path '
                                                     />
                                                     <div className=' w-4 absolute -left-1 bottom-1  border-b border-graySecondary rotate-45' />
                                                 </div>
                                             </div>
                                         }
-                                         <div className=' flex items-center justify-between text-11 py-2 px-4 text-dark-14 bg-swLime'>
+                                         <div className=' flex flex-col sm:flex-row  justify-between text-11 py-2 px-4 text-dark-14 bg-swLime'>
                                             <div className='flex items-center gap-2 '>
                                                 <ExclamationTriangleFilled />
                                                 <p>Minimum payout value: $1.00</p>
@@ -175,7 +175,7 @@ const MethodsPayout = () => {
                         <div className='text-darkSecondary ' >
                             <Checkbox checked={isAcceptedPolicy} onChange={(boolean) => { setIsAcceptedPolicy(boolean) }} />
                         </div>
-                        <p className='text-sm font-normal'>
+                        <p className='text-xs sm:text-sm font-normal'>
                             I agree to the {''}
                             <NavLink
                                 to={''}
@@ -195,7 +195,7 @@ const MethodsPayout = () => {
                         <Button
                             text={currentMethod ? `process payout [$${format(amount)}]` : 'select a payment method'}
                             onClick={() => { void handleSubmit() }}
-                            className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest uppercase text-21 font-medium hover',
+                            className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest uppercase text-17 sm:text-21 font-medium hover small-caps',
                               isAcceptedPolicy && methodsState[currentMethod]?.methodAccount && !(isCryptoErr && currentMethod === 'crypto') ? '' : 'pointer-events-none opacity-50 grayscale')}
                         />
                     </div>

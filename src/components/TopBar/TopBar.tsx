@@ -18,6 +18,7 @@ import { ESteamAppId } from '../../types/Inventory'
 import { format } from '../../helpers/numberFormater'
 import SearchModal from '../Content/SearcModal'
 import { gamesLinks } from '../../constants/games'
+import MobileNavBar from '../Navigation/MobileNavBar'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -38,7 +39,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     updateGameId
   } = useAppContext()
   const [, setSelected] = useState('')
-
+  const [isOpenNavBar, setIsOpenNavBar] = useState(false)
   return (
 <>
     <header
@@ -60,9 +61,21 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             <SkinwalletLogo />
           </a>
           <div className='flex lg:hidden items-center gap-3'>
-            <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3.47119 5.80446V4.76099H21.2103V5.80446H3.47119ZM21.2103 9.97838V11.0219H3.47119V9.97838H21.2103ZM3.47119 15.1958H21.2103V16.2392H3.47119V15.1958Z" fill="white"/>
-            </svg>
+            <div onClick={() => { setIsOpenNavBar(boolean => !boolean) }} className='cursor-pointer'>
+              {isOpenNavBar
+                ? (
+                  <div className='w-6 h-[21px] flex items-center justify-center'>
+                    <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.2391 14.1407L13.977 13.4028L1.43353 0.859375L0.695682 1.59723L13.2391 14.1407Z" fill="white"/>
+                      <path d="M1.43353 14.1407L0.695677 13.4028L13.2391 0.859375L13.977 1.59723L1.43353 14.1407Z" fill="white"/>
+                    </svg>
+                </div>
+                  )
+                : (
+              <svg width="24" height="21" viewBox="0 0 24 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.47119 5.80446V4.76099H21.2103V5.80446H3.47119ZM21.2103 9.97838V11.0219H3.47119V9.97838H21.2103ZM3.47119 15.1958H21.2103V16.2392H3.47119V15.1958Z" fill="white"/>
+              </svg>)}
+            </div>
             <a href={window.location.origin}>
               <SkinwalletLogoSmall />
             </a>
@@ -213,6 +226,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
       </div>
     </header>
     <SearchModal isOpen={searchOpened} onClose={changeSearchState} />
+    <MobileNavBar isOpen={isOpenNavBar} />
     </>
   )
 }

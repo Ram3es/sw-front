@@ -31,8 +31,8 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
       className={classNames(
         ' fixed left-0 z-30 md:sticky flex flex-col max-w-[429px] w-full gap-6 p-8 text-skinwallerGray font-Barlow bg-sideBarGradientSmall md:bg-sideBarGradient md:[clip-path:polygon(100%_0,100%_100%,calc(0%+8px)_100%,0_calc(100%-8px),0_0)] duration-100',
         shouldHide
-          ? ' h-max md:h-screen max-h-[calc(90vh-60px)] md:max-h-[calc(100vh-60px)] bottom-0 md:top-[60px]'
-          : ' h-max md:h-screen max-h-[calc(90vh-120px)] md:max-h-[calc(100vh-120px)] bottom-0 md:top-[120px]'
+          ? ' h-max md:h-screen max-h-[calc(90vh-54px)] md:max-h-[calc(100vh-54px)] bottom-0 md:top-[54px]'
+          : ' h-max md:h-screen max-h-[calc(90vh-112px)] md:max-h-[calc(100vh-112px)] bottom-0 md:top-[112px]'
       )}
     >
       <div className='absolute -top-[18px] left-1/2 -translate-x-1/2 w-9 h-9 rounded-full flex md:hidden justify-center items-center bg-darkGrey'>

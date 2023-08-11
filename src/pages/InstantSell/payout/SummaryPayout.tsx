@@ -46,17 +46,19 @@ const SummaryPayout = () => {
                 <h5 className='text-sm uppercase  tracking-[1.12px]'>fee value</h5>
                 <span className='text-yellow-1e text-2xl'>${getFee()}</span>
             </div>
-            <div className=' w-full flex gap-3 h-10 mt-4'>
+            <div className=' w-full flex flex-col sm:flex-row gap-3  mt-4'>
                 <Button
                     text='view transaction'
-                    onClick={() => { console.log('view transaction') }}
-                    className=' w-1/2 h-full bg-swLime hover justify-center text-darkSecondary cta-clip-path uppercase '
+                    onClick={() => { navigate('/panel/transactions') }}
+                    className='w-full sm:w-1/2 bg-swLime hover justify-center text-darkSecondary cta-clip-path uppercase '
+                    heightClass='h-10'
                 />
-                <div className=' w-1/2 relative overflow-hidden hover button'>
+                <div className=' w-full sm:w-1/2 relative overflow-hidden hover button'>
                     <Button
                         text='sell more items '
-                        className=' w-full h-full border border-graySecondary  hover justify-center cta-clip-path uppercase text-graySecondary '
+                        className=' w-full  border border-graySecondary  hover justify-center cta-clip-path uppercase text-graySecondary '
                         onClick={handleViewMore}
+                        heightClass='h-10'
                     />
                         <div className='absolute w-4 bottom-1 -left-1 border-b border-graySecondary hover rotate-45' />
                 </div>

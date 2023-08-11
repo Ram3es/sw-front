@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { IsUserLogged } from '../../components/IsUserLogged/IsUserLogged'
 import { classNames } from '../../helpers/className'
 import { useHideOnScroll } from '../../helpers/useHideOnScroll'
@@ -15,6 +16,8 @@ const MarketWithdraw = () => {
   const [isSelectedAll, setSelectedAll] = useState(false)
   const [isOnlySelectedShown, setIsOnlySelectedShown] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+  const navigate = useNavigate()
 
   const toggleSelect = (card: TInventoryCard) => {
     setRenderCards(prev => [...prev.map(item => card.id === item.id ? { ...item, isChecked: !item.isChecked } : item)])
@@ -144,7 +147,7 @@ const MarketWithdraw = () => {
         selectedItemsQty={selectedItemsQty}
         onShowSelected={() => { setIsOnlySelectedShown(prev => !prev) }}
         onCancel={() => { setRenderCards(prev => [...prev.map(item => item.isTradable ? { ...item, isChecked: false } : item)]) }}
-        onWithdraw={() => { void withdtraw() }}
+        onWithdraw={() => { void withdtraw(); navigate('/market/withdraw') }}
       />
     </div>
   )

@@ -4,7 +4,7 @@ import svgr from 'vite-plugin-svgr'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? 'https://skinwallet.itsua.co/' : '/',
+  base: process.env.NODE_ENV === 'production' ? 'https://sw.itsua.eu/' : '/',
   plugins: [
     react(),
     svgr(),

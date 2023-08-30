@@ -195,7 +195,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 alt="search-icon"
                 width={21}
                 height={21}
-                className={classNames('fill-skinwallerGray')}
+                className={classNames('fill-skinwallerGray h-[12px] w-[12px]')}
               />
             }
             onClick={changeSearchState}

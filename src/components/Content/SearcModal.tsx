@@ -28,7 +28,7 @@ const SearchModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
                         alt="search-icon"
                         width={21}
                         height={21}
-                        className={classNames('fill-skinwallerGray')}
+                        className={classNames('fill-skinwallerGray h-[21px] w-[21px]')}
                       />
                       <input
                         type='text'

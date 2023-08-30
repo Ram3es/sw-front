@@ -19,7 +19,7 @@ const UserMenu = ({ name, balance, wrapperClasses }: { name: string, balance: nu
               src="/chevron-down.svg"
               alt="chevron-down"
               className={classNames(
-                'fill-current',
+                'fill-current h-[12px] w-[12px]',
                 open ? 'rotate-180' : ''
               )}
             />

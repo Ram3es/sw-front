@@ -21,7 +21,7 @@ const DropdownGames = () => {
               height={12}
               src="/chevron-down.svg"
               alt="chevron-down"
-              className={classNames('fill-current', isOpen ? 'rotate-180' : '')}
+              className={classNames('fill-current h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')}
             />
         </div>)}
         className='px-[0px] [&>svg]:hidden'

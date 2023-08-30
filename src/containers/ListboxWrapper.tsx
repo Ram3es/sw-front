@@ -15,7 +15,7 @@ const ListBoxWrapper = ({ title, className, children, onChange }: { children: JS
                             height={12}
                             src="/chevron-down.svg"
                             alt="chevron-down"
-                            className={classNames('fill-current', open ? 'rotate-180' : '')}
+                            className={classNames('fill-current h-[12px] w-[12px]', open ? 'rotate-180' : '')}
                         />
                     </>
                 )}

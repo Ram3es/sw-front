@@ -80,7 +80,7 @@ const MarketWithdrawSidebar = () => {
             }}
             selectedOptionId={gameId as unknown as number}
           >
-            <span className="text-graySecondary font-font-['Barlow'] text-xs">
+            <span className="text-graySecondary font-font-Barlow text-xs">
               0
             </span>
           </RadioGroup>
@@ -94,7 +94,7 @@ const MarketWithdrawSidebar = () => {
             }}
             type="text"
             placeholder="Search in Inventory"
-            className="w-full bg-transparent border-none outline-none text-graySecondary font-['Barlow'] text-sm"
+            className="w-full bg-transparent border-none outline-none text-graySecondary font-Barlow text-sm"
           />
         </div>
         <div className="w-full border-t border-darkGrey" />
@@ -120,7 +120,7 @@ const MarketWithdrawSidebar = () => {
                 }}
                 label={item.name}
               >
-                <span className="font-['Barlow'] text-xs text-graySecondary font-medium uppercase">
+                <span className="font-Barlow text-xs text-graySecondary font-medium uppercase">
                   {item.numberOfItems}
                 </span>
               </InputWithCheckbox>

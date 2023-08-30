@@ -48,7 +48,7 @@ export const BaseLink = ({
         href={href}
         onClick={onClick}
         className={classNames(
-          'button font-["Barlow"] h-[50px] text-[14px] uppercase flex tracking-[1.12px]',
+          'button font-Barlow h-[50px] text-[14px] uppercase flex tracking-[1.12px]',
           className,
           text ? '' : 'contents',
           active ? 'text-white' : ''

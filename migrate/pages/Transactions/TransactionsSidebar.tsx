@@ -69,9 +69,9 @@ const TransactionsSidebar = ({ setEndDate, setStartDate, endDate, startDate }: I
                   <div className="mr-3">
                     <Checkbox checked={item.selected} additionalClasses='pointer-events-none text-black' />
                   </div>
-                  <h1 className="font-['Barlow'] text-sm">{item.name}</h1>
+                  <h1 className="font-Barlow text-sm">{item.name}</h1>
                 </div>
-                <span className="font-['Barlow'] text-xs text-graySecondary font-medium uppercase">
+                <span className="font-Barlow text-xs text-graySecondary font-medium uppercase">
                   {item.numberOfItems}
                 </span>
               </div>
@@ -85,7 +85,7 @@ const TransactionsSidebar = ({ setEndDate, setStartDate, endDate, startDate }: I
             onChange={(e) => { setSearch(e.target.value) }}
             type="text"
             placeholder="Search items"
-            className="w-full bg-transparent border-none outline-none text-graySecondary font-['Barlow'] text-sm"
+            className="w-full bg-transparent border-none outline-none text-graySecondary font-Barlow text-sm"
           />
         </div>
         <div className="w-full border-t border-darkGrey" />

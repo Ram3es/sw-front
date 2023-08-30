@@ -96,7 +96,7 @@ export default function TransactionsPage () {
     <>
       <Bar>
         <div className="flex justify-between items-center h-full px-6">
-          <h1 className='text-white font-["Barlow"] text-[21px] font-medium uppercase'>
+          <h1 className='text-white font-Barlow text-[21px] font-medium uppercase'>
             Transactions
           </h1>
         </div>
@@ -120,7 +120,7 @@ export default function TransactionsPage () {
               isSidebarOpen ? 'text-white' : 'text-graySecondary'
             )}
             onClick={() => { setIsSidebarOpen(prev => !prev) }}>
-              <span className='font-["Barlow"] text-[17px]'>FILTERS</span>
+              <span className='font-Barlow text-[17px]'>FILTERS</span>
               <svg className={classNames(isSidebarOpen ? '' : 'rotate-180')} width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M4.30811 7.3706L4.52686 7.1792C4.63623 7.04248 4.63623 6.85107 4.52686 6.71435L2.22998 4.44482L12.4839 4.44482C12.6753 4.44482 12.812 4.28076 12.812 4.1167L12.812 3.84326C12.812 3.65186 12.6753 3.51514 12.4839 3.51514L2.22998 3.51514L4.52686 1.21826C4.63623 1.08154 4.63623 0.890136 4.52686 0.753417L4.30811 0.562011C4.19873 0.425292 3.97998 0.425292 3.84326 0.562011L0.671387 3.73389C0.534668 3.8706 0.534668 4.06201 0.671387 4.19873L3.84326 7.3706C3.97998 7.50732 4.19873 7.50732 4.30811 7.3706Z" fill="currentColor"/>
               </svg>
@@ -139,7 +139,7 @@ export default function TransactionsPage () {
           )}
             onClick={() => { setIsSidebarOpen(prev => !prev) }}
           >
-            <span className='font-["Barlow"] text-[17px]'>FILTERS</span>
+            <span className='font-Barlow text-[17px]'>FILTERS</span>
             <svg className={classNames(isSidebarOpen ? '' : 'rotate-180')} width="13" height="8" viewBox="0 0 13 8" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M4.30811 7.3706L4.52686 7.1792C4.63623 7.04248 4.63623 6.85107 4.52686 6.71435L2.22998 4.44482L12.4839 4.44482C12.6753 4.44482 12.812 4.28076 12.812 4.1167L12.812 3.84326C12.812 3.65186 12.6753 3.51514 12.4839 3.51514L2.22998 3.51514L4.52686 1.21826C4.63623 1.08154 4.63623 0.890136 4.52686 0.753417L4.30811 0.562011C4.19873 0.425292 3.97998 0.425292 3.84326 0.562011L0.671387 3.73389C0.534668 3.8706 0.534668 4.06201 0.671387 4.19873L3.84326 7.3706C3.97998 7.50732 4.19873 7.50732 4.30811 7.3706Z" fill="currentColor"/>
             </svg>

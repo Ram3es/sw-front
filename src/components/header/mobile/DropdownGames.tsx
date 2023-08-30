@@ -44,10 +44,10 @@ const DropdownGames = () => {
                        </div>
                          : ''}
                      </div>
-                     <div className='uppercase text-base text-graySecondary font-["Barlow"] font-light'>
+                     <div className='uppercase text-base text-graySecondary font-Barlow font-light'>
                        {game.name}
                      </div>
-                     <div className='text-graySecondary text-center text-sm font-["Barlow"] font-light'>
+                     <div className='text-graySecondary text-center text-sm font-Barlow font-light'>
                        {game.description}
                      </div>
                    </Listbox.Option>

@@ -113,10 +113,10 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                     </div>
                       : ''}
                   </div>
-                  <div className='uppercase text-base text-graySecondary font-["Barlow"] font-light'>
+                  <div className='uppercase text-base text-graySecondary font-Barlow font-light'>
                     {game.name}
                   </div>
-                  <div className='text-graySecondary text-sm font-["Barlow"] font-light'>
+                  <div className='text-graySecondary text-sm font-Barlow font-light'>
                     {game.description}
                   </div>
                 </div>

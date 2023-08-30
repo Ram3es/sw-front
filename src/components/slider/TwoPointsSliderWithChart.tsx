@@ -109,15 +109,15 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
         />
       <div className='flex gap-2 pt-7'>
         <label className='w-full px-3 pt-1 pb-2 bg-darkGrey felx flex-col items-start'>
-          <span className=' text-graySecondary text-[11px] font-["Barlow"] text-start'>
+          <span className=' text-graySecondary text-[11px] font-Barlow text-start'>
             From
           </span>
-          <div className='flex items-center gap-1 text-white text-[14px] font-["Barlow"]'>
+          <div className='flex items-center gap-1 text-white text-[14px] font-Barlow'>
             {isCurrency ? '$' : ''}
             <input
               type="text"
               value={isCurrency ? format(priceRange[0] ?? 0) : formatToThousands(priceRange[0] ?? 0)}
-              className='text-white text-[14px] font-["Barlow"] text-start w-full bg-transparent border-0'
+              className='text-white text-[14px] font-Barlow text-start w-full bg-transparent border-0'
               onChange={(e) => {
                 const amountCents = +e.target.value.replace(/[^0-9]/g, '')
                 if (amountCents < 0) {
@@ -132,15 +132,15 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
           </div>
         </label>
         <label className='w-full px-3 pt-1 pb-2 bg-darkGrey felx flex-col items-start'>
-          <span className=' text-graySecondary text-[11px] font-["Barlow"] text-start'>
+          <span className=' text-graySecondary text-[11px] font-Barlow text-start'>
             To
           </span>
-          <div className='flex items-center gap-1 text-white text-[14px] font-["Barlow"]'>
+          <div className='flex items-center gap-1 text-white text-[14px] font-Barlow'>
             {isCurrency ? '$' : ''}
             <input
             type="text"
             value={isCurrency ? format(priceRange[1] ?? 0) : formatToThousands(priceRange[1] ?? 0)}
-            className='text-white text-[14px] font-["Barlow"] text-start w-full bg-transparent border-0'
+            className='text-white text-[14px] font-Barlow text-start w-full bg-transparent border-0'
             onChange={(e) => {
               const amountCents = +e.target.value.replace(/[^0-9]/g, '')
               if (amountCents > (maxPrice ?? 0)) {

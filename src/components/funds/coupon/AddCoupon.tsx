@@ -38,7 +38,7 @@ const AddCoupon = () => {
         <div className=' w-full sm:w-1/2 text-sm font-normal px-0 sm:px-2' >{'Follow us on social media and join our mailing list to make sure you won\'t miss any codes in the future!'}</div>
         <div className=' w-full sm:w-1/2'>
           <div className="flex flex-col gap-3">
-            <div className="font-['Barlow'] text-xs uppercase text-graySecondary">
+            <div className="font-Barlow text-xs uppercase text-graySecondary">
               Follow us
             </div>
             <div className="flex items-center gap-y-2 gap-x-4 flex-wrap text-graySecondary">

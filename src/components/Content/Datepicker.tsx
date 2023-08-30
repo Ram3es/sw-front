@@ -35,8 +35,8 @@ const Datepicker: React.FC<DatepickerProps> = ({ selectedDate, onChange, label, 
   return (
     <div className='w-full relative'>
       <button className='w-full px-3 py-1 bg-darkGrey felx flex-col items-start' onClick={toggleCalendar}>
-        <div className=' text-graySecondary text-[11px] font-["Barlow"] text-start'>{label}</div>
-        <div className="text-white text-sm font-['Barlow'] text-start">
+        <div className=' text-graySecondary text-[11px] font-Barlow text-start'>{label}</div>
+        <div className="text-white text-sm font-Barlow text-start">
           {selectedDate
             ? selectedDate.toLocaleDateString('en-GB', {
               day: 'numeric',

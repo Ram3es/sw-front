@@ -1,13 +1,12 @@
-import { ReactComponent as SkinwalletLogo } from '../../assets/logo-skinwallet.inline.svg'
-import { ReactComponent as SkinwalletLogoSmall } from '../../assets/logo-small.svg'
-import { ReactComponent as SearchIcon } from '../../assets/search-icon.svg'
+"use client"
+import Image from 'next/image'
 
 import { StoreIcon } from '../StoreIcon/store'
 import { USDCircleIcon } from '../USDIcon/usd-circle'
 import { CartIcon } from '../CartIcon/cart'
-import { Button, Link } from '../Navigation'
+import { Button, BaseLink } from '../Navigation'
 import { useAppContext } from '../../context/AppContext'
-import { useLocation } from 'react-router-dom'
+import { usePathname } from 'next/navigation'
 import { useHideOnScroll } from '../../helpers/useHideOnScroll'
 import UserMenu from '../Content/UserMenu'
 import NavDropdown from './NavDropdown'
@@ -29,7 +28,7 @@ function classNames (...classes: string[]) {
 }
 
 const TopBar = ({ isHidableOnScroll }: ITopBar) => {
-  const { pathname } = useLocation()
+  const pathname = usePathname()
   const shouldHide = useHideOnScroll()
   const {
     changeSearchState,
@@ -57,8 +56,13 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
         )}
       >
         <nav className="flex items-center">
-          <a className='hidden lg:block' href={window.location.origin}>
-            <SkinwalletLogo />
+          <a className='hidden lg:block' href='/'>
+            <Image
+              width={26}
+              height={140}
+              src="/logo-skinwallet.inline.svg"
+              alt="logo-skinwallet"
+            />
           </a>
           <div className='flex lg:hidden items-center gap-3'>
             <div onClick={() => { setIsOpenNavBar(boolean => !boolean) }} className='cursor-pointer'>
@@ -76,8 +80,13 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 <path d="M3.47119 5.80446V4.76099H21.2103V5.80446H3.47119ZM21.2103 9.97838V11.0219H3.47119V9.97838H21.2103ZM3.47119 15.1958H21.2103V16.2392H3.47119V15.1958Z" fill="white"/>
               </svg>)}
             </div>
-            <a href={window.location.origin}>
-              <SkinwalletLogoSmall />
+            <a href='/'>
+              <Image
+                width={27}
+                height={26}
+                src="/logo-small.svg"
+                alt="logo-small"
+              />
             </a>
           </div>
           <NavDropdown wrapperClasses='hidden lg:flex' title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
@@ -90,7 +99,13 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 >
                   <div className={ classNames('relative w-full', gameId === game.id ? 'border border-swViolet' : '')}>
                     {game.bg
-                      ? <img className="w-full" src={game.bg} alt={game.name} />
+                      ? <Image
+                      width={176}
+                      height={112}
+                      src={game.bg}
+                      alt={game.name}
+                      className="w-full"
+                    />
                       : <div className='w-[176px] h-[112px] bg-gray-500' />}
                     {game.logo
                       ? <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
@@ -98,10 +113,10 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                     </div>
                       : ''}
                   </div>
-                  <div className='uppercase text-base text-graySecondary font-["Barlow"] font-light'>
+                  <div className='uppercase text-base text-graySecondary font-Barlow font-light'>
                     {game.name}
                   </div>
-                  <div className='text-graySecondary text-sm font-["Barlow"] font-light'>
+                  <div className='text-graySecondary text-sm font-Barlow font-light'>
                     {game.description}
                   </div>
                 </div>
@@ -109,8 +124,8 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             </div>
           </NavDropdown>
           <div className="p-0 border-l border-white h-[32px] opacity-10 mx-4 hidden lg:block"></div>
-          <Link
-            to="/market"
+          <BaseLink
+            href="/market"
             className="hidden lg:flex font-medium text-skinwallerGray hover:text-white"
             wrapperStyles="h-[56px]"
             text="buy"
@@ -119,9 +134,9 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             withBorder
           >
             <StoreIcon />
-          </Link>
-          <Link
-            to="/panel/deposit"
+          </BaseLink>
+          <BaseLink
+            href="/panel/deposit"
             className="hidden lg:flex font-medium text-skinwallerGray hover:text-white w-max"
             wrapperStyles="h-[56px]"
             text="instant sell"
@@ -130,7 +145,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             withBorder
           >
             <USDCircleIcon />
-          </Link>
+          </BaseLink>
         </nav>
         <nav className="flex items-center">
           <NavDropdown wrapperClasses='hidden lg:flex ' title="categories" setSelected={setSelected}>
@@ -175,7 +190,11 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             className="hidden lg:flex uppercase font-medium text-skinwallerGray hover:text-white"
             text="search"
             icon={
-              <SearchIcon
+              <Image
+                src="/search-icon.svg"
+                alt="search-icon"
+                width={21}
+                height={21}
                 className={classNames('fill-skinwallerGray h-[12px] w-[12px]')}
               />
             }
@@ -192,23 +211,22 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                     className="uppercase font-medium z-10 relative text-skinwallerGray hover:text-white"
                   />
                 </div>
-                <Link
-                  to="/panel/cart"
+                <BaseLink
+                  href="/panel/cart"
                   className="font-medium text-skinwallerGray hover:text-white"
                   icon
                 >
                   <CartIcon />
-                </Link>
+                </BaseLink>
                 <UserMenu name={user.username} balance={user.balance} wrapperClasses='hidden lg:block' />
               </>
               )
             : (
             <>
-              <Link
-                to="/sign-in"
+              <BaseLink
+                href="/sign-in"
                 className="mr-[20px] font-medium text-skinwallerGray hover:text-white"
                 text="Log in"
-                state={{ from: pathname }}
                 active={pathname === '/sign-in'}
               />
               {/* <Link

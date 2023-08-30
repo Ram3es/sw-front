@@ -13,7 +13,7 @@ const InputWithCheckbox = ({ setter, isChecked, label, children }: { setter: (ch
             additionalClasses="pointer-events-none text-black"
           />
         </div>
-        <h1 className="font-['Barlow'] text-sm">{label}</h1>
+        <h1 className="font-Barlow text-sm">{label}</h1>
       </div>
       {children}
     </div>

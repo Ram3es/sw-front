@@ -28,7 +28,7 @@ const AddFunds = () => {
     <>
       <Bar>
         <div className="flex justify-between items-center h-full px-6  ">
-          <div className='flex gap-4 items-center text-white font-["Barlow"] text-[21px] font-medium uppercase'>
+          <div className='flex gap-4 items-center text-white font-Barlow text-[21px] font-medium uppercase'>
               { availablePages.includes(addFundsStep) &&
               <div
                 onClick={() => { setAddFundsStep(prev => prev - 1) }}

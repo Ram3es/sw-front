@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link
 import { ReactComponent as PayPal } from '../../../assets/img/payout/logo-ppcom-white.svg'
 import { format } from '../../../helpers/numberFormater'
 import InformationIcon from '../../../components/icons/InformationIcon'
@@ -52,7 +52,7 @@ const PayPalMethod = () => {
                   <div className='flex items-center  gap-x-2 text-sm  flex-wrap'>
                       Need more?
                       <Link
-                        to='https://www.skinwallet.com/market/kyc-verification'
+                        href='https://www.skinwallet.com/market/kyc-verification'
                         className={`${errorsState?.limit.status ? 'text-swOrange' : 'text-white'} underline hover:no-underline -mx-1`}
                         >
                         Complete KYC procedure

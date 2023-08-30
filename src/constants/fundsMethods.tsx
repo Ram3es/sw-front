@@ -1,8 +1,4 @@
-import { ReactComponent as Paypal } from '../assets/img/payout/logo-ppcom-white.svg'
-import { ReactComponent as Crypto } from '../assets/img/funds/crypto.svg'
-import { ReactComponent as Card } from '../assets/img/funds/visa-mastercard.svg'
-import { ReactComponent as Bitcoin } from '../assets/img/funds/bitcoin-logo.svg'
-import { ReactComponent as Skinwallet } from '../assets/img/funds/skinwallet-instant.svg'
+import Image from 'next/image'
 import GiftContent from '../components/funds/methods/GiftContent'
 import MethodFee from '../components/funds/methods/MethodFee'
 import { format } from '../helpers/numberFormater'
@@ -32,35 +28,60 @@ export const FUND_METHODS: IMethod[] = [
   {
     methodName: 'paypal',
     title: 'PayPal',
-    logo: <Paypal/>,
+    logo: <Image
+      width={90}
+      height={22}
+      src="/img/payout/logo-ppcom-white.svg"
+      alt="logo-ppcom-white"
+    />,
     content: <PayPalContent/>,
     label: 'powered by conotoxia pay'
   },
   {
     methodName: 'card',
     title: 'card',
-    logo: <Card/>,
+    logo: <Image
+      width={115}
+      height={32}
+      src="/img/funds/visa-mastercard.svg"
+      alt="visa-mastercard"
+    />,
     content: <MethodFee topUpFee={`3.1% + $${format(30)}`} />,
     label: 'powered by STRIPE'
   },
   {
     methodName: 'crypto',
     title: 'crypto',
-    logo: <Crypto/>,
+    logo: <Image
+      width={91}
+      height={28}
+      src="/img/funds/crypto.svg"
+      alt="crypto"
+    />,
     content: <MethodFee topUpFee='0%' />,
     summary: 'Aenean rhoncus ligula nibh, efficitur molestie elit aliquam quis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.'
   },
   {
     methodName: 'g2a',
     title: 'G2A Pay',
-    logo: <Bitcoin/>,
+    logo: <Image
+      width={97}
+      height={21}
+      src="/img/funds/bitcoin-logo.svg"
+      alt="bitcoin-logo"
+    />,
     content: <G2AContent/>,
     summary: 'To browse all top-up methods, switch locations on G2A Pay website.'
   },
   {
     methodName: 'skinwallet',
     title: 'balance',
-    logo: <Skinwallet/>,
+    logo: <Image
+      width={181}
+      height={21}
+      src="/img/funds/skinwallet-instant.svg"
+      alt="skinwallet-instant"
+    />,
     content: <MethodFee topUpFee='0%' />,
     summary: 'Use this method to transfer existing Balance from Skinwallet Instant or to sell virtual items instantly. After confirming this method, you will be redirected to the Skinwallet Instant website where you can finish the transaction.'
   }

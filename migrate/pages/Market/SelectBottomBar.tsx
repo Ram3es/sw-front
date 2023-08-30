@@ -3,7 +3,7 @@ import { classNames } from '../../helpers/className'
 
 const SelectBottomBar = ({ selectedItemsQty, onShowSelected, onCancel, onWithdraw }: { selectedItemsQty: number, onShowSelected: () => void, onCancel: () => void, onWithdraw: () => void }) => {
   return (
-    <div className="fixed left-0 bottom-0 w-full z-40 p-6 flex flex-col lg:flex-row gap-2 lg:gap-12 font-['Barlow'] items-center bg-graySecondary text-darkSecondary">
+    <div className="fixed left-0 bottom-0 w-full z-40 p-6 flex flex-col lg:flex-row gap-2 lg:gap-12 font-Barlow items-center bg-graySecondary text-darkSecondary">
       <div className="flex flex-col w-max">
         {selectedItemsQty === 0
           ? <span className="text-18 font-medium w-max">No items selected</span>

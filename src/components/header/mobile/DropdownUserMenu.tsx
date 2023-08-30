@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAppContext } from '../../../context/AppContext'
 import { classNames } from '../../../helpers/className'
-import { ReactComponent as Chevron } from '../../../assets/chevron-down.svg'
+import Image from 'next/image'
 import { Listbox } from '@headlessui/react'
 import { type IUserMenu, USER_MENU } from '../../../constants/user-menu-tabs'
 import { format } from '../../../helpers/numberFormater'
@@ -17,8 +17,12 @@ const DropdownUserMenu = () => {
           isOpen ? 'text-white' : 'text-graySecondary'
         )}>
             <span className='text-lg uppercase'>{user?.username}</span>
-            <Chevron
-                className={classNames('fill-current h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')}
+            <Image
+              width={12}
+              height={12}
+              src="/chevron-down.svg"
+              alt="chevron-down"
+              className={classNames('fill-current h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')}
             />
         </div>)}
     className='px-[0px] [&>svg]:hidden w-full flex justify-between'

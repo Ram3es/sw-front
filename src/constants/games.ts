@@ -1,5 +1,3 @@
-import csgoBg from '../assets/img/top-bar/csgo-bg.png'
-import csgoLogo from '../assets/img/top-bar/csgo-logo.svg'
 // import dotaBg from '../../assets/img/top-bar/dota-bg.png'
 // import dotaLogo from '../../assets/img/top-bar/dota-logo.png'
 // import tf2Bg from '../../assets/img/top-bar/tf2-bg.png'
@@ -9,8 +7,8 @@ import { ESteamAppId } from '../types/Inventory'
 export const gamesLinks = [
   {
     name: 'CS:GO',
-    bg: csgoBg,
-    logo: csgoLogo,
+    bg: "/img/top-bar/csgo-bg.png",
+    logo: "/img/top-bar/csgo-logo.svg",
     id: ESteamAppId.CSGO,
     description: 'The best knives, the coolest rifles, and many more skins!'
   }, {

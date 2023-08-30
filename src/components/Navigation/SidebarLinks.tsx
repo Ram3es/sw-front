@@ -14,7 +14,7 @@ const SidebarLinks = () => {
         <div className="flex gap-4 items-center flex-wrap">
           {SIDEBAR_LINKS.map((item, index) => (
             <div key={index} className="flex items-center gap-4">
-              <div className="font-['Barlow'] text-xs uppercase text-graySecondary">
+              <div className="font-Barlow text-xs uppercase text-graySecondary">
                 {item.title}
               </div>
               {index !== SIDEBAR_LINKS.length - 1 && (
@@ -24,7 +24,7 @@ const SidebarLinks = () => {
           ))}
         </div>
         <div className="flex flex-col gap-3">
-          <div className="font-['Barlow'] text-xs uppercase text-graySecondary">
+          <div className="font-Barlow text-xs uppercase text-graySecondary">
             Follow us
           </div>
           <div className="flex gap-6 flex-wrap text-graySecondary">
@@ -41,15 +41,15 @@ const SidebarLinks = () => {
             <div key={index}>{item.icon}</div>
           ))}
         </div>
-        <p className="font-['Barlow'] text-xs text-graySecondary leading-[18px]">
+        <p className="font-Barlow text-xs text-graySecondary leading-[18px]">
           Powered by Steam.
           <br />
           Not affiliated with Valve Corp.
         </p>
-        <p className="font-['Barlow'] text-xs text-graySecondary leading-[18px]">
+        <p className="font-Barlow text-xs text-graySecondary leading-[18px]">
           Skinwallet MT Limited 99, Sir Adrian Dingli Street, Sliema, Malta
         </p>
-        <p className="font-['Barlow'] text-xs text-graySecondary leading-[18px]">
+        <p className="font-Barlow text-xs text-graySecondary leading-[18px]">
           © 2021 Skinwallet
         </p>
       </div>

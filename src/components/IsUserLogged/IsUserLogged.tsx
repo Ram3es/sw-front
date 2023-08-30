@@ -15,7 +15,7 @@ export const IsUserLogged = ({ children }: { children: JSX.Element }) => {
           )
         : (
         <div className="flex flex-grow justify-center items-center">
-          <div className='flex flex-col w-[450px] h-[152px] justify-between font-["Barlow"] items-center text-white'>
+          <div className='flex flex-col w-[450px] h-[152px] justify-between font-Barlow items-center text-white'>
             <span className="tracking-wider text-2xl">
               PLEASE LOGIN TO BEGIN SELLING
             </span>

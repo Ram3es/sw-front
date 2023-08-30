@@ -64,7 +64,7 @@ const ItemCard = ({
       {!isTradable
         ? <div className="bg-darkSecondary bg-opacity-50 absolute left-0 top-0 w-full h-full z-20">
         <span
-          className={classNames("absolute left-1/2 -translate-x-1/2 uppercase flex w-max text-14 font-['Barlow'] text-white py-1 px-3 border rounded-[24px]",
+          className={classNames("absolute left-1/2 -translate-x-1/2 uppercase flex w-max text-14 font-Barlow text-white py-1 px-3 border rounded-[24px]",
             variant === ECardVariant.withdraw ? ' top-[114px] ' : ' top-[84px] '
           )}
         >
@@ -84,7 +84,7 @@ const ItemCard = ({
         />
         {variant === ECardVariant.withdraw
           ? <div className='flex w-full justify-between bg-darkGrey px-4 py-3 card-top-bar-clip-path'>
-            <span className='uppercase text-xs font-["Barlow"] font-extralight'>in skinwallet</span>
+            <span className='uppercase text-xs font-Barlow font-extralight'>in skinwallet</span>
             {isTradable
               ? <span className='text-swViolet'>
               <Checkbox
@@ -99,7 +99,7 @@ const ItemCard = ({
           <div
             className="flex w-full justify-between"
           >
-            <div className={classNames('flex items-center gap-2 uppercase text-xs font-["Barlow"]',
+            <div className={classNames('flex items-center gap-2 uppercase text-xs font-Barlow',
               isTradable && !timeToTrade ? 'text-[#18E86B]' : '',
               isTradable && timeToTrade ? 'text-[#FF8F27]' : '',
               !isTradable ? 'text-white' : ''
@@ -124,21 +124,21 @@ const ItemCard = ({
             alt={name}
           />
           <div className="flex flex-col w-full relative mb-2">
-            <div className='text-graySecondary uppercase text-sm font-["Barlow"] font-light group-[.market]/card:hidden'>estimated value</div>
-            <div className='uppercase text-2xl group-[.withdraw]/card:hidden font-["Barlow"] text-white font-bold'>${format(price)}</div>
+            <div className='text-graySecondary uppercase text-sm font-Barlow font-light group-[.market]/card:hidden'>estimated value</div>
+            <div className='uppercase text-2xl group-[.withdraw]/card:hidden font-Barlow text-white font-bold'>${format(price)}</div>
             <div className='hidden group-[.market]/card:flex group-[.withdraw]/card:flex items-center gap-2 py-1 text-sm text-graySecondary'>
               <SteamIcon className='w-4 h-auto'/>
               <span>${format(steamPrice ?? 0)}</span>
             </div>
             {isNoFee
-              ? <span className="px-1 absolute bottom-[110%] left-0 bg-[#FFD7BC] text-darkSecondary text-xs font-['Barlow']">
+              ? <span className="px-1 absolute bottom-[110%] left-0 bg-[#FFD7BC] text-darkSecondary text-xs font-Barlow">
               0% Fee
             </span>
               : ''}
           </div>
           <div className="flex flex-col w-full relative mb-2">
-            <div className='text-graySecondary uppercase text-sm font-["Barlow"] font-light'>{type}</div>
-            <div className='text-whote uppercase text-lg font-["Barlow"] text-white'>{name}</div>
+            <div className='text-graySecondary uppercase text-sm font-Barlow font-light'>{type}</div>
+            <div className='text-whote uppercase text-lg font-Barlow text-white'>{name}</div>
           </div>
           <span className="w-full border-t border-darkGrey" />
           {condition

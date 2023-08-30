@@ -1,7 +1,7 @@
 import React from 'react'
-import { type LinkProps, Link as RouterLink } from 'react-router-dom'
+import Link from 'next/link'
 
-interface ILink extends LinkProps {
+interface ILink {
   text?: string | React.JSX.Element
   className?: string
   icon?: boolean
@@ -12,13 +12,14 @@ interface ILink extends LinkProps {
   active?: boolean
   withBorder?: boolean
   borderStyle?: string
+  href: string
 }
 
 function classNames (...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export const Link = ({
+export const BaseLink = ({
   text,
   className = '',
   onClick,
@@ -29,6 +30,7 @@ export const Link = ({
   active,
   withBorder,
   borderStyle,
+  href,
   ...linkProps
 }: ILink) => {
   return (
@@ -42,10 +44,11 @@ export const Link = ({
         )
       }
     >
-      <RouterLink
+      <Link
+        href={href}
         onClick={onClick}
         className={classNames(
-          'button font-["Barlow"] h-[50px] text-[14px] uppercase flex tracking-[1.12px]',
+          'button font-Barlow h-[50px] text-[14px] uppercase flex tracking-[1.12px]',
           className,
           text ? '' : 'contents',
           active ? 'text-white' : ''
@@ -63,7 +66,7 @@ export const Link = ({
             { React.cloneElement(children, { color: active ? '#6842FF' : '#A4A4A4' }) }
           </span>
         }
-      </RouterLink>
+      </Link>
     </span>
   )
 }

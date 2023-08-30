@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
 import { classNames } from '../../helpers/className'
 import { type IUserMenu, USER_MENU } from '../../constants/user-menu-tabs'
 import { NavLink } from 'react-router-dom'
 import { format } from '../../helpers/numberFormater'
+import Image from 'next/image'
 
 const UserMenu = ({ name, balance, wrapperClasses }: { name: string, balance: number, wrapperClasses?: string }) => {
   return (
@@ -13,7 +13,11 @@ const UserMenu = ({ name, balance, wrapperClasses }: { name: string, balance: nu
         {({ open }) => (
           <>
             <span>{name}</span>
-            <Chevron
+            <Image
+              width={12}
+              height={12}
+              src="/chevron-down.svg"
+              alt="chevron-down"
               className={classNames(
                 'fill-current h-[12px] w-[12px]',
                 open ? 'rotate-180' : ''

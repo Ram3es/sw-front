@@ -29,7 +29,7 @@ const ListedItems = () => {
     <>
       <Bar>
         <div className='flex justify-between items-center h-full px-6'>
-          <h1 className='text-white font-["Barlow"] text-[21px] font-medium uppercase'>withdraw items</h1>
+          <h1 className='text-white font-Barlow text-[21px] font-medium uppercase'>withdraw items</h1>
         </div>
       </Bar>
       <IsUserLogged>
@@ -64,7 +64,7 @@ const ListedItems = () => {
                />)}
           </div>
 
-          <div className="fixed left-0 bottom-0 w-full z-40 p-6 flex flex-col lg:flex-row gap-2 lg:gap-12 font-['Barlow'] items-center bg-graySecondary text-darkSecondary">
+          <div className="fixed left-0 bottom-0 w-full z-40 p-6 flex flex-col lg:flex-row gap-2 lg:gap-12 font-Barlow items-center bg-graySecondary text-darkSecondary">
             <div className="flex flex-col w-max">
               <span className="text-18 font-medium w-max">0/3 Trade Offers accepted</span>
             </div>

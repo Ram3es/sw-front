@@ -1,6 +1,6 @@
 
 import { Listbox } from '@headlessui/react'
-import { ReactComponent as Chevron } from '../assets/chevron-down.svg'
+import Image from 'next/image'
 import { classNames } from '../helpers/className'
 
 const ListBoxWrapper = ({ title, className, children, onChange }: { children: JSX.Element, title: string | ((open?: boolean) => JSX.Element), className?: string, onChange?: (value: string) => void }) => {
@@ -10,7 +10,13 @@ const ListBoxWrapper = ({ title, className, children, onChange }: { children: JS
                 {({ open }) => (
                     <>
                         {typeof title === 'function' ? title(open) : title}
-                        <Chevron className={classNames('fill-current h-[12px] w-[12px]', open ? 'rotate-180' : '')}/>
+                        <Image
+                            width={12}
+                            height={12}
+                            src="/chevron-down.svg"
+                            alt="chevron-down"
+                            className={classNames('fill-current h-[12px] w-[12px]', open ? 'rotate-180' : '')}
+                        />
                     </>
                 )}
             </Listbox.Button>

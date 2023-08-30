@@ -1,11 +1,7 @@
-import Venmo from '../assets/img/payout/simple-icons_venmo.svg'
-import Paypal from '../assets/img/payout/logo-ppcom-white.svg'
-import Crypto from '../assets/img/payout/logo-crypto-group.png'
-import Webmoney from '../assets/img/payout/logo-webmoney.svg'
 export const PAYOUT_METHODS = [
   {
     name: 'venmo',
-    logo: Venmo,
+    logo: '/img/payout/simple-icons_venmo.svg',
     timeline: 'Instant Payout',
     placeholder: 'Enter Username or Phone Number',
     methodTitle: 'Venmo Account'
@@ -13,7 +9,7 @@ export const PAYOUT_METHODS = [
   },
   {
     name: 'paypal',
-    logo: Paypal,
+    logo: '/img/payout/logo-ppcom-white.svg',
     timeline: '2-24h (avg. 6h)',
     placeholder: 'Enter PayPal email',
     methodTitle: 'PayPal Email'
@@ -21,7 +17,7 @@ export const PAYOUT_METHODS = [
   },
   {
     name: 'crypto',
-    logo: Crypto,
+    logo: '/img/payout/logo-crypto-group.png',
     timeline: '2-24h (avg. 6h)',
     placeholder: 'Enter Address',
     methodTitle: 'Crypto Address'
@@ -29,7 +25,7 @@ export const PAYOUT_METHODS = [
   },
   {
     name: 'webmoney',
-    logo: Webmoney,
+    logo: '/img/payout/logo-webmoney.svg',
     timeline: 'Instant Payout',
     placeholder: 'Enter Webmoney Credentials'
 

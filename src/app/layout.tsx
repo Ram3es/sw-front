@@ -1,6 +1,8 @@
+import TopBar from '@/components/TopBar/TopBar'
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Providers } from '../providers/providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,7 +18,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className='flex flex-col bg-darkSecondary min-h-screen'>
+          <Providers>
+            <TopBar isHidableOnScroll={true}/>
+          </Providers>
+          {children}
+        </div>
+      </body>
     </html>
   )
 }

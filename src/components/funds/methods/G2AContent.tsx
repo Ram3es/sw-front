@@ -1,8 +1,6 @@
 import MethodFee from './MethodFee'
 import { format } from '../../../helpers/numberFormater'
-import { ReactComponent as WebMoney } from '../../../assets/img/payout/logo-webmoney.svg'
-import { ReactComponent as Trustly } from '../../../assets/img/funds/logo-trustly.svg'
-import { ReactComponent as Neteller } from '../../../assets/img/funds/logo-neteller.svg'
+import Image from 'next/image'
 
 const G2AContent = () => {
   return (
@@ -15,9 +13,24 @@ const G2AContent = () => {
             </div>
             </div>
             <div className='flex flex-col gap-4 mt-4 items-end'>
-                <WebMoney />
-                <Trustly />
-                <Neteller />
+              <Image
+                width={112}
+                height={27}
+                src="/img/payout/logo-webmoney.svg"
+                alt="logo-webmoney"
+              />
+              <Image
+                width={114}
+                height={25}
+                src="/img/funds/logo-trustly.svg"
+                alt="logo-webmoney"
+              />
+              <Image
+                width={105}
+                height={19}
+                src="/img/funds/logo-neteller.svg"
+                alt="logo-webmoney"
+              />
             </div>
         </div>
   )

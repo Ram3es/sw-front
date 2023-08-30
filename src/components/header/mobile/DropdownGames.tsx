@@ -1,6 +1,6 @@
 
 import { classNames } from '../../../helpers/className'
-import { ReactComponent as Chevron } from '../../../assets/chevron-down.svg'
+import Image from 'next/image'
 import { gamesLinks } from '../../../constants/games'
 import { useAppContext } from '../../../context/AppContext'
 import { ESteamAppId } from '../../../types/Inventory'
@@ -16,8 +16,12 @@ const DropdownGames = () => {
           isOpen ? 'text-white' : 'text-graySecondary'
         )}>
             <span className='text-lg uppercase'>{Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]}</span>
-            <Chevron
-                className={classNames('fill-current h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')}
+            <Image
+              width={12}
+              height={12}
+              src="/chevron-down.svg"
+              alt="chevron-down"
+              className={classNames('fill-current', isOpen ? 'rotate-180' : '')}
             />
         </div>)}
         className='px-[0px] [&>svg]:hidden'

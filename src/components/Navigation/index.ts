@@ -1,2 +1,2 @@
 export { Button } from './Button'
-export { Link } from './Link'
+export { BaseLink } from './BaseLink'

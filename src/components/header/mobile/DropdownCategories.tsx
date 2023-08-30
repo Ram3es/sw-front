@@ -1,10 +1,10 @@
 
 import React from 'react'
-import { ReactComponent as Chevron } from '../../../assets/chevron-down.svg'
 import { classNames } from '../../../helpers/className'
 import { Listbox } from '@headlessui/react'
 import { CATEGORIES } from '../../../constants/categories'
 import ListBoxWrapper from '../../../containers/ListboxWrapper'
+import Image from 'next/image'
 
 const DropdownCategories = () => {
   return (
@@ -14,8 +14,12 @@ const DropdownCategories = () => {
               isOpen ? 'text-white' : 'text-graySecondary'
             )}>
                 <span className='text-lg uppercase'>categories</span>
-                <Chevron
-                    className={classNames('fill-current h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')}
+                <Image
+                  width={12}
+                  height={12}
+                  src="/chevron-down.svg"
+                  alt="chevron-down"
+                  className={classNames('fill-current', isOpen ? 'rotate-180' : '')}
                 />
             </div>)}
           className='px-[0px] [&>svg]:hidden w-full flex justify-between'

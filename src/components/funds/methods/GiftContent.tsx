@@ -1,4 +1,4 @@
-import Kinguin from '../../../assets/img/funds/kinguin.png'
+import Image from 'next/image'
 
 const GiftContent = () => {
   return (
@@ -11,7 +11,13 @@ const GiftContent = () => {
           </div>
           <div className='flex flex-col' >
             <span className='text-xs leading-3 font-normal text-graySecondary'>Buy Gift Cards from our partner</span>
-            <img src={Kinguin} alt='kinguin ' className='w-32 h-auto -translate-x-3 pt-1 pb-2' />
+            <Image
+              src="/img/funds/kinguin.png"
+              alt="kinguin"
+              width={128}
+              height={43}
+              className='w-32 h-auto -translate-x-3 pt-1 pb-2'
+            />
           </div>
 
         </div>

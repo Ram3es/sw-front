@@ -1,14 +1,20 @@
+# Nextjs app Dockerfile
+#Build stage 
 FROM node:18-alpine as build-stage
 WORKDIR /app
+COPY package*.json ./
+RUN npm ci
 COPY . .
-COPY .env .env
-RUN npm install
 RUN npm run build
 
-FROM nginx:stable-alpine as production-stage
-WORKDIR /usr/share/nginx/html
-RUN rm -rf ./*
-COPY --from=build-stage /app/dist .
-COPY --from=build-stage /app/nginx.conf /etc/nginx/nginx.conf
+# Production stage
+FROM node:18-alpine as production-stage
+WORKDIR /app
+COPY --from=build-stage /app/package*.json ./
+COPY --from=build-stage /app/.next ./.next
+COPY --from=build-stage /app/public ./public
+COPY --from=build-stage /app/node_modules ./node_modules
+
+ENV NODE_ENV=production
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "start"]

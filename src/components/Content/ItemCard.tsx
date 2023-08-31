@@ -2,9 +2,9 @@ import { CONDITIONS } from '../../constants/item-conditions'
 import { format } from '../../helpers/numberFormater'
 import { ECardVariant, type CardItem, type ConditionItem } from '../../types/Card'
 import { Button } from '../Navigation'
+import ClockIcon from '../icons/ClockIcon'
 import SteamIcon from '../icons/SteamIcon'
 import Checkbox from './Checkbox'
-import { ReactComponent as ClockIcon } from './images/clock.svg'
 
 function findNearestMaxValue (arr: ConditionItem[], value: number): ConditionItem | null {
   let nearestMaxValue: ConditionItem | null = null

@@ -6,7 +6,6 @@ import { useSort } from '@/helpers/useSort'
 import { sortData } from '@/helpers/sortData'
 import { getInventory } from '@/services/inventory/inventory'
 import { IsUserLogged } from '@/components/IsUserLogged/IsUserLogged'
-import { Providers } from '@/providers/providers'
 import CardsListWrapper from './CardsListWrapper'
 import SellsBar from './SellsBar'
 import { Filters } from '@/components/InstantSellControls/filters'
@@ -62,7 +61,6 @@ export default function Deposit() {
   }, [user, gameId])
 
   return (
-    <Providers>
       <div className='flex flex-grow  items-stretch  '>
         <div className='flex flex-col flex-grow py-5'>
           <div className='flex justify-between h-auto xl:h-[50px] xl:border-b border-solid border-darkGrey xl:px-[8px] flex-wrap xl:flex-nowrap'>
@@ -84,6 +82,5 @@ export default function Deposit() {
         </div>
         <SellsBar selectedCards={selectedCards} onClose={toggleSelect} />
       </div>
-    </Providers>
   )
 }

@@ -5,7 +5,6 @@ import { Button } from "@/components/Navigation"
 import InformationIcon from "@/components/icons/InformationIcon"
 import { ChangeEvent, useState } from "react"
 import ProgressBonusBar from "./ProgressBonusBar"
-import { Providers } from "@/providers/providers"
 
 export default function Bonus() {
   const [inputValue, setInputValue] = useState('')
@@ -14,7 +13,6 @@ export default function Bonus() {
     setInputValue(e.target.value)
   }
   return (
-    <Providers>
       <div className='flex flex-col flex-grow py-5'>
         <div className='flex justify-between h-[50px] xl:border-b border-solid border-darkGrey px-0 xl:px-[8px]'>
           <Nav />
@@ -50,6 +48,5 @@ export default function Bonus() {
           </div>
         </IsUserLogged>
       </div>
-    </Providers>
   )
 }

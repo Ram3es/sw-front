@@ -1,19 +1,19 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import PaperPayout from './PaperPayout'
-import { usePayoutContext } from '../../../context/PayoutContext'
-import { convertToBacks, format } from '../../../helpers/numberFormater'
-import { Button } from '../../../components/Navigation'
-import ExclamationStarIcon from '../../../components/icons/ExclamationStarIcon'
-import { PAYOUT_METHODS } from '../../../constants/payout-methods'
-import Checkbox from '../../../components/Content/Checkbox'
-import ClockIcon from '../../../components/icons/ClockIcon'
-import { classNames } from '../../../helpers/className'
-import ExclamationTriangleFilled from '../../../components/icons/ExclamationTriangleFilled'
-import { NavLink } from 'react-router-dom'
-import { REGEX } from '../../../constants/regex'
-import { payout } from '../../../services/payout/payout'
-import InputWithBtn from '../../../components/Content/InputWithBtn'
-import { useAppContext } from '../../../context/AppContext'
+import { useAppContext } from '@/context/AppContext'
+import { usePayoutContext } from '@/context/PayoutContext'
+import { REGEX } from '@/constants/regex'
+import { payout } from '@/services/payout/payout'
+import { convertToBacks, format } from '@/helpers/numberFormater'
+import { Button } from '@/components/Navigation'
+import ExclamationStarIcon from '@/components/icons/ExclamationStarIcon'
+import { PAYOUT_METHODS } from '@/constants/payout-methods'
+import ExclamationTriangleFilled from '@/components/icons/ExclamationTriangleFilled'
+import { classNames } from '@/helpers/className'
+import Checkbox from '@/components/Content/Checkbox'
+import ClockIcon from '@/components/icons/ClockIcon'
+import InputWithBtn from '@/components/Content/InputWithBtn'
+import Link from 'next/link'
 
 const MethodsPayout = () => {
   const [isAcceptedPolicy, setIsAcceptedPolicy] = useState(false)
@@ -177,18 +177,18 @@ const MethodsPayout = () => {
                         </div>
                         <p className='text-xs sm:text-sm font-normal'>
                             I agree to the {''}
-                            <NavLink
-                                to={''}
+                            <Link
+                                href={''}
                                 className='text-swLime underline hover:text-swLime/90'
                             >
                                 Terms of Service
-                            </NavLink> and {''}
-                            <NavLink
-                                to={''}
+                            </Link> and {''}
+                            <Link
+                                href={''}
                                 className='text-swLime underline  hover:text-swLime/90'
                             >
                                 Privacy Policy
-                            </NavLink>.
+                            </Link>.
                         </p>
                     </div>
                     <div className='h-12 mt-4'>

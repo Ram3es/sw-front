@@ -1,14 +1,14 @@
-import { NavLink } from 'react-router-dom'
-import Checkbox from '../../../components/Content/Checkbox'
-import { Button } from '../../../components/Navigation'
-import ClockIcon from '../../../components/icons/ClockIcon'
-import ExclamationTriangleFilled from '../../../components/icons/ExclamationTriangleFilled'
-import { PAYOUT_METHODS } from '../../../constants/payout-methods'
-import { usePayoutContext } from '../../../context/PayoutContext'
-import { classNames } from '../../../helpers/className'
-import { format } from '../../../helpers/numberFormater'
+import { usePayoutContext } from '@/context/PayoutContext'
 import PaperPayout from './PaperPayout'
 import { useState } from 'react'
+import { Button } from '@/components/Navigation'
+import { format } from '@/helpers/numberFormater'
+import { classNames } from '@/helpers/className'
+import Checkbox from '@/components/Content/Checkbox'
+import { PAYOUT_METHODS } from '@/constants/payout-methods'
+import ClockIcon from '@/components/icons/ClockIcon'
+import ExclamationTriangleFilled from '@/components/icons/ExclamationTriangleFilled'
+import Link from 'next/link'
 
 const PayPalMethod = () => {
   const { amount, emailPayPal, inputPaypal, setPayPalEmail, setPayoutStep, setInputPayPal } = usePayoutContext()
@@ -108,18 +108,18 @@ const PayPalMethod = () => {
                         </div>
                         <p className='text-sm font-normal'>
                             I agree to the {''}
-                            <NavLink
-                                to={''}
+                            <Link
+                                href={''}
                                 className='text-swLime underline hover:text-swLime/90'
                             >
                                 Terms of Service
-                            </NavLink> and {''}
-                            <NavLink
-                                to={''}
+                            </Link> and {''}
+                            <Link
+                                href={''}
                                 className='text-swLime underline  hover:text-swLime/90'
                             >
                                 Privacy Policy
-                            </NavLink>.
+                            </Link>.
                         </p>
                     </div>
                     <div className='h-12 mt-4'>

@@ -2,7 +2,6 @@
 import Bar from '../../components/Bar/Bar'
 import Link  from 'next/link'
 import Readme from '../../components/funds/readme/Readme'
-import TrustBox from '../../components/Content/TrustBox'
 import { useFundsContext } from '../../context/FundsContext'
 import GiftIcon from '@/components/icons/GiftIcon'
 import ArrowRight from '@/components/icons/ArrowRight'
@@ -11,6 +10,8 @@ import PayPalMethod from './fund-steps/PayPalMethod'
 import Summary from './fund-steps/Summary'
 import SelectCryptoMethod from './fund-steps/SelectCryptoMethod'
 import CryptoAdress from './fund-steps/CryptoAdress'
+import dynamic from 'next/dynamic'
+const TrustBox = dynamic(() => import('../../components/Content/TrustBox'), { ssr: false })
 
 const getMethod = (method: string) => {
   switch (method) {

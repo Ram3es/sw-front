@@ -16,7 +16,7 @@ const CardWrapper: FC<ICardWrapperProps> = ({ children, isSelected, additionalCl
         isSelected ? 'border-swViolet border-2' : 'border-darkGrey border-2 ',
         additionalClass ?? '')}
   >
-      <span className={classNames('absolute w-[10px] border-t-2 -right-[3px] top-[2px] rotate-45',
+      <span className={classNames('absolute w-[10px] border-t-2 -right-[2px] top-[3px] rotate-45',
         isSelected ? 'border-swViolet ' : 'border-darkGrey')}/>
       <span className={classNames('absolute  w-[10px]  border-t-2 -left-[2px] bottom-[1px] rotate-45',
         isSelected ? 'border-swViolet ' : 'border-darkGrey')}/>

@@ -25,8 +25,8 @@ const TrustBox = () => {
       data-style-width="100%"
       data-theme="dark"
       >
-    <a href="https://www.trustpilot.com/review/skinwallet.com" target="_blank" rel="noopener noreferrer">Trustpilot</a>
-  </div>
+      <a href="https://www.trustpilot.com/review/skinwallet.com" target="_blank" rel="noopener noreferrer">Trustpilot</a>
+    </div>
   )
 }
 

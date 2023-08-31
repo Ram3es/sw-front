@@ -1,10 +1,10 @@
 
 import Dropbox from '../../Content/Dropbox'
 import { SOCIAL_LINKS } from '../../../constants/sidebar-links'
-import { Link } from 'react-router-dom'
 import { formatToDecimal } from '../../../helpers/numberFormater'
 import InputWithErrors from '../../Content/InputWithErrors'
 import { useFundsContext } from '../../../context/FundsContext'
+import Link from 'next/link'
 
 const AddCoupon = () => {
   const {
@@ -45,7 +45,7 @@ const AddCoupon = () => {
               {SOCIAL_LINKS.map((item, index) => (
                 <Link
                   key={index}
-                  to={item.path}
+                  href={item.path}
                   className='hover:text-white duration-200'
                 >
                   {item.icon}

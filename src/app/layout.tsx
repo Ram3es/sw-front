@@ -22,12 +22,12 @@ export default function RootLayout({
         <div className='flex flex-col bg-darkSecondary min-h-screen'>
           <Providers>
             <>
-              <TopBar isHidableOnScroll={true}/>
-            
-              {children}
+            <TopBar isHidableOnScroll={true}/>
+            {children}
             </>
           </Providers>
         </div>
+        <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
       </body>
     </html>
   )

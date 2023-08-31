@@ -1,15 +1,16 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { redirect } from 'next/navigation'
 import { Button } from '../Navigation'
 import { useAppContext } from '../../context/AppContext'
+import { URLS } from '@/constants/common'
+import Link from 'next/link'
 
 export const IsUserLogged = ({ children }: { children: JSX.Element }) => {
-  const navigate = useNavigate()
-  const { pathname } = useLocation()
   const { user } = useAppContext()
-
+  console.log(user);
+  
   return (
     <>
-      {user
+      {user?.id
         ? (
             children
           )
@@ -21,21 +22,16 @@ export const IsUserLogged = ({ children }: { children: JSX.Element }) => {
             </span>
             <span className="text-base font-light">some text</span>
             <div className="flex gap-5">
-              <Button
-                className="flex justify-center relative mr-[20px] w-[158px] h-[40px] uppercase font-semibold text-skinwalletPink border border-skinwalletPink cta-clip-path bg-transparent role-button hover:bg-skinwalletPink hover:text-black"
-                text="log in"
-                onClick={() => {
-                  navigate('/sign-in', { state: { from: pathname } })
-                }}
+              <Link
+              href={URLS.signinPage}
               >
-                <span className="absolute group-hover:hidden -left-[2px] bottom-[1px] w-[10px] rotate-45 border-skinwalletPink border-t-[3px]" />
-              </Button>
-              <Button
-                className="flex relative justify-center w-[158px] h-[40px] uppercase font-semibold text-skinwalletPink border border-skinwalletPink cta-clip-path bg-transparent role-button hover:bg-skinwalletPink hover:text-black"
-                text="sign in"
-              >
-                <span className="absolute group-hover:hidden -left-[2px] bottom-[1px] w-[10px] rotate-45 border-skinwalletPink border-t-[3px]" />
-              </Button>
+                <Button
+                  className="flex justify-center relative mr-[20px] w-[158px] h-[40px] uppercase font-semibold text-skinwalletPink border border-skinwalletPink cta-clip-path bg-transparent role-button hover:bg-skinwalletPink hover:text-black"
+                  text="log in"
+                >
+                  <span className="absolute group-hover:hidden -left-[2px] bottom-[1px] w-[10px] rotate-45 border-skinwalletPink border-t-[3px]" />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

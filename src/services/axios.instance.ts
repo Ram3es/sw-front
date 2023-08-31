@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const API_BASE_URL: string = process.env.PUBLIC_NEXT_API_BASE_URL ?? ''
+export const API_BASE_URL: string = process.env.NEXT_PUBLIC_API_BASE_URL ?? ''
 
 export const GET = async <T>(endpoint: string): Promise<T> =>
   await getAxiosInstance().get(endpoint)

@@ -1,6 +1,6 @@
+import SymbolIcon from '@/components/icons/SymbolIcon'
 import ItemCard from '../../../components/Content/ItemCard'
 import { type TInventoryCard } from '../../../types/Card'
-import SymbolIcon from './SymbolIcon'
 
 const CardsListWrapper = ({
   renderCards,

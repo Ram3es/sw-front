@@ -1,14 +1,14 @@
 import { type ChangeEvent, type FC, useState } from 'react'
 import { Button } from '../../../components/Navigation'
 import Checkbox from '../../../components/Content/Checkbox'
-import { NavLink } from 'react-router-dom'
 import { classNames } from '../../../helpers/className'
-import SymbolIcon from './SymbolIcon'
+import SymbolIcon from '../../../components/icons/SymbolIcon'
 import { type TInventoryCard } from '../../../types/Card'
 import InformationIcon from '../../../components/icons/InformationIcon'
 import ItemSelectedCard from '../../../components/Content/ItemSelectedCard'
 import { format } from '../../../helpers/numberFormater'
 import { useHideOnScroll } from '../../../helpers/useHideOnScroll'
+import Link from 'next/link'
 
 interface ISellBarProps {
   selectedCards: TInventoryCard[]
@@ -128,19 +128,19 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
         </div>
         <p className="text-sm font-normal">
           I agree to the {''}
-          <NavLink
-            to={''}
+          <Link
+            href={''}
             className="text-skinwalletPink underline hover:text-skinwalletPink/90"
           >
             Terms of Service
-          </NavLink>{' '}
+          </Link>{' '}
           and {''}
-          <NavLink
-            to={''}
+          <Link
+            href={''}
             className="text-skinwalletPink underline  hover:text-skinwalletPink/90"
           >
             Privacy Policy
-          </NavLink>
+          </Link>
           .
         </p>
       </div>

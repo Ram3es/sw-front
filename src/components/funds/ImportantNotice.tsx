@@ -1,7 +1,8 @@
 
 import Dropbox from '../Content/Dropbox'
-import { Link } from 'react-router-dom'
+
 import { classNames } from '../../helpers/className'
+import Link from 'next/link'
 
 export const NoticeContent = ({ className }: { className?: string }) => (
     <div className={classNames(' flex-col gap-4 mb-2 max-w-[388px] [&>p>span]:text-white [&>p>span]:font-medium ',
@@ -9,7 +10,7 @@ export const NoticeContent = ({ className }: { className?: string }) => (
       <p>Make sure you have a
         <span> verified PayPal account</span>, otherwise your payment won’t be accepted.
         <Link
-          to={'/'}
+          href={'/'}
           className='text-skinwalletPink font-medium underline hover:no-underline ml-1'
         >
           Read how to perform the verification process.

@@ -2,13 +2,13 @@ import SymbolIcon from '@/components/icons/SymbolIcon'
 import ItemCard from '../../../components/Content/ItemCard'
 import { type TInventoryCard } from '../../../types/Card'
 
-const CardsListWrapper = ({
+export default function CardsListWrapper ({
   renderCards,
   toggleSelect
 }: {
   renderCards: TInventoryCard[]
   toggleSelect: (card: TInventoryCard) => void
-}) => {
+}) {
   return (
     <>
       {renderCards.length
@@ -35,5 +35,3 @@ const CardsListWrapper = ({
     </>
   )
 }
-
-export default CardsListWrapper

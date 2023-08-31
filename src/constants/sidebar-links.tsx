@@ -1,17 +1,19 @@
-import { ReactComponent as DiscordIcon } from '../assets/img/socials/discord-icon.svg'
-import { ReactComponent as FacebookIcon } from '../assets/img/socials/facebook-icon.svg'
-import { ReactComponent as TwitterIcon } from '../assets/img/socials/twitter-icon.svg'
-import { ReactComponent as InstagramIcon } from '../assets/img/socials/instagram-icon.svg'
-import { ReactComponent as YoutubeIcon } from '../assets/img/socials/youtube-icon.svg'
-import { ReactComponent as SteamIcon } from '../assets/img/socials/steam-icon.svg'
-import { ReactComponent as VkIcon } from '../assets/img/socials/vk-icon.svg'
-import { ReactComponent as Airtm } from '../assets/img/payments/airtm.svg'
-import { ReactComponent as Mastercard } from '../assets/img/payments/mastercard.svg'
-import { ReactComponent as Payeer } from '../assets/img/payments/payeer.svg'
-import { ReactComponent as Payoneer } from '../assets/img/payments/payoneer.svg'
-import { ReactComponent as Qiwi } from '../assets/img/payments/qiwi.svg'
-import { ReactComponent as Tipalti } from '../assets/img/payments/tipalti.svg'
-import { ReactComponent as Visa } from '../assets/img/payments/visa.svg'
+import DiscordIcon from '@/components/icons/socials/Discord'
+import FacebookIcon from '@/components/icons/socials/Facebook'
+import TwitterIcon from '@/components/icons/socials/Twitter'
+import InstagramIcon from '@/components/icons/socials/Instagram'
+import YoutubeIcon from '@/components/icons/socials/Youtube'
+import SteamIcon from '@/components/icons/socials/Steam'
+import VkIcon from '@/components/icons/socials/Vk'
+
+import AirtmIcon from '@/components/icons/payments/Airtm'
+import MastercardIcon from '@/components/icons/payments/Mastercard'
+import PayeerIcon from '@/components/icons/payments/Payeer'
+import PayoneerIcon from '@/components/icons/payments/Payoneer'
+import QiwiIcon from '@/components/icons/payments/Qiwi'
+import TipaltiIcon from '@/components/icons/payments/Tipalti'
+import VisaIcon from '@/components/icons/payments/Visa'
+
 
 export const SIDEBAR_LINKS = [
   {
@@ -97,30 +99,30 @@ export const SOCIAL_LINKS = [
 export const PAYMENT_METHODS = [
   {
     title: 'visa',
-    icon: <Visa />
+    icon: <VisaIcon />
   },
   {
     title: 'mastercard',
-    icon: <Mastercard />
+    icon: <MastercardIcon />
   },
   {
     title: 'airtm',
-    icon: <Airtm />
+    icon: <AirtmIcon />
   },
   {
     title: 'payeer',
-    icon: <Payeer />
+    icon: <PayeerIcon />
   },
   {
     title: 'payoneer',
-    icon: <Payoneer />
+    icon: <PayoneerIcon />
   },
   {
     title: 'qiwi',
-    icon: <Qiwi />
+    icon: <QiwiIcon />
   },
   {
     title: 'tipalti',
-    icon: <Tipalti />
+    icon: <TipaltiIcon />
   }
 ]

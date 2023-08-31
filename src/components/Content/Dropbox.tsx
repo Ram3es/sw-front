@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
-import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
-import { classNames } from '../../helpers/className'
+import Chevron from '../icons/ChevronDown'
+import { classNames } from '@/helpers/className'
 
 const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses }: { label: string | ((isOpen?: boolean) => JSX.Element), onChange?: (value: any) => void, children?: JSX.Element, renderSubHeader?: JSX.Element, additionalClasses?: string }) => {
   const [isOpen, setIsOpen] = useState(false)

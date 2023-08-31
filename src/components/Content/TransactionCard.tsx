@@ -1,7 +1,7 @@
 import { useRef, useState, type FC } from 'react'
 import CopyIcon from '../icons/CopyIcon'
 import { classNames } from '../../helpers/className'
-import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
+import Chevron from '../icons/ChevronDown'
 import { format } from '../../helpers/numberFormater'
 import RoundedMark from '../icons/RoundedMark'
 import ReloadIcon from '../icons/ReloadIcon'

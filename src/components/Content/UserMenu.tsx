@@ -9,7 +9,7 @@ import Link from 'next/link'
 const UserMenu = ({ name, balance, wrapperClasses }: { name: string, balance: number, wrapperClasses?: string }) => {
   return (
     <Menu className={wrapperClasses} as="div">
-      <Menu.Button className="relative w-full flex gap-2 items-center text-graySecondary uppercase group hover:text-white button tracking-[1.12px] cursor-pointer">
+      <Menu.Button className="relative w-full flex gap-2 items-center font-Barlow text-graySecondary uppercase group hover:text-white button tracking-[1.12px] cursor-pointer">
         {({ open }) => (
           <>
             <span>{name}</span>
@@ -51,7 +51,7 @@ const UserMenu = ({ name, balance, wrapperClasses }: { name: string, balance: nu
                   }}
                   as={Link}
                   className={
-                    'flex items-center py-1.5 gap-2.5 text-sm text-graySecondary uppercase  hover:text-white button'
+                    'flex items-center py-1.5 gap-2.5 text-sm text-graySecondary uppercase font-Barlow hover:text-white button'
                   }
                 >
                   {item.icon}

@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react'
 
-declare global {
-  interface Window {
-    Trustpilot: any
-  }
-}
-
 const TrustBox = () => {
   const ref = React.useRef<HTMLDivElement>(null)
   useEffect(() => {

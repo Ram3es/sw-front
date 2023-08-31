@@ -1,5 +1,14 @@
+import ProfileArrowsIcon from '@/components/icons/profile/ProfileArrowsIcon'
 import { logoutSteam } from '../services/auth/auth'
-import Image from 'next/image'
+import ProfileCircleDollarIcon from '@/components/icons/profile/ProfileCircleDollarIcon'
+import ProfileCircleMark from '@/components/icons/profile/ProfileCircleMark'
+import ProfileCircleMinus from '@/components/icons/profile/ProfileCircleMinus'
+import ProfileCirclePlus from '@/components/icons/profile/ProfileCirclePlus'
+import ProfileDaggers from '@/components/icons/profile/ProfileDaggers'
+import ProfileGiftIcon from '@/components/icons/profile/ProfileGiftIcon'
+import ProfileSettingIcon from '@/components/icons/profile/ProfileSettingIcon'
+import ProfileSupportIcon from '@/components/icons/profile/ProfileSupportIcon'
+import ProfileTodoList from '@/components/icons/profile/ProfileTodoList'
 
 export interface IUserMenu {
   title: string
@@ -13,88 +22,58 @@ export const USER_MENU: IUserMenu[][] = [
     {
       title: 'add funds',
       path: '/wallet',
-      icon: <Image
-        src="/img/profile/circle-plus.svg"
-        alt="circle-plus"
-      />
+      icon: <ProfileCirclePlus />
     },
     {
       title: 'pay out',
       path: 'panel/deposit/payout',
-      icon: <Image
-        src="/img/profile/circle-minus.svg"
-        alt="circle-minus"
-      />
+      icon: <ProfileCircleMinus />
     },
     {
       title: 'redeem gift card',
       path: '/wallet',
-      icon: <Image
-        src="/img/profile/gift-icon.svg"
-        alt="gift-icon"
-      />
+      icon: <ProfileGiftIcon />
     }
   ],
   [
     {
       title: 'sell items',
       path: '/inventory',
-      icon: <Image
-        src="/img/profile/circle-dollar.svg"
-        alt="circle-dollar"
-      />
+      icon: <ProfileCircleDollarIcon />
     },
     {
       title: 'withdraw items',
       path: '/market/inventory',
-      icon: <Image
-        src="/img/profile/circle-mark.svg"
-        alt="circle-mark"
-      />
+      icon: <ProfileCircleMark />
     },
     {
       title: 'my listed items',
       path: '/market/withdraw',
-      icon: <Image
-        src="/img/profile/todo-list.svg"
-        alt="todo-list"
-      />
+      icon: <ProfileTodoList />
     },
     {
       title: 'redeem item',
       path: '/redeem-item',
-      icon: <Image
-        src="/img/profile/daggers.svg"
-        alt="daggers"
-      />
+      icon: <ProfileDaggers />
     }
   ],
   [
     {
       title: 'transactions',
       path: '/panel/transactions',
-      icon: <Image
-        src="/img/profile/arrows.svg"
-        alt="arrows"
-      />
+      icon: <ProfileArrowsIcon />
     }
   ],
   [
     {
       title: 'support',
       handleFunction: () => {},
-      icon: <Image
-        src="/img/profile/support.svg"
-        alt="support"
-      />
+      icon: <ProfileSupportIcon />
     },
     {
       title: 'settings',
       path: '/settings',
-      icon: <Image
-        src="/img/profile/setting.svg"
-        alt="setting"
-      />
+      icon: <ProfileSettingIcon />
     }
   ],
   [

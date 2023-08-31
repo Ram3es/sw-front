@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const API_BASE_URL: string = process.env.VITE_API_BASE_URL ?? ''
+export const API_BASE_URL: string = process.env.PUBLIC_NEXT_API_BASE_URL ?? ''
 
 export const GET = async <T>(endpoint: string): Promise<T> =>
   await getAxiosInstance().get(endpoint)
@@ -26,7 +26,7 @@ const getAxiosInstance = () => {
     },
     async (error) => {
       if (error?.response?.status === 403) {
-        // TODO
+        // check if window is defined
       }
       return await Promise.reject(error)
     }

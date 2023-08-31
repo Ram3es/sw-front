@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
-import { ReactComponent as Chevron } from '../../assets/chevron-down.svg'
 import { classNames } from '../../helpers/className'
+import ChevronDown from '../icons/ChevronDown'
 
 const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses }: { label: string | ((isOpen?: boolean) => JSX.Element), onChange?: (value: any) => void, children?: JSX.Element, renderSubHeader?: JSX.Element, additionalClasses?: string }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -20,7 +20,7 @@ const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses
                       {isOpen && renderSubHeader}
                     </div>
 
-              <Chevron
+              <ChevronDown
                 className={classNames('fill-current h-[12px] w-[12px]', isOpen ? 'rotate-180' : '')}
               />
             </Listbox.Button>

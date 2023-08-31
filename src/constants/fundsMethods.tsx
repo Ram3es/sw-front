@@ -1,10 +1,14 @@
-import Image from 'next/image'
 import GiftContent from '../components/funds/methods/GiftContent'
 import MethodFee from '../components/funds/methods/MethodFee'
 import { format } from '../helpers/numberFormater'
 import PayPalContent from '../components/funds/methods/PayPalContent'
 import G2AContent from '../components/funds/methods/G2AContent'
 import GiftMethodTitleLabel from '../components/funds/methods/GiftMethodTitle'
+import LogoPayPal from '@/components/icons/logo/LogoPayPal'
+import VisaMastercard from '@/components/icons/logo/VisaMastercard'
+import CryptoIcon from '@/components/icons/wallet/CryptoIcon'
+import LogoBitcoin from '@/components/icons/logo/LogoBitcoin'
+import SkinwaletInstant from '@/components/icons/logo/SkinwaletInstant'
 
 export interface IMethod {
   methodName: string
@@ -28,60 +32,35 @@ export const FUND_METHODS: IMethod[] = [
   {
     methodName: 'paypal',
     title: 'PayPal',
-    logo: <Image
-      width={90}
-      height={22}
-      src="/img/payout/logo-ppcom-white.svg"
-      alt="logo-ppcom-white"
-    />,
+    logo: <LogoPayPal/>,
     content: <PayPalContent/>,
     label: 'powered by conotoxia pay'
   },
   {
     methodName: 'card',
     title: 'card',
-    logo: <Image
-      width={115}
-      height={32}
-      src="/img/funds/visa-mastercard.svg"
-      alt="visa-mastercard"
-    />,
+    logo: <VisaMastercard/>,
     content: <MethodFee topUpFee={`3.1% + $${format(30)}`} />,
     label: 'powered by STRIPE'
   },
   {
     methodName: 'crypto',
     title: 'crypto',
-    logo: <Image
-      width={91}
-      height={28}
-      src="/img/funds/crypto.svg"
-      alt="crypto"
-    />,
+    logo: <CryptoIcon/>,
     content: <MethodFee topUpFee='0%' />,
     summary: 'Aenean rhoncus ligula nibh, efficitur molestie elit aliquam quis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.'
   },
   {
     methodName: 'g2a',
     title: 'G2A Pay',
-    logo: <Image
-      width={97}
-      height={21}
-      src="/img/funds/bitcoin-logo.svg"
-      alt="bitcoin-logo"
-    />,
+    logo: <LogoBitcoin/>,
     content: <G2AContent/>,
     summary: 'To browse all top-up methods, switch locations on G2A Pay website.'
   },
   {
     methodName: 'skinwallet',
     title: 'balance',
-    logo: <Image
-      width={181}
-      height={21}
-      src="/img/funds/skinwallet-instant.svg"
-      alt="skinwallet-instant"
-    />,
+    logo: <SkinwaletInstant />,
     content: <MethodFee topUpFee='0%' />,
     summary: 'Use this method to transfer existing Balance from Skinwallet Instant or to sell virtual items instantly. After confirming this method, you will be redirected to the Skinwallet Instant website where you can finish the transaction.'
   }

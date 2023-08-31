@@ -25,7 +25,7 @@ export interface IFundsContext {
 export const FundsContext = createContext<IFundsContext>({
   amountInputValue: '',
   couponInputValue: '',
-  addFundsStep: 0,
+  addFundsStep: 1,
   selectedMethod: undefined,
   couponInfo: 0,
   errorsState: {},

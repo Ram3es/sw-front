@@ -1,5 +1,4 @@
-
-import { BONUS_POINTS } from '../../../constants/bonus-bar'
+import { BONUS_POINTS } from "@/constants/bonus-bar"
 
 const ProgressScale = () => {
   return (
@@ -22,11 +21,13 @@ const ProgressScale = () => {
 }
 
 const ProgressBonusBar = () => {
+    console.log(BONUS_POINTS);
+    
   return (
         <div className='w-full max-w-[685px] flex justify-between items-center p-4 sm:p-8  font-Barlow bg-darkGrey bonus-wrapper-hexagon'>
             {BONUS_POINTS.map(card => (
                 <div key={card.percent} className='w-fit flex flex-col items-center gap-4 z-[5]'>
-                    <img src={card.icon} alt="level-logo" />
+                    {card.icon}
                     <div className={`px-2.5 py-1.5 flex items-center justify-center ${card.percent < 1 ? 'bg-swViolet' : 'bg-darkGrey is-border'} bonus-percent-hexagon `}>
                         <div className={`w-full h-full center flex items-center justify-center ${card.percent < 1 ? 'text-white' : 'text-graySecondary'}  text-base font-medium z-10`}>
                             +{card.percent}%

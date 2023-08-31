@@ -1,16 +1,16 @@
 "use client"
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import CardsListWrapper from './CardsListWrapper'
 import { TInventoryCard } from '@/types/Card'
 import { useAppContext } from '@/context/AppContext'
 import { useSort } from '@/helpers/useSort'
 import { sortData } from '@/helpers/sortData'
 import { getInventory } from '@/services/inventory/inventory'
 import { IsUserLogged } from '@/components/IsUserLogged/IsUserLogged'
-import { Nav } from '@/components/InstantSellControls/nav'
-import { Filters } from '@/components/InstantSellControls/filters'
-import SellsBar from './SellsBar'
 import { Providers } from '@/providers/providers'
+import CardsListWrapper from './CardsListWrapper'
+import SellsBar from './SellsBar'
+import { Filters } from '@/components/InstantSellControls/filters'
+import { Nav } from '@/components/InstantSellControls/nav'
 
 export default function Deposit() {
   const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])

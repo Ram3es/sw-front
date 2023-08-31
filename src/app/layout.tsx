@@ -21,9 +21,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className='flex flex-col bg-darkSecondary min-h-screen'>
           <Providers>
-            <TopBar isHidableOnScroll={true}/>
+            <>
+              <TopBar isHidableOnScroll={true}/>
+            
+              {children}
+            </>
           </Providers>
-          {children}
         </div>
       </body>
     </html>

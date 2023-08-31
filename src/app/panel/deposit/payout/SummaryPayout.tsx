@@ -1,8 +1,7 @@
-
-import { usePayoutContext } from '../../../context/PayoutContext'
-import { format } from '../../../helpers/numberFormater'
-import { Button } from '../../../components/Navigation'
-import { useNavigate } from 'react-router-dom'
+import { Button } from "@/components/Navigation"
+import { usePayoutContext } from "@/context/PayoutContext"
+import { redirect } from "next/navigation"
+import { format } from '@/helpers/numberFormater'
 
 const SummaryPayout = () => {
   const {
@@ -13,18 +12,19 @@ const SummaryPayout = () => {
     setAmount
   } = usePayoutContext()
 
-  const navigate = useNavigate()
 
   const handleViewMore = () => {
-    navigate('/deposit', { replace: true })
     setPayoutStep('amount')
     setAmount(0)
+    redirect('/deposit')
   }
 
   const getFee = (): number => {
     const currentMethod = Object.keys(methodsState).filter(key => methodsState[key].isSelected).join()
-    const fixedFee = availableMethods[currentMethod].fixedFee
-    return Number(((amount / 100) * fixedFee).toFixed(2))
+    console.log(availableMethods, currentMethod);
+    
+    // const fixedFee = availableMethods[currentMethod].fixedFee
+    return Number(((amount / 100) * 0).toFixed(2))
   }
 
   return (
@@ -49,7 +49,7 @@ const SummaryPayout = () => {
             <div className=' w-full flex flex-col sm:flex-row gap-3  mt-4'>
                 <Button
                     text='view transaction'
-                    onClick={() => { navigate('/panel/transactions') }}
+                    onClick={() => { redirect('/panel/transactions') }}
                     className='w-full sm:w-1/2 bg-swLime hover justify-center text-darkSecondary cta-clip-path uppercase '
                     heightClass='h-10'
                 />

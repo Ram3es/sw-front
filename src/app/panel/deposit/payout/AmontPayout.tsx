@@ -1,15 +1,14 @@
-import logo from '../../../assets/logo-skinwallet.inline.svg'
-import { Button } from '../../../components/Navigation'
-import ExclamationTriangleIcon from '../../../components/icons/ExclamationTriangle'
-import { convertToCents, format } from '../../../helpers/numberFormater'
-import { classNames } from '../../../helpers/className'
+import { useAppContext } from '@/context/AppContext'
 import { useState, type ChangeEvent, useRef, useEffect } from 'react'
-import { usePayoutContext } from '../../../context/PayoutContext'
+import { usePayoutContext } from '@/context/PayoutContext'
+import { useCounter } from '@/helpers/useCounter'
+import { convertToCents, format } from '@/helpers/numberFormater'
+import { classNames } from '@/helpers/className'
+import ExclamationTriangleIcon from '@/components/icons/ExclamationTriangle'
 import PaperPayout from './PaperPayout'
-import PlusIcon from '../../../components/icons/PlusIcon'
-import MinusIcon from '../../../components/icons/MinusIcon'
-import { useCounter } from '../../../helpers/useCounter'
-import { useAppContext } from '../../../context/AppContext'
+import MinusIcon from '@/components/icons/MinusIcon'
+import PlusIcon from '@/components/icons/PlusIcon'
+import { Button } from '@/components/Navigation'
 
 const AmontPayout = () => {
   const { user } = useAppContext()
@@ -47,7 +46,7 @@ const AmontPayout = () => {
   return (
         <div className='flex flex-col items-center mx-auto max-w-[472px]'>
             <div className=' flex items-center gap-2 mb-6'>
-                <img src={logo} alt="logo" />
+                <img src="/logo-skinwallet.inline.svg" alt="logo" />
                 <h2 className='text-24 leading-6 font-medium text-swLime'>Instant</h2>
             </div>
             <div

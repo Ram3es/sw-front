@@ -1,8 +1,8 @@
 import { type FC, type InputHTMLAttributes, useRef, useState } from 'react'
 import { classNames } from '../../helpers/className'
-import { ReactComponent as Mark } from '../../assets/img/funds/mark.svg'
-import { ReactComponent as CloseIcon } from '../../assets/close-icon.svg'
 import ExclamationTriangleIcon from '../icons/ExclamationTriangle'
+import Mark from '../icons/wallet/Mark'
+import CloseIcon from '../icons/CloseIcon'
 
 interface IInputWithErrors extends InputHTMLAttributes<HTMLInputElement> {
   handleChange: (value: string) => void
@@ -19,7 +19,7 @@ const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isLoading, error,
   const [isFocused, setIsFocused] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
-  const handleClear = (e: MouseEvent) => {
+  const handleClear = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
     if (inputRef?.current) {
       inputRef.current.focus()
@@ -61,7 +61,9 @@ const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isLoading, error,
             </div>
           </div>
           <div>
-            <CloseIcon onMouseDown={handleClear} className=' hidden group-focus-within:block w-3 h-[18px] cursor-pointer text-graySecondary hover:text-white duration-200' />
+            <div onMouseDown={handleClear} className='hidden group-focus-within:block cursor-pointer text-graySecondary hover:text-white duration-200'>
+              <CloseIcon className='w-3 h-[18px] ' />
+            </div>
             { !error?.status && !isLoading && value !== '' && <Mark className='block group-focus-within:hidden text-swLime w-4 h-[18px]' />}
           </div>
           {variant === 'coupon' && !isFocused && value === '' &&

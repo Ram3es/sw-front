@@ -1,17 +1,17 @@
-import { ReactComponent as DiscordIcon } from '../assets/img/socials/discord-icon.svg'
-import { ReactComponent as FacebookIcon } from '../assets/img/socials/facebook-icon.svg'
-import { ReactComponent as TwitterIcon } from '../assets/img/socials/twitter-icon.svg'
-import { ReactComponent as InstagramIcon } from '../assets/img/socials/instagram-icon.svg'
-import { ReactComponent as YoutubeIcon } from '../assets/img/socials/youtube-icon.svg'
-import { ReactComponent as SteamIcon } from '../assets/img/socials/steam-icon.svg'
-import { ReactComponent as VkIcon } from '../assets/img/socials/vk-icon.svg'
-import { ReactComponent as Airtm } from '../assets/img/payments/airtm.svg'
-import { ReactComponent as Mastercard } from '../assets/img/payments/mastercard.svg'
-import { ReactComponent as Payeer } from '../assets/img/payments/payeer.svg'
-import { ReactComponent as Payoneer } from '../assets/img/payments/payoneer.svg'
-import { ReactComponent as Qiwi } from '../assets/img/payments/qiwi.svg'
-import { ReactComponent as Tipalti } from '../assets/img/payments/tipalti.svg'
-import { ReactComponent as Visa } from '../assets/img/payments/visa.svg'
+import DiscordIcon from '@/components/icons/socials/DiscordIcon'
+import FacebookIcon from '@/components/icons/socials/FacebookIcon'
+import TwitterIcon from '@/components/icons/socials/TwitterIcon'
+import InstagramIcon from '@/components/icons/socials/InstagramIcon'
+import YoutubeIcon from '@/components/icons/socials/YoutubeIcon'
+import SteamIcon from '@/components/icons/SteamIcon'
+import VkIcon from '@/components/icons/socials/VkIcon'
+import Airtm from '@/components/icons/socials/Airtm'
+import Mastercard from '@/components/icons/payments/Mastercard'
+import Payeer from '@/components/icons/payments/Payeer'
+import Payoneer from '@/components/icons/payments/Payoneer'
+import Qiwi from '@/components/icons/payments/Qiwi'
+import Visa from '@/components/icons/payments/Visa'
+import Tipalti from '@/components/icons/payments/Taipalti'
 
 export const SIDEBAR_LINKS = [
   {
@@ -85,7 +85,7 @@ export const SOCIAL_LINKS = [
   {
     title: 'steam',
     path: '/',
-    icon: <SteamIcon />
+    icon: <SteamIcon className='w-[18px] h-auto'/>
   },
   {
     title: 'vk',

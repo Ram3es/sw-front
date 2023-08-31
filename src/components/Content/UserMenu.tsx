@@ -6,7 +6,6 @@ import { format } from '../../helpers/numberFormater'
 import ChevronDown from '../icons/ChevronDown'
 import Link from 'next/link'
 
-
 const UserMenu = ({ name, balance, wrapperClasses }: { name: string, balance: number, wrapperClasses?: string }) => {
   return (
     <Menu className={wrapperClasses} as="div">

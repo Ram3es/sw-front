@@ -1,6 +1,6 @@
 'use client'
 import Bar from '../../components/Bar/Bar'
-import { NavLink } from 'react-router-dom'
+import Link  from 'next/link'
 import Readme from '../../components/funds/readme/Readme'
 import TrustBox from '../../components/Content/TrustBox'
 import { useFundsContext } from '../../context/FundsContext'
@@ -43,12 +43,12 @@ export default function Wallet() {
       <div className='w-full pt-1'>
         <TrustBox />
       </div>
-      <NavLink
-        to={'/'}
+      <Link
+        href={'/'}
         className='flex shrink-0 items-center gap-2.5 sm:ml-auto text-sm text-graySecondary uppercase  hover:text-white button'>
         <GiftIcon />
         <span className='uppercase tracking-[1.12px]' >redeem gift card</span>
-      </NavLink>
+      </Link>
     </header>
     {addFundsStep === 5
       ? <Summary />
@@ -60,12 +60,12 @@ export default function Wallet() {
                 <p>Bear in mind that every top-up attempt counts to the monthly top-up limit.</p>
                 <p>Your top-up may require an additional KYC and/or AML verification. In such case, please follow the instructions displayed on the screen and wait for the verification process to finalize. The verification may take up to few hours.If, for any reason, your KYC procedure fails, your balance will be refunded.If, for any reason, your KYC procedure fails, your balance will be refunded.</p>
                 <p>If, for any reason, your KYC procedure fails, your balance will be refunded.</p>
-                <NavLink
-                  to={'/terms-of-service'}
+                <Link
+                  href={'/terms-of-service'}
                   className='underline hover:no-underline'
                 >
                     Read more about Wallet in our Terms of Service
-                </NavLink>
+                </Link>
               </>
             </Readme>
             {addFundsStep === 1

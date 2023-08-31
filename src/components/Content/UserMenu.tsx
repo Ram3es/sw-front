@@ -2,9 +2,10 @@ import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { classNames } from '../../helpers/className'
 import { type IUserMenu, USER_MENU } from '../../constants/user-menu-tabs'
-import { NavLink } from 'react-router-dom'
 import { format } from '../../helpers/numberFormater'
-import Image from 'next/image'
+import ChevronDown from '../icons/ChevronDown'
+import Link from 'next/link'
+
 
 const UserMenu = ({ name, balance, wrapperClasses }: { name: string, balance: number, wrapperClasses?: string }) => {
   return (
@@ -13,11 +14,7 @@ const UserMenu = ({ name, balance, wrapperClasses }: { name: string, balance: nu
         {({ open }) => (
           <>
             <span>{name}</span>
-            <Image
-              width={12}
-              height={12}
-              src="/chevron-down.svg"
-              alt="chevron-down"
+            <ChevronDown
               className={classNames(
                 'fill-current h-[12px] w-[12px]',
                 open ? 'rotate-180' : ''
@@ -46,14 +43,14 @@ const UserMenu = ({ name, balance, wrapperClasses }: { name: string, balance: nu
               {action.map((item: IUserMenu) => (
                 <Menu.Item
                   key={item.title}
-                  to={item.path ?? '/'}
+                  href={item.path ?? '/'}
                   onClick={(e) => {
                     if (item.handleFunction) {
                       e.preventDefault()
                       item.handleFunction()
                     }
                   }}
-                  as={NavLink}
+                  as={Link}
                   className={
                     'flex items-center py-1.5 gap-2.5 text-sm text-graySecondary uppercase  hover:text-white button'
                   }

@@ -1,17 +1,19 @@
-import DiscordIcon from '@/components/icons/socials/DiscordIcon'
-import FacebookIcon from '@/components/icons/socials/FacebookIcon'
-import TwitterIcon from '@/components/icons/socials/TwitterIcon'
-import InstagramIcon from '@/components/icons/socials/InstagramIcon'
-import YoutubeIcon from '@/components/icons/socials/YoutubeIcon'
-import SteamIcon from '@/components/icons/SteamIcon'
-import VkIcon from '@/components/icons/socials/VkIcon'
-import Airtm from '@/components/icons/socials/Airtm'
-import Mastercard from '@/components/icons/payments/Mastercard'
-import Payeer from '@/components/icons/payments/Payeer'
-import Payoneer from '@/components/icons/payments/Payoneer'
-import Qiwi from '@/components/icons/payments/Qiwi'
-import Visa from '@/components/icons/payments/Visa'
-import Tipalti from '@/components/icons/payments/Taipalti'
+import DiscordIcon from '@/components/icons/socials/Discord'
+import FacebookIcon from '@/components/icons/socials/Facebook'
+import TwitterIcon from '@/components/icons/socials/Twitter'
+import InstagramIcon from '@/components/icons/socials/Instagram'
+import YoutubeIcon from '@/components/icons/socials/Youtube'
+import SteamIcon from '@/components/icons/socials/Steam'
+import VkIcon from '@/components/icons/socials/Vk'
+
+import AirtmIcon from '@/components/icons/payments/Airtm'
+import MastercardIcon from '@/components/icons/payments/Mastercard'
+import PayeerIcon from '@/components/icons/payments/Payeer'
+import PayoneerIcon from '@/components/icons/payments/Payoneer'
+import QiwiIcon from '@/components/icons/payments/Qiwi'
+import TipaltiIcon from '@/components/icons/payments/Tipalti'
+import VisaIcon from '@/components/icons/payments/Visa'
+
 
 export const SIDEBAR_LINKS = [
   {
@@ -97,30 +99,30 @@ export const SOCIAL_LINKS = [
 export const PAYMENT_METHODS = [
   {
     title: 'visa',
-    icon: <Visa />
+    icon: <VisaIcon />
   },
   {
     title: 'mastercard',
-    icon: <Mastercard />
+    icon: <MastercardIcon />
   },
   {
     title: 'airtm',
-    icon: <Airtm />
+    icon: <AirtmIcon />
   },
   {
     title: 'payeer',
-    icon: <Payeer />
+    icon: <PayeerIcon />
   },
   {
     title: 'payoneer',
-    icon: <Payoneer />
+    icon: <PayoneerIcon />
   },
   {
     title: 'qiwi',
-    icon: <Qiwi />
+    icon: <QiwiIcon />
   },
   {
     title: 'tipalti',
-    icon: <Tipalti />
+    icon: <TipaltiIcon />
   }
 ]

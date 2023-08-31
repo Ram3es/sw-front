@@ -1,7 +1,7 @@
 import Dinero, { } from 'dinero.js'
 
 export const format = (num: number): string => {
-  const balance = Dinero({ amount: num })
+  const balance = Dinero({ amount: num ?? 0 })
   return balance.toFormat('0,0.00')
 }
 

@@ -1,6 +1,7 @@
-import { Button } from '../../../components/Navigation'
-import { ReactComponent as Chevron } from '../../../assets/chevron-down.svg'
-import Checkbox from '../../../components/Content/Checkbox'
+import { Button } from '../Navigation'
+import Checkbox from '../Content/Checkbox'
+import ChevronDown from '../icons/ChevronDown'
+
 
 function classNames (...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -23,7 +24,7 @@ export const Filters = ({ onSelectAll, toggleSort, isAsc, isSelectedAll, onRealo
         onClick={toggleSort}
         className=' text-graySecondary w-max uppercase text-xs sm:text-sm hover:text-white '
         icon={
-          <Chevron
+          <ChevronDown
             className={classNames(
               'fill-current h-[12px] w-[12px]',
               isAsc ? 'rotate-180' : ''

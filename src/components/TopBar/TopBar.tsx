@@ -1,6 +1,6 @@
 "use client"
+import React, { ReactComponentElement } from 'react'
 import Image from 'next/image'
-
 import { StoreIcon } from '../StoreIcon/store'
 import { USDCircleIcon } from '../USDIcon/usd-circle'
 import { CartIcon } from '../CartIcon/cart'
@@ -18,6 +18,9 @@ import { format } from '../../helpers/numberFormater'
 import SearchModal from '../Content/SearcModal'
 import { gamesLinks } from '../../constants/games'
 import MobileNavBar from '../Navigation/MobileNavBar'
+import LogoSmall from '../icons/top-bar/LogoSmall'
+import LogoSkinwallet from '../icons/top-bar/LogoSkinwallet'
+import SearchIcon from '../icons/top-bar/SearchIcon'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -57,12 +60,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
       >
         <nav className="flex items-center">
           <a className='hidden lg:block' href='/'>
-            <Image
-              width={26}
-              height={140}
-              src="/logo-skinwallet.inline.svg"
-              alt="logo-skinwallet"
-            />
+            <LogoSkinwallet />
           </a>
           <div className='flex lg:hidden items-center gap-3'>
             <div onClick={() => { setIsOpenNavBar(boolean => !boolean) }} className='cursor-pointer'>
@@ -81,12 +79,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
               </svg>)}
             </div>
             <a href='/'>
-              <Image
-                width={27}
-                height={26}
-                src="/logo-small.svg"
-                alt="logo-small"
-              />
+              <LogoSmall />
             </a>
           </div>
           <NavDropdown wrapperClasses='hidden lg:flex' title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
@@ -97,7 +90,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                   className="flex flex-col gap-3 w-[178px] cursor-pointer"
                   onClick={() => { updateGameId(game.id) }}
                 >
-                  <div className={ classNames('relative w-full', gameId === game.id ? 'border border-swViolet' : '')}>
+                  <div className={classNames('relative w-full', gameId === game.id ? 'border border-swViolet' : '')}>
                     {game.bg
                       ? <Image
                       width={176}
@@ -190,13 +183,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             className="hidden lg:flex uppercase font-medium text-skinwallerGray hover:text-white"
             text="search"
             icon={
-              <Image
-                src="/search-icon.svg"
-                alt="search-icon"
-                width={21}
-                height={21}
-                className={classNames('fill-skinwallerGray h-[12px] w-[12px]')}
-              />
+              <SearchIcon className={classNames('fill-current h-[12px] w-[12px]')}/>
             }
             onClick={changeSearchState}
           />

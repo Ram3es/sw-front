@@ -26,7 +26,7 @@ const getAxiosInstance = () => {
     },
     async (error) => {
       if (error?.response?.status === 403) {
-        // TODO
+        // check if window is defined
       }
       return await Promise.reject(error)
     }

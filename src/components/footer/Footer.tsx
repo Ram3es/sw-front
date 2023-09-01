@@ -1,8 +1,8 @@
 import { FOOTER_LINKS } from '../../constants/footer'
-import { Link, NavLink } from 'react-router-dom'
 import { PAYMENT_METHODS, SOCIAL_LINKS } from '../../constants/sidebar-links'
 import LanguagePicker from '../Content/LanguagePicker'
 import { classNames } from '../../helpers/className'
+import Link from 'next/link'
 
 const Footer = () => {
   return (
@@ -21,13 +21,13 @@ const Footer = () => {
                       idx % 2 !== 0 ? 'text-end md:text-start' : ''
                     )}>
                      {links.map((link) =>
-                        <NavLink
+                        <Link
                           key={link.title}
-                          to={link.path}
+                          href={link.path}
                           className=' w-max text-sm tracking-[1.12px] hover:text-white duration-200'
                           >
                           {link.title}
-                        </NavLink>)}
+                        </Link>)}
                       </div>)}
                     </div>
                     <div className='flex flex-wrap mt-20 gap-4 items-center'>
@@ -40,7 +40,7 @@ const Footer = () => {
                       {SOCIAL_LINKS.map(social =>
                         <Link
                             key={social.title}
-                            to={social.path}
+                            href={social.path}
                             className='hover:text-white duration-200'
                         >
                             {social.icon}

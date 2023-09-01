@@ -20,12 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className='flex flex-col bg-darkSecondary min-h-screen'>
-          <Providers>
-            <>
-            <TopBar isHidableOnScroll={true}/>
-            {children}
-            </>
-          </Providers>
+          {children}
         </div>
         <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
       </body>

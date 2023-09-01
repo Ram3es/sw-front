@@ -18,6 +18,7 @@ const config: Config = {
         'dark-14': '#141415',
         graySecondary: "#A4A4A4",
         darkBlue: '#2b475e',
+        'blue-5d': '#5D4DFF',
         skinwalletPink: '#CFBBFE',
         swViolet: '#6842FF',
         swLime: '#18E86B',

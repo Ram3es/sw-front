@@ -17,7 +17,7 @@ export const AppProvider = ({ children }: IProps) => {
   const getUserApp = useCallback(async () => {
     try {
       const data = await getUser()
-      setUser({ id: data.steamId, username: data.steamUsername, balance: Number(data.balance) })
+      setUser({ id: data.steamId, username: data.steamUsername, balance: Number(data.balance), avatar: data.avatarUrl })
     } catch (error) {
       console.log(error, 'app provider')
     }

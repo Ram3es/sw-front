@@ -5,9 +5,10 @@ import { BaseLink } from '@/components/Navigation';
 
 const NavBar = () => {
     const pathname = usePathname()
+    const isVisible = ['/settings','/settings/instant'].includes(pathname)
 
   return (
-    <div className='flex items-center w-full h-max pt-5 border-b border-darkGrey'>
+    <div className={`${isVisible ? 'flex' : 'hidden'}  items-center w-full h-max pt-5 border-b border-darkGrey`}>
       <BaseLink
         href='/settings'
         text='general'

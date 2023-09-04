@@ -10,6 +10,7 @@ import UnlinkIcon from '@/components/icons/settings/UnlinkIcon'
 import ExternalLink from '@/components/icons/settings/ExternalLink'
 import SuccessLabel from '@/components/Content/SuccessLabel'
 import { useAppContext } from '@/context/AppContext'
+import Link from 'next/link'
 
 const SteamSettings = () => {
   const { user } = useAppContext()
@@ -48,7 +49,9 @@ const SteamSettings = () => {
               />
               <p>Trade URL is required to receive trade offers on your Steam Account for selling and withdrawing items.</p>
               <div className=' w-max flex items-center gap-2 hover:text-white cursor-pointer duration-200'>
-               <EditPencil className='w-[18px] h-[18px] ' />
+               <Link href='/settings/trade-url'>
+                  <EditPencil className='w-[18px] h-[18px] ' />
+               </Link>
                <span className='tracking-[1.12px] uppercase'>add trade url</span>
               </div>
             </div>
@@ -73,7 +76,7 @@ const SteamSettings = () => {
               <p>In order for us to trade with you without restrictions, it is required that your Steam Guard Mobile Authenticator is enabled on your Steam account for at least 15 days. Before that we unfortunately cannot send you a trade offer, otherwise the trade will be withheld for 7 days by Steam.</p>
               <div className=' w-max flex items-center mb-6 gap-2 hover:text-white cursor-pointer duration-200'>
                <span className='tracking-[1.12px] uppercase'>set up steam guard</span>
-               <ExternalLink className='w-[18px] h-[18px] ' />
+               <ExternalLink  className='w-[18px] h-[18px] ' />
               </div>
             </div>
             )

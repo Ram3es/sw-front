@@ -1,11 +1,11 @@
 import TopBar from '@/components/TopBar/TopBar'
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Barlow } from 'next/font/google'
 import { Providers } from '../providers/providers'
 import Script from 'next/script'
 
-const inter = Inter({ subsets: ['latin'] })
+const barlow = Barlow({ subsets: ['latin'], weight: ['500'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={barlow.className}>
         <div className='flex flex-col bg-darkSecondary min-h-screen'>
           <Providers>
             <>

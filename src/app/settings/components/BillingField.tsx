@@ -5,12 +5,12 @@ import { useRouter } from 'next/navigation'
 
 const BillingField = () => {
   const { push } = useRouter()
-  const data = false
+  const data = true
   return (
         <SettingField
           title='billing'
           icon={<InformationIcon iconClasses='w-[14px] h-auto' />}
-          editableFn={() => { push('/settings/billing') }}
+          editableFn={() => { push('/settings/billing-info') }}
          >
           {data
             ? (

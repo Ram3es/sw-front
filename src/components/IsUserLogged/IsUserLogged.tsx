@@ -1,6 +1,6 @@
-import { redirect } from 'next/navigation'
+'use client'
 import { Button } from '../Navigation'
-import { useAppContext } from '../../context/AppContext'
+import { useAppContext } from '@/context/AppContext'
 import { URLS } from '@/constants/common'
 import Link from 'next/link'
 

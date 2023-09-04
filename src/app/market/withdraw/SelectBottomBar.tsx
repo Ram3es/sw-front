@@ -1,5 +1,5 @@
-import { Button } from '../../components/Navigation'
-import { classNames } from '../../helpers/className'
+import { Button } from '@/components/Navigation'
+import { classNames } from '@/helpers/className'
 
 const SelectBottomBar = ({ selectedItemsQty, onShowSelected, onCancel, onWithdraw }: { selectedItemsQty: number, onShowSelected: () => void, onCancel: () => void, onWithdraw: () => void }) => {
   return (

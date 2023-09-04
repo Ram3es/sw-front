@@ -87,7 +87,7 @@ export const SOCIAL_LINKS = [
   {
     title: 'steam',
     path: '/',
-    icon: <SteamIcon className='w-[18px] h-auto'/>
+    icon: <SteamIcon />
   },
   {
     title: 'vk',

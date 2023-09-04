@@ -3,19 +3,24 @@ import Link from "next/link"
 import { redirect } from 'next/navigation';
 import { URLS } from "@/constants/common";
 import { useEffect, useState } from "react";
-import { useAppContext } from '../../context/AppContext'
+import { useAppContext } from '@/context/AppContext'
 
 export default function SuccessAuth () {
   // if continueUrl provided save continueUrl to localStorage
-  const { user } = useAppContext()
+  const { user, userUpdate } = useAppContext()
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, [])
 
   if (!user?.username) {
     // redirect to home page if user is logged in
     return redirect(URLS.signinPage)
   }
 
-  if (typeof window !== 'undefined') {
-    const continueUrl = window.localStorage.getItem('continueUrl') || URLS.loggedInRedirect; 
+  if (isClient) {
+    const continueUrl = window.localStorage.getItem('continueUrl') || URLS.loggedInRedirect;
     window.localStorage.removeItem('continueUrl');
     return redirect(continueUrl);
   }

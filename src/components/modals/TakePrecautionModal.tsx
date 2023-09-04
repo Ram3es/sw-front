@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import ModalWrapper from '../../containers/Modal'
 import PopupWrapper from '../../containers/PopupWrapper'
 import ErrorLabelRounded from '../funds/ErrorLabelRounded'
@@ -28,20 +28,20 @@ const TakePrecautionModal = ({ submitFn }: { submitFn: () => void }) => {
               </ul>
               <span className='font-normal'>If you suspect that your account is compromised,
                 <Link
-                  to={'/'}
+                  href={'/'}
                   className='underline hover:no-underline ml-0.5'
                 >
                   clear your API
                 </Link>,
                 <Link
-                  to={'/'}
+                  href={'/'}
                   className='underline hover:no-underline mx-0.5'
                 >
                   change your Steam password
                 </Link>
                  and
                 <Link
-                  to={'/'}
+                  href={'/'}
                   className='underline hover:no-underline mx-0.5'
                 >
                 deauthorize other devices

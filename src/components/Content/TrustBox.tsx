@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react'
-
+import Link from 'next/link'
 declare global {
   interface Window {
     Trustpilot: any
@@ -27,7 +27,7 @@ const TrustBox = () => {
       data-style-width="100%"
       data-theme="dark"
       >
-      <a href="https://www.trustpilot.com/review/skinwallet.com" target="_blank" rel="noopener noreferrer">Trustpilot</a>
+      <Link href="https://www.trustpilot.com/review/skinwallet.com" target="_blank" rel="noopener noreferrer">Trustpilot</Link>
     </div>
   )
 }

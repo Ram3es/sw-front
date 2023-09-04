@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import Dropbox from '../../components/Content/Dropbox'
-import TwoPointsSliderWithChart from '../../components/slider/TwoPointsSliderWithChart'
-import SidebarLinks from '../../components/Navigation/SidebarLinks'
-import RadioGroup from '../../components/Content/RadioGroup'
-import { useAppContext } from '../../context/AppContext'
-import { ESteamAppId } from '../../types/Inventory'
-import InputWithCheckbox from '../../components/Content/InputWithCheckbox'
+import Dropbox from '@/components/Content/Dropbox'
+import TwoPointsSliderWithChart from '@/components/slider/TwoPointsSliderWithChart'
+import SidebarLinks from '@/components/Navigation/SidebarLinks'
+import RadioGroup from '@/components/Content/RadioGroup'
+import { useAppContext } from '@/context/AppContext'
+import { ESteamAppId } from '@/types/Inventory'
+import InputWithCheckbox from '@/components/Content/InputWithCheckbox'
 
 const maxPrice = 1000
 

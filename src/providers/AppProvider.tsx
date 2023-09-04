@@ -1,3 +1,4 @@
+'use client'
 import { useCallback, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { type IUser } from '../types/User'
@@ -17,6 +18,7 @@ export const AppProvider = ({ children }: IProps) => {
   const getUserApp = useCallback(async () => {
     try {
       const data = await getUser()
+      console.log(data, 'app provider user data')
       setUser({ id: data.steamId, username: data.steamUsername, balance: Number(data.balance) })
     } catch (error) {
       console.log(error, 'app provider')

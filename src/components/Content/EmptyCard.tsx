@@ -1,6 +1,6 @@
 
-import { Link } from 'react-router-dom'
-import { ReactComponent as ArrowRight } from '../../assets/img/market/arrow-right.svg'
+import Link from 'next/link'
+import MarketArrowRightIcon from '../icons/market/MarketArrowRightIcon'
 
 const EmptyCard = () => {
   return (
@@ -11,10 +11,10 @@ const EmptyCard = () => {
           <span className={'absolute border-t border-darkGrey group-hover:hidden -right-[2px] top-[3px] w-[10px] rotate-45'} />
           <span className={'absolute border-t border-darkGrey group-hover:hidden -left-[2px] bottom-[1px] w-[10px] rotate-45'} />
         </div>
-        <Link to={'/'} className=' relative h-full flex justify-center group-hover:h-[calc(100%_+_40px)] hover:bg-darkGrey text-white  cta-clip-path'>
+        <Link href={'/'} className=' relative h-full flex justify-center group-hover:h-[calc(100%_+_40px)] hover:bg-darkGrey text-white  cta-clip-path'>
            <div className=' absolute top-[180px] flex items-center gap-2 text-graySecondary group-hover:text-white '>
              <span className='tracking-[1.12px] uppercase'>see all</span>
-             <ArrowRight />
+             <MarketArrowRightIcon />
            </div>
         </Link>
 

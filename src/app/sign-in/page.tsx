@@ -3,13 +3,13 @@ import Link from "next/link"
 import SteamIcon from '../../components/icons/SteamIcon'
 import { useAppContext } from '../../context/AppContext'
 import { redirect } from 'next/navigation';
-import { NextPageContext } from "next"
 import { URLS } from "@/constants/common";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 
-export default function Signin(ctx: NextPageContext & { searchParams: any }) {
-  const { searchParams } = ctx;
-  const continueUrl = searchParams?.continueUrl || '/'
+export default function Signin() {
+  const searchParams = useSearchParams()
+  const continueUrl = searchParams.get('continueUrl')
   const { user } = useAppContext()
   const [isClient, setIsClient] = useState(false);
 

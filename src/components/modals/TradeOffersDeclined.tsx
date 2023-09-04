@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import ErrorLabelRounded from '../funds/ErrorLabelRounded'
 import ModalWrapper from '../../containers/Modal'
 import PopupWrapper from '../../containers/PopupWrapper'
 import { Button } from '../Navigation'
-import { ReactComponent as ReloadIcon } from '../../assets/reload-icon.svg'
+import ReloadIcon from '../icons/ReloadIcon'
 
 interface ITradeModal {
   submitFn: () => void
@@ -26,26 +26,26 @@ const TradeOffersDeclinedModal = ({ submitFn, cancelFn }: ITradeModal) => {
             </ul>
             <span className='font-normal'>Change your
                 <Link
-                  to={'/'}
+                  href={'/'}
                   className='underline hover:no-underline ml-0.5'
                 >
                   Steam Password
                 </Link>,
                 <Link
-                  to={'/'}
+                  href={'/'}
                   className='underline hover:no-underline mx-0.5'
                 >
                    create a new trade URL
                 </Link>,
                 <Link
-                  to={'/'}
+                  href={'/'}
                   className='underline hover:no-underline mx-0.5'
                 >
                  deauthorize other devices
                 </Link>
                 and
                 <Link
-                  to={'/'}
+                  href={'/'}
                   className='underline hover:no-underline mx-0.5'
                 >
                  and revoke Steam API key

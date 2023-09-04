@@ -1,3 +1,4 @@
+'use client'
 import { useCallback, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { type IUser } from '../types/User'

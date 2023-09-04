@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import Link from 'next/link'
 import {
   PAYMENT_METHODS,
   SIDEBAR_LINKS,
@@ -29,7 +29,7 @@ const SidebarLinks = () => {
           </div>
           <div className="flex gap-6 flex-wrap text-graySecondary">
             {SOCIAL_LINKS.map((item, index) => (
-              <Link key={index} to={item.path}>
+              <Link key={index} href={item.path}>
                 {item.icon}
               </Link>
             ))}

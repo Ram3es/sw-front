@@ -7,11 +7,11 @@ export default function MarketLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <Providers>
+    <Providers>
+      <>
         <TopBar isHidableOnScroll={true} />
-      </Providers>
-      {children}
-    </>
+        {children}
+      </>
+    </Providers>
   );
 }

@@ -21,6 +21,7 @@ import MobileNavBar from '../Navigation/MobileNavBar'
 import LogoSmall from '../icons/top-bar/LogoSmall'
 import LogoSkinwallet from '../icons/top-bar/LogoSkinwallet'
 import SearchIcon from '../icons/top-bar/SearchIcon'
+import Link from 'next/link'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -59,9 +60,9 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
         )}
       >
         <nav className="flex items-center">
-          <a className='hidden lg:block' href='/'>
+          <Link className='hidden lg:block' href='/'>
             <LogoSkinwallet />
-          </a>
+          </Link>
           <div className='flex lg:hidden items-center gap-3'>
             <div onClick={() => { setIsOpenNavBar(boolean => !boolean) }} className='cursor-pointer'>
               {isOpenNavBar
@@ -78,9 +79,9 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 <path d="M3.47119 5.80446V4.76099H21.2103V5.80446H3.47119ZM21.2103 9.97838V11.0219H3.47119V9.97838H21.2103ZM3.47119 15.1958H21.2103V16.2392H3.47119V15.1958Z" fill="white"/>
               </svg>)}
             </div>
-            <a href='/'>
+            <Link href='/'>
               <LogoSmall />
-            </a>
+            </Link>
           </div>
           <NavDropdown wrapperClasses='hidden lg:flex' title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
             <div className="flex w-full mx-10 gap-10 flex-wrap">

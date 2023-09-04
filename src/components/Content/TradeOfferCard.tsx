@@ -7,7 +7,7 @@ import { format as formatDate } from 'date-fns'
 import ItemSelectedCard from './ItemSelectedCard'
 import RoundedMark from '../icons/RoundedMark'
 import ExclamationTriangleIcon from '../icons/ExclamationTriangle'
-import { ReactComponent as PaperPlane } from '../../assets/paper-plane.svg'
+import PaperPlane from '@/components/icons/PaperPlane'
 import { useEffect, useRef, useState } from 'react'
 
 interface ITradeOfferCardProps {

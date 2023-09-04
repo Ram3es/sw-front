@@ -3,7 +3,7 @@ import ErrorLabelRounded from '../funds/ErrorLabelRounded'
 import ModalWrapper from '../../containers/Modal'
 import PopupWrapper from '../../containers/PopupWrapper'
 import { Button } from '../Navigation'
-import { ReactComponent as ReloadIcon } from '../../assets/reload-icon.svg'
+import ReloadIcon from '../icons/ReloadIcon'
 
 interface ITradeModal {
   submitFn: () => void

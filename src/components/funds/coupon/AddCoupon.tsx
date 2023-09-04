@@ -2,9 +2,10 @@
 import Dropbox from '../../Content/Dropbox'
 import { SOCIAL_LINKS } from '../../../constants/sidebar-links'
 import { formatToDecimal } from '../../../helpers/numberFormater'
-import InputWithErrors from '../../Content/InputWithErrors'
 import { useFundsContext } from '../../../context/FundsContext'
 import Link from 'next/link'
+import Mark from '@/components/icons/wallet/Mark'
+import InputWithErrors from '@/components/Content/InputWithErrors'
 
 const AddCoupon = () => {
   const {
@@ -32,6 +33,7 @@ const AddCoupon = () => {
         errorBorder='border-swRed'
         error={errorsState.wrongCoupon}
         isLoading={isLoading}
+        successIcon={<Mark className='w-4 h-[18px] text-swLime' />}
         variant='coupon'
         />
       <div className='w-full flex flex-col sm:flex-row gap-6 pb-6 border-b border-darkGrey'>

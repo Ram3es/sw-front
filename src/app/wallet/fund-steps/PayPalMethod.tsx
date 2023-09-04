@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 import { format } from '../../../helpers/numberFormater'
 import InformationIcon from '../../../components/icons/InformationIcon'
-import InputWithErrors from '../../../components/Content/InputWithErrors'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
 import AddCoupon from '../../../components/funds/coupon/AddCoupon'
@@ -10,6 +9,8 @@ import { useFundsContext } from '../../../context/FundsContext'
 import ErrorLabelRounded from '../../../components/funds/ErrorLabelRounded'
 import LogoPayPal from '@/components/icons/logo/LogoPayPal'
 import ArrowRight from '@/components/icons/ArrowRight'
+import InputWithErrors from '@/components/Content/InputWithErrors'
+import Mark from '@/components/icons/wallet/Mark'
 
 const PayPalMethod = () => {
   const {
@@ -70,9 +71,11 @@ const PayPalMethod = () => {
               handleChange={(value: string) => { setAmountInputValue(value) }}
               onClear={() => { setAmountInputValue('') } }
               handleBlur={handleBlurInputAmount}
+              successIcon={<Mark className='w-4 h-[18px] text-swLime' />}
               error={Object.values(errorsState).filter(obj => obj.status && obj.relative === 'amount')[0]}
               errorBorder='border-swOrange'
               autoFocus={!errorsState.excededMonthly.status}
+              variant='amount'
              />
              </div>
              {errorsState.excededMonthly.status

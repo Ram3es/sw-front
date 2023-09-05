@@ -66,30 +66,33 @@ export const FUND_METHODS: IMethod[] = [
   }
 ]
 
-export type TErrors = Record<string, { status: boolean, message?: string, errorClass?: string, relative?: string }>
+export type TErrors = Record<string, { status: boolean, message?: string, errorClass?: string, relative?: string, msgWithIcon?:boolean }>
 
 export const ERRORS: TErrors = {
   excededAmount: {
     status: false,
     errorClass: 'flex items gap-2 center text-swOrange text-sm font-normal leading-[14px]',
     message: 'The amount you have entered exceeded the monthly limit. We set the maximum value for you.',
-    relative: 'amount'
+    relative: 'amount',
+    msgWithIcon: true
   },
   lowAmount: {
     status: false,
     errorClass: 'flex items gap-2 center text-swOrange text-sm font-normal leading-[14px]',
     message: 'The amount you have entered is below the minimum. We set the minimum value for you.',
-    relative: 'amount'
+    relative: 'amount',
+    msgWithIcon: true
   },
   limit: {
     status: false,
-    relative: 'amount'
+    relative: 'amount',
   },
   wrongCoupon: {
     status: false,
     errorClass: 'flex items gap-2 center text-swRed text-sm font-normal leading-[14px]',
     message: 'Invalid or wrong code. Please check the spelling or use a different code.',
-    relative: 'coupon'
+    relative: 'coupon',
+    msgWithIcon: true
   },
   excededMonthly: {
     status: false,

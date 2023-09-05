@@ -1,12 +1,7 @@
 'use client'
 
-import React, { useEffect } from 'react'
 import Link from 'next/link'
-declare global {
-  interface Window {
-    Trustpilot: any
-  }
-}
+import React, { useEffect } from 'react'
 
 const TrustBox = () => {
   const ref = React.useRef<HTMLDivElement>(null)

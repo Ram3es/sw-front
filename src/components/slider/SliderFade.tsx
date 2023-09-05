@@ -1,11 +1,12 @@
 'use client'
 import Slider from 'react-slick'
 import { FADE_SLIDER_SETTINGS } from '../../constants/slider-settings'
-import TrustBox from '../Content/TrustBox'
 import ProfileSupportIcon from '../icons/profile/ProfileSupportIcon'
 import MarketShieldMarkIcon from '../icons/market/MarketShieldMarkIcon'
 import ProfileGiftIcon from '../icons/profile/ProfileGiftIcon'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
+const TrustBox = dynamic(() => import('../../components/Content/TrustBox'), { ssr: false })
 
 const SliderFade = () => {
   return (

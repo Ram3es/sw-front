@@ -1,21 +1,42 @@
+'use client'
 import { type FC, type InputHTMLAttributes, useRef, useState } from 'react'
 import { classNames } from '../../helpers/className'
 import ExclamationTriangleIcon from '../icons/ExclamationTriangle'
-import Mark from '../icons/wallet/Mark'
 import CloseIcon from '../icons/CloseIcon'
 
 interface IInputWithErrors extends InputHTMLAttributes<HTMLInputElement> {
   handleChange: (value: string) => void
-  onClear: () => void
-  handleBlur: () => void
-  isLoading?: boolean
-  errorBorder: string
-  error?: any
-  variant?: string
+  onClear?: () => void
+  handleBlur?: () => void
   label?: string
+  variant?: string
+  isLoading?: boolean
+  error?: any
+  errorIcon?: JSX.Element
+  errorBorder: string
+  successIcon?: JSX.Element
+  withClearBtn?: boolean
+  activeClass?: string
+  wrapperClasses?: string
 }
 
-const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isLoading, error, errorBorder, variant = 'amount', onClear, handleChange, handleBlur, ...rest }) => {
+const InputWithErrors: FC<IInputWithErrors> = ({ 
+  value,
+  label,
+  isLoading,
+  error,
+  errorBorder,
+  variant,
+  errorIcon,
+  successIcon,
+  withClearBtn,
+  activeClass,
+  wrapperClasses,
+  onClear,
+  handleChange,
+  handleBlur,
+   ...rest }) => {
+
   const [isFocused, setIsFocused] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -23,7 +44,7 @@ const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isLoading, error,
     e.preventDefault()
     if (inputRef?.current) {
       inputRef.current.focus()
-      onClear()
+      onClear?.()
     }
   }
 
@@ -36,20 +57,25 @@ const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isLoading, error,
   }
   const onBlur = () => {
     setIsFocused(false)
-    handleBlur()
+    handleBlur?.()
   }
   return (
       <div className='group'>
         <div
           onMouseDown={handleClick}
           onBlur={onBlur}
-          className={classNames('w-full flex items-center h-14 border-2 border-darkGrey group  px-6 cursor-text relative',
-            error?.status && !isFocused ? errorBorder : 'focus-within:border-white')}
+          className={classNames('w-full flex items-center h-14  group  px-6 cursor-text relative',
+            wrapperClasses ?? 'border-2 border-darkGrey',
+            isFocused ? activeClass ?? 'focus-within:border-white' : '',
+            error?.status && !isFocused ? errorBorder : '')}
         >
           <div className='w-full flex flex-col'>
-            <label className='w-full text-graySecondary text-11 leading-[11px] capitalize pointer-events-none'>{label ?? 'amount'}</label>
+            <label className={classNames('w-full text-graySecondary text-11 leading-[11px] capitalize pointer-events-none ',
+             value === '' && !isFocused ? 'hidden' : 'block' )}>
+              {label}
+            </label>
             <div className='w-full flex items-center text-lg leading-[18px]'>
-            {variant === 'amount' && <span>$</span>}
+              {variant === 'amount' && <span>$</span>}
               <input
                 ref={inputRef}
                 type='text'
@@ -61,23 +87,28 @@ const InputWithErrors: FC<IInputWithErrors> = ({ value, label, isLoading, error,
             </div>
           </div>
           <div>
-            <div onMouseDown={handleClear} className='hidden group-focus-within:block cursor-pointer text-graySecondary hover:text-white duration-200'>
-              <CloseIcon className='w-3 h-[18px] ' />
+            {withClearBtn && (
+              <div onMouseDown={handleClear} >
+                <CloseIcon className='hidden group-focus-within:block w-3 h-[18px] cursor-pointer text-graySecondary hover:text-white duration-200' />
+              </div>
+            )}
+            <div className='group-focus-within:hidden'>
+              {successIcon && !error?.status && !isLoading && value !== '' 
+                ? successIcon :  errorIcon }
             </div>
-            { !error?.status && !isLoading && value !== '' && <Mark className='block group-focus-within:hidden text-swLime w-4 h-[18px]' />}
           </div>
           {variant === 'coupon' && !isFocused && value === '' &&
-            <div className='absolute inset-0 bg-darkSecondary '>
-              <div className='w-full h-full flex px-6 items-center text-lg '>Coupon Code</div>
+            <div className='absolute inset-0 bg-transparent '>
+              <div className='w-full h-full flex px-6 items-center text-lg capitalize '>{label}</div>
             </div> }
         </div>
         {error?.status && !isFocused &&
-            <div className={classNames('py-1 px-3 group-focus-within:hidden',
-              error?.errorClass ?? 'text-white')}
-            >
-              <ExclamationTriangleIcon className='shrink-0' />
-              {error?.message}
-            </div> }
+          <div className={classNames('flex items items-center gap-2 py-1 px-3 group-focus-within:hidden capitalize',
+            error?.errorClass ?? 'text-white')}
+          >
+            {error?.msgWithIcon &&  <ExclamationTriangleIcon className='shrink-0' />}
+            {error?.message}
+          </div> }
       </div>
   )
 }

@@ -3,6 +3,7 @@ export interface IUser {
   username: string
   balance: number
   payoutLimit?: number
+  avatar: string
 }
 
 export interface ISteamUser {

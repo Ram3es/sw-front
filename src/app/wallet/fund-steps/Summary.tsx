@@ -6,9 +6,10 @@ import { format, formatToDecimal } from '../../../helpers/numberFormater'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
 import CouponLabel from '../../../components/funds/coupon/CouponLabel'
-import InputWithErrors from '../../../components/Content/InputWithErrors'
 import { ImportantNotice, NoticeContent } from '../../../components/funds/ImportantNotice'
 import CloseIcon from '@/components/icons/CloseIcon'
+import InputWithErrors from '@/components/Content/InputWithErrors'
+import Mark from '@/components/icons/wallet/Mark'
 
 const Summary = () => {
   const [isEditAmount, setIsEditAmount] = useState(false)
@@ -56,9 +57,11 @@ const Summary = () => {
                   handleChange={(value: string) => { setAmountInputValue(value) }}
                   onClear={() => { setAmountInputValue('') } }
                   handleBlur={handleBlurInputAmount}
+                  successIcon={<Mark className='w-4 h-[18px] text-swLime' />}
                   error={Object.values(errorsState).filter(obj => obj.status && obj.relative === 'amount')[0]}
                   errorBorder='border-swOrange'
                   autoFocus
+                  variant='amount'
                />
                 )
               : (
@@ -112,6 +115,7 @@ const Summary = () => {
                       handleChange={(value) => { setCouponInputValue(value) }}
                       onClear={() => { setCouponInputValue('') }}
                       handleBlur={() => { void handleBlurInputCoupon() }}
+                      successIcon={<Mark className='w-4 h-[18px] text-swLime' />}
                       errorBorder='border-swRed'
                       error={errorsState.wrongCoupon }
                       isLoading={isLoading}

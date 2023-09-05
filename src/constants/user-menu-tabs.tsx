@@ -4,7 +4,6 @@ import ProfileCircleDollarIcon from '@/components/icons/profile/ProfileCircleDol
 import ProfileCircleMark from '@/components/icons/profile/ProfileCircleMark'
 import ProfileCircleMinus from '@/components/icons/profile/ProfileCircleMinus'
 import ProfileCirclePlus from '@/components/icons/profile/ProfileCirclePlus'
-import ProfileDaggers from '@/components/icons/profile/ProfileDaggers'
 import ProfileGiftIcon from '@/components/icons/profile/ProfileGiftIcon'
 import ProfileSettingIcon from '@/components/icons/profile/ProfileSettingIcon'
 import ProfileSupportIcon from '@/components/icons/profile/ProfileSupportIcon'
@@ -37,11 +36,6 @@ export const USER_MENU: IUserMenu[][] = [
   ],
   [
     {
-      title: 'sell items',
-      path: '/inventory',
-      icon: <ProfileCircleDollarIcon />
-    },
-    {
       title: 'withdraw items',
       path: '/market/inventory',
       icon: <ProfileCircleMark />
@@ -51,11 +45,6 @@ export const USER_MENU: IUserMenu[][] = [
       path: '/market/withdraw',
       icon: <ProfileTodoList />
     },
-    {
-      title: 'redeem item',
-      path: '/redeem-item',
-      icon: <ProfileDaggers />
-    }
   ],
   [
     {
@@ -67,7 +56,7 @@ export const USER_MENU: IUserMenu[][] = [
   [
     {
       title: 'support',
-      handleFunction: () => {},
+      handleFunction: () => { window.Intercom('show') },
       icon: <ProfileSupportIcon />
     },
     {

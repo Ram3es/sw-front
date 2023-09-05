@@ -18,6 +18,7 @@ const config: Config = {
         'dark-14': '#141415',
         graySecondary: "#A4A4A4",
         darkBlue: '#2b475e',
+        'blue-5d': '#5D4DFF',
         skinwalletPink: '#CFBBFE',
         swViolet: '#6842FF',
         swLime: '#18E86B',
@@ -37,6 +38,7 @@ const config: Config = {
         18: '1.125rem',
         21: '1.3125rem',
         22: '1.1375rem',
+        23: '1.4375rem',
         24: '1.5rem',
 
       },

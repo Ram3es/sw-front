@@ -38,23 +38,6 @@ interface IOffersCardsState {
   newest: IOffersCard[]
 }
 
-async function getData(sortBy: string) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/market/offers?appid=730&sortBy=${sortBy}`, {
-    cache: 'force-cache',
-    credentials: 'include'
-  })
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
- 
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    console.log(res.statusText);
-    
-  }
- 
-  return res.json()
-}
-
 export default async function Market() {
   const { total, offers: hot } = await getOffers('HotDeals')
   const { offers: newest } = await getOffers('Newest')
@@ -84,40 +67,29 @@ export default async function Market() {
                         <span>or sell your</span>
                         <span>own for cash</span>
                     </div>
-                    <div className='flex gap-3 h-12 text-21  mt-8'>
-                        <Link
-                          href='/'
-                        >
+                    <div className='flex flex-col sm:flex-row gap-3 text-21 mt-8'>
+                      <Link href="/" >
                           <Button
                             text='sell skins'
-                            className=' h-full text-darkSecondary uppercase bg-swLightOrange cta-clip-path hover:opacity-80 '
+                            className='w-full sm:w-max justify-center text-23 small-caps leading-[24px] tracking-[2.3px] text-darkSecondary bg-swLightOrange cta-clip-path hover:opacity-80 [&_.text]:mb-1 '
+                            heightClass='h-12'
                           />
-                        </Link>
-                        <div className=' w-max relative overflow-hidden hover button'>
-                          <Link
-                            href='/'
-                          >
+                          </Link>
+                        <div className=' w-full sm:w-max relative overflow-hidden hover button'>
+                          <Link href="/" >
                             <Button
                               text='buy now'
-                              className=' w-full h-full border border-graySecondary  hover justify-center cta-clip-path uppercase text-graySecondary'
+                              className=' bg-black bg-opacity-50 w-full border border-graySecondary  hover justify-center cta-clip-path uppercase text-graySecondary text-23 small-caps leading-[24px] tracking-[2.3px] [&_.text]:mb-1'
+                              heightClass='h-12'
                             />
+                            <div className='absolute w-4 bottom-1 -left-1 border-b border-graySecondary hover rotate-45' />
                           </Link>
-                          <div className='absolute w-4 bottom-1 -left-1 border-b border-graySecondary hover rotate-45' />
                         </div>
                     </div>
                 </div>
             </div>
           </div>
-          <div className='w-full flex flex-col items-center max-w-[1850px] px-16'>
-            <Link
-              href='/'
-            >
-              <div
-                  className='my-12 pt-8 cursor-pointer  '
-              >
-                  <img src="/img/market/sell-instantly-banner.png" alt='SellBaner' className='w-full' />
-              </div>
-            </Link>
+          <div className='w-full flex flex-col items-center max-w-[1850px] pt-16 px-16'>
             <div className='w-full flex flex-col max-w-[1160px]'>
               <div className='w-full h-full flex flex-col '>
                 <SkinsCategoriesTitle

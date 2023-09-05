@@ -14,13 +14,17 @@ export const AppProvider = ({ children }: IProps) => {
   const [searchOpened, setSearchOpened] = useState(false)
   const [gameId, setGameId] = useState<ESteamAppId>(ESteamAppId.CSGO)
   const [user, setUser] = useState<IUser>()
+  const [isUserLoading, setIsUserLoading] = useState<boolean>(true)
 
   const getUserApp = useCallback(async () => {
+    setIsUserLoading(true)
     try {
       const data = await getUser()
       setUser({ id: data.steamId, username: data.steamUsername, balance: Number(data.balance), avatar: data.avatarUrl })
+      setIsUserLoading(false)
     } catch (error) {
       console.log(error, 'app provider')
+      setIsUserLoading(false)
     }
   }, [])
 
@@ -50,7 +54,8 @@ export const AppProvider = ({ children }: IProps) => {
         user,
         userUpdate,
         gameId,
-        updateGameId
+        updateGameId,
+        isUserLoading
       }}
     >
       { children }

@@ -12,6 +12,7 @@ export interface IAppContext {
   userUpdate: (payload: Partial<IUser>) => void
   gameId: ESteamAppId
   updateGameId: (id: ESteamAppId) => void
+  isUserLoading: boolean
 };
 
 export const AppContext = createContext<IAppContext>({
@@ -22,7 +23,8 @@ export const AppContext = createContext<IAppContext>({
   user: InitUserState,
   userUpdate: () => {},
   gameId: ESteamAppId.CSGO,
-  updateGameId: () => {}
+  updateGameId: () => {},
+  isUserLoading: false
 })
 
 export const useAppContext = () => useContext(AppContext)

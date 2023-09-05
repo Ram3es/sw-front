@@ -200,7 +200,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                   />
                 </div>
                 <BaseLink
-                  href="/panel/cart"
+                  href="/cart"
                   className="font-medium text-skinwallerGray hover:text-white"
                   icon
                 >

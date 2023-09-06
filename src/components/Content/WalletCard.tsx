@@ -5,8 +5,16 @@ import InformationIcon from '../icons/InformationIcon';
 import { classNames } from '@/helpers/className';
 import { Button } from '../Navigation';
 
-const WalletCard = ({ title, placeholder } : { title: string, placeholder: string  }) => {
-    const [ value, setValue] = useState(placeholder)
+export interface IWalletCard {
+  title: string
+  placeholder: string
+  varificationRequired?: boolean
+  isVerified?: boolean
+  verifyFn?: () => void
+  onValueUpdate: (v: string) => void
+}
+
+const WalletCard = ({ title, placeholder, varificationRequired, isVerified, verifyFn, onValueUpdate } : IWalletCard) => {
     const [isEditMode, setIsEditMode] = useState(false)
 
     const ref = useRef<HTMLInputElement>(null)
@@ -24,7 +32,7 @@ const WalletCard = ({ title, placeholder } : { title: string, placeholder: strin
            <div className=' h-full flex flex-col gap-4 mt-2'>
             {!isEditMode 
               ? <div className={classNames('text-white w-full truncate focus-within:hidden')}>
-                   {value}
+                   {placeholder}
                 </div>
               :
               (
@@ -32,19 +40,23 @@ const WalletCard = ({ title, placeholder } : { title: string, placeholder: strin
                   <input
                     ref={ref}
                     type='text'
-                    value={value}
-                    onChange={(e) => { setValue(e.target.value); } }
+                    value={placeholder}
+                    onChange={(e) => {
+                      onValueUpdate(e.target.value)
+                    } }
                     onFocus={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
                     className={classNames('bg-transparent outline-none w-full mr-8')} 
                   />
-                  <p>Check <span className='text-swViolet'>{value}</span> for confirmation email and click the link in the mail for verification.</p>
+                  {varificationRequired && <> <p>Check <span className='text-swViolet'>{placeholder}</span> for confirmation email and click the link in the mail for verification.</p>
                   <Button
                     text='resend'
                     className=' relative w-max border border-graySecondary group hover:text-white hover:border-white justify-center cta-clip-path uppercase text-graySecondary duration-200'
                     heightClass='h-11'
+                    onClick={verifyFn}
                     >
                     <div className='absolute w-4 bottom-1 -left-[5px] border-b border-graySecondary group-hover:border-white rotate-45 duration-200' />
                   </Button>
+                  </>}
                 </>
               )
               }

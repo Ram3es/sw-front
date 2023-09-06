@@ -31,7 +31,7 @@ const Heading = () => {
                if( route.path === pathname ){
                 const isShown: boolean =  route.path.split('/').length > 2 && !route.index
                 return (
-                  <div className='flex items-center gap-5'>
+                  <div key={route.title} className='flex items-center gap-5'>
                     <div onClick={back} className={isShown ? 'flex text-graySecondary hover:text-white duration-200 cursor-pointer' : 'hidden'}>
                       <ArrowRight className=' w-5 h-auto -rotate-180' />
                     </div>

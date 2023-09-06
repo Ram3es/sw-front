@@ -17,7 +17,8 @@ export const WALLETS = [
     },
     {
         title:'paypal account',
-        text: 'example@gmail.com'
+        text: 'example@gmail.com',
+        varificationRequired: true
     },
     {
         title:'webmoney account',

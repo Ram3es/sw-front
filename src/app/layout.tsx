@@ -21,7 +21,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={barlow.className}>
         <div className='flex flex-col bg-darkSecondary min-h-screen'>
-          {children}
+          <Providers>
+            <>
+              <TopBar isHidableOnScroll={true} />
+              {children}
+            </>
+          </Providers>
         </div>
         <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
         <Script>

@@ -1,7 +1,7 @@
 'use client'
 
 import { CartContext, CartState } from "@/context/CartContext"
-import { CardItem } from "@/types/Card"
+import { IOffersCard } from "@/types/Card"
 import { useReducer, useState } from "react"
 
 interface IProps {
@@ -15,8 +15,9 @@ const initialState: CartState = {
 const cartReducer = (state: CartState, action: { type: string; payload: any }): CartState => {
   switch (action.type) {
     case 'ADD_TO_CART':
+      
       // Check if the item already exists in the cart
-      const itemExists = state.items.find((item: CardItem) => item.id === action.payload.id);
+      const itemExists = state.items.find((item: IOffersCard) => item.inventoryItemId === action.payload.inventoryItemId);
 
       if (itemExists) {
         // Item already exists, don't add it again
@@ -31,7 +32,7 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
 
     case 'REMOVE_FROM_CART':
       // Filter out the item with the provided ID
-      const updatedItems = state.items.filter((item: CardItem) => item.id !== action.payload);
+      const updatedItems = state.items.filter((item: IOffersCard) => item.inventoryItemId !== action.payload);
 
       return {
         ...state,
@@ -47,7 +48,7 @@ export const CartProvider = ({ children }: IProps) => {
   const [cartState, dispatch] = useReducer(cartReducer, initialState);
 
   // Function to add an item to the cart
-  const addToCart = (item: CardItem) => {
+  const addToCart = (item: IOffersCard) => {
     dispatch({ type: 'ADD_TO_CART', payload: item });
   };
 

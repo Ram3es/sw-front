@@ -3,11 +3,11 @@ import { type FC, type PropsWithChildren } from 'react'
 import Slider, { type Settings } from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-import { ECardVariant, IOffersCard } from '@/types/Card'
 import ItemCard from '../Content/ItemCard'
-import { IMAGE_ROOT_URL } from '@/constants/strings'
-import { buyItems } from '@/services/market/market'
 import EmptyCard from '../Content/EmptyCard'
+import { useCartContext } from '@/context/CartContext'
+import { ECardVariant, IOffersCard } from '@/types/Card'
+import { IMAGE_ROOT_URL } from '@/constants/strings'
 
 interface ISliderProps extends PropsWithChildren {
   settings: Partial<Settings>,
@@ -15,24 +15,23 @@ interface ISliderProps extends PropsWithChildren {
 }
 
 const SliderCard: FC<ISliderProps> = ({ items, settings }) => {
+  const { addToCart } = useCartContext()
   return (
         <Slider {...settings}>
-            {items.map(({ inventoryItemId, imageUrl, name, price, typeName, wearFloat, steamPrice }) =>
+            {items.map((item) =>
               <ItemCard
-                key={inventoryItemId}
-                id={inventoryItemId}
+                key={item.inventoryItemId}
+                id={item.inventoryItemId}
                 variant={ECardVariant.market}
                 isTradable={true}
-                name={name}
-                type={typeName}
-                condition={wearFloat}
-                price={price.amount}
-                steamPrice={steamPrice.amount}
-                image={IMAGE_ROOT_URL.concat(imageUrl)}
+                name={item.name}
+                type={item.typeName}
+                condition={item.wearFloat}
+                price={item.price.amount}
+                steamPrice={item.steamPrice.amount}
+                image={IMAGE_ROOT_URL.concat(item.imageUrl)}
                 onClick={() => {
-                  void buyItems({
-                    assetIds: [inventoryItemId]
-                  })
+                  addToCart(item)
                 }}
                 submitFn={() => {}}
                   />

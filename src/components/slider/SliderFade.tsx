@@ -5,8 +5,9 @@ import ProfileSupportIcon from '../icons/profile/ProfileSupportIcon'
 import MarketShieldMarkIcon from '../icons/market/MarketShieldMarkIcon'
 import ProfileGiftIcon from '../icons/profile/ProfileGiftIcon'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
-const TrustBox = dynamic(() => import('../../components/Content/TrustBox'), { ssr: false })
+import { Suspense, lazy } from 'react'
+import Loader from '../Content/Loader'
+const TrustBox = lazy(() => import('../../components/Content/TrustBox'))
 
 const SliderFade = () => {
   return (
@@ -40,7 +41,9 @@ const SliderFade = () => {
             </div>
             <div className='p-3 md:p-0'>
               <div className=' pt-3 '>
-                <TrustBox />
+                <Suspense fallback={<Loader />}>
+                  <TrustBox />
+                </Suspense>
               </div>
             </div>
         </Slider>

@@ -38,6 +38,7 @@ export const BaseLink = ({
       className={
         classNames(
           'inline-flex items-center mx-4',
+          className,
           active ? ' pointer-events-none' : '',
           wrapperStyles ?? '',
           withBorder && active ? borderStyle ?? 'border-b border-solid border-swViolet' : ''

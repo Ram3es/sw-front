@@ -22,6 +22,7 @@ import LogoSmall from '../icons/top-bar/LogoSmall'
 import LogoSkinwallet from '../icons/top-bar/LogoSkinwallet'
 import SearchIcon from '../icons/top-bar/SearchIcon'
 import Link from 'next/link'
+import { useCartContext } from '@/context/CartContext'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -43,6 +44,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   } = useAppContext()
   const [, setSelected] = useState('')
   const [isOpenNavBar, setIsOpenNavBar] = useState(false)
+  const { cartItems } = useCartContext()
   return (
 <>
     <header
@@ -201,10 +203,19 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 </div>
                 <BaseLink
                   href="/cart"
-                  className="font-medium text-skinwallerGray hover:text-white"
+                  className="font-medium text-skinwallerGray hover:text-white relative"
                   icon
                 >
-                  <CartIcon />
+                  <>
+                    {
+                      cartItems.items.length > 0 
+                        ? <div className='w-4 h-4 rounded-full bg-swOrange font-Barlow text-[12px] text-darkSecondary flex justify-center items-center absolute right-0 -bottom-1'>
+                            {cartItems.items.length}
+                          </div>
+                        : ""
+                    }
+                    <CartIcon />
+                  </>
                 </BaseLink>
                 <UserMenu name={user.username} balance={user.balance} wrapperClasses='hidden lg:block' />
               </>

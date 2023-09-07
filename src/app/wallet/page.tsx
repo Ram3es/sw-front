@@ -10,8 +10,9 @@ import PayPalMethod from './fund-steps/PayPalMethod'
 import Summary from './fund-steps/Summary'
 import SelectCryptoMethod from './fund-steps/SelectCryptoMethod'
 import CryptoAdress from './fund-steps/CryptoAdress'
-import dynamic from 'next/dynamic'
-const TrustBox = dynamic(() => import('../../components/Content/TrustBox'), { ssr: false })
+import { Suspense, lazy } from 'react'
+import Loader from '@/components/Content/Loader'
+const TrustBox = lazy(() => import('../../components/Content/TrustBox'))
 
 const getMethod = (method: string) => {
   switch (method) {
@@ -42,7 +43,9 @@ export default function Wallet() {
     </Bar>
     <header className='w-full flex flex-col sm:flex-row items-center gap-2 sm:gap-0 pb-2 sm:pb-0 sm:h-12 border-b border-darkGrey mt-5 px-3 sm:px-6  relative' >
       <div className='w-full pt-1'>
-        <TrustBox />
+        <Suspense fallback={<Loader />}>
+          <TrustBox />
+        </Suspense>
       </div>
       <Link
         href={'/'}

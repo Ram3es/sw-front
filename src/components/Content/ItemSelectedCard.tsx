@@ -5,7 +5,7 @@ import TrashBin from '../icons/TrashBin'
 import { CONDITIONS } from '../../constants/item-conditions'
 import { classNames } from '../../helpers/className'
 
-const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, condition, name, variant, onClick }) => {
+const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, condition, name, variant, onClick, isBorderBottom = true }) => {
   const [type, modification] = name.split('|')
   // .split(/[ -]+/)
 
@@ -20,8 +20,9 @@ const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, condition, name
   }, [condition])
 
   return (
-        <div className={classNames('relative h-40 shrink-0 border-b border-white/10 overflow-hidden group ',
-          variant ?? '')}>
+        <div className={classNames('relative h-40 shrink-0 overflow-hidden group ',
+          variant ?? '',
+          isBorderBottom ? 'border-b border-white/10' : '')}>
             <span
                 className="absolute left-[15%] top-[40%] h-0 w-[13%]  "
                 style={{
@@ -42,7 +43,7 @@ const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, condition, name
                         </div>
                         <span className='font-normal capitalize'>Classified {'pistol'}</span>
                     </div>
-                    <div
+                    {condition ? <div
                         className='flex gap-2 items-center'
                         style={{ color }}
                         >
@@ -51,7 +52,7 @@ const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, condition, name
                             style={{ borderColor: `${color}` }}
                         >{shortName}</div>
                         <span className='font-normal'>{condition} wear</span>
-                    </div>
+                    </div>  : ''}
                 </div>
             </div>
             <div

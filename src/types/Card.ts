@@ -1,3 +1,4 @@
+import { ESteamAppId } from "./Inventory"
 
 export interface CardItem {
   id: string
@@ -18,7 +19,7 @@ export interface CardItem {
 }
 
 export interface IOffersCard {
-  appid: number
+  appid: ESteamAppId
   imageUrl: string
   inventoryItemId: string
   price: IOfferPrice
@@ -47,6 +48,7 @@ export enum ECardVariant {
 export interface IItemSelectedCard extends Pick<CardItem, 'id' | 'condition' | 'image' | 'name' | 'variant' > {
   price?: number
   onClick?: () => void
+  isBorderBottom?: boolean
 }
 
 export type TItemInventory = Omit<CardItem, 'onClick' | 'isSelected'>

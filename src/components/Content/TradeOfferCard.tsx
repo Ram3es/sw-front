@@ -24,7 +24,6 @@ const TradeOfferCard = ({ status = 'pending', botName, items, token, createdAt, 
   const refInterval = useRef<ReturnType< typeof setInterval>>()
 
   useEffect(() => {
-    console.log('expiredAt', expiredAt)
     refInterval.current && clearInterval(refInterval.current)
     if (status === 'pending') {
       refInterval.current = setInterval(() => { setTimer(prev => prev - 1000) }, 1000)

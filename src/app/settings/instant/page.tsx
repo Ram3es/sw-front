@@ -20,13 +20,13 @@ export default function Instant() {
   };
 
   useEffect(() => {
-    setWalletItems(() => WALLETS.map((w, index) => ({ 
+    setWalletItems(() => WALLETS.map((w: any, index: number) => ({ 
       title: w.title,
       placeholder: w.text,
       varificationRequired: w.varificationRequired,
       isVerified: w.isVerified,
       verifyFn: w.verifyFn,
-      onValueUpdate: (v) => handleInputChange(v, index)
+      onValueUpdate: (v: string) => handleInputChange(v, index)
     })))
   }, [])
 

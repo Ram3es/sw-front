@@ -7,11 +7,18 @@ export interface IUser {
 }
 
 export interface ISteamUser {
-  avatarUrl: string
-  balance: string
-  banned: number
-  payoutOk: number
-  profileUrl: string
-  steamId: string
-  steamUsername: string
+  id: number;
+  steamId: string;
+  steamUsername: string;
+  avatarUrl: string;
+  profileUrl: string;
+  payout: number;
+  banned: number;
+  balance: number;
+  transactionsTotal: number;
+  tradeUrl?: string | null;
+  notifications: number;
+  active: number;
+  email?: string | null;
+  createdAt: string;
 }

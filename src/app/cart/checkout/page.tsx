@@ -119,9 +119,9 @@ export default function CartCheckout() {
           <h1 className="text-white font-Barlow text-[21px] font-medium uppercase">checkout</h1>
         </div>
       </Bar>
-      <div className="w-full flex flex-grow gap-8 justify-center pt-6 sm:py-12">
-        <div className="w-full h-full max-w-[672px] pb-10 px-6 sm:px-0 text-white overflow-y-scroll relative flex flex-col gap-4">
-          <div className="pb-8 pt-4 px-6 grid grid-cols-12 bg-darkGrey">
+      <div className="w-full flex flex-col lg:flex-row flex-grow gap-8 justify-center pt-6 sm:py-12">
+        <div className="w-full h-full lg:max-w-[672px] pb-10 px-6 lg:px-0 text-white overflow-y-scroll relative flex flex-col gap-4">
+          <div className="pb-8 pt-4 px-6 space-y-4 lg:space-y-0 lg:grid grid-cols-12 bg-darkGrey">
             <div className="col-span-4 flex items-start">
               <div className="flex items-center gap-2">
                 {user?.billingAddress && <CheckUnfilled className="text-swLime" />}
@@ -149,7 +149,7 @@ export default function CartCheckout() {
               )}
             </div>
           </div>
-          <div className="pb-8 pt-4 px-6 grid grid-cols-12 bg-darkGrey">
+          <div className="pb-8 pt-4 px-6 space-y-4 lg:space-y-0 lg:grid grid-cols-12 bg-darkGrey">
             <div className="col-span-4 flex items-start">
               <div className="flex items-center gap-2">
                 {getTotal() !== 0 && (user?.balance ?? 0) >= getTotal() && <CheckUnfilled className="text-swLime" />}
@@ -237,8 +237,8 @@ export default function CartCheckout() {
             </div>
           </div>
         </div>
-        <div className="w-full h-[calc(100vh_-_234px)] sm:h-full max-w-[320px] flex flex-col justify-between sm:flex-row sm:gap-8">
-          <div className="h-max w-full sm:w-[320px] text-graySecondary bg-darkGrey p-6 sm:cta-clip-path relative">
+        <div className="w-full h-[calc(100vh_-_234px)] sm:h-full lg:max-w-[320px] flex flex-col justify-between sm:flex-row sm:gap-8">
+          <div className="h-max w-full lg:w-[320px] text-graySecondary bg-darkGrey p-6 sm:cta-clip-path relative">
             <div className="w-full border-b border-white/10 mb-6 flex flex-col gap-4">
               <div className="uppercase tracking-[1.44px] text-18">summary</div>
               <div className="mb-6 flex flex-col gap-4">

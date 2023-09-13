@@ -20,7 +20,13 @@ export const AppProvider = ({ children }: IProps) => {
     setIsUserLoading(true)
     try {
       const data = await getUser()
-      setUser({ id: data.steamId, username: data.steamUsername, balance: Number(data.balance), avatar: data.avatarUrl })
+      setUser({
+        id: data.steamId,
+        username: data.steamUsername,
+        balance: Number(data.balance),
+        avatar: data.avatarUrl,
+        billingAddress: data.billingAddress
+      })
       setIsUserLoading(false)
     } catch (error) {
       console.log(error, 'app provider')
@@ -32,17 +38,23 @@ export const AppProvider = ({ children }: IProps) => {
     void getUserApp()
   }, [])
 
-  const changeCategoriesState = () => { setCategoriesState(!categoriesState) }
-  const changeSearchState = () => { setSearchOpened(!searchOpened) }
+  const changeCategoriesState = () => {
+    setCategoriesState(!categoriesState)
+  }
+  const changeSearchState = () => {
+    setSearchOpened(!searchOpened)
+  }
   const userUpdate = (payload: Partial<IUser>) => {
-    setUser(prev => {
+    setUser((prev) => {
       if (prev) {
         return { ...prev, ...payload }
       }
       return prev
     })
   }
-  const updateGameId = (id: ESteamAppId) => { setGameId(id) }
+  const updateGameId = (id: ESteamAppId) => {
+    setGameId(id)
+  }
 
   return (
     <AppContext.Provider
@@ -58,7 +70,7 @@ export const AppProvider = ({ children }: IProps) => {
         isUserLoading
       }}
     >
-      { children }
+      {children}
     </AppContext.Provider>
   )
 }

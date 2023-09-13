@@ -2,9 +2,9 @@ export interface IBillingAddress {
   firstName: string
   lastName: string
   streetAddress: string
-  streetAddress2: string
+  streetAddress2?: string
   city: string
-  province: string
+  province?: string
   zip: string
   country: string
 }

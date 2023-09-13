@@ -8,6 +8,7 @@ import EmptyCard from '../Content/EmptyCard'
 import { useCartContext } from '@/context/CartContext'
 import { ECardVariant, IOffersCard } from '@/types/Card'
 import { IMAGE_ROOT_URL } from '@/constants/strings'
+import SliderArrow from '../../components/slider/SliderArrow'
 
 interface ISliderProps extends PropsWithChildren {
   settings: Partial<Settings>,
@@ -16,8 +17,14 @@ interface ISliderProps extends PropsWithChildren {
 
 const SliderCard: FC<ISliderProps> = ({ items, settings }) => {
   const { addToCart } = useCartContext()
+  const settingsWithArrow = { 
+    nextArrow: <SliderArrow />,
+    prevArrow: <SliderArrow isLeftArrow />,  
+    ...settings 
+  }
+  
   return (
-        <Slider {...settings}>
+        <Slider {...settingsWithArrow}>
             {items.map((item) =>
               <ItemCard
                 key={item.inventoryItemId}

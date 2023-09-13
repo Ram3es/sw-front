@@ -1,13 +1,14 @@
-import { type HTMLAttributes } from 'react'
 import ChevronDown from '../icons/ChevronDown'
+import { CustomArrowProps } from 'react-slick';
 
-interface IArrowProps extends HTMLAttributes<HTMLDivElement> {
+interface IArrowProps extends CustomArrowProps {
   isLeftArrow?: boolean
 }
 
-const SliderArrow = ({ className, style, onClick, isLeftArrow }: IArrowProps) => {
+const SliderArrow = ({ className, style, onClick, isLeftArrow, currentSlide, slideCount, ...props }: IArrowProps) => {
   return (
     <div
+      {...props}
       className={className}
       style={{ ...style }}
       onClick={onClick}

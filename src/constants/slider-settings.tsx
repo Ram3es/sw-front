@@ -1,5 +1,4 @@
 import { type Settings } from 'react-slick'
-import SliderArrow from '../components/slider/SliderArrow'
 
 export const FADE_SLIDER_SETTINGS: Partial<Settings> = {
   infinite: true,
@@ -20,8 +19,6 @@ export const HOT_SLIDER_SETTINGS: Partial<Settings> = {
   slidesToShow: 4,
   slidesToScroll: 1,
   draggable: false,
-  nextArrow: <SliderArrow />,
-  prevArrow: <SliderArrow isLeftArrow />,
   className: 'card-slider',
   responsive: [
     {

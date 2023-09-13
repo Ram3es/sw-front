@@ -65,7 +65,7 @@ export default function CartCheckout() {
                 </div>
               </div>
               <div className="col-span-8 col-start-5 ">
-                {!user?.billingAddress ? (
+                {user?.billingAddress ? (
                   <div className="flex flex-col gap-4">
                     <ErrorLabelRounded isError={true} message={CHECKOUT_ERRORS.BILLING_WARNING} />
                     <p className="text-graySecondary text-sm leading-[21px] font-normal">
@@ -84,7 +84,7 @@ export default function CartCheckout() {
                   </div>
                 ) : (
                   <div className="grid grid-cols-6 gap-4">
-                    <div className="col-span-4 flex flex-col gap-6">
+                    <div className="col-span-5 lg:col-span-4 flex flex-col gap-6">
                       <div className="text-lg leading-[26px] text-white">
                         <p className="font-medium">Skins and More Co.</p>
                         <p className="font-normal">PL1234567890</p>

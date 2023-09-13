@@ -13,14 +13,8 @@ import ItemSelectedCard from "../../components/Content/ItemSelectedCard"
 import { IMAGE_ROOT_URL } from "../../constants/strings"
 
 export default function Inventory() {
-  const { cartItems, removeFromCart } = useCartContext()
+  const { cartItems, removeFromCart, getSteamTotalPrice, getDiscount, getTotal } = useCartContext()
   const [ cartObject, setCartObject ] = useState<Record<string, IOffersCard[]> | undefined>()
-
-  const getSteamTotalPrice = () => cartItems.items.reduce((prev, cur) => prev += cur.steamPrice.amount ,0)
-
-  const getDiscount = () => cartItems.items.reduce((prev, cur) => prev += cur.steamPrice.amount - cur.price.amount ,0)
-
-  const getTotal = () => cartItems.items.reduce((prev, cur) => prev += cur.price.amount ,0)
 
   function getKeyByValue(enumObj: any, value: any) {
     for (const key in enumObj) {

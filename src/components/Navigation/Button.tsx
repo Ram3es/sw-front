@@ -1,35 +1,33 @@
-import { type ReactNode } from 'react'
+import { type ButtonHTMLAttributes, type ReactNode } from 'react'
 
-function classNames (...classes: string[]) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-interface IButton {
+interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string
-  className?: string
   icon?: any
   iconRight?: boolean
   heightClass?: string
-  disabled?: boolean
   children?: ReactNode
-  onClick?: () => void
 }
 
-export const Button = ({ text = '', className = '', heightClass, icon, iconRight = false, onClick, disabled, children }: IButton) => {
+export const Button = ({ text = '', heightClass, icon, iconRight = false, children, ...props }: IButton) => {
   return (
     <button
       className={classNames(
         'button font-Barlow px-4 lg:px-0 xl:px-4 tracking-[1.12px] flex',
-        className ?? ' text-[14px] ',
+        props.className ?? ' text-[14px] ',
         heightClass ?? 'h-[32px]'
       )}
-      onClick={onClick}
-      disabled={disabled}
+      onClick={props.onClick}
+      disabled={props.disabled}
+      type={props.type}
     >
-      { icon && !iconRight && <span className="pr-[8px]">{icon}</span> }
-      <span className='text'>{ text }</span>
-      { children }
-      { icon && iconRight && <span className="pl-[8px]">{icon}</span> }
+      {icon && !iconRight && <span className="pr-[8px]">{icon}</span>}
+      <span className="text">{text}</span>
+      {children}
+      {icon && iconRight && <span className="pl-[8px]">{icon}</span>}
     </button>
   )
 }

@@ -239,11 +239,10 @@ export default function CartCheckout() {
               <Button
                 type="submit"
                 text="place order"
-                // onClick={handlePlaceOrder}
-                disabled={cartItems.items.length === 0 || validateAgreements() || (user?.balance ?? 0) >= getTotal()}
+                disabled={cartItems.items.length === 0 || !validateAgreements() || !((user?.balance ?? 0) >= getTotal())}
                 className={classNames(
                   'bg-skinwalletPink justify-center items-center w-full h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
-                  cartItems.items.length !== 0 ? '' : 'opacity-50'
+                  cartItems.items.length === 0 || !validateAgreements() || !((user?.balance ?? 0) >= getTotal()) ? 'opacity-50' : ''
                 )}
               />
               <div

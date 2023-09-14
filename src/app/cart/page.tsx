@@ -146,12 +146,14 @@ export default function Inventory() {
                 </div>
               </div>
             </div>
-            <Button
-              text='checkout'
-              onClick={() => {}}
-              className={classNames('bg-skinwalletPink justify-center items-center w-full h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
-                cartItems.items.length !== 0 ? '' : 'pointer-events-none opacity-50')}
-             />
+            <Link href="/cart/checkout">
+              <Button
+                text='checkout'
+                onClick={() => {}}
+                className={classNames('bg-skinwalletPink justify-center items-center w-full h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
+                  cartItems.items.length !== 0 ? '' : 'pointer-events-none opacity-50')}
+              />
+             </Link>
              <div className='w-full absolute left-0 -top-10 h-10 sm:hidden' style={{ background: 'linear-gradient(180deg, rgba(20, 20, 21, 0.00) 0%, #0D0D0D 100%)' }}/>
           </div>
       </div>

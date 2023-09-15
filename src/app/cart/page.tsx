@@ -27,7 +27,7 @@ export default function Inventory() {
   }
 
   useEffect(() => {
-    setCartObject(() => cartItems.items.reduce((prev: Record<ESteamAppId, IOffersCard[]>, cur: IOffersCard) => {
+    setCartObject(() => cartItems.items.reduce((prev: any, cur: IOffersCard) => {
       if (prev[cur.appid]) {
         prev[cur.appid] = [...prev[cur.appid], cur]
       } else {

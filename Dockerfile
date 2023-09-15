@@ -16,5 +16,5 @@ COPY --from=build-stage /app/public ./public
 COPY --from=build-stage /app/node_modules ./node_modules
 
 ENV NODE_ENV=production
-EXPOSE 80
+EXPOSE 3000
 CMD ["npm", "start"]

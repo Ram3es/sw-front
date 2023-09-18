@@ -53,8 +53,6 @@ export const CartProvider = ({ children }: IProps) => {
   // Function to add an item to the cart
   const addToCart = (item: IOffersCard) => {
     dispatch({ type: 'ADD_TO_CART', payload: item })
-    console.log('item', item);
-    
     setLastAddedItem(item);
     setTimeout(() => setLastAddedItem(null), CHECKOUT_SETTINGS.DURATIOM_MODAL_CART_ADDED)
     
@@ -73,7 +71,7 @@ export const CartProvider = ({ children }: IProps) => {
     <CartContext.Provider
       value={{
         cartItems: cartState,
-        checkoutStatus: false,
+        isCheckoutCompleated: false,
         lastAddedItem,
         setLastAddedItem,
         addToCart: addToCart,

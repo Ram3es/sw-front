@@ -30,7 +30,7 @@ const AddedToCartModal = () => {
             steamPrice={lastAddedItem.steamPrice.amount}
             id={lastAddedItem.inventoryItemId}
             name={lastAddedItem.name}
-            condition={0}
+            condition={lastAddedItem.wearFloat}
           />
           <div className='w-full flex flex-col justify-center gap-4'>
             <Button

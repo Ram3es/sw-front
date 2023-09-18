@@ -36,6 +36,7 @@ export interface ConditionItem {
   maxVal: number
   color: string
   text: string
+  shortText: string
 }
 
 export enum ECardVariant {

@@ -5,6 +5,7 @@ import TrashBin from '../icons/TrashBin'
 import { CONDITIONS } from '../../constants/item-conditions'
 import { classNames } from '../../helpers/className'
 import SteamIcon from '../icons/SteamIcon'
+import { findNearestMaxValue } from '@/helpers/findNearestMaxValue'
 
 const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, steamPrice, condition, name, variant, onClick, isBorderBottom = true }) => {
   const [type, modification] = name.split('|')
@@ -20,8 +21,10 @@ const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, steamPrice, con
     }
   }, [condition])
 
+  const conditionObj = findNearestMaxValue(CONDITIONS, condition)
+
   return (
-        <div className={classNames('relative h-40 shrink-0 overflow-hidden group ',
+        <div className={classNames('relative h-44 shrink-0 overflow-hidden group ',
           variant ?? '',
           isBorderBottom ? 'border-b border-white/10' : '')}>
             <span
@@ -39,7 +42,7 @@ const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, steamPrice, con
                     <h4 className='text-white text-lg group-[.offer]:text-2xl'>{modification}</h4>
                     <div className='flex flex-row group-[.withdraw]/card:hidden font-Barlow font-bold'>
                         <span className='text-2xl text-white group-[.offer]:hidden mr-3'>${format(price ?? 0)}</span>
-                        {steamPrice && price ? <div className='bg-[#18E86B] text-black h-6 px-1'>{percentageDecrease(steamPrice, price)}%</div> : ''}
+                        {steamPrice && price ? <div className='bg-swLime text-black h-6 px-1'>{percentageDecrease(steamPrice, price)}%</div> : ''}
                     </div>
 
                     { steamPrice ? (
@@ -60,8 +63,8 @@ const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, steamPrice, con
                         <div
                             className='border text-xs px-1'
                             style={{ borderColor: `${color}` }}
-                        >{shortName}</div>
-                        <span className='font-normal'>{condition} wear</span>
+                        >{conditionObj?.shortText}</div>
+                        <span className='font-normal normal-case'>{condition.toFixed(3)} wear</span>
                     </div>  : ''}
                 </div>
             </div>

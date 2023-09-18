@@ -36,7 +36,7 @@ export default function CartCompleate() {
                   steamPrice={item.steamPrice.amount}
                   image={IMAGE_ROOT_URL.concat(item.imageUrl)}
                   onClick={() => {}}
-                    /> : <div></div>
+                    /> : ''
               )}
             </div>
             <div className='flex flex-row justify-center'>

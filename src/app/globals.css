@@ -91,10 +91,6 @@ input[type='number'] {
   transition: .2s linear
 }
 
-.text {
-  padding: 0 10px;
-}
-
 .hover:hover {
   filter: brightness(1.1);
 }

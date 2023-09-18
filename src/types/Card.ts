@@ -37,6 +37,7 @@ export interface ConditionItem {
   maxVal: number
   color: string
   text: string
+  shortText: string
 }
 
 export enum ECardVariant {
@@ -49,6 +50,7 @@ export enum ECardVariant {
 
 export interface IItemSelectedCard extends Pick<CardItem, 'id' | 'condition' | 'image' | 'name' | 'variant' > {
   price?: number
+  steamPrice?: number
   onClick?: () => void
   isBorderBottom?: boolean
 }

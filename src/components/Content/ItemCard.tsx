@@ -1,3 +1,4 @@
+import { findNearestMaxValue } from '@/helpers/findNearestMaxValue'
 import { CONDITIONS } from '../../constants/item-conditions'
 import { format, percentageDecrease } from '../../helpers/numberFormater'
 import { ECardVariant, type CardItem, type ConditionItem } from '../../types/Card'
@@ -5,21 +6,6 @@ import { Button } from '../Navigation'
 import ClockIcon from '../icons/ClockIcon'
 import SteamIcon from '../icons/SteamIcon'
 import Checkbox from './Checkbox'
-
-function findNearestMaxValue (arr: ConditionItem[], value: number): ConditionItem | null {
-  let nearestMaxValue: ConditionItem | null = null
-
-  for (let i = 0; i < arr.length; i++) {
-    const maxVal: number = arr[i].maxVal
-
-    if (value < maxVal) {
-      nearestMaxValue = arr[i]
-      break
-    }
-  }
-
-  return nearestMaxValue
-}
 
 function classNames (...classes: string[]) {
   return classes.filter(Boolean).join(' ')

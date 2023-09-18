@@ -23,6 +23,7 @@ import LogoSkinwallet from '../icons/top-bar/LogoSkinwallet'
 import SearchIcon from '../icons/top-bar/SearchIcon'
 import Link from 'next/link'
 import { useCartContext } from '@/context/CartContext'
+import AddedToCartModal from '../modals/AddedToCartModal'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -215,6 +216,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                         : ""
                     }
                     <CartIcon />
+                  <AddedToCartModal />
                   </>
                 </BaseLink>
                 <UserMenu name={user.username} balance={user.balance} wrapperClasses='hidden lg:block' />

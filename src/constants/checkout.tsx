@@ -13,3 +13,11 @@ export const CHECKOUT_ERRORS: ICheckoutErrors = {
   PAYMENT_NOTICE:
     'Please top-up your balance with missing amount first, to finalize the order. Add funds with your Mastercard, Visa, Union Pay, via wire transfer or even use your current Skinwallet Instant balance'
 }
+
+interface CheckoutModal {
+  DURATIOM_MODAL_CART_ADDED: number 
+}
+
+export const CHECKOUT_SETTINGS: CheckoutModal = {
+  DURATIOM_MODAL_CART_ADDED: 4000
+}

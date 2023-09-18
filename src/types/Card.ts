@@ -47,6 +47,7 @@ export enum ECardVariant {
 
 export interface IItemSelectedCard extends Pick<CardItem, 'id' | 'condition' | 'image' | 'name' | 'variant' > {
   price?: number
+  steamPrice?: number
   onClick?: () => void
   isBorderBottom?: boolean
 }

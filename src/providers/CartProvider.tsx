@@ -1,5 +1,6 @@
 'use client'
 
+import { CHECKOUT_SETTINGS } from '@/constants/checkout'
 import { CartContext, CartState } from '@/context/CartContext'
 import { IOffersCard } from '@/types/Card'
 import { useReducer, useState } from 'react'
@@ -47,10 +48,16 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
 
 export const CartProvider = ({ children }: IProps) => {
   const [cartState, dispatch] = useReducer(cartReducer, initialState)
+  const [lastAddedItem, setLastAddedItem] = useState<IOffersCard | null>(null)
 
   // Function to add an item to the cart
   const addToCart = (item: IOffersCard) => {
     dispatch({ type: 'ADD_TO_CART', payload: item })
+    console.log('item', item);
+    
+    setLastAddedItem(item);
+    setTimeout(() => setLastAddedItem(null), CHECKOUT_SETTINGS.DURATIOM_MODAL_CART_ADDED)
+    
   }
 
   // Function to remove an item from the cart by ID
@@ -66,6 +73,9 @@ export const CartProvider = ({ children }: IProps) => {
     <CartContext.Provider
       value={{
         cartItems: cartState,
+        checkoutStatus: false,
+        lastAddedItem,
+        setLastAddedItem,
         addToCart: addToCart,
         removeFromCart: removeFromCart,
         getSteamTotalPrice,

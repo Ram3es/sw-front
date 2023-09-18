@@ -26,3 +26,11 @@ export const formatToDecimal = (amount: string): string => {
   }
   return parseFloat('0').toFixed(2)
 }
+
+export const percentageDecrease = (originalPrice: number, decreasedPrice: number): string => {
+  if (originalPrice && decreasedPrice) {
+    const percentageDecrease = -100 * (originalPrice - decreasedPrice) / originalPrice ;
+    return percentageDecrease.toFixed(0)
+  }
+  return ''
+}

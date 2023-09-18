@@ -1,11 +1,12 @@
 import { type FC, useMemo } from 'react'
-import { format } from '../../helpers/numberFormater'
+import { format, percentageDecrease } from '../../helpers/numberFormater'
 import { type IItemSelectedCard } from '../../types/Card'
 import TrashBin from '../icons/TrashBin'
 import { CONDITIONS } from '../../constants/item-conditions'
 import { classNames } from '../../helpers/className'
+import SteamIcon from '../icons/SteamIcon'
 
-const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, condition, name, variant, onClick, isBorderBottom = true }) => {
+const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, steamPrice, condition, name, variant, onClick, isBorderBottom = true }) => {
   const [type, modification] = name.split('|')
   // .split(/[ -]+/)
 
@@ -36,7 +37,16 @@ const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, condition, name
                 <div className='w-[60%] flex flex-col gap-2 p-2'>
                     <span className='uppercase'>{type}</span>
                     <h4 className='text-white text-lg group-[.offer]:text-2xl'>{modification}</h4>
-                    <span className='text-2xl text-white group-[.offer]:hidden '>${format(price ?? 0)}</span>
+                    <div className='flex flex-row group-[.withdraw]/card:hidden font-Barlow font-bold'>
+                        <span className='text-2xl text-white group-[.offer]:hidden mr-3'>${format(price ?? 0)}</span>
+                        {steamPrice && price ? <div className='bg-[#18E86B] text-black h-6 px-1'>{percentageDecrease(steamPrice, price)}%</div> : ''}
+                    </div>
+
+                    { steamPrice ? (
+                        <div className='flex flex-row group-[.market]/card:flex group-[.withdraw]/card:flex items-center gap-2 pb-1 text-sm text-graySecondary'>
+                            <SteamIcon className='w-4 h-auto'/>
+                            <span>${format(steamPrice)}</span>
+                        </div>) : null}
                     <div className='hidden  group-[.offer]:block'>
                         <div className='w-3/5 border-t border-white/10'>
                             <div className=' w-1/5 border-t border-white/10 p-1'/>
@@ -55,12 +65,14 @@ const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, condition, name
                     </div>  : ''}
                 </div>
             </div>
-            <div
+            {onClick ? 
+            (<div
                 className='absolute h-4 w-4 right-2 top-2 text-graySecondary group button group-[.offer]:hidden'
                 onClick={onClick}
             >
                 <TrashBin iconClasses='group-hover:text-graySecondary/80' />
-            </div>
+            </div>) : null
+            }
         </div>
   )
 }

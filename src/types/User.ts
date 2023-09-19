@@ -1,3 +1,5 @@
+import { IUserAccount, IUserBillingAddress, IUserCryptoWallet } from "./Settings"
+
 export interface IBillingAddress {
   firstName: string
   lastName: string
@@ -33,5 +35,10 @@ export interface ISteamUser {
   active: number
   email?: string | null
   createdAt: string
-  billingAddress?: IBillingAddress
+  
+}
+export interface IUserWithSettingsData extends ISteamUser {
+  billingAddress: IUserBillingAddress;
+  cryptoWallets: IUserCryptoWallet[];
+  accounts: IUserAccount[];
 }

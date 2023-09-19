@@ -3,15 +3,35 @@ import Bar from "@/components/Bar/Bar"
 import NavBar from "./components/NavBar"
 import { useAppContext } from "@/context/AppContext"
 import SwitchToggle from "@/components/Content/SwitchToggle"
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import SettingField from "@/containers/SettingField"
 import BillingField from "./components/BillingField"
 import SteamSettings from "./components/SteamSettings"
+import { getUserAccountSettings } from "@/services/user/user"
+import { useSettingsContext } from "@/context/SettingsContext"
 
 export default function Settings() { 
 const [isAcceptedNotification, setAcceptedNotification] = useState(false)
 
 const { user } = useAppContext()
+const { data, setData } = useSettingsContext()
+
+
+const getSettings = useCallback(async () => {
+  try {
+    const data = await getUserAccountSettings()
+    setData(data)
+  } catch (error) {
+    console.log(error, 'errrrooooorr')
+  }
+ 
+},[])
+
+useEffect(() => {
+  void getSettings()
+},[])
+
+
 return (
       <div className='w-full py-16 px-6'>
         <div className='w-full max-w-[672px] flex flex-col gap-8 mx-auto '>
@@ -20,7 +40,7 @@ return (
               title='e-mail'
               editableFn={() => { console.log('nav to email page') }}
             >
-              <span className='text-white'>steam@email.com  ??</span>
+              <span className='text-white'>{data?.steamId}</span>
             </SettingField>
             <BillingField />
             <SettingField

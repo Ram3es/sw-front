@@ -4,6 +4,7 @@ import { AppProvider } from "./AppProvider";
 import { CartProvider } from "./CartProvider";
 import { FundsProvider } from "./FundsProvider";
 import PayoutProvider from "./PayoutProvider";
+import SettingsProvider from "./SettingsProvider";
 
 export function Providers({ children } : { children: React.JSX.Element }) {
   return (
@@ -11,7 +12,9 @@ export function Providers({ children } : { children: React.JSX.Element }) {
       <PayoutProvider>
         <FundsProvider>
           <CartProvider>
-            {children}
+            <SettingsProvider>
+              {children}
+            </SettingsProvider>
           </CartProvider>
         </FundsProvider>
       </PayoutProvider>

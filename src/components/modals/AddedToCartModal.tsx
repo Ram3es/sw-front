@@ -12,8 +12,8 @@ const AddedToCartModal = () => {
   
   return (
     <>  
-        <div className={classNames('z-[70] fixed right-0 bg-darkGrey w-[368px] text-graySecondary p-6',
-        lastAddedItem ? "popup open" : "popup"
+        <div className={classNames('z-[70] fixed right-0 bg-darkGrey w-[368px] text-graySecondary p-6 popup',
+        lastAddedItem ? " open" : ""
         )}>
           <div  className='flex justify-between pb-4'>
             <div className='flex items-center gap-2 text-xs font-Barlow text-[#18E86B]'>

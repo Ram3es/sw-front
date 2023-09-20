@@ -190,3 +190,16 @@ body {
     )
     rgb(var(--background-start-rgb));
 } */
+
+
+/* visibility animation */
+.popup {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s ease-in-out
+}
+
+.popup.open {
+  opacity: 1;
+  visibility: visible;
+}

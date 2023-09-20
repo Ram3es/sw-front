@@ -12,8 +12,9 @@ const AddedToCartModal = () => {
   
   return (
     <>  
-      { lastAddedItem ? 
-        <div className='fixed right-0 bg-darkGrey w-[368px] p-6'>
+        <div className={classNames('z-[70] fixed right-0 bg-darkGrey w-[368px] text-graySecondary p-6 popup',
+        lastAddedItem ? " open" : ""
+        )}>
           <div  className='flex justify-between pb-4'>
             <div className='flex items-center gap-2 text-xs font-Barlow text-[#18E86B]'>
               <CheckUnfilled />
@@ -23,15 +24,18 @@ const AddedToCartModal = () => {
               <CloseIcon  className='w-3 h-[18px] ' />
             </div>       
           </div>
-          <ItemSelectedCard
-            key={lastAddedItem.inventoryItemId}
-            image={IMAGE_ROOT_URL.concat(lastAddedItem.imageUrl)}
-            price={lastAddedItem.price.amount}
-            steamPrice={lastAddedItem.steamPrice.amount}
-            id={lastAddedItem.inventoryItemId}
-            name={lastAddedItem.name}
-            condition={lastAddedItem.wearFloat}
-          />
+          { lastAddedItem ? 
+              <ItemSelectedCard
+                key={lastAddedItem.inventoryItemId}
+                image={IMAGE_ROOT_URL.concat(lastAddedItem.imageUrl)}
+                price={lastAddedItem.price.amount}
+                steamPrice={lastAddedItem.steamPrice.amount}
+                id={lastAddedItem.inventoryItemId}
+                name={lastAddedItem.name}
+                condition={lastAddedItem.wearFloat}
+              /> 
+            : <div className='h-[175px]' ></div>
+          }
           <div className='w-full flex flex-col justify-center gap-4'>
             <Button
               className='w-full bg-skinwalletPink uppercase justify-center text-dark-14 hover:opacity-50 cta-clip-path mr-6'
@@ -46,9 +50,8 @@ const AddedToCartModal = () => {
               />
               <div className='absolute w-4 bottom-1 -left-1 border-b border-graySecondary hover rotate-45' />
             </div>
-          </div>                  
+          </div>     
         </div>
-      : null }        
     </>
   )
 }

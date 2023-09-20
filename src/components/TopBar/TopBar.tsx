@@ -48,6 +48,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   const { cartItems } = useCartContext()
   return (
 <>
+<AddedToCartModal />
     <header
       id="top-bar"
       className={classNames(
@@ -216,7 +217,6 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                         : ""
                     }
                     <CartIcon />
-                  <AddedToCartModal />
                   </>
                 </BaseLink>
                 <UserMenu name={user.username} balance={user.balance} wrapperClasses='hidden lg:block' />
@@ -242,6 +242,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             </>
               )}
         </nav>
+
       </div>
     </header>
     <SearchModal isOpen={searchOpened} onClose={changeSearchState} />

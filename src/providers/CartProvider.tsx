@@ -40,6 +40,12 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
         ...state,
         items: updatedItems
       }
+    
+    case 'CLEAR_CART':
+      return {
+        ...state,
+        items: []
+      }
 
     default:
       return state
@@ -63,6 +69,10 @@ export const CartProvider = ({ children }: IProps) => {
     dispatch({ type: 'REMOVE_FROM_CART', payload: itemId })
   }
 
+  const clearCart = () => {
+    dispatch({ type: 'CLEAR_CART', payload: {} })
+  }
+
   const getSteamTotalPrice = () => cartState.items.reduce((prev, cur) => (prev += cur.steamPrice.amount), 0)
   const getDiscount = () => cartState.items.reduce((prev, cur) => (prev += cur.steamPrice.amount - cur.price.amount), 0)
   const getTotal = () => cartState.items.reduce((prev, cur) => (prev += cur.price.amount), 0)
@@ -78,7 +88,8 @@ export const CartProvider = ({ children }: IProps) => {
         removeFromCart: removeFromCart,
         getSteamTotalPrice,
         getDiscount,
-        getTotal
+        getTotal,
+        clearCart
       }}
     >
       {children}

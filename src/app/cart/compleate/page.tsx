@@ -1,15 +1,45 @@
 'use client'
 
 import ItemCard from '@/components/Content/ItemCard'
+import Loader from '@/components/Content/Loader'
 import { Button } from '@/components/Navigation'
 import { IMAGE_ROOT_URL } from '@/constants/strings'
 import { useCartContext } from '@/context/CartContext'
-import { ECardVariant, IOffersCard } from '@/types/Card'
+import { buyItems } from '@/services/market/market'
+import { CardItem, ECardVariant, IOffersCard } from '@/types/Card'
+import { useEffect, useState } from 'react'
 
 export default function CartCompleate() {
-  const { cartItems, checkoutStatus } = useCartContext()
+  const { cartItems, clearCart } = useCartContext()
+  const [ isCheckoutSuccess, setIsCheckoutSuccess ] = useState(false)
+  const [ isCheckoutLoading, setIsCheckoutLoading ] = useState(false)
+  const [ itemsToShow, setItemsToShow ] = useState<IOffersCard[]>([])
 
- return checkoutStatus ? (
+  const submitOrder = async () => {
+    if (!isCheckoutLoading) {
+      setIsCheckoutLoading(true)
+      setItemsToShow(cartItems.items)
+      try {
+        const assetIds = cartItems.items.map(i => i.inventoryItemId)
+        await buyItems({ assetIds })
+        setIsCheckoutSuccess(true)
+        setIsCheckoutLoading(false)
+        clearCart()
+      } catch (e) {
+        console.log(e)
+        setIsCheckoutSuccess(false)
+        setIsCheckoutLoading(false)
+      }
+    }
+  }
+
+  useEffect(() => void submitOrder(), [])
+
+ return isCheckoutLoading ? (
+  <div className='flex items-center justify-center h-full py-12'>
+    <Loader />
+  </div>
+ ) : isCheckoutSuccess ? (
     <>
       <div className='w-full flex flex-col items-center max-w-[1850px] pt-16 px-16'>
         <div className='w-full flex flex-col max-w-[1160px]'>
@@ -23,7 +53,7 @@ export default function CartCompleate() {
             </div>
 
             <div className='flex flex-col gap-1 md:flex-row justify-center pb-16'>
-              {cartItems.items.map((item: IOffersCard) =>
+              {itemsToShow.map((item: IOffersCard) =>
                 item.inventoryItemId ? <ItemCard
                   key={item.inventoryItemId}
                   id={item.inventoryItemId.toString() }

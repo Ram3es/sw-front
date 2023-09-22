@@ -15,6 +15,7 @@ export interface ICartContext {
   getSteamTotalPrice: () => number
   getDiscount: () => number
   getTotal: () => number
+  clearCart: () => void
 }
 
 export const CartContext = createContext<ICartContext | undefined>(undefined)

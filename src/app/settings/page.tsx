@@ -9,20 +9,27 @@ import BillingField from "./components/BillingField"
 import SteamSettings from "./components/SteamSettings"
 import { getUserAccountSettings } from "@/services/user/user"
 import { useSettingsContext } from "@/context/SettingsContext"
+import ErrorLabelRounded from "@/components/funds/ErrorLabelRounded"
+import { useRouter } from "next/navigation"
 
 export default function Settings() { 
-const [isAcceptedNotification, setAcceptedNotification] = useState(false)
-
-const { user } = useAppContext()
-const { data, setData } = useSettingsContext()
+const { push } = useRouter()
+const { 
+  data,
+  isAcceptedNotification,
+  setData,
+  updateField,
+  setAcceptedNotification
+ } = useSettingsContext()
 
 
 const getSettings = useCallback(async () => {
   try {
     const data = await getUserAccountSettings()
     setData(data)
+    setAcceptedNotification(data.notifications)
   } catch (error) {
-    console.log(error, 'errrrooooorr')
+    console.log(error)
   }
  
 },[])
@@ -38,9 +45,15 @@ return (
           <div className='flex flex-col gap-4'>
             <SettingField
               title='e-mail'
-              editableFn={() => { console.log('nav to email page') }}
+              editableFn={() => { push('settings/email-setup') }}
             >
-              <span className='text-white'>{data?.steamId}</span>
+              { data?.email 
+                ? <span className='text-white'>{data.email}</span> 
+                : <ErrorLabelRounded
+                    message='not provided'
+                    isError
+                  />
+              }  
             </SettingField>
             <BillingField />
             <SettingField
@@ -48,8 +61,8 @@ return (
             >
               <div className='w-full gap-4 flex items-center '>
                 <SwitchToggle
-                  checked={isAcceptedNotification}
-                  onChange={() => { setAcceptedNotification(boolean => !boolean) }}
+                  checked={Boolean(isAcceptedNotification)}
+                  onChange={() => { setAcceptedNotification(val => val ? 0 : 1 ); updateField({ notifications: isAcceptedNotification ? 0 : 1 }) }}
                  />
                 <span className='text-sm font-normal'>I agree to receive e-mail newsletters from Skinwallet</span>
               </div>

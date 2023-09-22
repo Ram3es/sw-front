@@ -11,20 +11,22 @@ import ExternalLink from '@/components/icons/settings/ExternalLink'
 import SuccessLabel from '@/components/Content/SuccessLabel'
 import { useAppContext } from '@/context/AppContext'
 import Link from 'next/link'
+import { useSettingsContext } from '@/context/SettingsContext'
+import { useRouter } from 'next/navigation'
 
 const SteamSettings = () => {
-  const { user } = useAppContext()
-  const data = undefined
+  const { data } = useSettingsContext()
+  const { push } = useRouter()
 
   const editFn = () => {
-    console.log('navigate')
+    push('/settings/trade-url')
   }
   return (
     <div className='w-full border border-darkGrey'>
       <div className=' flex items-center h-14 px-3 sm:px-6 py-3 bg-darkGrey relative'>
         <div className='w-[calc(100%_-_144px)] sm:w-2/3 flex items-center gap-3 text-lg text-white'>
-          <Avatar url={user?.avatar } />
-          <span className='w-full truncate'>{user?.username}</span>
+          <Avatar url={data?.avatarUrl} />
+          <span className='w-full truncate'>{data?.steamUsername}</span>
         </div>
         <div className='w-36 sm:w-1/3 absolute z-0 ml-auto inset-0 flex items-center justify-center text-white bg-darkBlue'>
           <div className='flex items-center gap-2'>
@@ -38,7 +40,7 @@ const SteamSettings = () => {
         title='steam trade url'
         wrapperClasses='bg-darkSecondary'
         editableFn={data && editFn}
-      >{ data
+      >{ data?.tradeUrl
         ? <SuccessLabel message='provided' />
         : (
             <div className='flex flex-col gap-5 text-graySecondary text-sm'>
@@ -48,12 +50,13 @@ const SteamSettings = () => {
                 isError
               />
               <p>Trade URL is required to receive trade offers on your Steam Account for selling and withdrawing items.</p>
-              <div className=' w-max flex items-center gap-2 hover:text-white cursor-pointer duration-200'>
-               <Link href='/settings/trade-url'>
+               <Link 
+                 href='/settings/trade-url'
+                 className='w-max flex items-center gap-2 hover:text-white cursor-pointer duration-200'
+                >
                   <EditPencil className='w-[18px] h-[18px] ' />
+                  <span className='tracking-[1.12px] uppercase'>add trade url</span>
                </Link>
-               <span className='tracking-[1.12px] uppercase'>add trade url</span>
-              </div>
             </div>
           )
       }
@@ -64,7 +67,7 @@ const SteamSettings = () => {
         Authenticator'
         wrapperClasses='bg-darkSecondary [&_span]:leading-5'
       >
-        {data
+        {data?.accounts[0]
           ? <SuccessLabel message='enabled' />
           : (
             <div className='flex flex-col gap-5 text-graySecondary text-sm'>

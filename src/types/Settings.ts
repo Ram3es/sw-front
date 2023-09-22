@@ -23,3 +23,5 @@ export interface IUserBillingAddress {
     accountType: string;
     accountNumber: string;
   }
+
+  export type IUpdateSettingDto = Record<string, string | number | boolean>

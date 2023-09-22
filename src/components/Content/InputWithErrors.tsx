@@ -1,11 +1,11 @@
 'use client'
-import { type FC, type InputHTMLAttributes, useRef, useState } from 'react'
+import { type FC, type InputHTMLAttributes, useRef, useState, ChangeEvent,  } from 'react'
 import { classNames } from '../../helpers/className'
 import ExclamationTriangleIcon from '../icons/ExclamationTriangle'
 import CloseIcon from '../icons/CloseIcon'
 
 interface IInputWithErrors extends InputHTMLAttributes<HTMLInputElement> {
-  handleChange: (value: string) => void
+  handleChange: (value: string, e?: ChangeEvent<HTMLInputElement> ) => void
   onClear?: () => void
   handleBlur?: () => void
   label?: string
@@ -56,8 +56,9 @@ const InputWithErrors: FC<IInputWithErrors> = ({
     }
   }
   const onBlur = () => {
-    setIsFocused(false)
     handleBlur?.()
+    setIsFocused(false)
+    
   }
   return (
       <div className='group'>
@@ -80,7 +81,7 @@ const InputWithErrors: FC<IInputWithErrors> = ({
                 ref={inputRef}
                 type='text'
                 value={value}
-                onChange={(e) => { handleChange(e.target.value) }}
+                onChange={(e) => { handleChange(e.target.value, e) }}
                 className='w-0 grow bg-transparent outline-none pr-4'
                 {...rest}
               />
@@ -93,8 +94,8 @@ const InputWithErrors: FC<IInputWithErrors> = ({
               </div>
             )}
             <div className='group-focus-within:hidden'>
-              {successIcon && !error?.status && !isLoading && value !== '' 
-                ? successIcon :  errorIcon }
+              {successIcon && !error?.status && !isLoading && value !== '' && successIcon }
+              {errorIcon && error?.status  && !isLoading && errorIcon }
             </div>
           </div>
           {variant === 'coupon' && !isFocused && value === '' &&

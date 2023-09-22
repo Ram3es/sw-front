@@ -3,7 +3,7 @@ import ShieldCheck from '../icons/settings/ShieldCheck'
 
 const SuccessLabel = ({ message, className, icon }: { message?: string, className?: string, icon?: JSX.Element }) => {
   return (
-          <div className={classNames('w-max rounded-2xl ',
+          <div className={classNames('w-max rounded-2xl  ',
             className ?? 'text-swLime border-swLime border text-sm'
 
           )}>

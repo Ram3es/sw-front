@@ -13,6 +13,7 @@ import { useCartContext } from '@/context/CartContext'
 import { classNames } from '@/helpers/className'
 import { format } from '@/helpers/numberFormater'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 import { SyntheticEvent, useCallback, useState } from 'react'
 
 interface IAgreements {
@@ -23,6 +24,7 @@ interface IAgreements {
 export default function CartCheckout() {
   const { cartItems, getSteamTotalPrice, getDiscount, getTotal } = useCartContext()
   const { user } = useAppContext()
+  const router = useRouter();
 
   const [agreements, setAgreements] = useState<IAgreements>({
     policy: false,
@@ -41,7 +43,7 @@ export default function CartCheckout() {
     e.preventDefault()
 
     if (validateAgreements() && isPositiveBalance()) {
-      console.log('place order successful')
+      router.push('/cart/compleate')
     } else {
       console.log('order bad')
     }

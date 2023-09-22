@@ -6,6 +6,7 @@ import CloseIcon from '../icons/CloseIcon'
 import ItemSelectedCard from '../Content/ItemSelectedCard'
 import { classNames } from '@/helpers/className'
 import CheckUnfilled from '../icons/checkout/CheckUnfilled'
+import Link from 'next/link'
 
 const AddedToCartModal = () => {
   const { lastAddedItem, cartItems, setLastAddedItem } = useCartContext()
@@ -37,17 +38,21 @@ const AddedToCartModal = () => {
             : <div className='h-[175px]' ></div>
           }
           <div className='w-full flex flex-col justify-center gap-4'>
-            <Button
-              className='w-full bg-skinwalletPink uppercase justify-center text-dark-14 hover:opacity-50 cta-clip-path mr-6'
-              heightClass='h-10'
-              text='checkout'
-            />
-            <div className=' w-full  relative overflow-hidden hover button '>
+            <Link href={'/cart/checkout'}>
               <Button
-                className='w-full bg-black border border-graySecondary uppercase justify-center text-graySecondary hover:opacity-50 cta-clip-path'
+                className='w-full bg-skinwalletPink uppercase justify-center text-dark-14 hover:opacity-50 cta-clip-path mr-6'
                 heightClass='h-10'
-                text='view cart'
+                text='checkout'
               />
+            </Link>
+            <div className=' w-full  relative overflow-hidden hover button '>
+              <Link href={'/cart'}>
+                <Button
+                  className='w-full bg-black border border-graySecondary uppercase justify-center text-graySecondary hover:opacity-50 cta-clip-path'
+                  heightClass='h-10'
+                  text='view cart'
+                />
+              </Link>
               <div className='absolute w-4 bottom-1 -left-1 border-b border-graySecondary hover rotate-45' />
             </div>
           </div>     

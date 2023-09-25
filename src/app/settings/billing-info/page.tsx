@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/Navigation';
 import { classNames } from '@/helpers/className';
 import { useRouter } from 'next/navigation';
-import { useAppContext } from '@/context/AppContext';
+import CountryList from '@/components/Content/CountryList';
 
 
 const ERRROS_STATE = {
@@ -38,7 +38,12 @@ const ERRROS_STATE = {
       status: false,
       message: '',
       errorClass: 'text-red-500',
-  }
+  },
+  country: {
+    status: false,
+    message: '',
+    errorClass: 'text-red-500',
+}
 }
 
 type TErrState = Record<string, { status: boolean, message: string, errorClass: string }>
@@ -46,13 +51,9 @@ type TErrState = Record<string, { status: boolean, message: string, errorClass: 
 
 const BillingInfo = () => {
   const { data } = useSettingsContext()
-  const { user } = useAppContext()
   const { back } = useRouter()
   const [errors, setErrors] = useState<TErrState>(ERRROS_STATE)
 
-  useEffect(() => {
-    console.log(data?.steamId)
-  }, [])
 
   const formik = useFormik({
     initialTouched: {
@@ -62,17 +63,18 @@ const BillingInfo = () => {
       streetAddress2: false,
       zip: false,
       city: false,
-      province: false 
+      province: false,
+      country: false 
     },
     initialValues: {
-      firstName: data?.billingAddress.firstName ?? '',
-      lastName: data?.billingAddress.lastName ?? '',
-      streetAddress: data?.billingAddress.streetAddress ?? '',
-      streetAddress2: data?.billingAddress.streetAddress2 ?? '',
-      zip: data?.billingAddress.zip ?? '',
-      city: data?.billingAddress.city ?? '',
-      province:  data?.billingAddress.province ?? '',
-      country: data?.billingAddress.province ?? 'Ukraine'
+      firstName:  '',
+      lastName:  '',
+      streetAddress:  '',
+      streetAddress2:  '',
+      zip:  '',
+      city:  '',
+      province:  '' ,
+      country: undefined || ''
     },
     validationSchema: Yup.object({
       firstName: Yup.string().min(2).required('This field can not be empty'),
@@ -80,16 +82,21 @@ const BillingInfo = () => {
       streetAddress: Yup.string().min(10).required('This field can not be empty'),
       zip: Yup.string().min(4).required('This field can not be empty'),
       city: Yup.string().min(2).required('This field can not be empty'),
+      country: Yup.string().required('Selecting country is required.')
     }),
     validateOnChange: true,
     onSubmit: (values) => {
         try {
-          setBillingAddress({...values, userId: Number(user?.id), id: data?.billingAddress?.id})
+          setBillingAddress({...values, userId: data?.id, id:data?.billingAddress?.id })
         } catch(error) {
           console.log(error)
         } 
       } 
   })
+
+  const handleChangeCountry = (value: string) => {
+    formik.setFieldValue('country', value, true)
+  }
 
   useEffect(() => {
     Object.keys(errors).forEach((fieldName) => {
@@ -112,6 +119,23 @@ const BillingInfo = () => {
       }
     })  
   }, [formik.errors, formik.touched ])
+
+  
+
+  useEffect(() => {
+    if(data?.billingAddress){
+     formik.setValues({ 
+      firstName: data.billingAddress.firstName ?? '',
+      lastName: data.billingAddress.lastName ?? '',
+      streetAddress: data.billingAddress.streetAddress ?? '',
+      streetAddress2: data.billingAddress.streetAddress2 ?? '',
+      zip: data.billingAddress.zip ?? '',
+      city: data.billingAddress.city ?? '',
+      province: data.billingAddress.province ?? '' ,
+      country: data.billingAddress.country ?? undefined
+     })
+    }
+  }, [data])
 
   
     return (
@@ -223,6 +247,8 @@ const BillingInfo = () => {
                     activeClass='focus-within:border-swViolet'
                     wrapperClasses='bg-darkGrey border-2 border-darkSecondary'
                     />
+                <CountryList value={formik.values.country} onChange={handleChangeCountry}  />
+                  <span className={` -mt-2 ml-4 ${errors.country.status ? 'block' : 'hidden'} ${errors.country.errorClass}`}>{errors.country.message}</span>
                 <div className="flex gap-4 ml-auto mt-8">
                   <Button
                     text='cancel'

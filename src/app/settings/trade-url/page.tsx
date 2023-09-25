@@ -24,7 +24,7 @@ export default function TradeUrl() {
         tradeUrl: false
       },
       initialValues: {
-        tradeUrl: data?.tradeUrl ?? ''
+        tradeUrl: ''
       },
       validationSchema: Yup.object({
         tradeUrl: Yup.string().required('Steam Trade URL cannot be empty')
@@ -47,6 +47,14 @@ export default function TradeUrl() {
       }
 
     }, [formik.errors.tradeUrl])
+
+    useEffect(() => {
+      if(data?.tradeUrl){
+        formik.setValues({
+          tradeUrl: data?.tradeUrl
+        })
+      }
+    }, [data])
 
 
     return (

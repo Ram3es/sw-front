@@ -14,7 +14,7 @@ const BillingField = () => {
           icon={<InformationIcon iconClasses='w-[14px] h-auto' />}
           editableFn={() => { push('/settings/billing-info') }}
          >
-          {data?.billingAddress.id
+          {data?.billingAddress.firstName
             ? (
                 <div className='max-w-[300px] flex flex-col gap-6 text-white'>
                   <div className='flex flex-col'>
@@ -26,10 +26,7 @@ const BillingField = () => {
                     <p className='font-normal'>
                       {data.billingAddress.streetAddress}
                       {data.billingAddress.streetAddress2}<br/>
-                      {data.billingAddress.zip}
-                      {data.billingAddress.city}
-                      {data.billingAddress.province}
-                      {data.billingAddress.country}
+                      {data.billingAddress.zip } {data.billingAddress.city }, {data.billingAddress.province} {data.billingAddress.country}
                     </p>
                   </div>
                   <span>18.05.1986</span>

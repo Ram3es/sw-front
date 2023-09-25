@@ -1,43 +1,21 @@
 'use client'
-import Bar from "@/components/Bar/Bar"
-import NavBar from "./components/NavBar"
-import { useAppContext } from "@/context/AppContext"
 import SwitchToggle from "@/components/Content/SwitchToggle"
-import { useCallback, useEffect, useState } from "react"
 import SettingField from "@/containers/SettingField"
 import BillingField from "./components/BillingField"
 import SteamSettings from "./components/SteamSettings"
-import { getUserAccountSettings } from "@/services/user/user"
 import { useSettingsContext } from "@/context/SettingsContext"
 import ErrorLabelRounded from "@/components/funds/ErrorLabelRounded"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 
 export default function Settings() { 
 const { push } = useRouter()
+
 const { 
   data,
   isAcceptedNotification,
-  setData,
   updateField,
   setAcceptedNotification
  } = useSettingsContext()
-
-
-const getSettings = useCallback(async () => {
-  try {
-    const data = await getUserAccountSettings()
-    setData(data)
-    setAcceptedNotification(data.notifications)
-  } catch (error) {
-    console.log(error)
-  }
- 
-},[])
-
-useEffect(() => {
-  void getSettings()
-},[])
-
 
 return (
       <div className='w-full py-16 px-6'>

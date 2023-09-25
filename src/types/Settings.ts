@@ -4,9 +4,9 @@ export interface IUserBillingAddress {
     firstName: string;
     lastName: string;
     streetAddress: string;
-    streetAddress2?: string | null;
+    streetAddress2?: string
     city: string;
-    province?: string | null;
+    province?: string 
     zip: string;
     country: string;
   }

@@ -6,7 +6,7 @@ import TriangleExclamation from "@/components/icons/settings/TriangleExclamation
 import { useSettingsContext } from "@/context/SettingsContext"
 import { classNames } from "@/helpers/className"
 import { useFormik } from "formik"
-import router, { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import * as Yup from 'yup'
 import { useEffect, useState } from "react"
 
@@ -43,6 +43,13 @@ export default function EmailSetup() {
         }
       }, [formik.errors.email])
 
+      useEffect(() => {
+        if(data?.email){
+          formik.setValues({
+            email: data?.email
+          })
+        }
+      }, [data])
 
 
     return (

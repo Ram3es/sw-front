@@ -4,8 +4,11 @@ import EditPencil from '../icons/EditPencil';
 import InformationIcon from '../icons/InformationIcon';
 import { classNames } from '@/helpers/className';
 import { Button } from '../Navigation';
+import { setWallet } from '@/services/user/user';
 
 export interface IWalletCard {
+  id?: number
+  currency: string
   title: string
   placeholder: string
   varificationRequired?: boolean
@@ -14,10 +17,20 @@ export interface IWalletCard {
   onValueUpdate: (v: string) => void
 }
 
-const WalletCard = ({ title, placeholder, varificationRequired, isVerified, verifyFn, onValueUpdate } : IWalletCard) => {
+const WalletCard = ({id, currency, title, placeholder, varificationRequired, isVerified, verifyFn, onValueUpdate } : IWalletCard) => {
     const [isEditMode, setIsEditMode] = useState(false)
 
     const ref = useRef<HTMLInputElement>(null)
+
+    const handleSaveBtn = async () => {
+      setIsEditMode(false)
+      try {
+        await setWallet({ id, currency, wallet: placeholder })
+        
+      } catch (error) {
+        
+      }
+    }
 
     useEffect(() => {
         isEditMode && ref.current?.focus()
@@ -47,6 +60,13 @@ const WalletCard = ({ title, placeholder, varificationRequired, isVerified, veri
                     onFocus={(e) => e.currentTarget.setSelectionRange(e.currentTarget.value.length, e.currentTarget.value.length)}
                     className={classNames('bg-transparent outline-none w-full mr-8')} 
                   />
+                  {!varificationRequired && isEditMode &&
+                   <Button
+                     text="Save"
+                     onClick={handleSaveBtn}
+                   className=" w-24 flex justify-center text-base font-medium text-darkGrey bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer cta-clip-path "
+                 />
+                  }
                   {varificationRequired && <> <p>Check <span className='text-swViolet'>{placeholder}</span> for confirmation email and click the link in the mail for verification.</p>
                   <Button
                     text='resend'

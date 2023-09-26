@@ -1,3 +1,5 @@
+import { EToastType } from "./Enums";
+
 export interface IUserBillingAddress {
     id: number;
     userId: number;
@@ -25,3 +27,9 @@ export interface IUserBillingAddress {
   }
 
   export type IUpdateSettingDto = Record<string, string | number | boolean>
+
+  export interface IToast  {
+    id: string
+    type: keyof typeof EToastType,
+    message: string
+  }

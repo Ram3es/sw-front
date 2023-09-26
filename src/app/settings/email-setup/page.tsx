@@ -12,7 +12,7 @@ import { useEffect, useState } from "react"
 
 export default function EmailSetup() {
     const [errors, setErrors] = useState({status: false, message: '', errorClass: 'text-red-500' })
-    const {data, updateField } = useSettingsContext()
+    const {data, updateField, showToast } = useSettingsContext()
     const { back } = useRouter()
 
     const formik = useFormik({
@@ -26,11 +26,21 @@ export default function EmailSetup() {
           email: Yup.string().email('Invalid email').required('This field can not be empty')
         }),
         validateOnChange: false,
-        onSubmit: (values) => {
+        onSubmit: async (values) => {
             try {
-              updateField(values)
+              await updateField(values)
+              back()
+              showToast({
+                id: 'email',
+                message: 'Email was changed',
+                type: "success"
+              })
             } catch(error) {
-              console.log(error)
+              showToast({
+                id: 'email-error',
+                message: 'Email wasn`t changed',
+                type: "error"
+              })
             } 
           } 
       })

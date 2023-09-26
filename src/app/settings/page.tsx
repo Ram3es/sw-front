@@ -6,6 +6,7 @@ import SteamSettings from "./components/SteamSettings"
 import { useSettingsContext } from "@/context/SettingsContext"
 import ErrorLabelRounded from "@/components/funds/ErrorLabelRounded"
 import { useRouter, usePathname } from "next/navigation"
+import { useCallback } from "react"
 
 export default function Settings() { 
 const { push } = useRouter()
@@ -14,8 +15,29 @@ const {
   data,
   isAcceptedNotification,
   updateField,
+  showToast,
   setAcceptedNotification
  } = useSettingsContext()
+
+ const toggleSwitcher = useCallback(async () => {
+  setAcceptedNotification(val => val ? 0 : 1 )
+  try {
+    await updateField({ notifications: isAcceptedNotification ? 0 : 1 })
+    showToast({
+      id: `notification-${Date.now().toString()}`,
+      message: 'Setting was applied',
+      type: "success"
+    })
+
+  } catch (error) {
+    showToast({
+      id: `notification-error-${Date.now().toString()}`,
+      message: 'Error occurred',
+      type: "error"
+    })
+  }
+   
+ }, [isAcceptedNotification])
 
 return (
       <div className='w-full py-16 px-6'>
@@ -40,7 +62,7 @@ return (
               <div className='w-full gap-4 flex items-center '>
                 <SwitchToggle
                   checked={Boolean(isAcceptedNotification)}
-                  onChange={() => { setAcceptedNotification(val => val ? 0 : 1 ); updateField({ notifications: isAcceptedNotification ? 0 : 1 }) }}
+                  onChange={toggleSwitcher}
                  />
                 <span className='text-sm font-normal'>I agree to receive e-mail newsletters from Skinwallet</span>
               </div>

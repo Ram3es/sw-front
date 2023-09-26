@@ -50,7 +50,7 @@ type TErrState = Record<string, { status: boolean, message: string, errorClass: 
 
 
 const BillingInfo = () => {
-  const { data } = useSettingsContext()
+  const { data, showToast } = useSettingsContext()
   const { back } = useRouter()
   const [errors, setErrors] = useState<TErrState>(ERRROS_STATE)
 
@@ -85,11 +85,20 @@ const BillingInfo = () => {
       country: Yup.string().required('Selecting country is required.')
     }),
     validateOnChange: true,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
         try {
-          setBillingAddress({...values, userId: data?.id, id:data?.billingAddress?.id })
+          await setBillingAddress({...values, userId: data?.id, id:data?.billingAddress?.id })
+          back()
+          showToast({ 
+            type: 'success',
+            message: 'Billing settings have been changed',
+            id: Date.now().toString()})
+
         } catch(error) {
-          console.log(error)
+          showToast({ 
+            type: 'error',
+            message: 'Error occurred',
+            id: Date.now().toString()})
         } 
       } 
   })

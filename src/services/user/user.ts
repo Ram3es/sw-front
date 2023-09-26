@@ -11,3 +11,5 @@ export const updateSettings = async (data: IUpdateSettingDto) => await PATCH('/u
 export const setBillingAddress = async (data: any) => await PUT('/users/address', data)
 
 export const setWallet = async (data: { currency: string, wallet: string, id?: number }) => await PUT('/users/wallet', data)
+
+export const setPaymentAccount = async (data: { accountType: string, accountNumber: string, id?: number }) => await PUT('/users/account', data)

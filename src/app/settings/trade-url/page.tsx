@@ -16,8 +16,8 @@ export default function TradeUrl() {
     const [errors, setErrors] = useState({status: false, message: '', errorClass: 'text-red-500' })
 
     const { data } = useSettingsContext()
-    const { updateField } = useSettingsContext()
-    const router = useRouter()
+    const { updateField, showToast } = useSettingsContext()
+    const { back } = useRouter()
  
     const formik = useFormik({
       initialTouched: {
@@ -30,11 +30,21 @@ export default function TradeUrl() {
         tradeUrl: Yup.string().required('Steam Trade URL cannot be empty')
       }),
       validateOnChange: false,
-      onSubmit: (values) => {
+      onSubmit: async (values) => {
           try {
-            updateField(values)
+           await updateField(values)
+           back()
+           showToast({
+            id: Date.now.toString(),
+            type: 'success',
+            message: 'Trade Url was updated'
+           })
           } catch(error) {
-            console.log(error)
+            showToast({
+              id: Date.now.toString(),
+              type: 'error',
+              message: 'Error occurred'
+             })
           } 
         } 
     })
@@ -89,9 +99,10 @@ export default function TradeUrl() {
               <div className="flex gap-4 ml-auto">
                 <Button
                   text='cancel'
+                  type='button'
                   className=' bg-black bg-opacity-50 w-full border border-graySecondary group hover:border-white hover:text-white justify-center cta-clip-path uppercase text-graySecondary  [&_.text]:w-max relative'
                   heightClass='h-12'
-                  onClick={router.back}
+                  onClick={back}
                 >
                   <div className='absolute w-3 bottom-[3px] -left-[3px] border-b border-graySecondary group-hover:border-white duration-200 rotate-45' />
                 </Button>

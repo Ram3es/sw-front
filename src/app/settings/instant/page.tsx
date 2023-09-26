@@ -1,8 +1,5 @@
 'use client'
 import WalletCard, { IWalletCard } from "@/components/Content/WalletCard";
-import { Button } from "@/components/Navigation";
-import EditPencil from "@/components/icons/EditPencil";
-import InformationIcon from "@/components/icons/InformationIcon";
 import { WALLETS } from "@/constants/settings";
 import { useSettingsContext } from "@/context/SettingsContext";
 import { useEffect, useState } from "react";

@@ -39,7 +39,7 @@ const SteamSettings = () => {
       <SettingField
         title='steam trade url'
         wrapperClasses='bg-darkSecondary'
-        editableFn={data && editFn}
+        editableFn={data?.tradeUrl ? editFn : undefined}
       >{ data?.tradeUrl
         ? <SuccessLabel message='provided' />
         : (

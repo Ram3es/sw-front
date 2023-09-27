@@ -46,7 +46,6 @@ export const SettingsProvider:FC<PropsWithChildren> = ({ children }) => {
         if(pathname.includes('settings')) {
           void getSettings()
         }
-       
       },[pathname])
 
     return(

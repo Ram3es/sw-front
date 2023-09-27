@@ -1,6 +1,7 @@
 import { IUserAccount, IUserBillingAddress, IUserCryptoWallet } from "./Settings"
 
 export interface IBillingAddress {
+  id?: number
   firstName: string
   lastName: string
   streetAddress: string

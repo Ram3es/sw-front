@@ -12,9 +12,11 @@ import { useAppContext } from '@/context/AppContext'
 import { useCartContext } from '@/context/CartContext'
 import { classNames } from '@/helpers/className'
 import { format } from '@/helpers/numberFormater'
+import { getUserAccountSettings } from '@/services/user/user'
+import { IBillingAddress } from '@/types/User'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
-import { SyntheticEvent, useCallback, useState } from 'react'
+import { SyntheticEvent, useCallback, useEffect, useState } from 'react'
 
 interface IAgreements {
   policy: boolean
@@ -24,8 +26,9 @@ interface IAgreements {
 export default function CartCheckout() {
   const { cartItems, getSteamTotalPrice, getDiscount, getTotal } = useCartContext()
   const { user } = useAppContext()
-  const router = useRouter();
+  const { replace }  = useRouter();
 
+  const [billingAddress, setBillingAddress] = useState<IBillingAddress>()
   const [agreements, setAgreements] = useState<IAgreements>({
     policy: false,
     cancelation: false
@@ -35,7 +38,7 @@ export default function CartCheckout() {
     return Object.values(agreements).every((el) => el)
   }, [agreements])
 
-  const isPositiveBalance = () => (user?.balance ?? 0) >= getTotal()
+  const isPositiveBalance = (): boolean => (user?.balance ?? 0) >= getTotal()
 
   const isButtonDisabled = () => cartItems.items.length === 0 || !validateAgreements() || !isPositiveBalance
 
@@ -43,11 +46,22 @@ export default function CartCheckout() {
     e.preventDefault()
 
     if (validateAgreements() && isPositiveBalance()) {
-      router.push('/cart/compleate')
+      replace('/cart/complete')
     } else {
       console.log('order bad')
     }
   }
+
+  useEffect(() => {
+    const getBillingAddres = async () => {
+      const { billingAddress } = await getUserAccountSettings()
+      setBillingAddress(billingAddress)
+    }
+    if(user?.id){
+      void getBillingAddres()
+    }
+    
+  }, [user])
 
   return (
     <>
@@ -62,17 +76,17 @@ export default function CartCheckout() {
             <div
               className={classNames(
                 'pt-4 px-6 space-y-4 lg:space-y-0 lg:grid grid-cols-12 bg-darkGrey',
-                user?.billingAddress ? 'pb-8' : 'pb-4'
+                billingAddress ? 'pb-8' : 'pb-4'
               )}
             >
               <div className="col-span-4 flex items-start">
                 <div className="flex items-center gap-2">
-                  {user?.billingAddress && <CheckUnfilled className="text-swLime" />}
+                  {billingAddress && <CheckUnfilled className="text-swLime" />}
                   <span className="text-graySecondary uppercase tracking-[1.44px] text-18">billing</span>
                 </div>
               </div>
               <div className="col-span-8 col-start-5 ">
-                {!user?.billingAddress ? (
+                {!billingAddress ? (
                   <div className="flex flex-col gap-4">
                     <ErrorLabelRounded isError={true} message={CHECKOUT_ERRORS.BILLING_WARNING} />
                     <p className="text-graySecondary text-sm leading-[21px] font-normal">
@@ -97,8 +111,8 @@ export default function CartCheckout() {
                         <p className="font-normal">PL1234567890</p>
                       </div>
                       <div className="text-lg leading-[26px] text-white">
-                        <p className="font-medium">{`${user?.billingAddress?.firstName} ${user?.billingAddress?.lastName}`}</p>
-                        <p className="font-normal">{`${user?.billingAddress?.streetAddress} ${user?.billingAddress?.zip} ${user?.billingAddress?.province}, ${user?.billingAddress?.country}`}</p>
+                        <p className="font-medium">{`${billingAddress?.firstName} ${billingAddress?.lastName}`}</p>
+                        <p className="font-normal">{`${billingAddress?.streetAddress} ${billingAddress?.zip} ${billingAddress?.province}, ${billingAddress?.country}`}</p>
                       </div>
                       <div className="text-lg leading-[26px] text-white">
                         <p className="font-medium">11.03.1997</p>
@@ -114,13 +128,13 @@ export default function CartCheckout() {
             <div className="pb-8 pt-4 px-6 space-y-4 lg:space-y-0 lg:grid grid-cols-12 bg-darkGrey">
               <div className="col-span-4 flex items-start">
                 <div className="flex items-center gap-2">
-                  {getTotal() !== 0 && isPositiveBalance() && <CheckUnfilled className="text-swLime" />}
+                  {(user?.balance ?? 0)!== 0 && isPositiveBalance() && <CheckUnfilled className="text-swLime" />}
                   <span className="text-graySecondary uppercase tracking-[1.44px] text-18">payment</span>
                 </div>
               </div>
               <div className="col-span-8 col-start-5 flex flex-col gap-4">
                 <ErrorLabelRounded
-                  isError={getTotal() === 0 || (user?.balance ?? 0) > getTotal()}
+                  isError={(user?.balance ?? 0) === 0 || !isPositiveBalance()}
                   message={CHECKOUT_ERRORS.PAYMENT_WARNING}
                 />
                 <div className="w-full flex items-center justify-between">
@@ -128,13 +142,13 @@ export default function CartCheckout() {
                   <span
                     className={classNames(
                       'font-medium leading-4 text-base',
-                      getTotal() === 0 || !isPositiveBalance() ? 'text-swOrange' : 'text-white'
+                      (user?.balance ?? 0) === 0 || !isPositiveBalance() ? 'text-swOrange' : 'text-white'
                     )}
                   >
                     ${format(user?.balance ?? 0)}
                   </span>
                 </div>
-                {getTotal() === 0 || !isPositiveBalance() ? (
+                {(user?.balance ?? 0) === 0 || !isPositiveBalance() ? (
                   <>
                     <p className="text-graySecondary text-sm leading-[21px] font-normal">
                       {CHECKOUT_ERRORS.PAYMENT_NOTICE}

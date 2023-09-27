@@ -10,9 +10,6 @@ interface IToastMngProps {
 
 const ToastManager = () => {
     const { listToasts, removeToast } = useSettingsContext()
-    useEffect(() => {
-        console.log(listToasts)
-    }, [listToasts])
     return (
         <div className='flex w-max flex-col gap-y-3 mt-2 fixed right-0 z-50' >
             { listToasts.map(toast => (

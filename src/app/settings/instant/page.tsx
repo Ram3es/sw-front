@@ -11,8 +11,6 @@ export default function Instant() {
   const handleInputChange = (newValue: string, index: number) => {
     setWalletItems((prev) => {
       const newValues = [...prev];
-      console.log(newValues,  newValues[index]);
-      
       newValues[index]['placeholder'] = newValue
       return newValues
     });

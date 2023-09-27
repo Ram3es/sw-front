@@ -16,7 +16,6 @@ export const SettingsProvider:FC<PropsWithChildren> = ({ children }) => {
     const updateField = async (value: IUpdateSettingDto ) => {
         try {
             const user = await updateSettings(value)
-            console.log(user)
         } catch (error) {
             console.log(error)
         }
@@ -26,7 +25,6 @@ export const SettingsProvider:FC<PropsWithChildren> = ({ children }) => {
         try {
           const data = await getUserAccountSettings()
           setData(data)
-          console.log(data)
           setAcceptedNotification(data.notifications)
         } catch (error) {
           console.log(error)

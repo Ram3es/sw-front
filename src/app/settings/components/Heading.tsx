@@ -19,6 +19,10 @@ const TITLE_ROUTES = [
     {
         path: '/settings/trade-url',
         title : 'steam trade url',
+    },
+    {
+        path: '/settings/email-setup',
+        title : 'email',
     }
 ]
 

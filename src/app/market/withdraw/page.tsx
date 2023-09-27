@@ -53,7 +53,7 @@ export default function Inventory() {
                  key={offer.security_token}
                  botName={offer.bot_name}
                  token={offer.security_token}
-                 createdAt={offer.created_at}
+                 createdAt={offer.createdAt}
                  expiredAt={offer.expired_at}
                  items={offer.items.map(item => (
                    {

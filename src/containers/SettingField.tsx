@@ -11,7 +11,7 @@ interface IFieldProps extends PropsWithChildren {
 
 const SettingField: FC<IFieldProps> = ({ children, title, icon, wrapperClasses, editableFn }) => {
   return (
-        <div className={classNames('w-full flex justify-between px-6 py-3 text-graySecondary ',
+        <div className={classNames('w-full flex justify-between p-6 text-graySecondary ',
           wrapperClasses ?? 'bg-darkGrey'
         )}>
           <div className='flex flex-col gap-y-2 sm:flex-row items-start sm:items-center w-full text-lg'>

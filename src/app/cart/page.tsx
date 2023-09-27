@@ -12,10 +12,12 @@ import { format } from "../../helpers/numberFormater"
 import ItemSelectedCard from "../../components/Content/ItemSelectedCard"
 import { IMAGE_ROOT_URL } from "../../constants/strings"
 import SteamIcon from "@/components/icons/checkout/SteamIcon"
+import { useRouter } from "next/navigation"
 
 export default function Inventory() {
   const { cartItems, removeFromCart, getSteamTotalPrice, getDiscount, getTotal } = useCartContext()
   const [ cartObject, setCartObject ] = useState<Record<string, IOffersCard[]> | undefined>()
+  const { replace } = useRouter()
 
   function getKeyByValue(enumObj: any, value: any) {
     for (const key in enumObj) {
@@ -83,7 +85,7 @@ export default function Inventory() {
                   {cartObject[k].map(card => (
                     <div className="flex w-full justify-between border-b border-white/10">
                       <ItemSelectedCard
-                        key={card.name}
+                        key={card.inventoryItemId}
                         id={card.inventoryItemId}
                         variant='offer'
                         image={IMAGE_ROOT_URL.concat(card.imageUrl)}
@@ -145,14 +147,12 @@ export default function Inventory() {
                 </div>
               </div>
             </div>
-            <Link href="/cart/checkout">
               <Button
                 text='checkout'
-                onClick={() => {}}
+                onClick={() => replace('/cart/checkout') }
                 className={classNames('bg-skinwalletPink justify-center items-center w-full h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
                   cartItems.items.length !== 0 ? '' : 'pointer-events-none opacity-50')}
               />
-             </Link>
              <div className='w-full absolute left-0 -top-10 h-10 sm:hidden' style={{ background: 'linear-gradient(180deg, rgba(20, 20, 21, 0.00) 0%, #0D0D0D 100%)' }}/>
           </div>
       </div>

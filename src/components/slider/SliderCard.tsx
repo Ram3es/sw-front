@@ -9,6 +9,7 @@ import { useCartContext } from '@/context/CartContext'
 import { ECardVariant, IOffersCard } from '@/types/Card'
 import { IMAGE_ROOT_URL } from '@/constants/strings'
 import SliderArrow from '../../components/slider/SliderArrow'
+import { useAppContext } from '@/context/AppContext'
 
 interface ISliderProps extends PropsWithChildren {
   settings: Partial<Settings>,
@@ -17,11 +18,14 @@ interface ISliderProps extends PropsWithChildren {
 
 const SliderCard: FC<ISliderProps> = ({ items, settings }) => {
   const { addToCart } = useCartContext()
+  const { user } = useAppContext()
   const settingsWithArrow = { 
     nextArrow: <SliderArrow />,
     prevArrow: <SliderArrow isLeftArrow />,  
     ...settings 
   }
+
+
   
   return (
         <Slider {...settingsWithArrow}>
@@ -38,7 +42,7 @@ const SliderCard: FC<ISliderProps> = ({ items, settings }) => {
                 steamPrice={item.steamPrice.amount}
                 image={IMAGE_ROOT_URL.concat(item.imageUrl)}
                 onClick={() => {
-                  addToCart(item)
+                  if (user?.id) addToCart(item)
                 }}
                 submitFn={() => {}}
                   />

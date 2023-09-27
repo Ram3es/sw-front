@@ -7,7 +7,6 @@ import Loader from '../Content/Loader'
 
 export const IsUserLogged = ({ children }: { children: JSX.Element }) => {
   const { user, isUserLoading } = useAppContext()
-  console.log(user);
   
   return (
     <>

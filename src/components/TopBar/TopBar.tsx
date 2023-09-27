@@ -23,6 +23,7 @@ import LogoSkinwallet from '../icons/top-bar/LogoSkinwallet'
 import SearchIcon from '../icons/top-bar/SearchIcon'
 import Link from 'next/link'
 import { useCartContext } from '@/context/CartContext'
+import AddedToCartModal from '../modals/AddedToCartModal'
 
 interface ITopBar {
   isHidableOnScroll: boolean
@@ -47,6 +48,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
   const { cartItems } = useCartContext()
   return (
 <>
+<AddedToCartModal />
     <header
       id="top-bar"
       className={classNames(
@@ -240,6 +242,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
             </>
               )}
         </nav>
+
       </div>
     </header>
     <SearchModal isOpen={searchOpened} onClose={changeSearchState} />

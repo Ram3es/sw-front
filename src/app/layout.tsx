@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Barlow } from 'next/font/google'
 import { Providers } from '../providers/providers'
 import Script from 'next/script'
+import Toast from '@/components/Content/Toast'
 
 const barlow = Barlow({ subsets: ['latin'], weight: ['500'] })
 
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={barlow.className}>
-        <div className='flex flex-col bg-darkSecondary min-h-screen'>
+        <div className='flex flex-col bg-darkSecondary min-h-screen relative'>
           <Providers>
             <>
               <TopBar isHidableOnScroll={true} />

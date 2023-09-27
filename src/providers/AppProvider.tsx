@@ -25,7 +25,6 @@ export const AppProvider = ({ children }: IProps) => {
         username: data.steamUsername,
         balance: Number(data.balance),
         avatar: data.avatarUrl,
-        billingAddress: data.billingAddress
       })
       setIsUserLoading(false)
     } catch (error) {

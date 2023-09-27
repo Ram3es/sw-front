@@ -1,25 +1,11 @@
+import { findNearestMaxValue } from '@/helpers/findNearestMaxValue'
 import { CONDITIONS } from '../../constants/item-conditions'
-import { format } from '../../helpers/numberFormater'
+import { format, percentageDecrease } from '../../helpers/numberFormater'
 import { ECardVariant, type CardItem, type ConditionItem } from '../../types/Card'
 import { Button } from '../Navigation'
 import ClockIcon from '../icons/ClockIcon'
 import SteamIcon from '../icons/SteamIcon'
 import Checkbox from './Checkbox'
-
-function findNearestMaxValue (arr: ConditionItem[], value: number): ConditionItem | null {
-  let nearestMaxValue: ConditionItem | null = null
-
-  for (let i = 0; i < arr.length; i++) {
-    const maxVal: number = arr[i].maxVal
-
-    if (value < maxVal) {
-      nearestMaxValue = arr[i]
-      break
-    }
-  }
-
-  return nearestMaxValue
-}
 
 function classNames (...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -36,6 +22,7 @@ const ItemCard = ({
   steamPrice,
   type,
   condition,
+  onChange,
   onClick,
   submitFn,
   variant
@@ -112,11 +99,11 @@ const ItemCard = ({
                   : timeToTrade ? `${timeToTrade} hours` : "Can't trade"}
                 </span>}
             </div>
-            <div className='text-swViolet group-[.market]/card:hidden group-[.withdraw]/card:hidden'>
+            {onChange ? <div className='text-swViolet group-[.market]/card:hidden group-[.withdraw]/card:hidden'>
               <Checkbox
                 checked={isSelected ?? false}
               />
-            </div>
+            </div> : ''}
           </div>
           <img
             className="h-[137px]"
@@ -125,8 +112,11 @@ const ItemCard = ({
           />
           <div className="flex flex-col w-full relative mb-2">
             <div className='text-graySecondary uppercase text-sm font-Barlow font-light group-[.market]/card:hidden'>estimated value</div>
-            <div className='uppercase text-2xl group-[.withdraw]/card:hidden font-Barlow text-white font-bold'>${format(price)}</div>
-            <div className='hidden group-[.market]/card:flex group-[.withdraw]/card:flex items-center gap-2 py-1 text-sm text-graySecondary'>
+            <div className='flex flex-row group-[.withdraw]/card:hidden font-Barlow font-bold'>
+              <div className='uppercase text-2xl text-white mr-3'>${format(price)}</div>
+              {steamPrice ? <div className='bg-[#18E86B] h-6 px-1'>{percentageDecrease(steamPrice, price)}%</div> : ''}
+            </div>
+            <div className='flex flex-row group-[.market]/card:flex group-[.withdraw]/card:flex items-center gap-2 py-1 text-sm text-graySecondary'>
               <SteamIcon className='w-4 h-auto'/>
               <span>${format(steamPrice ?? 0)}</span>
             </div>
@@ -166,14 +156,14 @@ const ItemCard = ({
 
         </div>
       </div>
-      {variant !== ECardVariant.withdraw
-        ? <Button
+      {variant == ECardVariant.withdraw || variant == ECardVariant.purchased
+        ? '' 
+        : <Button
             className={classNames('justify-center z-10 hidden group-hover:flex  absolute left-0 top-full mr-[20px] text-base w-full h-[40px] uppercase font-semibold text-darkSecondary border border-skinwalletPink bg-skinwalletPink cta-clip-path role-button',
               variant === ECardVariant.market ? ' hover:opacity-50 ' : '')}
             text={variant === ECardVariant.market ? 'add to cart' : 'add to sale'}
             onClick={submitFn}
-          />
-        : ''}
+          />}
     </div>
   )
 }

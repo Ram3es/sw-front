@@ -11,7 +11,7 @@ export interface IOffersResponse {
 export interface ITradeOffersResponse {
   items: IOffersCard[]
   bot_name: string
-  created_at: Date
+  createdAt: Date
   security_token: string
   accepted: boolean
   expired_at: Date

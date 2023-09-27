@@ -1,28 +1,41 @@
-export const WALLETS = [
+export interface IWalletSettings {
+    currency: string
+    title: string
+    text: string
+    varificationRequired?: boolean
+}
+
+export const WALLETS: IWalletSettings[]  = [
     {
+        currency: 'venmo',
         title:'venmo account',
-        text: 'example@gmail.com'
+        text: ''
     },
     {
+        currency: 'btc',
         title:'btc wallet',
-        text: '38wmw4uou2bWPEw4USzunSHdA9t7JhfvHX'
+        text: ''
     },
     {
+        currency: 'eth',
         title:'eth wallet',
-        text: '0xe646Cb2Cbd960dd3A279754a440C6a55fa78F248'
+        text: ''
     },
     {
+        currency: 'ltc',
         title:'ltc wallet',
-        text: 'MGgGTNsYKBU98aD6Yq4DcCS8zNTAcPQwW4'
+        text: ''
     },
     {
+        currency: 'paypal',
         title:'paypal account',
-        text: 'example@gmail.com',
+        text: '',
         varificationRequired: true
     },
     {
+        currency: 'webmoney',
         title:'webmoney account',
-        text: 'example@gmail.com'
+        text: ''
     },
 
 ]

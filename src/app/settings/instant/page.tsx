@@ -1,12 +1,11 @@
 'use client'
 import WalletCard, { IWalletCard } from "@/components/Content/WalletCard";
-import { Button } from "@/components/Navigation";
-import EditPencil from "@/components/icons/EditPencil";
-import InformationIcon from "@/components/icons/InformationIcon";
 import { WALLETS } from "@/constants/settings";
+import { useSettingsContext } from "@/context/SettingsContext";
 import { useEffect, useState } from "react";
 
 export default function Instant() {
+  const { data } = useSettingsContext()
   const [walletItems, setWalletItems] = useState<IWalletCard[]>([])
 
   const handleInputChange = (newValue: string, index: number) => {
@@ -21,6 +20,7 @@ export default function Instant() {
 
   useEffect(() => {
     setWalletItems(() => WALLETS.map((w: any, index: number) => ({ 
+      currency: w.currency,
       title: w.title,
       placeholder: w.text,
       varificationRequired: w.varificationRequired,
@@ -30,24 +30,29 @@ export default function Instant() {
     })))
   }, [])
 
+  useEffect(() => {
+    data && data.cryptoWallets.map((wallet) =>{
+       setWalletItems(prev => [...prev.map(method => {
+        if(method.currency === wallet.currency){
+          return {...method, placeholder: wallet.wallet, id: wallet?.id  }
+        }
+        return method
+       })])
+    } )
+  }, [data])
+
     return (
         <div className='w-full py-16 px-6'>
           <div className='w-full max-w-[672px] items-end flex flex-col gap-8 mx-auto '>
             <div className="flex flex-col w-full gap-4 text-graySecondary">
              {walletItems.map((wallet) => 
                 <WalletCard
-                  key={wallet.title}
+                  key={wallet.currency}
                   {...wallet}
                  /> 
                 )}
             </div>
-            <Button
-              text="Save"
-              onClick={() => {
-                console.log('Save')
-              }}
-              className=" w-24 flex justify-center text-base font-medium text-darkGrey bg-skinwalletPink/50 hover:bg-skinwalletPink/80 uppercase cursor-pointer cta-clip-path "
-            />
+           
           </div>
         </div>
     )

@@ -25,7 +25,7 @@ export const Button = ({ text = '', heightClass, icon, iconRight = false, childr
       type={props.type}
     >
       {icon && !iconRight && <span className="pr-[8px]">{icon}</span>}
-      <span className="text">{text}</span>
+      <span className="text py-[10px]">{text}</span>
       {children}
       {icon && iconRight && <span className="pl-[8px]">{icon}</span>}
     </button>

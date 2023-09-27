@@ -19,5 +19,5 @@ interface CheckoutModal {
 }
 
 export const CHECKOUT_SETTINGS: CheckoutModal = {
-  DURATIOM_MODAL_CART_ADDED: 4000
+  DURATIOM_MODAL_CART_ADDED: 3000
 }

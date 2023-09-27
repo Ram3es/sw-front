@@ -7,9 +7,11 @@ import { IMAGE_ROOT_URL } from '@/constants/strings'
 import { useCartContext } from '@/context/CartContext'
 import { buyItems } from '@/services/market/market'
 import { CardItem, ECardVariant, IOffersCard } from '@/types/Card'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 export default function CartCompleate() {
+  const { replace } = useRouter()
   const { cartItems, clearCart } = useCartContext()
   const [ isCheckoutSuccess, setIsCheckoutSuccess ] = useState(false)
   const [ isCheckoutLoading, setIsCheckoutLoading ] = useState(false)
@@ -74,12 +76,14 @@ export default function CartCompleate() {
                 className='bg-skinwalletPink w-max uppercase text-dark-14 hover:opacity-50 cta-clip-path mr-6'
                 heightClass='h-12'
                 text='withdraw items'
+                onClick={() => replace('/market/inventory',)}
               />
               <div className=' w-full sm:w-max relative overflow-hidden hover button'>
                 <Button
                   className='bg-black w-max border border-graySecondary uppercase text-graySecondary hover:opacity-50 cta-clip-path'
                   heightClass='h-12'
                   text='continue shopping'
+                  onClick={() => replace('/market')}
                 />
                 <div className='absolute w-4 bottom-1 -left-1 border-b border-graySecondary hover rotate-45' />
               </div>
@@ -105,6 +109,7 @@ export default function CartCompleate() {
                 className='bg-skinwalletPink w-max uppercase text-dark-14 hover:opacity-50 cta-clip-path'
                 heightClass='h-12'
                 text='continue shopping'
+                onClick={() => replace('/market')}
               />
             </div>
           </div>

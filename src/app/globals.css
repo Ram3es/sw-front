@@ -104,6 +104,10 @@ input[type='number'] {
   text-transform: capitalize;
 }
 
+.first-capital:first-letter {
+  text-transform: capitalize;
+}
+
 .marked-list p {
   position: relative;
   color:white;

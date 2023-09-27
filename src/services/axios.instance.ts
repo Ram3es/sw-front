@@ -8,6 +8,12 @@ export const GET = async <T>(endpoint: string): Promise<T> =>
 export const POST = async <T, U = undefined >(endpoint: string, data?: U): Promise<T> =>
   await getAxiosInstance().post(endpoint, data)
 
+export const PUT = async <T, U>(endpoint: string, data: U):Promise<T> => 
+await getAxiosInstance().put(endpoint, data)
+
+export const PATCH = async <T, U>(endpoint: string, data: U):Promise<T> => 
+  await getAxiosInstance().patch(endpoint, data)
+
 const getAxiosInstance = () => {
   const instance = axios.create({
     baseURL: API_BASE_URL,

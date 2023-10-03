@@ -13,11 +13,12 @@ interface IInputWithErrors extends InputHTMLAttributes<HTMLInputElement> {
   isLoading?: boolean
   error?: any
   errorIcon?: JSX.Element
-  errorBorder: string
+  errorBorder?: string
   successIcon?: JSX.Element
   withClearBtn?: boolean
   activeClass?: string
   wrapperClasses?: string
+  couponLabelClasses?: string
 }
 
 const InputWithErrors: FC<IInputWithErrors> = ({ 
@@ -32,6 +33,7 @@ const InputWithErrors: FC<IInputWithErrors> = ({
   withClearBtn,
   activeClass,
   wrapperClasses,
+  couponLabelClasses,
   onClear,
   handleChange,
   handleBlur,
@@ -68,7 +70,7 @@ const InputWithErrors: FC<IInputWithErrors> = ({
           className={classNames('w-full flex items-center h-14  group  px-6 cursor-text relative',
             wrapperClasses ?? 'border-2 border-darkGrey',
             isFocused ? activeClass ?? 'focus-within:border-white' : '',
-            error?.status && !isFocused ? errorBorder : '')}
+            error?.status && !isFocused ? errorBorder ?? '' : '')}
         >
           <div className='w-full flex flex-col'>
             <label className={classNames('w-full text-graySecondary text-11 leading-[11px] capitalize pointer-events-none ',
@@ -100,7 +102,9 @@ const InputWithErrors: FC<IInputWithErrors> = ({
           </div>
           {variant === 'coupon' && !isFocused && value === '' &&
             <div className='absolute inset-0 bg-transparent '>
-              <div className='w-full h-full flex px-6 items-center text-lg capitalize '>{label}</div>
+              <div className={classNames('w-full h-full flex  items-center  ',
+                couponLabelClasses ?? 'px-6 text-lg capitalize'
+              )}>{label}</div>
             </div> }
         </div>
         {error?.status && !isFocused &&

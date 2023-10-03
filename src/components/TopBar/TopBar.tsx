@@ -90,10 +90,11 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
           <NavDropdown wrapperClasses='hidden lg:flex' title={Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]} setSelected={setSelected}>
             <div className="flex w-full mx-10 gap-10 flex-wrap">
               {gamesLinks.map((game) => (
-                <div
+                <Listbox.Option
                   key={game.id}
                   className="flex flex-col gap-3 w-[178px] cursor-pointer"
                   onClick={() => { updateGameId(game.id) }}
+                  value={game}
                 >
                   <div className={classNames('relative w-full', gameId === game.id ? 'border border-swViolet' : '')}>
                     {game.bg
@@ -117,7 +118,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                   <div className='text-graySecondary text-sm font-Barlow font-light'>
                     {game.description}
                   </div>
-                </div>
+                </Listbox.Option>
               ))}
             </div>
           </NavDropdown>

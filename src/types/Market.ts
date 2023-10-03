@@ -4,8 +4,7 @@ export interface IOffersResponse {
   offers: IOffersCard[]
   total: number
   sortBy: string
-  sortByOptions: any[]
-
+  sortByOptions: ISortByOptions[]
 }
 
 export interface ITradeOffersResponse {
@@ -17,4 +16,9 @@ export interface ITradeOffersResponse {
   expired_at: Date
   browser_confiramation_url: string
   steam_confiramation_url: string
+}
+
+export interface ISortByOptions {
+  name: string
+  label: string
 }

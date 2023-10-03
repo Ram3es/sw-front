@@ -76,7 +76,7 @@ export default async function Market() {
                           />
                           </Link>
                         <div className=' w-full sm:w-max relative overflow-hidden hover button'>
-                          <Link href="/" >
+                          <Link href="/market/offers" >
                             <Button
                               text='buy now'
                               className=' bg-black bg-opacity-50 w-full border border-graySecondary  hover justify-center cta-clip-path uppercase text-graySecondary text-23 small-caps leading-[24px] tracking-[2.3px] [&_.text]:mb-1'
@@ -93,7 +93,7 @@ export default async function Market() {
             <div className='w-full flex flex-col max-w-[1160px]'>
               <div className='w-full h-full flex flex-col '>
                 <SkinsCategoriesTitle
-                  path='/'
+                  path='/market/offers'
                   title='hot offers'
                   icon={<MarketHotIcon className='text-swRed' />}
                   totalSkins={offerCards?.total ?? 0}
@@ -102,7 +102,7 @@ export default async function Market() {
               </div>
               <div className='w-full h-full flex flex-col mt-8 '>
                 <SkinsCategoriesTitle
-                  path='/'
+                  path='/market/offers'
                   title='newly listed'
                   icon={<PlusIcon />}
                   totalSkins={offerCards?.total ?? 0}

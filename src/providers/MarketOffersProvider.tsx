@@ -108,6 +108,7 @@ const getMarketOffers = useCallback(async (query?: string) => {
         updateFilter,
         updateFilterWithCheckbox,
         getMarketOffers,
+        resetFilters,
         resetSideBarFilters
         
         }}>

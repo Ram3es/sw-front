@@ -1,4 +1,4 @@
-import { IOfferFilter, IOtherFilter, IRarityFilter } from "@/constants/market-offers";
+import { IOtherFilter, IRarityFilter } from "@/constants/market-offers";
 import { IOffersCard } from "@/types/Card";
 import { ESteamAppId } from "@/types/Inventory";
 import { ISortByOptions } from "@/types/Market";
@@ -42,6 +42,7 @@ export interface IMarketOffersCtx {
     updateFilterWithCheckbox: (filterKey:TKeysCheckboxFilter, value: string) => void
     setHeaderFilterOptions: Dispatch<SetStateAction<ISortByOptions[]>>
     resetSideBarFilters: () => void
+    resetFilters: () => void
     
 }
 

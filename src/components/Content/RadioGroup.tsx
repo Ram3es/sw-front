@@ -14,13 +14,11 @@ const RadioGroup = (
     setOption: (id: number) => void,
     selectedOptionId: number | null,
     children?: ReactNode }) => {
-
-
   return (
     <fieldset>
       <div className="mt-2">
         {options.map((option, optionIdx) => (
-          <label key={option.id} className="relative flex items-start pt-3 gap-3">
+          <label key={optionIdx} className="relative flex items-start pt-3 gap-3">
             <div className="flex h-6 items-center relative">
               <input
                 id={`side-${option.id ?? 'none'}`}

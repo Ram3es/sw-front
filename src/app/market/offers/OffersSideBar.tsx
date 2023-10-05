@@ -1,4 +1,4 @@
-'use'
+'use client'
 import Dropbox from '@/components/Content/Dropbox';
 import InputWithCheckbox from '@/components/Content/InputWithCheckbox';
 import InputWithErrors from '@/components/Content/InputWithErrors';
@@ -23,6 +23,7 @@ const OffersSideBar = () => {
     sidebarFilters,
     setSideBarFilters,
     updateFilter,
+    resetFilters,
     resetSideBarFilters,
     updateFilterWithCheckbox
      
@@ -35,11 +36,7 @@ const OffersSideBar = () => {
     rarity,
     pattern,
     tradableIn,
-
-     
   } = sidebarFilters
-
-
 const setOption = (id: number) => {
   setOffersId(id)
   const offers = OFFERS_FILTER.find(item => item.id === id)?.filter
@@ -76,7 +73,7 @@ return (
             className={classNames('mt-2 relative w-full border border-graySecondary group hover:text-white hover:border-white justify-center cta-clip-path uppercase text-graySecondary duration-200',
              isSelectedSideBarFilter ? '' : 'pointer-events-none opacity-50' )}
             heightClass='h-8'
-            onClick={resetSideBarFilters}
+            onClick={() => { resetSideBarFilters(); resetFilters() }  }
           >
             <div className='absolute w-3 bottom-[3px] -left-[3px] border-b border-graySecondary group-hover:border-white rotate-45 duration-200' />
           </Button>

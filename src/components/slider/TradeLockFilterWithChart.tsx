@@ -9,10 +9,11 @@ interface IOnePointSliderProps {
     colorsArr?: string[]
     barWidthArr?: number[]
     onChange: (value: number) => void
+    updateFilterFn: () => void
     
 }
 
-const TradeLockFilterWithChart = ({ data, maskId, barWidthArr, colorsArr, sliderValue,  onChange }:IOnePointSliderProps) => {
+const TradeLockFilterWithChart = ({ data, maskId, barWidthArr, colorsArr, sliderValue,  onChange, updateFilterFn }:IOnePointSliderProps) => {
     const maxValue = Math.max(...data)
 
   const handleSliderChange = (value: number) => {
@@ -96,7 +97,8 @@ const TradeLockFilterWithChart = ({ data, maskId, barWidthArr, colorsArr, slider
     return () => {
         svg.remove()
     }
-    }, [])
+    }, [data])
+
     return (
     <div className=' pt-4'>
       <div id={`${maskId}Container`} style={{ width: '208px', height: '51px' }} />
@@ -107,7 +109,7 @@ const TradeLockFilterWithChart = ({ data, maskId, barWidthArr, colorsArr, slider
         step={1}
         withTracks={false}
         value={sliderValue}
-        renderThumb={(props, _state) => <div {...props}> <span className="w-3 h-3 bg-white thumb-corners-polygon absolute translate-x-1/3 "></span></div>}
+        renderThumb={(props, _state) => <div onMouseUp={() => updateFilterFn()} {...props}> <span className="w-3 h-3 bg-white thumb-corners-polygon absolute translate-x-1/3 "></span></div>}
         onChange={handleSliderChange}
       />
     </div>

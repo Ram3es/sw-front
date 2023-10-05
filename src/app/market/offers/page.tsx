@@ -3,44 +3,47 @@ import { classNames } from "@/helpers/className";
 import OffersHeader from "./OffersHeader";
 import OffersSideBar from "./OffersSideBar";
 import { useHideOnScroll } from "@/helpers/useHideOnScroll";
-import { useCallback, useEffect, useState } from "react";
-import { getOffers } from "@/services/market/market";
+import { useEffect, useRef, useState } from "react";
 import ItemCard from "@/components/Content/ItemCard";
-import { ECardVariant, IOffersCard } from "@/types/Card";
+import { ECardVariant } from "@/types/Card";
 import { IMAGE_ROOT_URL } from "@/constants/strings";
 import { useCartContext } from "@/context/CartContext";
 import { useAppContext } from "@/context/AppContext";
 import { IsUserLogged } from "@/components/IsUserLogged/IsUserLogged";
-import { ISortByOptions } from "@/types/Market";
+import { useMarketOffersCtx } from "@/context/MarketOffers";
 
 export default function MarketOffers () {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const shouldHide = useHideOnScroll()
   const { addToCart } = useCartContext()
   const { user } = useAppContext()
 
-
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
-  const [renderCards, setRenderCards] = useState<IOffersCard[]>([])
-  const [headerFilters, setHeaderFilters] = useState<ISortByOptions[]>([])
-
-  const getMarketOffers = useCallback(async () => {
-    try {
-      const res = await getOffers('')
-      console.log(res)
-      setRenderCards(res.offers)
-      setHeaderFilters(res.sortByOptions)
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
+  const {
+    renderCards,
+    filtersState,
+    getMarketOffers
+  } = useMarketOffersCtx()
 
   useEffect(() => {
-    getMarketOffers()
-  }, [])
+    const queryContainer: Array<string[]> = []
+    Object.entries(filtersState).forEach(([key, value]) =>{
+      if(Array.isArray(value)){
+        value.forEach(filter => queryContainer.push([`${key}=${filter}`]) )
+        return 
+      }
+      if(value || (key ==='tradableIn' && value === 0) ){
+          queryContainer.push([`${key}=${value}`])
+      }
+   })
+     const filtersQuery = queryContainer.join('&')
+     void getMarketOffers(filtersQuery)
+   
+   }, [filtersState])
+
   
     return(
       <>
-        <OffersHeader filterOptions={headerFilters} />
+        <OffersHeader />
         <div className="flex text-white mt-5">
           <div className={classNames('w-full duration-100 lg:max-w-[256px] bg-darkSecondary lg:bg-transparent fixed lg:sticky justify-center flex z-30 ',
             isSidebarOpen ? ' left-0' : ' -left-full',

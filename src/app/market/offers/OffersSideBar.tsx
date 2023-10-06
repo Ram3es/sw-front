@@ -37,6 +37,8 @@ const OffersSideBar = () => {
     pattern,
     tradableIn,
   } = sidebarFilters
+
+  
 const setOption = (id: number) => {
   setOffersId(id)
   const offers = OFFERS_FILTER.find(item => item.id === id)?.filter

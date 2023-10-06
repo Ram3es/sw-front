@@ -1,4 +1,4 @@
-import { type IOffersCard } from './Card'
+import { IOfferPrice, type IOffersCard } from './Card'
 
 export interface IOffersResponse {
   offers: IOffersCard[]
@@ -21,4 +21,19 @@ export interface ITradeOffersResponse {
 export interface ISortByOptions {
   name: string
   label: string
+}
+
+export interface IOfferHistory {
+  soldAt: number
+  soldFor: IOfferPrice
+  wear: number
+  paintSeed: number
+}
+
+export interface IHistorySalesOfferRes {
+  offershHistory : IOfferHistory[]
+}
+
+export interface ISimilarOffersRes {
+  similarOffers : IOffersCard[]
 }

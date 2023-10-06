@@ -11,12 +11,14 @@ import { useCartContext } from "@/context/CartContext";
 import { useAppContext } from "@/context/AppContext";
 import { IsUserLogged } from "@/components/IsUserLogged/IsUserLogged";
 import { useMarketOffersCtx } from "@/context/MarketOffers";
+import { useRouter } from "next/navigation";
 
 export default function MarketOffers () {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const shouldHide = useHideOnScroll()
   const { addToCart } = useCartContext()
   const { user } = useAppContext()
+  const { push } = useRouter()
 
   const {
     renderCards,
@@ -97,12 +99,13 @@ export default function MarketOffers () {
                   price={item.price.amount}
                   steamPrice={item.steamPrice.amount}
                   image={IMAGE_ROOT_URL.concat(item.imageUrl)}
-                  onClick={() => {
+                  onClick={() => push(`/market/offers/${item.inventoryItemId}`) }
+                  submitFn={(e) => {
+                    e.stopPropagation()
                     if (user?.id){
                       addToCart(item)
                     }
                   }}
-                  submitFn={() => {}}
                     />
                 ))}
               </div>

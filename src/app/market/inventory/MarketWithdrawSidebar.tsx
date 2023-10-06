@@ -73,7 +73,9 @@ const MarketWithdrawSidebar = () => {
               id: ESteamAppId[
                 key as keyof typeof ESteamAppId
               ] as unknown as number,
-              name: key
+              name: key,
+              filter: '',
+              selected: false
             }))}
             setOption={(id) => {
               updateGameId(id as unknown as ESteamAppId)
@@ -133,7 +135,13 @@ const MarketWithdrawSidebar = () => {
             data={[120, 40, 160, 80, 0, 10, 150]}
             maxPrice={maxPrice}
             maskId="priceMask"
-          />
+            rangeLimit={[]}
+            setRangeLimit={function (value: number[]): void {
+              console.log('setRangeLimit')
+            } }
+            updateFilterFn={function (): void {
+              console.log('updateFilterFn')
+            } }          />
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />
         <Dropbox label="wear">
@@ -150,7 +158,12 @@ const MarketWithdrawSidebar = () => {
             ]}
             maskId="wearMask"
             isCurrency={false}
-          />
+            rangeLimit={[]}
+            setRangeLimit={function (value: number[]): void {
+              console.log('setRangeLimit')
+            } } updateFilterFn={function (): void {
+              console.log('updateFilterFn')
+            } }          />
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />
         <Dropbox label="other">

@@ -93,7 +93,7 @@ return (
         <div className="w-full border-t border-darkGrey" />
         <Dropbox label="price">
             <TwoPointsSliderWithChart
-            data={[120, 40, 160, 80, 0, 5, 7, 10, 150, 200]}
+            data={[120, 40, 160, 80, 0, 5, 7, 10, 150, 200, 300]}
             maxPrice={1000000}
             maskId="priceMask"
             rangeLimit={price}

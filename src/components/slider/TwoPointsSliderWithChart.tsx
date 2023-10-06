@@ -99,12 +99,25 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
     }
   }, [data])
 
-  const handleSliderChange = (value: number[]) => {
+  const debounce = (func: (...args: any[]) => void, delay: number) => {
+    let timerId: NodeJS.Timeout | null;
+    return (...args: any[]) => {
+      if (timerId) {
+        clearTimeout(timerId);
+      }
+      timerId = setTimeout(() => {
+        func(...args);
+        timerId = null;
+      }, delay);
+    };
+  };
+
+  const handleSliderChange = debounce((value: number[]) => {
     setRangeLimit(value)
     d3.select(`#${maskId}`).select('rect')
       .attr('x', `${value[0] / maxPrice * 100}%`)
       .attr('width', `${(value[1] / maxPrice * 100) - value[0] / maxPrice * 100}%`)
-  }
+  }, 100)
   
 
   return (
@@ -118,7 +131,7 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
           withTracks={false}
           value={rangeLimit}
           renderThumb={(props, _state) => 
-            <div onMouseUp={() => updateFilterFn()} {...props}> 
+            <div {...props} onMouseUp={() => updateFilterFn()} key={`${_state.index}Slider`} > 
               <span className="w-3 h-3 bg-white thumb-corners-polygon absolute -translate-x-1/2 "></span>
             </div>}
           onChange={handleSliderChange}

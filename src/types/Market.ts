@@ -1,11 +1,10 @@
-import { type IOffersCard } from './Card'
+import { IOfferPrice, type IOffersCard } from './Card'
 
 export interface IOffersResponse {
   offers: IOffersCard[]
   total: number
   sortBy: string
-  sortByOptions: any[]
-
+  sortByOptions: ISortByOptions[]
 }
 
 export interface ITradeOffersResponse {
@@ -17,4 +16,24 @@ export interface ITradeOffersResponse {
   expired_at: Date
   browser_confiramation_url: string
   steam_confiramation_url: string
+}
+
+export interface ISortByOptions {
+  name: string
+  label: string
+}
+
+export interface IOfferHistory {
+  soldAt: number
+  soldFor: IOfferPrice
+  wear: number
+  paintSeed: number
+}
+
+export interface IHistorySalesOfferRes {
+  offershHistory : IOfferHistory[]
+}
+
+export interface ISimilarOffersRes {
+  similarOffers : IOffersCard[]
 }

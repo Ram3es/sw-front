@@ -76,6 +76,7 @@ const PayPalMethod = () => {
               errorBorder='border-swOrange'
               autoFocus={!errorsState.excededMonthly.status}
               variant='amount'
+              withClearBtn
              />
              </div>
              {errorsState.excededMonthly.status

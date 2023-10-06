@@ -15,7 +15,7 @@ export interface CardItem {
   condition: number
   onChange?: () => void
   onClick: () => void
-  submitFn?: () => void
+  submitFn?: (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   variant?: keyof typeof ECardVariant
 }
 
@@ -25,13 +25,16 @@ export interface IOffersCard {
   inventoryItemId: string
   price: IOfferPrice
   steamPrice: IOfferPrice
-  wearFloat: number
-  rarity: string
+  wearFloat: number 
+  rarity: string | null
   typeName: string
   name: string
+  tradableIn: number
+  quality: string
+  pattern?: number
 }
 
-interface IOfferPrice { amount: number, currency: string }
+export interface IOfferPrice { amount: number, currency: string }
 
 export interface ConditionItem {
   maxVal: number

@@ -3,7 +3,7 @@
 import { CHECKOUT_SETTINGS } from '@/constants/checkout'
 import { CartContext, CartState } from '@/context/CartContext'
 import { IOffersCard } from '@/types/Card'
-import { useReducer, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 
 interface IProps {
   children: React.JSX.Element
@@ -55,6 +55,7 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
 export const CartProvider = ({ children }: IProps) => {
   const [cartState, dispatch] = useReducer(cartReducer, initialState)
   const [lastAddedItem, setLastAddedItem] = useState<IOffersCard | null>(null)
+  
 
   // Function to add an item to the cart
   const addToCart = (item: IOffersCard) => {

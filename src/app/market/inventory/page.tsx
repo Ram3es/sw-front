@@ -6,7 +6,6 @@ import { classNames } from '@/helpers/className'
 import { useHideOnScroll } from '@/helpers/useHideOnScroll'
 import { Filters } from '@/components/InstantSellControls/filters'
 import CardsListWrapper from '@/app/panel/deposit/CardsListWrapper'
-
 import MarketWithdrawSidebar from './MarketWithdrawSidebar'
 import SelectBottomBar from './SelectBottomBar'
 import { getItemsToWithdraw, withdrawItems } from '@/services/market/market'

@@ -14,9 +14,10 @@ import { useAppContext } from '@/context/AppContext'
 interface ISliderProps extends PropsWithChildren {
   settings: Partial<Settings>,
   items: IOffersCard[]
+  withEmptySlide?: boolean 
 }
 
-const SliderCard: FC<ISliderProps> = ({ items, settings }) => {
+const SliderCard: FC<ISliderProps> = ({ items, settings, withEmptySlide = true }) => {
   const { addToCart } = useCartContext()
   const { user } = useAppContext()
   const settingsWithArrow = { 
@@ -25,8 +26,6 @@ const SliderCard: FC<ISliderProps> = ({ items, settings }) => {
     ...settings 
   }
 
-
-  
   return (
         <Slider {...settingsWithArrow}>
             {items.map((item) =>
@@ -47,7 +46,7 @@ const SliderCard: FC<ISliderProps> = ({ items, settings }) => {
                 submitFn={() => {}}
                   />
             )}
-                <EmptyCard />
+                { withEmptySlide && <EmptyCard /> }
         </Slider>
   )
 }

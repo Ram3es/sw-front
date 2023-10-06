@@ -5,6 +5,7 @@ export interface IOffersResponse {
   total: number
   sortBy: string
   sortByOptions: ISortByOptions[]
+  defaultFilters: any []
 }
 
 export interface ITradeOffersResponse {

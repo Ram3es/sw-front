@@ -78,14 +78,38 @@ const resetFilters = () => {
 const resetSideBarFilters = () => {
   setSideBarFilters(initSideBarState)
 }
-const getMarketOffers = useCallback(async (query?: string) => {
+const setDefaultFilters = useCallback(async (query?: string) => {
     try {
-      const res = await getOffers(query ?? '')
-      setRenderCards(res.offers)
+      const res = await getOffers(`appId=${ESteamAppId.CSGO}&sortBy=HotDeals`)
+      console.log(res.defaultFilters)
+
       setHeaderFilterOptions(res.sortByOptions)
+      res.defaultFilters.forEach(filter => {
+        Object.keys(sidebarFilters).forEach(key => {
+          if(filter.name === key){
+            setSideBarFilters(prev => ({
+              ...prev,
+              [key]: filter.value
+            }))
+            console.log(filter.name)
+          }
+        })
+
+      })
+
     } catch (error) {
       console.log(error)
     }
+  }, [])
+
+  const getFilteredItems = useCallback( async (query?: string) => {
+    try {
+      const { offers } = await getOffers(query ?? '')
+      setRenderCards(offers)
+    } catch (error) {
+      console.log(error)
+    }
+
   }, [])
 
  useEffect(() => {
@@ -107,9 +131,10 @@ const getMarketOffers = useCallback(async (query?: string) => {
         setHeaderFilterOptions,
         updateFilter,
         updateFilterWithCheckbox,
-        getMarketOffers,
+        setDefaultFilters,
         resetFilters,
-        resetSideBarFilters
+        resetSideBarFilters,
+        getFilteredItems
         
         }}>
           {children}

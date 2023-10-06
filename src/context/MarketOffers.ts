@@ -38,7 +38,8 @@ export interface IMarketOffersCtx {
     sidebarFilters: IFiltersSideBar
     setSideBarFilters:  Dispatch<SetStateAction<IFiltersSideBar>>
     updateFilter: <K extends keyof IInitialFiltersState>(value: TValue<K>) => void
-    getMarketOffers: (query?: string) => Promise<void>
+    setDefaultFilters: (query?: string) => Promise<void>
+    getFilteredItems:  (query?: string) => Promise<void>
     updateFilterWithCheckbox: (filterKey:TKeysCheckboxFilter, value: string) => void
     setHeaderFilterOptions: Dispatch<SetStateAction<ISortByOptions[]>>
     resetSideBarFilters: () => void

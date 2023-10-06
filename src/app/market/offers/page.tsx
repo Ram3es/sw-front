@@ -23,7 +23,8 @@ export default function MarketOffers () {
   const {
     renderCards,
     filtersState,
-    getMarketOffers
+    setDefaultFilters,
+    getFilteredItems
   } = useMarketOffersCtx()
 
   useEffect(() => {
@@ -38,9 +39,13 @@ export default function MarketOffers () {
       }
    })
      const filtersQuery = queryContainer.join('&')
-     void getMarketOffers(filtersQuery)
+     void getFilteredItems(filtersQuery)
    
    }, [filtersState])
+
+   useEffect(() => {
+    setDefaultFilters()
+   }, [])
 
   
     return(

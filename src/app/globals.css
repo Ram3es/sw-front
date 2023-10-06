@@ -7,6 +7,10 @@
     clip-path: polygon(50% 0, 100% 33%, 100% 100%, 0 100%, 0% 33%);
   }
 
+  .backdrop-offer-hexagon {
+    clip-path: polygon(0 0, 100% 0, 100% 97.5%, 46% 97.5%, 45% 100%, 0 100%);
+  }
+
   .cta-clip-path {
     clip-path: polygon(100% 0, 100% 100%, calc(0% + 8px) 100%, 0 calc(100% - 8px), 0 0);
   }

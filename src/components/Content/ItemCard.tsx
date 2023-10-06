@@ -162,7 +162,7 @@ const ItemCard = ({
             className={classNames('justify-center z-10 hidden group-hover:flex  absolute left-0 top-full mr-[20px] text-base w-full h-[40px] uppercase font-semibold text-darkSecondary border border-skinwalletPink bg-skinwalletPink cta-clip-path role-button',
               variant === ECardVariant.market ? ' hover:opacity-50 ' : '')}
             text={variant === ECardVariant.market ? 'add to cart' : 'add to sale'}
-            onClick={submitFn}
+            onClick={(e) => submitFn?.(e)}
           />}
     </div>
   )

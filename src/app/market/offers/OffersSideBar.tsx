@@ -32,7 +32,7 @@ const OffersSideBar = () => {
   const { 
     wear,
     other,
-    price,
+    priceRange,
     rarity,
     pattern,
     tradableIn,
@@ -93,17 +93,17 @@ return (
         <div className="w-full border-t border-darkGrey" />
         <Dropbox label="price">
             <TwoPointsSliderWithChart
-            data={[120, 40, 160, 80, 0, 5, 7, 10, 150, 200, 300]}
-            maxPrice={1000000}
+            data={priceRange.data}
+            maxPrice={priceRange.range[1]}
             maskId="priceMask"
-            rangeLimit={price}
+            rangeLimit={priceRange.range}
             setRangeLimit={(value: number[]) =>{
               setSideBarFilters(prev => ({
                 ...prev,
-                price: value
+                priceRange: {...prev.priceRange, range: value  }
               }))
             }}
-            updateFilterFn={() => { updateFilter({ priceFrom: price[0], priceTo: price[1]  })}}
+            updateFilterFn={() => { updateFilter({ priceFrom: priceRange.range[0], priceTo: priceRange.range[1]  })}}
             />
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />

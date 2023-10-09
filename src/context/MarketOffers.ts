@@ -21,7 +21,7 @@ export interface IInitialFiltersState {
 export interface IFiltersSideBar {
     pattern: string
     tradableIn: number
-    price: number[]
+    priceRange: { range: number[], data: number[] }
     wear: number[]
     other: IOtherFilter[]
     rarity: IRarityFilter[]

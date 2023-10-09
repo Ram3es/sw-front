@@ -25,7 +25,7 @@ const initialFiltersState:IInitialFiltersState  = {
 const initSideBarState:IFiltersSideBar = {
   pattern: '',
   tradableIn: 8,
-  price:[3, 1000000],
+  priceRange: { range: [], data: [] },
   wear: [3, 1000],
   other: OTHER_FILTER,
   rarity: RARITY_FILTER,
@@ -36,6 +36,8 @@ const [filtersState, setFiltersState] = useState(initialFiltersState)
 const [headerFilterOptions, setHeaderFilterOptions] = useState<ISortByOptions[]>([])
 const [renderCards, setRenderCards] = useState<IOffersCard[]>([])
 const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBarState)
+
+
 
 const { gameId } = useAppContext()
 
@@ -81,17 +83,23 @@ const resetSideBarFilters = () => {
 const setDefaultFilters = useCallback(async (query?: string) => {
     try {
       const res = await getOffers(`appId=${ESteamAppId.CSGO}&sortBy=HotDeals`)
-      console.log(res.defaultFilters)
+      console.log(res)
 
       setHeaderFilterOptions(res.sortByOptions)
       res.defaultFilters.forEach(filter => {
         Object.keys(sidebarFilters).forEach(key => {
-          if(filter.name === key){
+          if(filter.type === 'range' && filter.name === key ){
+            console.log(filter.value.diagramData.map((el: { count: any }) => el?.count))
             setSideBarFilters(prev => ({
               ...prev,
-              [key]: filter.value
+              [key]:  {range: filter.value.range, data: filter.value.diagramData.map((el: { count: any }) => el?.count)}
             }))
-            console.log(filter.name)
+          }
+          if(filter.name === key){
+            // setSideBarFilters(prev => ({
+            //   ...prev,
+            //   [key]:  filter.value
+            // }))
           }
         })
 

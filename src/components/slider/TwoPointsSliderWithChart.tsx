@@ -112,12 +112,12 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
     };
   };
 
-  const handleSliderChange = debounce((value: number[]) => {
+  const handleSliderChange =(value: number[]) => {
     setRangeLimit(value)
     d3.select(`#${maskId}`).select('rect')
       .attr('x', `${value[0] / maxPrice * 100}%`)
       .attr('width', `${(value[1] / maxPrice * 100) - value[0] / maxPrice * 100}%`)
-  }, 100)
+  }
   
 
   return (

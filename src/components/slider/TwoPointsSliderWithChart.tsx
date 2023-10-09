@@ -11,9 +11,9 @@ interface ITwoPointsSliderProps {
   colorsArr?: string[]
   barWidthArr?: number[]
   isCurrency?: boolean 
-  rangeLimit: number[]
-  setRangeLimit: (value: number[]) => void
-  updateFilterFn: () => void
+  rangeLimit?: number[]
+  setRangeLimit?: (value: number[]) => void
+  updateFilterFn?: () => void
 }
 
 const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthArr, isCurrency = true, rangeLimit, setRangeLimit, updateFilterFn }: ITwoPointsSliderProps) => {
@@ -33,9 +33,9 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
     svg.append('mask')
       .attr('id', maskId)
       .append('rect')
-      .attr('x', `${rangeLimit[0] / maxPrice * 100}%`)
+      .attr('x', `${(rangeLimit?.[0] ?? 0) / maxPrice * 100}%`)
       .attr('y', 0)
-      .attr('width', `${(rangeLimit[1] / maxPrice * 100) - rangeLimit[0] / maxPrice * 100}%`)
+      .attr('width', `${((rangeLimit?.[1] ?? 0) / maxPrice * 100) - (rangeLimit?.[0] ?? 0) / maxPrice * 100}%`)
       .attr('height', svgHeight)
       .attr('fill', 'white') // Initial masking color (fully transparent)
 
@@ -112,12 +112,12 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
     };
   };
 
-  const handleSliderChange =(value: number[]) => {
-    setRangeLimit(value)
+  const handleSliderChange = debounce((value: number[]) => {
+    if (setRangeLimit) setRangeLimit(value)
     d3.select(`#${maskId}`).select('rect')
       .attr('x', `${value[0] / maxPrice * 100}%`)
       .attr('width', `${(value[1] / maxPrice * 100) - value[0] / maxPrice * 100}%`)
-  }
+  }, 100)
   
 
   return (
@@ -131,7 +131,7 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
           withTracks={false}
           value={rangeLimit}
           renderThumb={(props, _state) => 
-            <div {...props} onMouseUp={() => updateFilterFn()} key={`${_state.index}Slider`} > 
+            <div {...props} onMouseUp={() => updateFilterFn && updateFilterFn()} key={`${_state.index}Slider`} > 
               <span className="w-3 h-3 bg-white thumb-corners-polygon absolute -translate-x-1/2 "></span>
             </div>}
           onChange={handleSliderChange}
@@ -145,17 +145,17 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
             {isCurrency ? '$' : ''}
             <input
               type="text"
-              value={isCurrency ? format(rangeLimit[0] ?? 0) : formatToThousands(rangeLimit[0] ?? 0)}
+              value={isCurrency ? format(rangeLimit?.[0] ?? 0) : formatToThousands(rangeLimit?.[0] ?? 0)}
               className='text-white text-[14px] font-Barlow text-start w-full bg-transparent border-0'
               onChange={(e) => {
                 const amountCents = +e.target.value.replace(/[^0-9]/g, '')
                 if (amountCents < 0) {
                   return
-                } else if (amountCents >= rangeLimit[1]) {
-                  handleSliderChange([rangeLimit[1], rangeLimit[1]])
+                } else if (amountCents >= (rangeLimit?.[1] ?? 0)) {
+                  handleSliderChange([rangeLimit?.[1] ?? 0, rangeLimit?.[1] ?? 0])
                   return
                 }
-                handleSliderChange([amountCents, rangeLimit[1]])
+                handleSliderChange([amountCents, rangeLimit?.[1] ?? 0])
               }}
             />
           </div>
@@ -168,17 +168,17 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
             {isCurrency ? '$' : ''}
             <input
             type="text"
-            value={isCurrency ? format(rangeLimit[1] ?? 0) : formatToThousands(rangeLimit[1] ?? 0)}
+            value={isCurrency ? format(rangeLimit?.[1] ?? 0) : formatToThousands(rangeLimit?.[1] ?? 0)}
             className='text-white text-[14px] font-Barlow text-start w-full bg-transparent border-0'
             onChange={(e) => {
               const amountCents = +e.target.value.replace(/[^0-9]/g, '')
               if (amountCents > (maxPrice ?? 0)) {
                 return
-              } else if (amountCents <= rangeLimit[0]) {
-                handleSliderChange([rangeLimit[0], rangeLimit[0]])
+              } else if (amountCents <= (rangeLimit?.[0] ?? 0)) {
+                handleSliderChange([rangeLimit?.[0] ?? 0, rangeLimit?.[0] ?? 0])
                 return
               }
-              handleSliderChange([rangeLimit[0], amountCents])
+              handleSliderChange([rangeLimit?.[0] ?? 0, amountCents])
             }}
            />
           </div>

@@ -1,5 +1,4 @@
 'use client'
-import { OTHER_FILTER, RARITY_FILTER } from "@/constants/market-offers"
 import { useAppContext } from "@/context/AppContext"
 import { IFiltersSideBar, IInitialFiltersState, MarketOffersContext, TKeysCheckboxFilter, TValue } from "@/context/MarketOffers"
 import { getOffers } from "@/services/market/market"
@@ -19,16 +18,17 @@ const initialFiltersState:IInitialFiltersState  = {
     tradableIn: null,
     quality: [],
     rarity: [],
-    offers: ''
+    variant: ''
 }
 
 const initSideBarState:IFiltersSideBar = {
   pattern: '',
-  tradableIn: 8,
-  priceRange: { range: [], data: [] },
-  wear: [3, 1000],
-  other: OTHER_FILTER,
-  rarity: RARITY_FILTER,
+  tradableIn: { value: 8, data: []},
+  priceRange: { value: [], data: [] },
+  wear: { value: [], data: [] },
+  quality: [],
+  rarity: [],
+  variant: { value: '', options: [] }
 }
 
 export const MarketOffersProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -36,7 +36,6 @@ const [filtersState, setFiltersState] = useState(initialFiltersState)
 const [headerFilterOptions, setHeaderFilterOptions] = useState<ISortByOptions[]>([])
 const [renderCards, setRenderCards] = useState<IOffersCard[]>([])
 const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBarState)
-
 
 
 const { gameId } = useAppContext()
@@ -57,13 +56,34 @@ const updateFilterWithCheckbox = (filterKey:TKeysCheckboxFilter, value: string) 
   }) )
  }
 
+ // checking was changed sidebar filters
 const isSelectedSideBarFilter = useMemo(():boolean => {
- return Object.entries(sidebarFilters).some(([key, value]) => {
-  if(Array.isArray(value) && !value.length){
-    return false
+  const initialFiltersString  = localStorage.getItem('filters')
+  if(initialFiltersString){
+    const initFilters = JSON.parse(initialFiltersString) as IFiltersSideBar
+
+    return Object.entries(sidebarFilters).some(([key, value]) => {
+      if(typeof value === 'object' && !Array.isArray(value) ){
+
+        const initValue = initFilters[key as keyof IFiltersSideBar] as {value: any} 
+        if(Array.isArray(value.value) && value.value.length && Array.isArray(initValue.value)){
+          for(let i = 0; i < value.value.length; i++ ){
+            if(value.value[i] !== initValue.value[i]){
+              return true
+            }
+          }
+          return false
+        }
+        return initValue.value !== value.value 
+      }
+      if(Array.isArray(value) && value.length ){
+        return value.some((el) => el.selected )
+      }
+      return sidebarFilters[key as keyof IFiltersSideBar] !== initFilters[key as keyof IFiltersSideBar]
+    })
   }
-  return value !== initSideBarState[key as keyof IFiltersSideBar]
-  }) 
+  return false
+
 },[sidebarFilters])
 
 const resetFilters = () => {
@@ -77,32 +97,37 @@ const resetFilters = () => {
   })
 }
 
+
 const resetSideBarFilters = () => {
-  setSideBarFilters(initSideBarState)
+  const initialFilters  = localStorage.getItem('filters')
+  if(initialFilters){
+    setSideBarFilters(JSON.parse(initialFilters))
+  } 
 }
 const setDefaultFilters = useCallback(async (query?: string) => {
     try {
       const res = await getOffers(`appId=${ESteamAppId.CSGO}&sortBy=HotDeals`)
-      console.log(res)
+      
+      console.log(res.defaultFilters)
 
-      setHeaderFilterOptions(res.sortByOptions)
+      // create initial sidebar state
+      const initFilters: Record<string, any> = {}
+
       res.defaultFilters.forEach(filter => {
-        Object.keys(sidebarFilters).forEach(key => {
-          if(filter.type === 'range' && filter.name === key ){
-            console.log(filter.value.diagramData.map((el: { count: any }) => el?.count))
-            setSideBarFilters(prev => ({
-              ...prev,
-              [key]:  {range: filter.value.range, data: filter.value.diagramData.map((el: { count: any }) => el?.count)}
-            }))
-          }
-          if(filter.name === key){
-            // setSideBarFilters(prev => ({
-            //   ...prev,
-            //   [key]:  filter.value
-            // }))
-          }
-        })
+        if(filter.type === 'range'){
+         return initFilters[filter.name] = { value: filter.value, data: filter?.diagramData?.map((el: { count: any }) => el?.count) }
+        }
+        if(filter.type === 'multiple-choice-filter'){
+           return initFilters[filter.name] = filter?.options?.map(el => ({...el, selected: false}))
+        }
+        if(filter.type === 'radio'){
+          return initFilters[filter.name] = ({value: filter.value, options:filter.options})
+        }
+        initFilters[filter.name] = filter.value ?? ''
 
+        setHeaderFilterOptions(res.sortByOptions)
+        setSideBarFilters(initFilters as IFiltersSideBar )
+        localStorage.setItem('filters', JSON.stringify(initFilters) )
       })
 
     } catch (error) {

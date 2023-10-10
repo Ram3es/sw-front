@@ -109,7 +109,10 @@ const TradeLockFilterWithChart = ({ data, maskId, barWidthArr, colorsArr, slider
         step={1}
         withTracks={false}
         value={sliderValue}
-        renderThumb={(props, _state) => <div onMouseUp={() => updateFilterFn()} {...props}> <span className="w-3 h-3 bg-white thumb-corners-polygon absolute translate-x-1/3 "></span></div>}
+        renderThumb={(props, _state) => 
+          <div {...props} onMouseUp={() => updateFilterFn()} key={`${_state.index}Slider`}  > 
+            <span className="w-3 h-3 bg-white thumb-corners-polygon absolute translate-x-1/3 "></span>
+          </div>}
         onChange={handleSliderChange}
       />
     </div>

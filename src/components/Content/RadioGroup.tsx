@@ -10,19 +10,19 @@ const RadioGroup = (
     selectedOptionId,
     children 
   }:{ 
-    options: IOfferFilter[],
-    setOption: (id: number) => void,
-    selectedOptionId: number | null,
+    options: IOfferFilter[] ,
+    setOption: (id: number | string ) => void,
+    selectedOptionId: number | null | string,
     children?: ReactNode }) => {
   return (
     <fieldset>
       <div className="mt-2">
-        {options.map((option, optionIdx) => (
+        {options?.map((option, optionIdx) => (
           <label key={optionIdx} className="relative flex items-start pt-3 gap-3">
             <div className="flex h-6 items-center relative">
               <input
                 id={`side-${option.id ?? 'none'}`}
-                name="plan"
+                name={option.name}
                 type="radio"
                 onChange={() => { setOption(option.id) }}
                 className="h-4 w-4 opacity-0 z-10"
@@ -44,7 +44,11 @@ const RadioGroup = (
                 {option.name}
               </label>
             </div>
-            {children}
+            {children ?? (
+              <span className="text-graySecondary font-font-Barlow text-xs my-auto">
+                {option.count}
+              </span>
+            )}
           </label>
         ))}
       </div>

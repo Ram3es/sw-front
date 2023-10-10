@@ -8,7 +8,6 @@ import { Button } from '@/components/Navigation';
 import SidebarLinks from '@/components/Navigation/SidebarLinks';
 import TradeLockFilterWithChart from '@/components/slider/TradeLockFilterWithChart';
 import TwoPointsSliderWithChart from '@/components/slider/TwoPointsSliderWithChart';
-import { OFFERS_FILTER } from '@/constants/market-offers';
 import { REGEX } from '@/constants/regex';
 import { useMarketOffersCtx } from '@/context/MarketOffers';
 import { classNames } from '@/helpers/className';
@@ -16,7 +15,6 @@ import React, { useMemo, useState } from 'react';
 
 const OffersSideBar = () => {
   const [isShownAllOptions, setShowAllOptions] = useState(false)
-  const [offersId, setOffersId] = useState(1)
 
   const { 
     isSelectedSideBarFilter,
@@ -26,12 +24,12 @@ const OffersSideBar = () => {
     resetFilters,
     resetSideBarFilters,
     updateFilterWithCheckbox
-     
   } = useMarketOffersCtx()
 
   const { 
     wear,
-    other,
+    quality,
+    variant,
     priceRange,
     rarity,
     pattern,
@@ -39,12 +37,10 @@ const OffersSideBar = () => {
   } = sidebarFilters
 
   
-const setOption = (id: number) => {
-  setOffersId(id)
-  const offers = OFFERS_FILTER.find(item => item.id === id)?.filter
-  if(offers){
-    updateFilter({ offers })
-  }
+const setOption = (value: string) => {
+  setSideBarFilters(prev => ({ ...prev, variant: {...prev.variant, value } }))
+  updateFilter({ variant: value })
+  
 }
 
 const handleChangePatternValue = (value: string) => {
@@ -65,8 +61,6 @@ const handleChangePatternValue = (value: string) => {
 const renderRarityFilters = useMemo(() => isShownAllOptions ? rarity : rarity.slice(0, 6)
 ,[isShownAllOptions, rarity])
 
-
-
 return (
     <>
         <div className="p-6 w-full flex flex-col gap-8">
@@ -79,37 +73,33 @@ return (
           >
             <div className='absolute w-3 bottom-[3px] -left-[3px] border-b border-graySecondary group-hover:border-white rotate-45 duration-200' />
           </Button>
-        <Dropbox label="offers">
+          <Dropbox label="offers">
             <RadioGroup
-            options={OFFERS_FILTER}
-            setOption={setOption}
-            selectedOptionId={offersId}
-            >
-            <span className="text-graySecondary font-font-Barlow text-xs my-auto">
-                0
-            </span>
-            </RadioGroup>
+            options={variant?.options}
+            setOption={(value) => setOption(value as string)}
+            selectedOptionId={variant?.value}
+            />
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />
         <Dropbox label="price">
             <TwoPointsSliderWithChart
             data={priceRange.data}
-            maxPrice={priceRange.range[1]}
+            maxPrice={priceRange.value[1]}
             maskId="priceMask"
-            rangeLimit={priceRange.range}
+            rangeLimit={priceRange.value}
             setRangeLimit={(value: number[]) =>{
               setSideBarFilters(prev => ({
                 ...prev,
-                priceRange: {...prev.priceRange, range: value  }
+                priceRange: {...prev.priceRange, value }
               }))
             }}
-            updateFilterFn={() => { updateFilter({ priceFrom: priceRange.range[0], priceTo: priceRange.range[1]  })}}
+            updateFilterFn={() => { updateFilter({ priceFrom: priceRange.value[0], priceTo: priceRange.value[1]  })}}
             />
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />
         <Dropbox label="wear">
             <TwoPointsSliderWithChart
-            data={[120, 40, 160, 80, 130]}
+            data={wear.data}
             maxPrice={1000}
             barWidthArr={[0.07, 0.08, 0.22, 0.07, 0.56]}
             colorsArr={[
@@ -121,14 +111,14 @@ return (
             ]}
             maskId="wearMask"
             isCurrency={false}
-            rangeLimit={wear}
+            rangeLimit={wear.value}
             setRangeLimit={(value: number[]) =>{
               setSideBarFilters(prev => ({
                 ...prev,
-                wear: value
+                wear: {...prev.wear, value }
               }))
             }}
-            updateFilterFn={() => { updateFilter({ wearFrom: wear[0], wearTo: wear[1] })}}
+            updateFilterFn={() => { updateFilter({ wearFrom: wear.value[0], wearTo: wear.value[1] })}}
             />
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />
@@ -139,7 +129,7 @@ return (
                 key={index}
                 isChecked={option.selected}
                 setter={(selected) => {
-                  updateFilterWithCheckbox('rarity',option.name)
+                  updateFilterWithCheckbox('rarity',option.value)
                   setSideBarFilters((prev) => ({
                     ...prev,
                     rarity: prev.rarity.map((item, i) => {
@@ -155,10 +145,10 @@ return (
                   })
                 )
                 }}
-                label={option.name}
+                label={option.label}
             >
               <span className="font-Barlow text-xs text-graySecondary font-medium uppercase">
-                {option.numberOfItems}
+                {option.count}
               </span>
             </InputWithCheckbox>
             ))}
@@ -190,15 +180,15 @@ return (
         <div className="w-full border-t border-darkGrey" />
         <Dropbox label="other">
           <div className="flex flex-col w-full gap-3 mt-6">
-            {other.map((option, index) => (
+            {quality.map((option, index) => (
               <InputWithCheckbox
                 key={index}
                 isChecked={option.selected}
                 setter={(selected) => {
-                  updateFilterWithCheckbox('quality',option.filter)
+                  updateFilterWithCheckbox('quality',option.value)
                   setSideBarFilters((prev) =>({
                     ...prev,
-                    other:  prev.other.map((item, i) => {
+                    quality:  prev.quality.map((item, i) => {
                       if (i === index) {
                         return {
                           ...item,
@@ -211,8 +201,12 @@ return (
                   })
                   )
                 }}
-                label={option.name}
-              />
+                label={option.label}
+              >
+                <span className="font-Barlow text-xs text-graySecondary font-medium uppercase">
+                  {option.count}
+                </span>
+              </InputWithCheckbox>
             ))}
           </div>
         </Dropbox>
@@ -220,21 +214,21 @@ return (
         <Dropbox label="trade lock">
           <>
             <TradeLockFilterWithChart
-              data={[200,120, 40, 160, 80, 20, 50, 90, 140]}
-              sliderValue={tradableIn}
+              data={tradableIn.data}
+              sliderValue={tradableIn.value}
               onChange={(value) => {
                 setSideBarFilters(prev => ({
                   ...prev,
-                  tradableIn: value
+                  tradableIn: {...prev.tradableIn, value}
                 }))
               }}
-              updateFilterFn={() => { updateFilter({ tradableIn })}}
+              updateFilterFn={() => { updateFilter({ tradableIn :tradableIn.value === 8 ? null : tradableIn.value })}}
               colorsArr={[
                 'rgba(24,232,107,1)',
               ]}
               maskId='trade'
             />
-            <TradeLockStatuses value={tradableIn} />
+            <TradeLockStatuses value={tradableIn.value} />
           </>
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />

@@ -1,8 +1,10 @@
-import { IOtherFilter, IRarityFilter } from "@/constants/market-offers";
+import { IFilterwithCheckbox, IOfferFilter } from "@/constants/market-offers";
 import { IOffersCard } from "@/types/Card";
 import { ESteamAppId } from "@/types/Inventory";
 import { ISortByOptions } from "@/types/Market";
 import { Dispatch, SetStateAction, createContext, useContext } from "react";
+
+type TRange = { value: number[], data: number[] }
 
 export interface IInitialFiltersState {
     appId: ESteamAppId
@@ -15,16 +17,17 @@ export interface IInitialFiltersState {
     tradableIn: number | null
     quality: string[]
     rarity: string[]
-    offers: string
+    variant: string
 }
 
 export interface IFiltersSideBar {
     pattern: string
-    tradableIn: number
-    priceRange: { range: number[], data: number[] }
-    wear: number[]
-    other: IOtherFilter[]
-    rarity: IRarityFilter[]
+    tradableIn: { value: number, data: number[] }
+    priceRange: TRange
+    wear: TRange
+    quality: IFilterwithCheckbox[]
+    rarity: IFilterwithCheckbox[]
+    variant: { value: string, options: IOfferFilter[] }
   }
 export type TValue <K extends keyof IInitialFiltersState> = Record<K, IInitialFiltersState[K]>
 export type TKeysCheckboxFilter = keyof Pick<IInitialFiltersState,'quality' | 'rarity'>

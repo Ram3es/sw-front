@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import * as d3 from 'd3-selection'
 import Slider from 'react-slider'
 import { format, formatToThousands } from '../../helpers/numberFormater'
-import { useMarketOffersCtx } from '@/context/MarketOffers'
 
 interface ITwoPointsSliderProps {
   data: number[]
@@ -18,6 +17,7 @@ interface ITwoPointsSliderProps {
 
 const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthArr, isCurrency = true, rangeLimit, setRangeLimit, updateFilterFn }: ITwoPointsSliderProps) => {
   const maxValue = Math.max(...data)
+  
 
   useEffect(() => {
     const svgWidth = 208
@@ -33,9 +33,9 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
     svg.append('mask')
       .attr('id', maskId)
       .append('rect')
-      .attr('x', `${(rangeLimit?.[0] ?? 0) / maxPrice * 100}%`)
+      .attr('x', `${(rangeLimit?.[0] ?? 0) / maxValue * 100}%`)
       .attr('y', 0)
-      .attr('width', `${((rangeLimit?.[1] ?? 0) / maxPrice * 100) - (rangeLimit?.[0] ?? 0) / maxPrice * 100}%`)
+      .attr('width', `${((rangeLimit?.[1] ?? 0) / maxValue * 100) - (rangeLimit?.[0] ?? 0) / maxValue * 100}%`)
       .attr('height', svgHeight)
       .attr('fill', 'white') // Initial masking color (fully transparent)
 
@@ -112,12 +112,12 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
     };
   };
 
-  const handleSliderChange = debounce((value: number[]) => {
+  const handleSliderChange = (value: number[]) => {
     if (setRangeLimit) setRangeLimit(value)
     d3.select(`#${maskId}`).select('rect')
-      .attr('x', `${value[0] / maxPrice * 100}%`)
-      .attr('width', `${(value[1] / maxPrice * 100) - value[0] / maxPrice * 100}%`)
-  }, 100)
+      .attr('x', `${value[0] / maxValue * 100}%`)
+      .attr('width', `${(value[1] / maxValue * 100) - value[0] / maxValue * 100}%`)
+  }
   
 
   return (
@@ -126,12 +126,12 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
       <Slider
           className="w-full bg-gray-300"
           min={0}
-          max={maxPrice}
+          max={maxValue}
           step={1}
           withTracks={false}
           value={rangeLimit}
           renderThumb={(props, _state) => 
-            <div {...props} onMouseUp={() => updateFilterFn && updateFilterFn()} key={`${_state.index}Slider`} > 
+            <div {...props}  onMouseUp={() => updateFilterFn && updateFilterFn()} key={`${_state.index}Slider`} > 
               <span className="w-3 h-3 bg-white thumb-corners-polygon absolute -translate-x-1/2 "></span>
             </div>}
           onChange={handleSliderChange}
@@ -172,7 +172,7 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, maskId, colorsArr, barWidthA
             className='text-white text-[14px] font-Barlow text-start w-full bg-transparent border-0'
             onChange={(e) => {
               const amountCents = +e.target.value.replace(/[^0-9]/g, '')
-              if (amountCents > (maxPrice ?? 0)) {
+              if (amountCents > (maxValue ?? 0)) {
                 return
               } else if (amountCents <= (rangeLimit?.[0] ?? 0)) {
                 handleSliderChange([rangeLimit?.[0] ?? 0, rangeLimit?.[0] ?? 0])

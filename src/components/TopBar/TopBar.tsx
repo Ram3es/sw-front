@@ -64,7 +64,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
         )}
       >
         <nav className="flex items-center">
-          <Link className='hidden lg:block' href='/'>
+          <Link className='hidden lg:block' href='/market'>
             <LogoSkinwallet />
           </Link>
           <div className='flex lg:hidden items-center gap-3'>
@@ -83,7 +83,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 <path d="M3.47119 5.80446V4.76099H21.2103V5.80446H3.47119ZM21.2103 9.97838V11.0219H3.47119V9.97838H21.2103ZM3.47119 15.1958H21.2103V16.2392H3.47119V15.1958Z" fill="white"/>
               </svg>)}
             </div>
-            <Link href='/'>
+            <Link href='/market'>
               <LogoSmall />
             </Link>
           </div>

@@ -13,6 +13,12 @@ import { getOffers } from "@/services/market/market"
 import { ECardVariant, IOffersCard } from "@/types/Card"
 import Link from "next/link"
 import LandingInfo from "./LandingInfo"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: 'Skinwallet Market: Buy CSGO Skins at the Best CS:GO marketplace',
+  description: 'Buy the best CS:GO skins for the best prices! Fast and secure transactions, transparent prices, and huge stock! Skinwallet-the best CSGO marker!',
+}
 
 const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string, icon?: JSX.Element, path: string, totalSkins: number }) => {
   return (
@@ -68,7 +74,7 @@ export default async function Market() {
                         <span>own for cash</span>
                     </div>
                     <div className='flex flex-col sm:flex-row gap-3 text-21 mt-8'>
-                      <Link href="/" >
+                      <Link href="/panel/deposit" >
                           <Button
                             text='sell skins'
                             className='w-full sm:w-max justify-center text-23 small-caps leading-[24px] tracking-[2.3px] text-darkSecondary bg-swLightOrange cta-clip-path hover:opacity-80 [&_.text]:mb-1 '

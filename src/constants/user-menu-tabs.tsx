@@ -40,11 +40,11 @@ export const USER_MENU: IUserMenu[][] = [
       path: '/market/inventory',
       icon: <ProfileCircleMark />
     },
-    {
-      title: 'my listed items',
-      path: '/market/withdraw',
-      icon: <ProfileTodoList />
-    },
+    // {
+    //   title: 'my listed items',
+    //   path: '/market/withdraw',
+    //   icon: <ProfileTodoList />
+    // },
   ],
   [
     {

@@ -42,6 +42,7 @@ const Footer = () => {
                             key={social.title}
                             href={social.path}
                             className='hover:text-white duration-200'
+                            target='_blank'
                         >
                             {social.icon}
                         </Link>)

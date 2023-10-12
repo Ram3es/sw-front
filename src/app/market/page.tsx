@@ -45,8 +45,8 @@ interface IOffersCardsState {
 }
 
 export default async function Market() {
-  const { total, offers: hot } = await getOffers('HotDeals')
-  const { offers: newest } = await getOffers('Newest')
+  const { total, offers: hot } = await getOffers('sortBy=HotDeals')
+  const { offers: newest } = await getOffers('sortBy=Newest')
   
   const offerCards = { total, hot, newest }
   return (

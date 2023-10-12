@@ -20,17 +20,17 @@ export const FOOTER_LINKS = [
     },
     {
       title: 'faq',
-      path: '/'
+      path: '/market/faq'
     }
   ],
   [
     {
       title: 'terms of service',
-      path: '/'
+      path: '/market/terms-of-service'
     },
     {
       title: 'privacy',
-      path: '/'
+      path: '/market/privacy-policy'
     }
   ]
 ]

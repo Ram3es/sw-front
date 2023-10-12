@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { classNames } from '../../helpers/className'

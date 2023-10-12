@@ -19,7 +19,6 @@ export default function MarketOffers () {
   const { addToCart } = useCartContext()
   const { user } = useAppContext()
   const { push } = useRouter()
-
   const {
     renderCards,
     filtersState,
@@ -34,7 +33,7 @@ export default function MarketOffers () {
         value.forEach(filter => queryContainer.push([`${key}=${filter}`]) )
         return 
       }
-      if(value || (key ==='tradableIn' && value === 0) ){
+      if(value || value === 0 ){
           queryContainer.push([`${key}=${value}`])
       }
    })

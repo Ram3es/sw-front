@@ -12,12 +12,24 @@ import { findNearestMaxValue } from "@/helpers/findNearestMaxValue"
 import { format, percentageDecrease } from "@/helpers/numberFormater"
 import { getOfferById, getOfferSalesHistory, getSimilarOffers } from "@/services/market/market"
 import { ESteamAppId } from "@/types/Inventory"
+import { Metadata } from "next"
 import Link from "next/link"
 
 interface IOfferProps {
     params: {
         id: string
     }
+}
+export async function generateMetadata(
+  { params: { id } }: IOfferProps,
+): Promise<Metadata> {
+
+  const item = await getOfferById(id)
+
+  return {
+    title:`Skinwallet Market | Offer-${item.name}`,
+   
+  }
 }
 export default async function Offer({ params: { id } }: IOfferProps){
 const offerData =  await getOfferById(id)

@@ -18,7 +18,8 @@ const OffersSideBar = () => {
 
   const { 
     isSelectedSideBarFilter,
-    sidebarFilters,
+    sidebarFilters ,
+    defaulSideBarStateFilters: initFilters,
     setSideBarFilters,
     updateFilter,
     resetFilters,
@@ -39,7 +40,7 @@ const OffersSideBar = () => {
   
 const setOption = (value: string) => {
   setSideBarFilters(prev => ({ ...prev, variant: {...prev.variant, value } }))
-  updateFilter({ variant: value })
+  updateFilter({ variant: value === 'all' ? '' : value })
   
 }
 
@@ -84,23 +85,37 @@ return (
         <Dropbox label="price">
             <TwoPointsSliderWithChart
             data={priceRange.data}
-            maxPrice={priceRange.value[1]}
+            maxPrice={initFilters.priceRange.value[1]}
+            minPrice = {initFilters.priceRange.value[0]}
             maskId="priceMask"
             rangeLimit={priceRange.value}
             setRangeLimit={(value: number[]) =>{
               setSideBarFilters(prev => ({
                 ...prev,
-                priceRange: {...prev.priceRange, value }
+                priceRange: {...prev.priceRange, value}
               }))
             }}
-            updateFilterFn={() => { updateFilter({ priceFrom: priceRange.value[0], priceTo: priceRange.value[1]  })}}
+            updateFilterFn={(value) => { 
+              const rangeValue = value ? value : priceRange.value
+              const priceFrom = rangeValue[0] === initFilters.priceRange.value[0]
+                && rangeValue[1] === initFilters.priceRange.value[1] 
+                  ? null 
+                  : rangeValue[0]
+
+              const priceTo = rangeValue[1] === initFilters.priceRange.value[1] 
+                &&  rangeValue[0] === initFilters.priceRange.value[0] 
+                  ? null 
+                  : rangeValue[1]
+
+              updateFilter({ priceFrom, priceTo })}}
             />
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />
         <Dropbox label="wear">
             <TwoPointsSliderWithChart
             data={wear.data}
-            maxPrice={1000}
+            maxPrice={initFilters.wear.value[1]}
+            minPrice={initFilters.wear.value[0]}
             barWidthArr={[0.07, 0.08, 0.22, 0.07, 0.56]}
             colorsArr={[
             'rgba(24,232,107,1)',
@@ -118,7 +133,19 @@ return (
                 wear: {...prev.wear, value }
               }))
             }}
-            updateFilterFn={() => { updateFilter({ wearFrom: wear.value[0], wearTo: wear.value[1] })}}
+            updateFilterFn={() => { 
+              const wearFrom = wear.value[0] === initFilters.wear.value[0] 
+                && wear.value[1] === initFilters.wear.value[1] 
+                  ? null 
+                  : wear.value[0]
+
+              const wearTo = wear.value[1] === initFilters.wear.value[1] 
+                &&  wear.value[0] === initFilters.wear.value[0] 
+                ? null 
+                : wear.value[1]
+
+              updateFilter({ wearFrom , wearTo })
+            }}
             />
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />

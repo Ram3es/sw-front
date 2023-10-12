@@ -12,12 +12,10 @@ import { Filters } from '@/components/InstantSellControls/filters'
 import { Nav } from '@/components/InstantSellControls/nav'
 import { Metadata } from 'next'
 
-export const metadata: Metadata = {
-  title: 'Panel | Deposit | Skinwallet Instant',
-  description: 'Sell your CSGO skins fast and cash out instantly for PayPal, WebMoney. Log in with your Steam, evaluate your inventory, sell skins and send money to your PayPal, WebMoney in 5 minutes.',
-}
 
 export default function Deposit() {
+
+
   const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])
   const [selectedCards, setSellectedCards] = useState<TInventoryCard[]>([])
   const [isSelectedAll, setSelectedAll] = useState(false)
@@ -96,4 +94,5 @@ export default function Deposit() {
         <SellsBar selectedCards={selectedCards} onClose={toggleSelect} />
       </div>
   )
+  
 }

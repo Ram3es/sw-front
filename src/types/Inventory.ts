@@ -12,5 +12,5 @@ export enum ESteamAppId {
   CSGO = '730',
   // DOTA2 = '570',
   // TF2 = '252490',
-  RUST = '0',
+  RUST = '252490',
 }

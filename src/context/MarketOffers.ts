@@ -10,10 +10,10 @@ export interface IInitialFiltersState {
     appId: ESteamAppId
     sortBy: string
     pattern: string | null
-    priceFrom: number
-    priceTo: number
-    wearFrom: number
-    wearTo: number
+    priceFrom: number | null
+    priceTo: number | null
+    wearFrom: number | null
+    wearTo: number | null
     tradableIn: number | null
     quality: string[]
     rarity: string[]
@@ -39,6 +39,7 @@ export interface IMarketOffersCtx {
     headerFilterOptions: ISortByOptions[]
     isSelectedSideBarFilter: boolean
     sidebarFilters: IFiltersSideBar
+    defaulSideBarStateFilters: IFiltersSideBar
     setSideBarFilters:  Dispatch<SetStateAction<IFiltersSideBar>>
     updateFilter: <K extends keyof IInitialFiltersState>(value: TValue<K>) => void
     setDefaultFilters: (query?: string) => Promise<void>

@@ -11,10 +11,10 @@ const initialFiltersState:IInitialFiltersState  = {
     appId: ESteamAppId.CSGO,
     sortBy: 'HotDeals',
     pattern: null,
-    priceFrom: 0,
-    priceTo: 0,
-    wearFrom: 0,
-    wearTo: 0,
+    priceFrom: null,
+    priceTo: null,
+    wearFrom: null,
+    wearTo: null,
     tradableIn: null,
     quality: [],
     rarity: [],
@@ -36,6 +36,9 @@ const [filtersState, setFiltersState] = useState(initialFiltersState)
 const [headerFilterOptions, setHeaderFilterOptions] = useState<ISortByOptions[]>([])
 const [renderCards, setRenderCards] = useState<IOffersCard[]>([])
 const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBarState)
+
+const [defaulSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
+
 
 
 const { gameId } = useAppContext()
@@ -108,8 +111,6 @@ const setDefaultFilters = useCallback(async (query?: string) => {
     try {
       const res = await getOffers(`appId=${ESteamAppId.CSGO}&sortBy=HotDeals`)
       
-      console.log(res.defaultFilters)
-
       // create initial sidebar state
       const initFilters: Record<string, any> = {}
 
@@ -127,6 +128,7 @@ const setDefaultFilters = useCallback(async (query?: string) => {
 
         setHeaderFilterOptions(res.sortByOptions)
         setSideBarFilters(initFilters as IFiltersSideBar )
+        setDefaultStateFilters(initFilters as IFiltersSideBar)
         localStorage.setItem('filters', JSON.stringify(initFilters) )
       })
 
@@ -160,6 +162,7 @@ const setDefaultFilters = useCallback(async (query?: string) => {
         headerFilterOptions,
         isSelectedSideBarFilter,
         sidebarFilters,
+        defaulSideBarStateFilters,
         setSideBarFilters,
         setHeaderFilterOptions,
         updateFilter,

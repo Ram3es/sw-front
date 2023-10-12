@@ -106,7 +106,7 @@ const ItemCard = ({
             </div> : ''}
           </div>
           <img
-            className="h-[137px]"
+            className="h-[137px] object-contain"
             src={image}
             alt={name}
           />

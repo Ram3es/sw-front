@@ -61,29 +61,31 @@ const updateFilterWithCheckbox = (filterKey:TKeysCheckboxFilter, value: string) 
 
  // checking was changed sidebar filters
 const isSelectedSideBarFilter = useMemo(():boolean => {
-  const initialFiltersString  = localStorage.getItem('filters')
-  if(initialFiltersString){
-    const initFilters = JSON.parse(initialFiltersString) as IFiltersSideBar
+  if (typeof localStorage !== "undefined") {
+  const initialFiltersString  = localStorage?.getItem('filters')
+    if(initialFiltersString){
+      const initFilters = JSON.parse(initialFiltersString) as IFiltersSideBar
 
-    return Object.entries(sidebarFilters).some(([key, value]) => {
-      if(typeof value === 'object' && !Array.isArray(value) ){
+      return Object.entries(sidebarFilters).some(([key, value]) => {
+        if(typeof value === 'object' && !Array.isArray(value) ){
 
-        const initValue = initFilters[key as keyof IFiltersSideBar] as {value: any} 
-        if(Array.isArray(value.value) && value.value.length && Array.isArray(initValue.value)){
-          for(let i = 0; i < value.value.length; i++ ){
-            if(value.value[i] !== initValue.value[i]){
-              return true
+          const initValue = initFilters[key as keyof IFiltersSideBar] as {value: any} 
+          if(Array.isArray(value.value) && value.value.length && Array.isArray(initValue.value)){
+            for(let i = 0; i < value.value.length; i++ ){
+              if(value.value[i] !== initValue.value[i]){
+                return true
+              }
             }
+            return false
           }
-          return false
+          return initValue.value !== value.value 
         }
-        return initValue.value !== value.value 
-      }
-      if(Array.isArray(value) && value.length ){
-        return value.some((el) => el.selected )
-      }
-      return sidebarFilters[key as keyof IFiltersSideBar] !== initFilters[key as keyof IFiltersSideBar]
-    })
+        if(Array.isArray(value) && value.length ){
+          return value.some((el) => el.selected )
+        }
+        return sidebarFilters[key as keyof IFiltersSideBar] !== initFilters[key as keyof IFiltersSideBar]
+      })
+    }
   }
   return false
 
@@ -103,10 +105,12 @@ const resetFilters = () => {
 
 
 const resetSideBarFilters = () => {
-  const initialFilters  = localStorage.getItem('filters')
-  if(initialFilters){
-    setSideBarFilters(JSON.parse(initialFilters))
-  } 
+  if (typeof localStorage !== "undefined") {
+    const initialFilters = localStorage?.getItem('filters')
+    if(initialFilters){
+      setSideBarFilters(JSON.parse(initialFilters))
+    } 
+  }
 }
 const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
     try {

@@ -47,7 +47,7 @@ export interface IMarketOffersCtx {
     updateFilterWithCheckbox: (filterKey:TKeysCheckboxFilter, value: string) => void
     setHeaderFilterOptions: Dispatch<SetStateAction<ISortingState>>
     resetSideBarFilters: () => void
-    resetFilters: () => void
+    resetFilters: (appId?: ESteamAppId) => void
     
 }
 

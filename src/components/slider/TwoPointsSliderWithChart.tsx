@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3-selection'
 import Slider from 'react-slider'
 import { format, formatToThousands } from '../../helpers/numberFormater'
@@ -13,12 +13,14 @@ interface ITwoPointsSliderProps {
   isCurrency?: boolean 
   rangeLimit?: number[]
   setRangeLimit?: (value: number[]) => void
-  updateFilterFn?: (value?: number[]) => void
+  updateFilterFn?: (value: number[]) => void
+  isShouldReset?: boolean
+  setShouldReset?:() => void
 }
 
 let timerId: NodeJS.Timeout | null;
 
-const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr, barWidthArr, isCurrency = true, rangeLimit, setRangeLimit, updateFilterFn }: ITwoPointsSliderProps) => {
+const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr, barWidthArr, isCurrency = true, rangeLimit, setRangeLimit, updateFilterFn, isShouldReset, setShouldReset }: ITwoPointsSliderProps) => {
   const maxValue = Math.max(...data)
 
 
@@ -26,9 +28,25 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
   const [isFocused, setIsFocused] = useState({from:false, to:false})
   const [sliderRange, setSloderRange] = useState<number[]>(rangeLimit ?? []) 
 
+  const initialRangeRef = useRef<number[]>()
+
   useEffect(() => {
-    setInputRange(rangeLimit ?? [])
-  }, [rangeLimit])
+    if(rangeLimit){
+      initialRangeRef.current = rangeLimit
+    }
+  }, [])
+
+  useEffect(() => {
+    if(initialRangeRef.current && isShouldReset){
+      setSloderRange(initialRangeRef.current)
+      setShouldReset?.()
+    }
+  }, [isShouldReset])
+
+  useEffect(() => {
+    setInputRange(sliderRange ?? [])
+  }, [sliderRange])
+
   
 
   useEffect(() => {
@@ -124,10 +142,8 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
   };
 
   const handleValueChange = debounce((value) => {
-    console.log('here', value);
-    
     if (setRangeLimit) setRangeLimit(value)
-    if (updateFilterFn) updateFilterFn()
+    if (updateFilterFn) updateFilterFn(value)
   }, 300);
 
   const handleSliderChange = (value: number[]) => {
@@ -162,13 +178,12 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
             {isCurrency ? '$' : ''}
             <input
               type="text"
-              value={isCurrency ? format(isFocused.from ? inputRange?.[0] ?? 0 : rangeLimit?.[0] ?? 0) : formatToThousands(isFocused ? inputRange?.[0] ?? 0 : rangeLimit?.[0] ?? 0)}
+              value={isCurrency ? format(isFocused.from ? inputRange?.[0] ?? 0 : sliderRange?.[0] ?? 0) : formatToThousands(isFocused ? inputRange?.[0] ?? 0 : sliderRange?.[0] ?? 0)}
               className='text-white text-[14px] font-Barlow text-start w-full bg-transparent border-0 outline-none '
               onFocus={() => setIsFocused(prev => ({...prev, from: true}))}
               onBlur={() => {
                 setIsFocused(prev => ({...prev, from: false}))
                 handleSliderChange([inputRange?.[0] ?? 0, inputRange?.[1] ?? 0])
-                updateFilterFn && updateFilterFn([inputRange?.[0] ?? 0, inputRange?.[1] ?? 0])
               }}
               onChange={(e) => {
                 const amountCents = +e.target.value.replace(/[^0-9]/g, '')
@@ -191,13 +206,12 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
             {isCurrency ? '$' : ''}
             <input
             type="text"
-            value={isCurrency ? format(isFocused.to ? inputRange?.[1] ?? 0 : rangeLimit?.[1] ?? 0) : formatToThousands(isFocused ? inputRange?.[1] ?? 0 : rangeLimit?.[1] ?? 0)}
+            value={isCurrency ? format(isFocused.to ? inputRange?.[1] ?? 0 : sliderRange?.[1] ?? 0) : formatToThousands(isFocused ? inputRange?.[1] ?? 0 : sliderRange?.[1] ?? 0)}
             className='text-white text-[14px] font-Barlow text-start w-full bg-transparent border-0 outline-none'
             onFocus={() => setIsFocused(prev => ({...prev, to: true}))}
             onBlur={() => {
               setIsFocused(prev => ({...prev, to: false}))
               handleSliderChange([inputRange?.[0] ?? 0, inputRange?.[1] ?? 0])
-              updateFilterFn && updateFilterFn([inputRange?.[0] ?? 0, inputRange?.[1] ?? 0])
             }}
             onChange={(e) => {
               const amountCents = +e.target.value.replace(/[^0-9]/g, '')

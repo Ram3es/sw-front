@@ -54,7 +54,6 @@ export default function MarketOffers () {
      const filtersQuery = queryContainer.join('&')
      void getFilteredItems(filtersQuery)
     }
-
    
    }, [filtersState])
 

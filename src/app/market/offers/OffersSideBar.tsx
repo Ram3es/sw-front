@@ -13,10 +13,11 @@ import { useAppContext } from '@/context/AppContext';
 import { useMarketOffersCtx } from '@/context/MarketOffers';
 import { classNames } from '@/helpers/className';
 import { ESteamAppId } from '@/types/Inventory';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 const OffersSideBar = () => {
   const [isShownAllOptions, setShowAllOptions] = useState(false)
+  const [isShouldReset, setShouldReset] = useState(false)
 
   const { gameId } =useAppContext()
 
@@ -63,8 +64,15 @@ const handleChangePatternValue = (value: string) => {
     }
 }
 
+
 const renderRarityFilters = useMemo(() => isShownAllOptions ? rarity : rarity.slice(0, 6)
 ,[isShownAllOptions, rarity])
+
+useEffect(() => {
+  setShouldReset(true)
+  resetFilters()
+  setShouldReset(false)
+} , [gameId])
 
 return (
     <>
@@ -74,18 +82,20 @@ return (
             className={classNames('mt-2 relative w-full border border-graySecondary group hover:text-white hover:border-white justify-center cta-clip-path uppercase text-graySecondary duration-200',
              isSelectedSideBarFilter ? '' : 'pointer-events-none opacity-50' )}
             heightClass='h-8'
-            onClick={() => { resetSideBarFilters(); resetFilters(gameId) }  }
+            onClick={() => { resetSideBarFilters(); resetFilters(); setShouldReset(true) }  }
           >
             <div className='absolute w-3 bottom-[3px] -left-[3px] border-b border-graySecondary group-hover:border-white rotate-45 duration-200' />
           </Button>
+          {gameId === ESteamAppId.CSGO && 
           <Dropbox label="offers">
             <RadioGroup
             options={variant?.options}
             setOption={(value) => setOption(value as string)}
             selectedOptionId={variant?.value}
             />
-        </Dropbox>
+        </Dropbox>}
         <div className="w-full border-t border-darkGrey" />
+        {gameId === ESteamAppId.CSGO && 
         <Dropbox label="price">
             <TwoPointsSliderWithChart
             data={priceRange.data}
@@ -93,6 +103,8 @@ return (
             minPrice = {initFilters.priceRange.value[0]}
             maskId="priceMask"
             rangeLimit={priceRange.value}
+            isShouldReset={isShouldReset}
+            setShouldReset={() => setShouldReset(false)}
             setRangeLimit={(value: number[]) =>{
               setSideBarFilters(prev => ({
                 ...prev,
@@ -100,20 +112,52 @@ return (
               }))
             }}
             updateFilterFn={(value) => { 
-              const rangeValue = value ? value : priceRange.value
-              const priceFrom = rangeValue[0] === initFilters.priceRange.value[0]
-                && rangeValue[1] === initFilters.priceRange.value[1] 
-                  ? null 
-                  : rangeValue[0]
+              // const rangeValue = value ? value : priceRange.value
+              // const priceFrom = rangeValue[0] === initFilters.priceRange.value[0]
+              //   && rangeValue[1] === initFilters.priceRange.value[1] 
+              //     ? null 
+              //     : rangeValue[0]
 
-              const priceTo = rangeValue[1] === initFilters.priceRange.value[1] 
-                &&  rangeValue[0] === initFilters.priceRange.value[0] 
-                  ? null 
-                  : rangeValue[1]
+              // const priceTo = rangeValue[1] === initFilters.priceRange.value[1] 
+              //   &&  rangeValue[0] === initFilters.priceRange.value[0] 
+              //     ? null 
+              //     : rangeValue[1]
 
-              updateFilter({ priceFrom, priceTo })}}
+              updateFilter({ priceFrom: value?.[0] ?? 0, priceTo: value?.[1] ?? 0 })}}
             />
-        </Dropbox>
+        </Dropbox>}
+        {gameId === ESteamAppId.RUST && 
+        <Dropbox label="price">
+            <TwoPointsSliderWithChart
+            data={priceRange.data}
+            maxPrice={initFilters.priceRange.value[1]}
+            minPrice = {initFilters.priceRange.value[0]}
+            maskId="priceMask"
+            rangeLimit={priceRange.value}
+            isShouldReset={isShouldReset}
+            setShouldReset={() => setShouldReset(false)}
+            setRangeLimit={(value: number[]) =>{
+              setSideBarFilters(prev => ({
+                ...prev,
+                priceRange: {...prev.priceRange, value}
+              }))
+            }}
+            updateFilterFn={(value) => { 
+              // const rangeValue = value ? value : priceRange.value
+              // const priceFrom = rangeValue[0] === initFilters.priceRange.value[0]
+              //   && rangeValue[1] === initFilters.priceRange.value[1] 
+              //     ? null 
+              //     : rangeValue[0]
+
+              // const priceTo = rangeValue[1] === initFilters.priceRange.value[1] 
+              //   &&  rangeValue[0] === initFilters.priceRange.value[0] 
+              //     ? null 
+              //     : rangeValue[1]
+
+              updateFilter({ priceFrom: value?.[0] ?? 0, priceTo: value?.[1] ?? 0 })}}
+            />
+        </Dropbox>}
+        
         {ESteamAppId.CSGO === gameId && (<>
         <div className="w-full border-t border-darkGrey" />
         <Dropbox label="wear">
@@ -121,6 +165,8 @@ return (
             data={wear?.data}
             maxPrice={initFilters?.wear?.value[1]}
             minPrice={initFilters?.wear?.value[0]}
+            isShouldReset={isShouldReset}
+            setShouldReset={() => setShouldReset(false)}
             barWidthArr={[0.07, 0.08, 0.22, 0.07, 0.56]}
             colorsArr={[
             'rgba(24,232,107,1)',
@@ -139,18 +185,19 @@ return (
               }))
             }}
             updateFilterFn={(value) => { 
-              const wearValue = value ? value : wear.value
-              const wearFrom = wearValue[0] === initFilters.wear.value[0] 
-                && wearValue[1] === initFilters.wear.value[1] 
-                  ? null 
-                  : wearValue[0] /1000
+              // const wearValue = value ? value : wear.value
+              // const wearFrom = wearValue[0] === initFilters.wear.value[0] 
+              //   && wearValue[1] === initFilters.wear.value[1] 
+              //     ? null 
+              //     : wearValue[0] /1000
 
-              const wearTo = wearValue[1] === initFilters.wear.value[1] 
-                &&  wearValue[0] === initFilters.wear.value[0] 
-                ? null 
-                : wearValue[1] /1000
+              // const wearTo = wearValue[1] === initFilters.wear.value[1] 
+              //   &&  wearValue[0] === initFilters.wear.value[0] 
+              //   ? null 
+              //   : wearValue[1] /1000
 
-              updateFilter({ wearFrom , wearTo })
+              // updateFilter({ wearFrom , wearTo })
+              updateFilter({ wearFrom: value[0] / 1000, wearTo: value[1] / 1000})
             }}
             />
         </Dropbox>

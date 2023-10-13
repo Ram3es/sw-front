@@ -87,13 +87,13 @@ const isSelectedSideBarFilter = useMemo(():boolean => {
 
 },[sidebarFilters])
 
-const resetFilters = (appId: ESteamAppId) => {
+const resetFilters = () => {
   Object.entries(filtersState).forEach(([key, value]) =>{
     if( value || value === 0 ){
       setFiltersState(prev => ({
         ...prev,
         [key]: initialFiltersState[key as keyof IInitialFiltersState],
-        appId 
+
       }))
     }
   })

@@ -4,20 +4,20 @@ import { IFiltersSideBar, IInitialFiltersState, MarketOffersContext, TKeysCheckb
 import { getOffers } from "@/services/market/market"
 import { IOffersCard } from "@/types/Card"
 import { ESteamAppId } from "@/types/Inventory"
-import { ISortByOptions } from "@/types/Market"
+import { ISortByOptions, ISortingState } from "@/types/Market"
 import { FC, PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react"
 
 const initialFiltersState:IInitialFiltersState  = {
-    appId: ESteamAppId.CSGO,
-    sortBy: 'HotDeals',
+    appId: null,
+    sortBy: null,
     pattern: null,
     priceFrom: null,
     priceTo: null,
     wearFrom: null,
     wearTo: null,
     tradableIn: null,
-    quality: [],
-    rarity: [],
+    quality: null,
+    rarity: null,
     variant: ''
 }
 
@@ -33,16 +33,12 @@ const initSideBarState:IFiltersSideBar = {
 
 export const MarketOffersProvider: FC<PropsWithChildren> = ({ children }) => {
 const [filtersState, setFiltersState] = useState(initialFiltersState)
-const [headerFilterOptions, setHeaderFilterOptions] = useState<ISortByOptions[]>([])
+const [headerFilterOptions, setHeaderFilterOptions] = useState<ISortingState>({sortBy:'', options:[]})
 const [renderCards, setRenderCards] = useState<IOffersCard[]>([])
 const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBarState)
 
+
 const [defaulSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
-
-
-
-const { gameId } = useAppContext()
-
 
 const updateFilter = <K extends keyof IInitialFiltersState>(value: TValue<K>): void => {
     setFiltersState(prev => ({
@@ -53,9 +49,9 @@ const updateFilter = <K extends keyof IInitialFiltersState>(value: TValue<K>): v
 const updateFilterWithCheckbox = (filterKey:TKeysCheckboxFilter, value: string) => {
   setFiltersState(prev => ({
     ...prev,
-    [filterKey]: prev[filterKey].some((el) => el === value ) 
-      ?  prev[filterKey].filter(el => el !== value)
-      : [ ...prev[filterKey], value ]
+    [filterKey]: prev[filterKey]?.some((el) => el === value ) 
+      ?  prev[filterKey]?.filter(el => el !== value)
+      : [ ...prev[filterKey] ?? [], value ]
   }) )
  }
 
@@ -91,13 +87,13 @@ const isSelectedSideBarFilter = useMemo(():boolean => {
 
 },[sidebarFilters])
 
-const resetFilters = () => {
+const resetFilters = (appId: ESteamAppId) => {
   Object.entries(filtersState).forEach(([key, value]) =>{
-    console.log(key,' key filters')
-    if(!['appId','sortBy'].includes(key) && value || value === 0 ){
+    if( value || value === 0 ){
       setFiltersState(prev => ({
         ...prev,
-        [key]: initialFiltersState[key as keyof IInitialFiltersState] 
+        [key]: initialFiltersState[key as keyof IInitialFiltersState],
+        appId 
       }))
     }
   })
@@ -114,13 +110,13 @@ const resetSideBarFilters = () => {
 }
 const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
     try {
-      const res = await getOffers(`appId=${appId}&sortBy=HotDeals`)
-      console.log(res.defaultFilters)
+      const { defaultFilters, sortByOptions, offers, sortBy  } = await getOffers(`appId=${appId}&sortBy=HotDeals`)
+
       
       // create initial sidebar state
       const initFilters: Record<string, any> = {}
 
-      res.defaultFilters.forEach(filter => {
+      defaultFilters.forEach(filter => {
         if(filter.type === 'range'){
          return initFilters[filter.name] = { value: filter.value, data: filter?.diagramData?.map((el: { count: any }) => el?.count) }
         }
@@ -134,10 +130,14 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
 
         
       })
-
-      setHeaderFilterOptions(res.sortByOptions)
+      setHeaderFilterOptions(prev => ({
+        prev,
+        options: sortByOptions,
+        sortBy
+      }))
       setSideBarFilters(initFilters as IFiltersSideBar )
       setDefaultStateFilters(initFilters as IFiltersSideBar)
+      setRenderCards(offers)
       localStorage.setItem('filters', JSON.stringify(initFilters) )
 
     } catch (error) {
@@ -154,14 +154,6 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
     }
 
   }, [])
-
- useEffect(() => {
- if(gameId !== filtersState.appId ) {
-    updateFilter({ appId: gameId })
- }
- }, [gameId])
-
-
 
     return (
       <MarketOffersContext.Provider value={{

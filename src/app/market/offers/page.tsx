@@ -22,13 +22,24 @@ export default function MarketOffers () {
   const {
     renderCards,
     filtersState,
+    headerFilterOptions,
     setDefaultFilters,
-    getFilteredItems
+    getFilteredItems,
   } = useMarketOffersCtx()
 
   useEffect(() => {
-    const queryContainer: Array<string[]> = []
-    Object.entries(filtersState).forEach(([key, value]) =>{
+   
+    if(Object.values(filtersState).filter(filt => !!filt).length){
+      const queryContainer: Array<string[]> = []
+
+      if(!filtersState.appId){
+        queryContainer.push([`appId=${gameId}`])
+      }
+      if(!filtersState.sortBy){
+        queryContainer.push([`sortBy=${ headerFilterOptions.sortBy}`])
+      }
+     
+      Object.entries(filtersState).forEach(([key, value]) =>{
       if(Array.isArray(value) ){
         if(!value.length) return
 
@@ -37,13 +48,18 @@ export default function MarketOffers () {
       if(value || value === 0 ){
           queryContainer.push([`${key}=${value}`])
       }
+
+
    })
      const filtersQuery = queryContainer.join('&')
      void getFilteredItems(filtersQuery)
+    }
+
    
    }, [filtersState])
 
    useEffect(() => {
+    if(!gameId) return
     setDefaultFilters(gameId)
    }, [gameId])
 

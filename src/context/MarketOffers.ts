@@ -1,22 +1,22 @@
 import { IFilterwithCheckbox, IOfferFilter } from "@/constants/market-offers";
 import { IOffersCard } from "@/types/Card";
 import { ESteamAppId } from "@/types/Inventory";
-import { ISortByOptions } from "@/types/Market";
+import { ISortByOptions, ISortingState } from "@/types/Market";
 import { Dispatch, SetStateAction, createContext, useContext } from "react";
 
 type TRange = { value: number[], data: number[] }
 
 export interface IInitialFiltersState {
-    appId: ESteamAppId
-    sortBy: string
+    appId: ESteamAppId | null
+    sortBy: string | null
     pattern: string | null
     priceFrom: number | null
     priceTo: number | null
     wearFrom: number | null
     wearTo: number | null
     tradableIn: number | null
-    quality: string[]
-    rarity: string[]
+    quality: string[] | null
+    rarity: string[] | null
     variant: string
 }
 
@@ -36,7 +36,7 @@ export type TKeysCheckboxFilter = keyof Pick<IInitialFiltersState,'quality' | 'r
 export interface IMarketOffersCtx {
     renderCards: IOffersCard[]
     filtersState: IInitialFiltersState
-    headerFilterOptions: ISortByOptions[]
+    headerFilterOptions:ISortingState
     isSelectedSideBarFilter: boolean
     sidebarFilters: IFiltersSideBar
     defaulSideBarStateFilters: IFiltersSideBar
@@ -45,9 +45,9 @@ export interface IMarketOffersCtx {
     setDefaultFilters: (appId: ESteamAppId) => Promise<void>
     getFilteredItems:  (query?: string) => Promise<void>
     updateFilterWithCheckbox: (filterKey:TKeysCheckboxFilter, value: string) => void
-    setHeaderFilterOptions: Dispatch<SetStateAction<ISortByOptions[]>>
+    setHeaderFilterOptions: Dispatch<SetStateAction<ISortingState>>
     resetSideBarFilters: () => void
-    resetFilters: () => void
+    resetFilters: (appId: ESteamAppId) => void
     
 }
 

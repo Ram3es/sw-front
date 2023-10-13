@@ -7,25 +7,23 @@ import { classNames } from '@/helpers/className';
 import { ESteamAppId } from '@/types/Inventory';
 import { ISortByOptions } from '@/types/Market';
 import { Listbox } from '@headlessui/react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 const OffersHeader = () => {
     const { gameId } = useAppContext()
     const { 
       updateFilter,
+      setHeaderFilterOptions,
       headerFilterOptions,
-      filtersState
      } = useMarketOffersCtx()
-    const [selectedFilter, setSelectedFilter] =useState<ISortByOptions>()
 
-    useEffect(() => {
-      if(headerFilterOptions.length && filtersState.sortBy ){
-        setSelectedFilter(headerFilterOptions.find( opt => opt.name ===  filtersState.sortBy ))
-      }
-    }, [headerFilterOptions])
 
     const onChangeFilter = (value: ISortByOptions) => {
-      setSelectedFilter(value)
+      setHeaderFilterOptions(prev => ({
+        ...prev,
+        sortBy: value.name
+
+      }))
       updateFilter({ sortBy: value.name })
     }
    
@@ -40,7 +38,7 @@ const OffersHeader = () => {
               <Listbox.Button className='relative w-full cursor-pointer text-sm  text-graySecondary uppercase flex gap-4 justify-between items-center '>
                 {({ open }) => (<>
                       <div className="flex items-center text-sm tracking-[1.12] gap-2 label-wrap">
-                       {selectedFilter?.label}
+                       { headerFilterOptions.options.find(el => el.name === headerFilterOptions.sortBy )?.label ?? '' }
                       </div>
                 <ChevronDown
                   className={classNames('fill-current h-[12px] w-[12px]', open ? 'rotate-180' : '')}
@@ -48,7 +46,7 @@ const OffersHeader = () => {
                 </>)}
               </Listbox.Button>
               <Listbox.Options className={'absolute top-9 right-0 min-w-[200px] flex flex-col gap-2 p-4 text-sm bg-darkGrey '}>
-                {headerFilterOptions.map((option, idx) =>
+                {headerFilterOptions.options.map((option, idx) =>
                   <Listbox.Option 
                     key={idx}
                     value={option}

@@ -125,10 +125,8 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
     if (setRangeLimit) setRangeLimit(value)
     d3.select(`#${maskId}`).select('rect')
       .attr('x', `${(value[0] - minPrice) / (maxPrice - minPrice) * 100}%`)
-      .attr('width', `${(value[1] / (maxPrice - minPrice) * 100) - value[0] / maxPrice * 100}%`)
+      .attr('width', `${(value[1] / (maxPrice - minPrice) * 100) - value[0] / (maxPrice - minPrice )* 100}%`)
   }
-  
-
   return (
     <div className='pt-5'>
       <div id={`${maskId}Container`} style={{ width: '208px', height: '51px' }} />

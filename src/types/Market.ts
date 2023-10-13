@@ -19,6 +19,10 @@ export interface ITradeOffersResponse {
   steam_confiramation_url: string
 }
 
+export interface ISortingState {
+  sortBy: string
+  options: ISortByOptions[]
+}
 export interface ISortByOptions {
   name: string
   label: string

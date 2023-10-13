@@ -74,7 +74,7 @@ return (
             className={classNames('mt-2 relative w-full border border-graySecondary group hover:text-white hover:border-white justify-center cta-clip-path uppercase text-graySecondary duration-200',
              isSelectedSideBarFilter ? '' : 'pointer-events-none opacity-50' )}
             heightClass='h-8'
-            onClick={() => { resetSideBarFilters(); resetFilters() }  }
+            onClick={() => { resetSideBarFilters(); resetFilters(gameId) }  }
           >
             <div className='absolute w-3 bottom-[3px] -left-[3px] border-b border-graySecondary group-hover:border-white rotate-45 duration-200' />
           </Button>
@@ -143,12 +143,12 @@ return (
               const wearFrom = wearValue[0] === initFilters.wear.value[0] 
                 && wearValue[1] === initFilters.wear.value[1] 
                   ? null 
-                  : wearValue[0]
+                  : wearValue[0] /1000
 
               const wearTo = wearValue[1] === initFilters.wear.value[1] 
                 &&  wearValue[0] === initFilters.wear.value[0] 
                 ? null 
-                : wearValue[1]
+                : wearValue[1] /1000
 
               updateFilter({ wearFrom , wearTo })
             }}

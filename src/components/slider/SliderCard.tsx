@@ -10,6 +10,7 @@ import { ECardVariant, IOffersCard } from '@/types/Card'
 import { IMAGE_ROOT_URL } from '@/constants/strings'
 import SliderArrow from '../../components/slider/SliderArrow'
 import { useAppContext } from '@/context/AppContext'
+import { useRouter } from 'next/navigation'
 
 interface ISliderProps extends PropsWithChildren {
   settings: Partial<Settings>,
@@ -19,6 +20,7 @@ interface ISliderProps extends PropsWithChildren {
 
 const SliderCard: FC<ISliderProps> = ({ items, settings, withEmptySlide = true }) => {
   const { addToCart } = useCartContext()
+  const { push } = useRouter()
   const { user } = useAppContext()
   const settingsWithArrow = { 
     nextArrow: <SliderArrow />,
@@ -41,9 +43,12 @@ const SliderCard: FC<ISliderProps> = ({ items, settings, withEmptySlide = true }
                 steamPrice={item.steamPrice.amount}
                 image={IMAGE_ROOT_URL.concat(item.imageUrl)}
                 onClick={() => {
+                  push(`/market/offers/${item.inventoryItemId}`)
+                }}
+                submitFn={(e) => {
+                  e.stopPropagation()
                   if (user?.id) addToCart(item)
                 }}
-                submitFn={() => {}}
                   />
             )}
                 { withEmptySlide && <EmptyCard /> }

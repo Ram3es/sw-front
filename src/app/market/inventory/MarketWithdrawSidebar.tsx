@@ -74,7 +74,7 @@ const MarketWithdrawSidebar = () => {
                 key as keyof typeof ESteamAppId
               ] as unknown as number,
               name: key,
-              filter: '',
+              count: '',
               selected: false
             }))}
             setOption={(id) => {
@@ -134,6 +134,7 @@ const MarketWithdrawSidebar = () => {
           <TwoPointsSliderWithChart
             data={[120, 40, 160, 80, 0, 10, 150]}
             maxPrice={maxPrice}
+            minPrice={311}
             maskId="priceMask"
             rangeLimit={[]}
             setRangeLimit={function (value: number[]): void {
@@ -148,6 +149,7 @@ const MarketWithdrawSidebar = () => {
           <TwoPointsSliderWithChart
             data={[120, 40, 160, 80, 130]}
             maxPrice={1000}
+            minPrice={0}
             barWidthArr={[0.07, 0.08, 0.22, 0.07, 0.56]}
             colorsArr={[
               'rgba(24,232,107,1)',

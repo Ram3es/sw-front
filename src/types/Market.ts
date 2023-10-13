@@ -5,6 +5,7 @@ export interface IOffersResponse {
   total: number
   sortBy: string
   sortByOptions: ISortByOptions[]
+  defaultFilters: IDefaultFilters []
 }
 
 export interface ITradeOffersResponse {
@@ -18,6 +19,10 @@ export interface ITradeOffersResponse {
   steam_confiramation_url: string
 }
 
+export interface ISortingState {
+  sortBy: string
+  options: ISortByOptions[]
+}
 export interface ISortByOptions {
   name: string
   label: string
@@ -36,4 +41,28 @@ export interface IHistorySalesOfferRes {
 
 export interface ISimilarOffersRes {
   similarOffers : IOffersCard[]
+}
+export interface IDefaultFilters {
+  label: string
+  name: string
+  type: string
+  value: number[]
+  diagramData?: DiagramDaum[]
+  options?: IDefaultOptionRes[] | IDefaultRadioOptionRes[]
+}
+export interface DiagramDaum {
+  columnNumber: number
+  count: number
+}
+
+export interface IDefaultOptionRes {
+  label: string
+  value: string
+  count: number
+  warning: any
+}
+export interface IDefaultRadioOptionRes {
+  id: string
+  name: string
+  count: number
 }

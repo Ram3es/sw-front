@@ -106,17 +106,19 @@ const ItemCard = ({
             </div> : ''}
           </div>
           <img
-            className="h-[137px]"
+            className="h-[137px] object-contain"
             src={image}
             alt={name}
           />
           <div className="flex flex-col w-full relative mb-2">
-            <div className='text-graySecondary uppercase text-sm font-Barlow font-light group-[.market]/card:hidden'>estimated value</div>
+            <div className='text-graySecondary uppercase text-sm font-Barlow font-light group-[.market]/card:hidden'>
+              {variant === ECardVariant.sell ? 'sell price' : 'estimated value' }
+            </div>
             <div className='flex flex-row group-[.withdraw]/card:hidden font-Barlow font-bold'>
               <div className='uppercase text-2xl text-white mr-3'>${format(price)}</div>
               {steamPrice ? <div className='bg-[#18E86B] h-6 px-1'>{percentageDecrease(steamPrice, price)}%</div> : ''}
             </div>
-            <div className='flex flex-row group-[.market]/card:flex group-[.withdraw]/card:flex items-center gap-2 py-1 text-sm text-graySecondary'>
+            <div className='flex flex-row group-[.market]/card:flex group-[.withdraw]/card:flex group-[.sell]/card:hidden items-center gap-2 py-1 text-sm text-graySecondary'>
               <SteamIcon className='w-4 h-auto'/>
               <span>${format(steamPrice ?? 0)}</span>
             </div>

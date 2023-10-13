@@ -1,6 +1,6 @@
 "use client"
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { TInventoryCard } from '@/types/Card'
+import { ECardVariant, TInventoryCard } from '@/types/Card'
 import { useAppContext } from '@/context/AppContext'
 import { useSort } from '@/helpers/useSort'
 import { sortData } from '@/helpers/sortData'
@@ -52,7 +52,14 @@ export default function Deposit() {
   const getUserInventory = useCallback(async () => {
     if (user && gameId) {
       const inventory = await getInventory(gameId)
-      setRenderCards(Object.values(inventory).map((item: any) => ({ ...item, isTradable: true, isChecked: false })))
+      setRenderCards(Object.values(inventory).map((item: any) => (
+        {
+          ...item,
+          variant: ECardVariant.sell,
+          isTradable: true,
+          isChecked: false,
+          condition: 0.3435533 
+        })))
     }
   }, [user, gameId])
 
@@ -83,4 +90,5 @@ export default function Deposit() {
         <SellsBar selectedCards={selectedCards} onClose={toggleSelect} />
       </div>
   )
+  
 }

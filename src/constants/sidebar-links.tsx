@@ -61,38 +61,18 @@ export const SIDEBAR_LINKS = [
 export const SOCIAL_LINKS = [
   {
     title: 'discord',
-    path: '/',
+    path: 'https://discord.gg/skinwallet',
     icon: <DiscordIcon />
   },
   {
-    title: 'facebook',
-    path: '/',
-    icon: <FacebookIcon />
-  },
-  {
     title: 'twitter',
-    path: '/',
+    path: 'https://twitter.com/Skinwalletcom',
     icon: <TwitterIcon />
   },
   {
-    title: 'instagram',
-    path: '/',
-    icon: <InstagramIcon />
-  },
-  {
-    title: 'youtube',
-    path: '/',
-    icon: <YoutubeIcon />
-  },
-  {
     title: 'steam',
-    path: '/',
+    path: 'https://steamcommunity.com/groups/SkinwalletOfficial',
     icon: <SteamIcon />
-  },
-  {
-    title: 'vk',
-    path: '/',
-    icon: <VkIcon />
   }
 ]
 

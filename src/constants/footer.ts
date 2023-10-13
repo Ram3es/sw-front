@@ -2,7 +2,7 @@ export const FOOTER_LINKS = [
   [
     {
       title: 'instant sale',
-      path: '/instant-sell'
+      path: '/panel/deposit'
     },
     {
       title: 'market place',
@@ -15,26 +15,22 @@ export const FOOTER_LINKS = [
   ],
   [
     {
-      title: 'partnership',
-      path: '/'
-    },
-    {
       title: 'sitemap',
       path: '/'
     },
     {
       title: 'faq',
-      path: '/'
+      path: '/market/faq'
     }
   ],
   [
     {
       title: 'terms of service',
-      path: '/'
+      path: '/market/terms-of-service'
     },
     {
       title: 'privacy',
-      path: '/'
+      path: '/market/privacy-policy'
     }
   ]
 ]

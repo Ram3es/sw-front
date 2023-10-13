@@ -30,10 +30,10 @@ export default function Inventory() {
 
   useEffect(() => {
     setCartObject(() => cartItems.items.reduce((prev: any, cur: IOffersCard) => {
-      if (prev[cur.appid]) {
-        prev[cur.appid] = [...prev[cur.appid], cur]
+      if (prev[cur.appId]) {
+        prev[cur.appId] = [...prev[cur.appId], cur]
       } else {
-        prev[cur.appid] = [cur]
+        prev[cur.appId] = [cur]
       }
       return prev
     }, {}))

@@ -12,12 +12,24 @@ import { findNearestMaxValue } from "@/helpers/findNearestMaxValue"
 import { format, percentageDecrease } from "@/helpers/numberFormater"
 import { getOfferById, getOfferSalesHistory, getSimilarOffers } from "@/services/market/market"
 import { ESteamAppId } from "@/types/Inventory"
+import { Metadata } from "next"
 import Link from "next/link"
 
 interface IOfferProps {
     params: {
         id: string
     }
+}
+export async function generateMetadata(
+  { params: { id } }: IOfferProps,
+): Promise<Metadata> {
+
+  const item = await getOfferById(id)
+
+  return {
+    title:`Skinwallet Market | Offer-${item.name}`,
+   
+  }
 }
 export default async function Offer({ params: { id } }: IOfferProps){
 const offerData =  await getOfferById(id)
@@ -26,7 +38,7 @@ const { similarOffers } = await getSimilarOffers()
 
 const {
      name,
-     appid,
+     appId,
      price,
      pattern,
      imageUrl,
@@ -43,7 +55,7 @@ const conditionObj = findNearestMaxValue(CONDITIONS, wearFloat)
       <div className="w-full h-[625px] bg-darkGrey backdrop-offer-hexagon">
         <div className="h-full">
             <div className="text-graySecondary text-xs h-10 px-6 flex items-center uppercase gap-3">
-              <span>{Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(appid.toString() as  ESteamAppId)]}</span>
+              <span>{Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(appId.toString() as  ESteamAppId)]}</span>
               /
               <span>{typeName}</span>
               /

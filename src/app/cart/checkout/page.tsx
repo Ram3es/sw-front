@@ -55,7 +55,9 @@ export default function CartCheckout() {
   useEffect(() => {
     const getBillingAddres = async () => {
       const { billingAddress } = await getUserAccountSettings()
-      setBillingAddress(billingAddress)
+      console.log(billingAddress)
+      if(billingAddress.id) setBillingAddress(billingAddress)
+  
     }
     if(user?.id){
       void getBillingAddres()

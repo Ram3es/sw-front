@@ -13,6 +13,9 @@ export const metadata: Metadata = {
     template: '%s',
     default: 'Skinwalet'
   },
+  icons:{
+    icon: './icon.ico'
+  }
   
 }
 

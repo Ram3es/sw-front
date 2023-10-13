@@ -1,18 +1,8 @@
 'use client'
 import Bar from "@/components/Bar/Bar";
 import Script from "next/script";
-import { useEffect } from "react";
 
 export default function TermsOfService() {
-    // useEffect(() => {
-    //     return () => {
-    //      const script = document.getElementById('termly')
-    //      if(script?.parentNode){
-    //         console.log(script)
-    //         script.parentNode.removeChild(script)
-    //      }
-    //     }
-    // }, [] )
     return(
       <>
         <Bar>

@@ -91,7 +91,8 @@ const isSelectedSideBarFilter = useMemo(():boolean => {
 
 const resetFilters = () => {
   Object.entries(filtersState).forEach(([key, value]) =>{
-    if(!['appId','sortBy'].includes(key) && value ){
+    console.log(key,' key filters')
+    if(!['appId','sortBy'].includes(key) && value || value === 0 ){
       setFiltersState(prev => ({
         ...prev,
         [key]: initialFiltersState[key as keyof IInitialFiltersState] 
@@ -107,9 +108,10 @@ const resetSideBarFilters = () => {
     setSideBarFilters(JSON.parse(initialFilters))
   } 
 }
-const setDefaultFilters = useCallback(async (query?: string) => {
+const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
     try {
-      const res = await getOffers(`appId=${ESteamAppId.CSGO}&sortBy=HotDeals`)
+      const res = await getOffers(`appId=${appId}&sortBy=HotDeals`)
+      console.log(res.defaultFilters)
       
       // create initial sidebar state
       const initFilters: Record<string, any> = {}
@@ -126,11 +128,13 @@ const setDefaultFilters = useCallback(async (query?: string) => {
         }
         initFilters[filter.name] = filter.value ?? ''
 
-        setHeaderFilterOptions(res.sortByOptions)
-        setSideBarFilters(initFilters as IFiltersSideBar )
-        setDefaultStateFilters(initFilters as IFiltersSideBar)
-        localStorage.setItem('filters', JSON.stringify(initFilters) )
+        
       })
+
+      setHeaderFilterOptions(res.sortByOptions)
+      setSideBarFilters(initFilters as IFiltersSideBar )
+      setDefaultStateFilters(initFilters as IFiltersSideBar)
+      localStorage.setItem('filters', JSON.stringify(initFilters) )
 
     } catch (error) {
       console.log(error)

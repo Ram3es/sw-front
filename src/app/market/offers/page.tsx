@@ -3,7 +3,7 @@ import { classNames } from "@/helpers/className";
 import OffersHeader from "./OffersHeader";
 import OffersSideBar from "./OffersSideBar";
 import { useHideOnScroll } from "@/helpers/useHideOnScroll";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ItemCard from "@/components/Content/ItemCard";
 import { ECardVariant } from "@/types/Card";
 import { IMAGE_ROOT_URL } from "@/constants/strings";
@@ -17,7 +17,7 @@ export default function MarketOffers () {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const shouldHide = useHideOnScroll()
   const { addToCart } = useCartContext()
-  const { user } = useAppContext()
+  const { user, gameId } = useAppContext()
   const { push } = useRouter()
   const {
     renderCards,
@@ -29,9 +29,10 @@ export default function MarketOffers () {
   useEffect(() => {
     const queryContainer: Array<string[]> = []
     Object.entries(filtersState).forEach(([key, value]) =>{
-      if(Array.isArray(value)){
-        value.forEach(filter => queryContainer.push([`${key}=${filter}`]) )
-        return 
+      if(Array.isArray(value) ){
+        if(!value.length) return
+
+        return queryContainer.push([`${key}=${value.join()}`])   
       }
       if(value || value === 0 ){
           queryContainer.push([`${key}=${value}`])
@@ -43,8 +44,8 @@ export default function MarketOffers () {
    }, [filtersState])
 
    useEffect(() => {
-    setDefaultFilters()
-   }, [])
+    setDefaultFilters(gameId)
+   }, [gameId])
 
   
     return(

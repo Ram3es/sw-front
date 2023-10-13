@@ -9,12 +9,16 @@ import SidebarLinks from '@/components/Navigation/SidebarLinks';
 import TradeLockFilterWithChart from '@/components/slider/TradeLockFilterWithChart';
 import TwoPointsSliderWithChart from '@/components/slider/TwoPointsSliderWithChart';
 import { REGEX } from '@/constants/regex';
+import { useAppContext } from '@/context/AppContext';
 import { useMarketOffersCtx } from '@/context/MarketOffers';
 import { classNames } from '@/helpers/className';
+import { ESteamAppId } from '@/types/Inventory';
 import React, { useMemo, useState } from 'react';
 
 const OffersSideBar = () => {
   const [isShownAllOptions, setShowAllOptions] = useState(false)
+
+  const { gameId } =useAppContext()
 
   const { 
     isSelectedSideBarFilter,
@@ -110,12 +114,13 @@ return (
               updateFilter({ priceFrom, priceTo })}}
             />
         </Dropbox>
+        {ESteamAppId.CSGO === gameId && (<>
         <div className="w-full border-t border-darkGrey" />
         <Dropbox label="wear">
             <TwoPointsSliderWithChart
-            data={wear.data}
-            maxPrice={initFilters.wear.value[1]}
-            minPrice={initFilters.wear.value[0]}
+            data={wear?.data}
+            maxPrice={initFilters?.wear?.value[1]}
+            minPrice={initFilters?.wear?.value[0]}
             barWidthArr={[0.07, 0.08, 0.22, 0.07, 0.56]}
             colorsArr={[
             'rgba(24,232,107,1)',
@@ -126,23 +131,24 @@ return (
             ]}
             maskId="wearMask"
             isCurrency={false}
-            rangeLimit={wear.value}
+            rangeLimit={wear?.value}
             setRangeLimit={(value: number[]) =>{
               setSideBarFilters(prev => ({
                 ...prev,
                 wear: {...prev.wear, value }
               }))
             }}
-            updateFilterFn={() => { 
-              const wearFrom = wear.value[0] === initFilters.wear.value[0] 
-                && wear.value[1] === initFilters.wear.value[1] 
+            updateFilterFn={(value) => { 
+              const wearValue = value ? value : wear.value
+              const wearFrom = wearValue[0] === initFilters.wear.value[0] 
+                && wearValue[1] === initFilters.wear.value[1] 
                   ? null 
-                  : wear.value[0]
+                  : wearValue[0]
 
-              const wearTo = wear.value[1] === initFilters.wear.value[1] 
-                &&  wear.value[0] === initFilters.wear.value[0] 
+              const wearTo = wearValue[1] === initFilters.wear.value[1] 
+                &&  wearValue[0] === initFilters.wear.value[0] 
                 ? null 
-                : wear.value[1]
+                : wearValue[1]
 
               updateFilter({ wearFrom , wearTo })
             }}
@@ -241,8 +247,8 @@ return (
         <Dropbox label="trade lock">
           <>
             <TradeLockFilterWithChart
-              data={tradableIn.data}
-              sliderValue={tradableIn.value}
+              data={tradableIn?.data}
+              sliderValue={tradableIn?.value}
               onChange={(value) => {
                 setSideBarFilters(prev => ({
                   ...prev,
@@ -255,10 +261,11 @@ return (
               ]}
               maskId='trade'
             />
-            <TradeLockStatuses value={tradableIn.value} />
+            <TradeLockStatuses value={tradableIn?.value} />
           </>
         </Dropbox>
         <div className="w-full border-t border-darkGrey" />
+        </>)}
       </div>
       <SidebarLinks />
     </>

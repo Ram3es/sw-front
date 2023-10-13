@@ -42,7 +42,7 @@ export interface IMarketOffersCtx {
     defaulSideBarStateFilters: IFiltersSideBar
     setSideBarFilters:  Dispatch<SetStateAction<IFiltersSideBar>>
     updateFilter: <K extends keyof IInitialFiltersState>(value: TValue<K>) => void
-    setDefaultFilters: (query?: string) => Promise<void>
+    setDefaultFilters: (appId: ESteamAppId) => Promise<void>
     getFilteredItems:  (query?: string) => Promise<void>
     updateFilterWithCheckbox: (filterKey:TKeysCheckboxFilter, value: string) => void
     setHeaderFilterOptions: Dispatch<SetStateAction<ISortByOptions[]>>

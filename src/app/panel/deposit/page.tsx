@@ -10,12 +10,8 @@ import CardsListWrapper from './CardsListWrapper'
 import SellsBar from './SellsBar'
 import { Filters } from '@/components/InstantSellControls/filters'
 import { Nav } from '@/components/InstantSellControls/nav'
-import { Metadata } from 'next'
-
 
 export default function Deposit() {
-
-
   const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])
   const [selectedCards, setSellectedCards] = useState<TInventoryCard[]>([])
   const [isSelectedAll, setSelectedAll] = useState(false)

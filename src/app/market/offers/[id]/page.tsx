@@ -38,7 +38,7 @@ const { similarOffers } = await getSimilarOffers()
 
 const {
      name,
-     appid,
+     appId,
      price,
      pattern,
      imageUrl,
@@ -55,7 +55,7 @@ const conditionObj = findNearestMaxValue(CONDITIONS, wearFloat)
       <div className="w-full h-[625px] bg-darkGrey backdrop-offer-hexagon">
         <div className="h-full">
             <div className="text-graySecondary text-xs h-10 px-6 flex items-center uppercase gap-3">
-              <span>{Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(appid.toString() as  ESteamAppId)]}</span>
+              <span>{Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(appId.toString() as  ESteamAppId)]}</span>
               /
               <span>{typeName}</span>
               /

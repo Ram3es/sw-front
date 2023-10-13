@@ -20,7 +20,7 @@ export interface CardItem {
 }
 
 export interface IOffersCard {
-  appid: ESteamAppId
+  appId: ESteamAppId
   imageUrl: string
   inventoryItemId: string
   price: IOfferPrice

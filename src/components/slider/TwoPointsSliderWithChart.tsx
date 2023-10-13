@@ -16,12 +16,15 @@ interface ITwoPointsSliderProps {
   updateFilterFn?: (value?: number[]) => void
 }
 
+let timerId: NodeJS.Timeout | null;
+
 const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr, barWidthArr, isCurrency = true, rangeLimit, setRangeLimit, updateFilterFn }: ITwoPointsSliderProps) => {
   const maxValue = Math.max(...data)
 
 
   const [inputRange, setInputRange] = useState<number[]>([]) 
   const [isFocused, setIsFocused] = useState({from:false, to:false})
+  const [sliderRange, setSloderRange] = useState<number[]>(rangeLimit ?? []) 
 
   useEffect(() => {
     setInputRange(rangeLimit ?? [])
@@ -109,7 +112,6 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
   }, [data])
 
   const debounce = (func: (...args: any[]) => void, delay: number) => {
-    let timerId: NodeJS.Timeout | null;
     return (...args: any[]) => {
       if (timerId) {
         clearTimeout(timerId);
@@ -121,8 +123,16 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
     };
   };
 
-  const handleSliderChange = (value: number[]) => {
+  const handleValueChange = debounce((value) => {
+    console.log('here', value);
+    
     if (setRangeLimit) setRangeLimit(value)
+    if (updateFilterFn) updateFilterFn()
+  }, 300);
+
+  const handleSliderChange = (value: number[]) => {
+    setSloderRange(value)
+    handleValueChange(value)
     d3.select(`#${maskId}`).select('rect')
       .attr('x', `${(value[0] - minPrice) / (maxPrice - minPrice) * 100}%`)
       .attr('width', `${(value[1] / (maxPrice - minPrice) * 100) - value[0] / maxPrice * 100}%`)
@@ -138,9 +148,9 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
           max={maxPrice}
           step={1}
           withTracks={false}
-          value={rangeLimit}
+          value={sliderRange}
           renderThumb={(props, _state) => 
-            <div {...props}  onMouseUp={() => updateFilterFn && updateFilterFn()} key={`${_state.index}Slider`} > 
+            <div {...props} key={`${_state.index}Slider`} > 
               <span className="w-3 h-3 bg-white thumb-corners-polygon absolute -translate-x-1/2 "></span>
             </div>}
           onChange={handleSliderChange}

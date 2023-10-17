@@ -25,12 +25,13 @@ const ItemCard = ({
   onChange,
   onClick,
   submitFn,
-  variant
+  variant, 
+  forwardRef
 }: CardItem) => {
   const conditionObj = findNearestMaxValue(CONDITIONS, condition)
 
   return (
-    <div className={classNames('relative h-full group/card ',
+    <div ref={forwardRef} className={classNames('relative h-full group/card ',
       isTradable && !isSelected ? 'group hover:-translate-y-4 hover:z-20 duration-75' : '',
       isSelected ? 'shadow-checkedCard' : '',
       variant ?? ''

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3-selection'
 import Slider from 'react-slider'
 import { format, formatToThousands } from '../../helpers/numberFormater'
+import { useDebounce } from '@/helpers/useDebounce'
 
 interface ITwoPointsSliderProps {
   data: number[]
@@ -14,34 +15,22 @@ interface ITwoPointsSliderProps {
   rangeLimit?: number[]
   setRangeLimit?: (value: number[]) => void
   updateFilterFn?: (value: number[]) => void
-  isShouldReset?: boolean
-  setShouldReset?:() => void
+
 }
 
-let timerId: NodeJS.Timeout | null;
 
-const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr, barWidthArr, isCurrency = true, rangeLimit, setRangeLimit, updateFilterFn, isShouldReset, setShouldReset }: ITwoPointsSliderProps) => {
-  const maxValue = Math.max(...data)
-
-
+const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr, barWidthArr, isCurrency = true, rangeLimit, setRangeLimit, updateFilterFn }: ITwoPointsSliderProps) => {
   const [inputRange, setInputRange] = useState<number[]>([]) 
   const [isFocused, setIsFocused] = useState({from:false, to:false})
-  const [sliderRange, setSloderRange] = useState<number[]>(rangeLimit ?? []) 
+  const [sliderRange, setSloderRange] = useState<number[]>(rangeLimit ?? [])
+  
+  const maxValue = Math.max(...data)
+  const { current: debounce } = useRef(useDebounce())
 
-  const initialRangeRef = useRef<number[]>()
-
-  useEffect(() => {
-    if(rangeLimit){
-      initialRangeRef.current = rangeLimit
-    }
-  }, [])
 
   useEffect(() => {
-    if(initialRangeRef.current && isShouldReset){
-      setSloderRange(initialRangeRef.current)
-      setShouldReset?.()
-    }
-  }, [isShouldReset])
+      setSloderRange([minPrice ,maxPrice])
+  }, [maxPrice, minPrice, data])
 
   useEffect(() => {
     setInputRange(sliderRange ?? [])
@@ -129,19 +118,8 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
     }
   }, [data])
 
-  const debounce = (func: (...args: any[]) => void, delay: number) => {
-    return (...args: any[]) => {
-      if (timerId) {
-        clearTimeout(timerId);
-      }
-      timerId = setTimeout(() => {
-        func(...args);
-        timerId = null;
-      }, delay);
-    };
-  };
 
-  const handleValueChange = debounce((value) => {
+  const handleValueChange =  debounce((value) => {
     if (setRangeLimit) setRangeLimit(value)
     if (updateFilterFn) updateFilterFn(value)
   }, 300);

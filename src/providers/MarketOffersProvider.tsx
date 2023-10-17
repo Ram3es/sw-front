@@ -1,25 +1,14 @@
 'use client'
 import { useAppContext } from "@/context/AppContext"
 import { IFiltersSideBar, IInitialFiltersState, MarketOffersContext, TKeysCheckboxFilter, TValue } from "@/context/MarketOffers"
+import { generateQuery } from "@/helpers/generateQuery"
 import { getOffers } from "@/services/market/market"
 import { IOffersCard } from "@/types/Card"
 import { ESteamAppId } from "@/types/Inventory"
-import { ISortByOptions, ISortingState } from "@/types/Market"
+import { ISortingState } from "@/types/Market"
 import { FC, PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react"
 
-const initialFiltersState:IInitialFiltersState  = {
-    appId: null,
-    sortBy: null,
-    pattern: null,
-    priceFrom: null,
-    priceTo: null,
-    wearFrom: null,
-    wearTo: null,
-    tradableIn: null,
-    quality: null,
-    rarity: null,
-    variant: ''
-}
+const initialFiltersState: Record<string, any> = {}
 
 const initSideBarState:IFiltersSideBar = {
   pattern: '',
@@ -33,26 +22,37 @@ const initSideBarState:IFiltersSideBar = {
 
 export const MarketOffersProvider: FC<PropsWithChildren> = ({ children }) => {
 const [filtersState, setFiltersState] = useState(initialFiltersState)
-const [headerFilterOptions, setHeaderFilterOptions] = useState<ISortingState>({sortBy:'', options:[]})
+const [sortOptions, setHeaderFilterOptions] = useState<ISortingState>({sortBy:'', options:[]})
 const [renderCards, setRenderCards] = useState<IOffersCard[]>([])
 const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBarState)
-
-
 const [defaulSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
+const [amountPages, setAmountPages] = useState<number>(0)
+
+const { gameId } = useAppContext()
+const hasMore = useMemo(() => filtersState.page ? filtersState.page < amountPages : true, [filtersState, amountPages])
 
 const updateFilter = <K extends keyof IInitialFiltersState>(value: TValue<K>): void => {
     setFiltersState(prev => ({
         ...prev,
-        ...value
+        ...value,
+        page: 1
     }))
 }
 const updateFilterWithCheckbox = (filterKey:TKeysCheckboxFilter, value: string) => {
   setFiltersState(prev => ({
     ...prev,
-    [filterKey]: prev[filterKey]?.some((el) => el === value ) 
-      ?  prev[filterKey]?.filter(el => el !== value)
+    page: 1,
+    [filterKey]: prev[filterKey]?.some((el: string) => el === value ) 
+      ?  prev[filterKey]?.filter((el: string) => el !== value)
       : [ ...prev[filterKey] ?? [], value ]
   }) )
+ }
+
+ const updatePage = () => {
+  setFiltersState( prev => ({
+    ...prev,
+    page: prev.page ? prev.page + 1 : 2
+  }))
  }
 
  // checking was changed sidebar filters
@@ -81,38 +81,40 @@ const isSelectedSideBarFilter = useMemo(():boolean => {
         }
         return sidebarFilters[key as keyof IFiltersSideBar] !== initFilters[key as keyof IFiltersSideBar]
       })
-    }
+    } 
   }
   return false
 
 },[sidebarFilters])
 
-const resetFilters = (appId?:ESteamAppId ) => {
-  
+const resetFilters = () => {
   Object.entries(filtersState).forEach(([key, value]) =>{
-    
     if( value || value === 0 ){
       setFiltersState(prev => ({
         ...prev,
         [key]: initialFiltersState[key as keyof IInitialFiltersState],
-        appId: appId ?? null
       }))
     }
   })
 }
 
-
 const resetSideBarFilters = () => {
   if (typeof localStorage !== "undefined") {
     const initialFilters = localStorage?.getItem('filters')
     if(initialFilters){
-      setSideBarFilters(JSON.parse(initialFilters))
+      const state = JSON.parse(initialFilters) as IFiltersSideBar
+      setSideBarFilters(prev => ({
+        ...prev,
+        ...state
+      }))
     } 
   }
 }
+
 const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
+  setFiltersState({})
     try {
-      const { defaultFilters, sortByOptions, offers, sortBy  } = await getOffers(`appId=${appId}&sortBy=HotDeals`)
+      const { defaultFilters, sortByOptions, offers, sortBy, total  } = await getOffers(`appId=${appId}`)
 
       
       // create initial sidebar state
@@ -140,6 +142,7 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
       setSideBarFilters(initFilters as IFiltersSideBar )
       setDefaultStateFilters(initFilters as IFiltersSideBar)
       setRenderCards(offers)
+      setAmountPages(Math.ceil(total / 24))
       localStorage.setItem('filters', JSON.stringify(initFilters) )
 
     } catch (error) {
@@ -147,24 +150,39 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
     }
   }, [])
 
-  const getFilteredItems = useCallback( async (query?: string) => {
+  const getFilteredItems = useCallback( async (query: string) => {
     try {
-      const { offers } = await getOffers(query ?? '')
+      const { offers } = await getOffers(`appId=${gameId}${query ? `&${query}` : '' }`)
+      if(filtersState?.page > 1){
+        return setRenderCards(prev => ([...prev, ...offers]))
+      }
+      window.scrollTo({top: 0, behavior: "instant"})
       setRenderCards(offers)
+      console.log(offers)
     } catch (error) {
       console.log(error)
     }
 
-  }, [])
+  }, [sortOptions, gameId, filtersState])
+
+
+  useEffect(() => {
+    if(Object.keys(filtersState).length){
+      const copiedState = {...filtersState, sortBy: sortOptions.sortBy, page:filtersState.page ?? 1 }
+      const filtersQuery = generateQuery(copiedState)
+      void getFilteredItems(filtersQuery)
+    }
+   }, [filtersState, sortOptions])
 
     return (
       <MarketOffersContext.Provider value={{
         renderCards,
         filtersState,
-        headerFilterOptions,
+        sortOptions,
         isSelectedSideBarFilter,
         sidebarFilters,
         defaulSideBarStateFilters,
+        hasMore,
         setSideBarFilters,
         setHeaderFilterOptions,
         updateFilter,
@@ -172,7 +190,8 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
         setDefaultFilters,
         resetFilters,
         resetSideBarFilters,
-        getFilteredItems
+        getFilteredItems,
+        updatePage,
         
         }}>
           {children}

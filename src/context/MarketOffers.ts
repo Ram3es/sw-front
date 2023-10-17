@@ -35,19 +35,21 @@ export type TKeysCheckboxFilter = keyof Pick<IInitialFiltersState,'quality' | 'r
 
 export interface IMarketOffersCtx {
     renderCards: IOffersCard[]
-    filtersState: IInitialFiltersState
-    headerFilterOptions:ISortingState
+    filtersState: Record<string, any>
+    sortOptions:ISortingState
     isSelectedSideBarFilter: boolean
     sidebarFilters: IFiltersSideBar
     defaulSideBarStateFilters: IFiltersSideBar
+    hasMore: boolean
     setSideBarFilters:  Dispatch<SetStateAction<IFiltersSideBar>>
     updateFilter: <K extends keyof IInitialFiltersState>(value: TValue<K>) => void
     setDefaultFilters: (appId: ESteamAppId) => Promise<void>
-    getFilteredItems:  (query?: string) => Promise<void>
+    getFilteredItems:  (query: string) => Promise<void>
     updateFilterWithCheckbox: (filterKey:TKeysCheckboxFilter, value: string) => void
     setHeaderFilterOptions: Dispatch<SetStateAction<ISortingState>>
     resetSideBarFilters: () => void
     resetFilters: (appId?: ESteamAppId) => void
+    updatePage: () => void
     
 }
 

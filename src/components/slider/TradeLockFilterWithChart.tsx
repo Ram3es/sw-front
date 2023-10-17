@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Slider from 'react-slider';
 import * as d3 from 'd3-selection'
+import { useDebounce } from '@/helpers/useDebounce';
 
 interface IOnePointSliderProps {
     data: number[]
@@ -9,15 +10,23 @@ interface IOnePointSliderProps {
     colorsArr?: string[]
     barWidthArr?: number[]
     onChange: (value: number) => void
-    updateFilterFn: () => void
+    updateFilterFn: (value: number) => void
     
 }
 
 const TradeLockFilterWithChart = ({ data, maskId, barWidthArr, colorsArr, sliderValue,  onChange, updateFilterFn }:IOnePointSliderProps) => {
-    const maxValue = Math.max(...data)
+
+  const maxValue = Math.max(...data)
+  const { current: debounce } = useRef(useDebounce())
+
+ const updateSliderValue = debounce((value) =>{
+  updateFilterFn(value)
+ }, 700 )
+
 
   const handleSliderChange = (value: number) => {
     onChange(value)
+    updateSliderValue(value)
     d3.select(`#${maskId}`).select('rect')
       .attr('width', `${((value + 1) * ((208 / data.length) * 100 / 208))}%`)
   }
@@ -110,7 +119,7 @@ const TradeLockFilterWithChart = ({ data, maskId, barWidthArr, colorsArr, slider
         withTracks={false}
         value={sliderValue}
         renderThumb={(props, _state) => 
-          <div {...props} onMouseUp={() => updateFilterFn()} key={`${_state.index}Slider`}  > 
+          <div {...props}  key={`${_state.index}Slider`}  > 
             <span className="w-3 h-3 bg-white thumb-corners-polygon absolute translate-x-1/3 "></span>
           </div>}
         onChange={handleSliderChange}

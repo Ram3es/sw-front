@@ -14,7 +14,7 @@ const OffersHeader = () => {
     const { 
       updateFilter,
       setHeaderFilterOptions,
-      headerFilterOptions,
+      sortOptions,
      } = useMarketOffersCtx()
 
 
@@ -38,7 +38,7 @@ const OffersHeader = () => {
               <Listbox.Button className='relative w-full cursor-pointer text-sm  text-graySecondary uppercase flex gap-4 justify-between items-center '>
                 {({ open }) => (<>
                       <div className="flex items-center text-sm tracking-[1.12] gap-2 label-wrap">
-                       { headerFilterOptions.options.find(el => el.name === headerFilterOptions.sortBy )?.label ?? '' }
+                       { sortOptions.options.find(el => el.name === sortOptions.sortBy )?.label ?? '' }
                       </div>
                 <ChevronDown
                   className={classNames('fill-current h-[12px] w-[12px]', open ? 'rotate-180' : '')}
@@ -46,7 +46,7 @@ const OffersHeader = () => {
                 </>)}
               </Listbox.Button>
               <Listbox.Options className={'absolute top-9 right-0 min-w-[200px] flex flex-col gap-2 p-4 text-sm bg-darkGrey '}>
-                {headerFilterOptions.options.map((option, idx) =>
+                {sortOptions.options.map((option, idx) =>
                   <Listbox.Option 
                     key={idx}
                     value={option}

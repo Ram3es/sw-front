@@ -3,7 +3,7 @@ import { classNames } from "@/helpers/className";
 import OffersHeader from "./OffersHeader";
 import OffersSideBar from "./OffersSideBar";
 import { useHideOnScroll } from "@/helpers/useHideOnScroll";
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ItemCard from "@/components/Content/ItemCard";
 import { ECardVariant } from "@/types/Card";
 import { IMAGE_ROOT_URL } from "@/constants/strings";
@@ -13,6 +13,7 @@ import { IsUserLogged } from "@/components/IsUserLogged/IsUserLogged";
 import { useMarketOffersCtx } from "@/context/MarketOffers";
 import { useRouter } from "next/navigation";
 
+
 export default function MarketOffers () {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const shouldHide = useHideOnScroll()
@@ -21,48 +22,28 @@ export default function MarketOffers () {
   const { push } = useRouter()
   const {
     renderCards,
-    filtersState,
-    headerFilterOptions,
+    hasMore,
     setDefaultFilters,
-    getFilteredItems,
+    updatePage,
   } = useMarketOffersCtx()
 
-  useEffect(() => {
-   
-    if(Object.values(filtersState).filter(filt => !!filt).length){
-      const queryContainer: Array<string[]> = []
-
-      if(!filtersState.appId){
-        queryContainer.push([`appId=${gameId}`])
-      }
-      if(!filtersState.sortBy){
-        queryContainer.push([`sortBy=${ headerFilterOptions.sortBy}`])
-      }
-     
-      Object.entries(filtersState).forEach(([key, value]) =>{
-      if(Array.isArray(value) ){
-        if(!value.length) return
-
-        return queryContainer.push([`${key}=${value.join()}`])   
-      }
-      if(value || value === 0 ){
-          queryContainer.push([`${key}=${value}`])
-      }
-
-
-   })
-     const filtersQuery = queryContainer.join('&')
-     void getFilteredItems(filtersQuery)
-    }
-   
-   }, [filtersState])
+  const observer = useRef<IntersectionObserver | null>(null)
+  const lastElementRef = useCallback(
+      (node: HTMLElement) => {
+        if(observer.current || !hasMore) observer.current?.disconnect()
+        observer.current = new IntersectionObserver((element) => {
+         if(element[0].isIntersecting && hasMore) updatePage()
+         })
+        
+        if(node) observer.current?.observe(node)
+        
+    }, [hasMore])
 
    useEffect(() => {
     if(!gameId) return
     setDefaultFilters(gameId)
    }, [gameId])
 
-  
     return(
       <>
         <OffersHeader />
@@ -77,7 +58,7 @@ export default function MarketOffers () {
                 'flex flex-col flex-grow max-w-[256px] pt-10 lg:pt-0 max-h-screen overflow-auto',
                 shouldHide
                   ? 'h-[calc(100vh-60px)] top-[60px]'
-                  : 'h-[calc(100vh-120px)] top-[120px]'
+                  : 'h-[calc(100vh-120px)] top-[120px]' 
               )}
             >
               <div className={classNames('flex ml-6 lg:hidden items-center gap-2',
@@ -107,9 +88,10 @@ export default function MarketOffers () {
             </div>
             <IsUserLogged>
               <div className="px-[24px] py-[30px] grid grid-cols-2 sm:grid-cols-cards gap-1">
-                {renderCards.map((item) => (
+                {renderCards.map((item, idx) => (
                   <ItemCard
-                  key={item.inventoryItemId}
+                  forwardRef={ idx + 1 === renderCards.length ? lastElementRef : null}
+                  key={item.inventoryItemId + idx}
                   id={item.inventoryItemId}
                   variant={ECardVariant.market}
                   isTradable={true}

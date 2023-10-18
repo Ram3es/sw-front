@@ -11,6 +11,7 @@ import { Button } from '@/components/Navigation';
 import { classNames } from '@/helpers/className';
 import { useRouter } from 'next/navigation';
 import CountryList from '@/components/Content/CountryList';
+import BirthdayPicker from '@/components/Content/BirthdayPicker';
 
 
 const ERRROS_STATE = {
@@ -258,6 +259,8 @@ const BillingInfo = () => {
                     />
                 <CountryList value={formik.values.country} onChange={handleChangeCountry}  />
                   <span className={` -mt-2 ml-4 ${errors.country.status ? 'block' : 'hidden'} ${errors.country.errorClass}`}>{errors.country.message}</span>
+                  <div className='border-b border-darkGrey my-6' />
+                  <BirthdayPicker />
                 <div className="flex gap-4 ml-auto mt-8">
                   <Button
                     text='cancel'

@@ -13,7 +13,7 @@ import { useAppContext } from '@/context/AppContext';
 import { useMarketOffersCtx } from '@/context/MarketOffers';
 import { classNames } from '@/helpers/className';
 import { ESteamAppId } from '@/types/Inventory';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 const OffersSideBar = () => {
   const [isShownAllOptions, setShowAllOptions] = useState(false)

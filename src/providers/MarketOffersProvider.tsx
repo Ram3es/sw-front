@@ -27,6 +27,7 @@ const [renderCards, setRenderCards] = useState<IOffersCard[]>([])
 const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBarState)
 const [defaulSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
 const [amountPages, setAmountPages] = useState<number>(0)
+const [isLoading, setIsLoading]= useState(false)
 
 const { gameId } = useAppContext()
 const hasMore = useMemo(() => filtersState.page ? filtersState.page < amountPages : true, [filtersState, amountPages])
@@ -58,9 +59,12 @@ const updateFilterWithCheckbox = (filterKey:TKeysCheckboxFilter, value: string) 
  // checking was changed sidebar filters
 const isSelectedSideBarFilter = useMemo(():boolean => {
   if (typeof localStorage !== "undefined") {
+    
   const initialFiltersString  = localStorage?.getItem('filters')
     if(initialFiltersString){
+
       const initFilters = JSON.parse(initialFiltersString) as IFiltersSideBar
+      if(Object.keys(initFilters).length !== Object.keys(sidebarFilters).length) return false
 
       return Object.entries(sidebarFilters).some(([key, value]) => {
         if(typeof value === 'object' && !Array.isArray(value) ){
@@ -153,12 +157,12 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
   const getFilteredItems = useCallback( async (query: string) => {
     try {
       const { offers } = await getOffers(`appId=${gameId}${query ? `&${query}` : '' }`)
+      setIsLoading(false)
       if(filtersState?.page > 1){
         return setRenderCards(prev => ([...prev, ...offers]))
       }
       window.scrollTo({top: 0, behavior: "instant"})
       setRenderCards(offers)
-      console.log(offers)
     } catch (error) {
       console.log(error)
     }
@@ -170,6 +174,7 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
     if(Object.keys(filtersState).length){
       const copiedState = {...filtersState, sortBy: sortOptions.sortBy, page:filtersState.page ?? 1 }
       const filtersQuery = generateQuery(copiedState)
+      setIsLoading(true)
       void getFilteredItems(filtersQuery)
     }
    }, [filtersState, sortOptions])
@@ -183,6 +188,7 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
         sidebarFilters,
         defaulSideBarStateFilters,
         hasMore,
+        isLoading,
         setSideBarFilters,
         setHeaderFilterOptions,
         updateFilter,

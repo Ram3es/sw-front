@@ -12,6 +12,7 @@ import { useAppContext } from "@/context/AppContext";
 import { IsUserLogged } from "@/components/IsUserLogged/IsUserLogged";
 import { useMarketOffersCtx } from "@/context/MarketOffers";
 import { useRouter } from "next/navigation";
+import Loader from "@/components/Content/Loader";
 
 
 export default function MarketOffers () {
@@ -23,6 +24,7 @@ export default function MarketOffers () {
   const {
     renderCards,
     hasMore,
+    isLoading,
     setDefaultFilters,
     updatePage,
   } = useMarketOffersCtx()
@@ -112,6 +114,10 @@ export default function MarketOffers () {
                 ))}
               </div>
             </IsUserLogged>
+            <div className={classNames('mb-10', isLoading ? 'block': 'hidden' )}>
+              <Loader/>
+            </div>
+            
           </div>
         </div>
         </div>

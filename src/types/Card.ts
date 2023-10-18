@@ -17,6 +17,7 @@ export interface CardItem {
   onClick: () => void
   submitFn?: (e:React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
   variant?: keyof typeof ECardVariant
+  forwardRef?: ((node: any) => void) | null
 }
 
 export interface IOffersCard {

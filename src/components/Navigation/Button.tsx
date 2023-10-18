@@ -1,4 +1,4 @@
-
+'use client'
 import { type ButtonHTMLAttributes, type ReactNode } from 'react'
 
 function classNames(...classes: string[]) {
@@ -13,12 +13,12 @@ interface IButton extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode
 }
 
-export const Button = ({ text = '', heightClass, icon, iconRight = false, children, ...props }: IButton) => {
+export const Button = ({ text = '', heightClass, icon, iconRight = false, children, className, ...props }: IButton) => {
   return (
     <button
       className={classNames(
         'button font-Barlow px-4 lg:px-0 xl:px-4 tracking-[1.12px] flex',
-        props.className ?? ' text-[14px] ',
+        className ?? ' text-[14px] ',
         heightClass ?? 'h-[32px]'
       )}
       onClick={props.onClick}

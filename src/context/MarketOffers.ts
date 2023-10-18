@@ -41,6 +41,7 @@ export interface IMarketOffersCtx {
     sidebarFilters: IFiltersSideBar
     defaulSideBarStateFilters: IFiltersSideBar
     hasMore: boolean
+    isLoading: boolean
     setSideBarFilters:  Dispatch<SetStateAction<IFiltersSideBar>>
     updateFilter: <K extends keyof IInitialFiltersState>(value: TValue<K>) => void
     setDefaultFilters: (appId: ESteamAppId) => Promise<void>

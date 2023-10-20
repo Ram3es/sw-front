@@ -11,8 +11,9 @@ import { useCartContext } from "@/context/CartContext";
 import { useAppContext } from "@/context/AppContext";
 import { IsUserLogged } from "@/components/IsUserLogged/IsUserLogged";
 import { useMarketOffersCtx } from "@/context/MarketOffers";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Loader from "@/components/Content/Loader";
+import { generateQuery } from "@/helpers/generateQuery";
 
 
 export default function MarketOffers () {
@@ -27,7 +28,13 @@ export default function MarketOffers () {
     isLoading,
     setDefaultFilters,
     updatePage,
+    setSearch,
+    filtersState
   } = useMarketOffersCtx()
+
+const searchParams = useSearchParams();
+const appId = searchParams.get('appId')
+const search = searchParams.get('search')
 
   const observer = useRef<IntersectionObserver | null>(null)
   const lastElementRef = useCallback(
@@ -43,8 +50,11 @@ export default function MarketOffers () {
 
    useEffect(() => {
     if(!gameId) return
-    setDefaultFilters(gameId)
-   }, [gameId])
+    setSearch(search ?? '')
+    const additional = search ? {...filtersState, page:1} : {}
+    const query = generateQuery({appId, search, ...additional})
+    setDefaultFilters(query)
+   }, [search, appId])
 
     return(
       <>

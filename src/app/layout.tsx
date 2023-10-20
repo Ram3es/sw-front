@@ -4,7 +4,6 @@ import type { Metadata } from 'next'
 import { Barlow } from 'next/font/google'
 import { Providers } from '../providers/providers'
 import Script from 'next/script'
-import Toast from '@/components/Content/Toast'
 
 const barlow = Barlow({ subsets: ['latin'], weight: ['500'] })
 

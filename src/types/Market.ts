@@ -46,9 +46,9 @@ export interface IDefaultFilters {
   label: string
   name: string
   type: string
-  value: number[]
+  value: any
   diagramData?: DiagramDaum[]
-  options?: IDefaultOptionRes[] | IDefaultRadioOptionRes[]
+  options?: IDefaultOptionRes[] | IDefaultRadioOptionRes[] | IRangeOptions
 }
 export interface DiagramDaum {
   columnNumber: number
@@ -65,4 +65,14 @@ export interface IDefaultRadioOptionRes {
   id: string
   name: string
   count: number
+}
+export interface IRangeOptions {
+  from: {
+    amount: number
+    currency: string
+  },
+  to: {
+    amount: number
+    currency: string
+  }
 }

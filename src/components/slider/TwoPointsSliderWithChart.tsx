@@ -12,7 +12,7 @@ interface ITwoPointsSliderProps {
   colorsArr?: string[]
   barWidthArr?: number[]
   isCurrency?: boolean 
-  rangeLimit?: number[]
+  rangeLimit: number[]
   setRangeLimit?: (value: number[]) => void
   updateFilterFn?: (value: number[]) => void
 
@@ -23,14 +23,15 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
   const [inputRange, setInputRange] = useState<number[]>([]) 
   const [isFocused, setIsFocused] = useState({from:false, to:false})
   const [sliderRange, setSloderRange] = useState<number[]>(rangeLimit ?? [])
+
   
   const maxValue = Math.max(...data)
   const { current: debounce } = useRef(useDebounce())
 
 
   useEffect(() => {
-      setSloderRange([minPrice ,maxPrice])
-  }, [maxPrice, minPrice, data])
+      setSloderRange(rangeLimit)
+  }, [rangeLimit, data])
 
   useEffect(() => {
     setInputRange(sliderRange ?? [])
@@ -52,9 +53,9 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
     svg.append('mask')
       .attr('id', maskId)
       .append('rect')
-      .attr('x', 0)
+      .attr('x', `${(rangeLimit[0] - minPrice) / (maxPrice - minPrice) * 100}%`)
       .attr('y', 0)
-      .attr('width','100%')
+      .attr('width',`${(rangeLimit[1] / (maxPrice - minPrice) * 100) - rangeLimit[0] / (maxPrice - minPrice )* 100}%`)
       .attr('height', svgHeight)
       .attr('fill', 'white') // Initial masking color (fully transparent)
 

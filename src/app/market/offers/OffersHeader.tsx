@@ -1,21 +1,26 @@
 'use client'
 import Bar from '@/components/Bar/Bar';
 import ChevronDown from '@/components/icons/ChevronDown';
+import CloseIcon from '@/components/icons/CloseIcon';
+import { gamesLinks } from '@/constants/games';
 import { useAppContext } from '@/context/AppContext';
 import { useMarketOffersCtx } from '@/context/MarketOffers';
 import { classNames } from '@/helpers/className';
-import { ESteamAppId } from '@/types/Inventory';
 import { ISortByOptions } from '@/types/Market';
 import { Listbox } from '@headlessui/react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const OffersHeader = () => {
     const { gameId } = useAppContext()
     const { 
       updateFilter,
+      setSearch,
       setHeaderFilterOptions,
       sortOptions,
+      search
      } = useMarketOffersCtx()
+     const { push } = useRouter()
 
 
     const onChangeFilter = (value: ISortByOptions) => {
@@ -31,7 +36,19 @@ const OffersHeader = () => {
       <Bar>
         <div className='flex justify-between items-center h-full px-6'>
           <h1 className='text-white font-Barlow text-[21px] font-medium uppercase'>
-            {Object.keys(ESteamAppId)[Object.values(ESteamAppId).indexOf(gameId)]}
+            {
+              search 
+                ? <div className='text-graySecondary flex flex-col text-sm tracking-[1.12px]'>
+                    <span className='uppercase'>results for</span>
+                    <div className='flex gap-4 items-center'>
+                      <div className='text-white text-24 '>'{search}'</div>
+                      <div onClick={() => { push(`/market/offers?appId=${gameId}`); setSearch('')}} className='hover:text-white duration-200 cursor-pointer'>
+                        <CloseIcon className='h-[18px]' />
+                      </div>
+                    </div>
+                  </div>
+                : gamesLinks.find((game) => game.id === gameId)?.name ?? ''
+            }
           </h1>
           <div className='text-white w-max relative'>
             <Listbox onChange={onChangeFilter}>

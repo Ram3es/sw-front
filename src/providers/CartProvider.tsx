@@ -25,6 +25,13 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
         // Item already exists, don't add it again
         return state
       }
+      
+      if(Array.isArray(action.payload)){
+        return {
+          ...state,
+          items: [...state.items, ...action.payload]
+        }
+      }
 
       // Item doesn't exist, add it to the cart
       return {
@@ -60,6 +67,7 @@ export const CartProvider = ({ children }: IProps) => {
   // Function to add an item to the cart
   const addToCart = (item: IOffersCard) => {
     dispatch({ type: 'ADD_TO_CART', payload: item })
+
     setLastAddedItem(item);
     setTimeout(() => setLastAddedItem(null), CHECKOUT_SETTINGS.DURATIOM_MODAL_CART_ADDED)
     
@@ -77,6 +85,19 @@ export const CartProvider = ({ children }: IProps) => {
   const getSteamTotalPrice = () => cartState.items.reduce((prev, cur) => (prev += cur.steamPrice.amount), 0)
   const getDiscount = () => cartState.items.reduce((prev, cur) => (prev += cur.steamPrice.amount - cur.price.amount), 0)
   const getTotal = () => cartState.items.reduce((prev, cur) => (prev += cur.price.amount), 0)
+
+  useEffect(() => {
+    const data = localStorage.getItem('cart')
+    if(data){
+      const cartItems = JSON.parse(data)
+      dispatch({ type: 'ADD_TO_CART', payload: cartItems })
+    }
+  },[])
+
+  useEffect(() => {
+    if(cartState.items && typeof localStorage !== 'undefined')
+    localStorage.setItem('cart', JSON.stringify(cartState.items))
+  },[cartState.items])
 
   return (
     <CartContext.Provider

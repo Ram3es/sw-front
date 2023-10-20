@@ -1,6 +1,6 @@
 'use client'
 
-import { CHECKOUT_SETTINGS } from '@/constants/checkout'
+import { CART_SESSION_STORAGE_KEY, CHECKOUT_SETTINGS } from '@/constants/checkout'
 import { CartContext, CartState } from '@/context/CartContext'
 import { IOffersCard } from '@/types/Card'
 import { useEffect, useReducer, useState } from 'react'
@@ -12,6 +12,13 @@ interface IProps {
 const initialState: CartState = {
   items: []
 }
+
+const cartInitializer = (initialValue: CartState = initialState) =>
+  JSON.parse(
+    navigator.cookieEnabled
+      ? sessionStorage.getItem(CART_SESSION_STORAGE_KEY) ?? JSON.stringify(initialValue)
+      : JSON.stringify(initialValue)
+  )
 
 const cartReducer = (state: CartState, action: { type: string; payload: any }): CartState => {
   switch (action.type) {
@@ -40,7 +47,7 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
         ...state,
         items: updatedItems
       }
-    
+
     case 'CLEAR_CART':
       return {
         ...state,
@@ -53,16 +60,14 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
 }
 
 export const CartProvider = ({ children }: IProps) => {
-  const [cartState, dispatch] = useReducer(cartReducer, initialState)
+  const [cartState, dispatch] = useReducer(cartReducer, initialState, cartInitializer)
   const [lastAddedItem, setLastAddedItem] = useState<IOffersCard | null>(null)
-  
 
   // Function to add an item to the cart
   const addToCart = (item: IOffersCard) => {
     dispatch({ type: 'ADD_TO_CART', payload: item })
-    setLastAddedItem(item);
-    setTimeout(() => setLastAddedItem(null), CHECKOUT_SETTINGS.DURATIOM_MODAL_CART_ADDED)
-    
+    setLastAddedItem(item)
+    setTimeout(() => setLastAddedItem(null), CHECKOUT_SETTINGS.DURATION_MODAL_CART_ADDED)
   }
 
   // Function to remove an item from the cart by ID
@@ -78,11 +83,21 @@ export const CartProvider = ({ children }: IProps) => {
   const getDiscount = () => cartState.items.reduce((prev, cur) => (prev += cur.steamPrice.amount - cur.price.amount), 0)
   const getTotal = () => cartState.items.reduce((prev, cur) => (prev += cur.price.amount), 0)
 
+  console.log(cartState, 'cartState')
+
+  useEffect(() => {
+    try {
+      sessionStorage.setItem(CART_SESSION_STORAGE_KEY, JSON.stringify(cartState))
+    } catch {
+      console.log('All cookies are disabled from the user.')
+    }
+  }, [cartState])
+
   return (
     <CartContext.Provider
       value={{
         cartItems: cartState,
-        isCheckoutCompleated: false,
+        isCheckoutCompleted: false,
         lastAddedItem,
         setLastAddedItem,
         addToCart: addToCart,

@@ -15,9 +15,11 @@ export const CHECKOUT_ERRORS: ICheckoutErrors = {
 }
 
 interface CheckoutModal {
-  DURATIOM_MODAL_CART_ADDED: number 
+  DURATION_MODAL_CART_ADDED: number
 }
 
 export const CHECKOUT_SETTINGS: CheckoutModal = {
-  DURATIOM_MODAL_CART_ADDED: 3000
+  DURATION_MODAL_CART_ADDED: 3000
 }
+
+export const CART_SESSION_STORAGE_KEY = 'skinwallet_cart'

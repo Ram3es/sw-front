@@ -79,14 +79,6 @@ export const CartProvider = ({ children }: IProps) => {
   const getTotal = () => state.items.reduce((prev, cur) => (prev += cur.price.amount), 0)
 
   useEffect(() => {
-    try {
-      sessionStorage.setItem(CART_SESSION_STORAGE_KEY, JSON.stringify(state))
-    } catch {
-      console.log('All cookies are disabled from the user.')
-    }
-  }, [state])
-
-  useEffect(() => {
     setHasMounted(true)
   }, [])
 

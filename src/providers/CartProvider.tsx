@@ -2,7 +2,7 @@
 
 import { CART_SESSION_STORAGE_KEY, CHECKOUT_SETTINGS } from '@/constants/checkout'
 import { CartContext, CartState } from '@/context/CartContext'
-import { useIsMounted } from '@/helpers/useIsMounted'
+import { useIsClient } from '@/helpers/useIsClient'
 import { useSessionReducer } from '@/helpers/useSessionReducer'
 import { IOffersCard } from '@/types/Card'
 import { useEffect, useState } from 'react'
@@ -57,7 +57,7 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
 export const CartProvider = ({ children }: IProps) => {
   const { state, dispatch } = useSessionReducer(cartReducer, initialState, CART_SESSION_STORAGE_KEY)
   const [lastAddedItem, setLastAddedItem] = useState<IOffersCard | null>(null)
-  const isMounted = useIsMounted();
+  const isClient = useIsClient();
 
   // Function to add an item to the cart
   const addToCart = (item: IOffersCard) => {
@@ -79,7 +79,7 @@ export const CartProvider = ({ children }: IProps) => {
   const getDiscount = () => state.items.reduce((prev, cur) => (prev += cur.steamPrice.amount - cur.price.amount), 0)
   const getTotal = () => state.items.reduce((prev, cur) => (prev += cur.price.amount), 0)
 
-  if (!isMounted) {
+  if (!isClient) {
     return null;
   }
 

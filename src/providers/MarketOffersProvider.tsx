@@ -25,7 +25,7 @@ const [filtersState, setFiltersState] = useState(initialFiltersState)
 const [sortOptions, setHeaderFilterOptions] = useState<ISortingState>({sortBy:'', options:[]})
 const [renderCards, setRenderCards] = useState<IOffersCard[]>([])
 const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBarState)
-const [defaulSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
+const [defaultSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
 const [amountPages, setAmountPages] = useState<number>(0)
 const [isLoading, setIsLoading]= useState(false)
 
@@ -56,40 +56,43 @@ const updateFilterWithCheckbox = (filterKey:TKeysCheckboxFilter, value: string) 
   }))
  }
 
- // checking was changed sidebar filters
-const isSelectedSideBarFilter = useMemo(():boolean => {
-  if (typeof localStorage !== "undefined") {
-    
-  const initialFiltersString  = localStorage?.getItem('filters')
-    if(initialFiltersString){
+  // checking was changed sidebar filters
+  const isSelectedSideBarFilter = useMemo((): boolean => {
+    if (!window.navigator.cookieEnabled) {
+      return false
+    }
 
-      const initFilters = JSON.parse(initialFiltersString) as IFiltersSideBar
-      if(Object.keys(initFilters).length !== Object.keys(sidebarFilters).length) return false
+    if (typeof localStorage === 'undefined') {
+      return false
+    }
 
-      return Object.entries(sidebarFilters).some(([key, value]) => {
-        if(typeof value === 'object' && !Array.isArray(value) ){
+    const initialFiltersString = localStorage.getItem('filters')
+    if (!initialFiltersString) {
+      return false
+    }
 
-          const initValue = initFilters[key as keyof IFiltersSideBar] as {value: any} 
-          if(Array.isArray(value.value) && value.value.length && Array.isArray(initValue.value)){
-            for(let i = 0; i < value.value.length; i++ ){
-              if(value.value[i] !== initValue.value[i]){
-                return true
-              }
-            }
-            return false
-          }
-          return initValue.value !== value.value 
-        }
-        if(Array.isArray(value) && value.length ){
-          return value.some((el) => el.selected )
-        }
+    const initFilters = JSON.parse(initialFiltersString) as IFiltersSideBar
+    if (Object.keys(initFilters).length !== Object.keys(sidebarFilters).length) {
+      return false
+    }
+
+    return Object.entries(sidebarFilters).some(([key, value]) => {
+      if (typeof value !== 'object' && Array.isArray(value)) {
         return sidebarFilters[key as keyof IFiltersSideBar] !== initFilters[key as keyof IFiltersSideBar]
-      })
-    } 
-  }
-  return false
+      }
 
-},[sidebarFilters])
+      if (Array.isArray(value) && value.length) {
+        return value.some((el) => el.selected)
+      }
+
+      const initValue = initFilters[key as keyof IFiltersSideBar] as { value: any }
+      if (Array.isArray(value.value) && value.value.length && Array.isArray(initValue.value)) {
+        return value.value.some((item: any, index: number) => item !== initValue.value[index]);
+      }
+
+      return initValue.value !== value.value
+    })
+  }, [sidebarFilters])
 
 const resetFilters = () => {
   Object.entries(filtersState).forEach(([key, value]) =>{
@@ -186,7 +189,7 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
         sortOptions,
         isSelectedSideBarFilter,
         sidebarFilters,
-        defaulSideBarStateFilters,
+        defaultSideBarStateFilters,
         hasMore,
         isLoading,
         setSideBarFilters,

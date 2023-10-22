@@ -2,7 +2,7 @@ import { useEffect, useReducer } from 'react'
 import { usePrevious } from './usePrevious'
 import deepEqual from 'fast-deep-equal/es6'
 
-export const usePersistedReducer = <State, Action>(
+export const useSessionReducer = <State, Action>(
   reducer: (state: State, action: Action) => State,
   initialState: State,
   storageKey: string

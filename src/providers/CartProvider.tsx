@@ -3,7 +3,7 @@
 import { CART_SESSION_STORAGE_KEY, CHECKOUT_SETTINGS } from '@/constants/checkout'
 import { CartContext, CartState } from '@/context/CartContext'
 import { useIsMounted } from '@/helpers/useIsMounted'
-import { usePersistedReducer } from '@/helpers/usePersistedReducer'
+import { useSessionReducer } from '@/helpers/useSessionReducer'
 import { IOffersCard } from '@/types/Card'
 import { useEffect, useState } from 'react'
 
@@ -55,7 +55,7 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
 }
 
 export const CartProvider = ({ children }: IProps) => {
-  const { state, dispatch } = usePersistedReducer(cartReducer, initialState, CART_SESSION_STORAGE_KEY)
+  const { state, dispatch } = useSessionReducer(cartReducer, initialState, CART_SESSION_STORAGE_KEY)
   const [lastAddedItem, setLastAddedItem] = useState<IOffersCard | null>(null)
   const isMounted = useIsMounted();
 

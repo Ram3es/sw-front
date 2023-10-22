@@ -2,8 +2,9 @@
 
 import { CART_SESSION_STORAGE_KEY, CHECKOUT_SETTINGS } from '@/constants/checkout'
 import { CartContext, CartState } from '@/context/CartContext'
+import { usePersistedReducer } from '@/helpers/usePersistedReducer'
 import { IOffersCard } from '@/types/Card'
-import { useEffect, useReducer, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 interface IProps {
   children: React.JSX.Element
@@ -12,13 +13,6 @@ interface IProps {
 const initialState: CartState = {
   items: []
 }
-
-const cartInitializer = (initialValue: CartState = initialState) =>
-  JSON.parse(
-    navigator.cookieEnabled
-      ? sessionStorage.getItem(CART_SESSION_STORAGE_KEY) ?? JSON.stringify(initialValue)
-      : JSON.stringify(initialValue)
-  )
 
 const cartReducer = (state: CartState, action: { type: string; payload: any }): CartState => {
   switch (action.type) {
@@ -60,8 +54,9 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
 }
 
 export const CartProvider = ({ children }: IProps) => {
-  const [cartState, dispatch] = useReducer(cartReducer, initialState, cartInitializer)
+  const { state, dispatch } = usePersistedReducer(cartReducer, initialState, CART_SESSION_STORAGE_KEY)
   const [lastAddedItem, setLastAddedItem] = useState<IOffersCard | null>(null)
+  const [hasMounted, setHasMounted] = useState(false)
 
   // Function to add an item to the cart
   const addToCart = (item: IOffersCard) => {
@@ -79,24 +74,30 @@ export const CartProvider = ({ children }: IProps) => {
     dispatch({ type: 'CLEAR_CART', payload: {} })
   }
 
-  const getSteamTotalPrice = () => cartState.items.reduce((prev, cur) => (prev += cur.steamPrice.amount), 0)
-  const getDiscount = () => cartState.items.reduce((prev, cur) => (prev += cur.steamPrice.amount - cur.price.amount), 0)
-  const getTotal = () => cartState.items.reduce((prev, cur) => (prev += cur.price.amount), 0)
-
-  console.log(cartState, 'cartState')
+  const getSteamTotalPrice = () => state.items.reduce((prev, cur) => (prev += cur.steamPrice.amount), 0)
+  const getDiscount = () => state.items.reduce((prev, cur) => (prev += cur.steamPrice.amount - cur.price.amount), 0)
+  const getTotal = () => state.items.reduce((prev, cur) => (prev += cur.price.amount), 0)
 
   useEffect(() => {
     try {
-      sessionStorage.setItem(CART_SESSION_STORAGE_KEY, JSON.stringify(cartState))
+      sessionStorage.setItem(CART_SESSION_STORAGE_KEY, JSON.stringify(state))
     } catch {
       console.log('All cookies are disabled from the user.')
     }
-  }, [cartState])
+  }, [state])
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
+
+  if (!hasMounted) {
+    return null
+  }
 
   return (
     <CartContext.Provider
       value={{
-        cartItems: cartState,
+        cartItems: state,
         isCheckoutCompleted: false,
         lastAddedItem,
         setLastAddedItem,

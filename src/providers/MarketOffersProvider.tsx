@@ -58,15 +58,15 @@ const updateFilterWithCheckbox = (filterKey:TKeysCheckboxFilter, value: string) 
 
   // checking was changed sidebar filters
   const isSelectedSideBarFilter = useMemo((): boolean => {
+    if (typeof window === 'undefined') {
+      return false
+    }
+
     if (!window.navigator.cookieEnabled) {
       return false
     }
 
-    if (typeof localStorage === 'undefined') {
-      return false
-    }
-
-    const initialFiltersString = localStorage.getItem('filters')
+    const initialFiltersString = window.localStorage.getItem('filters')
     if (!initialFiltersString) {
       return false
     }

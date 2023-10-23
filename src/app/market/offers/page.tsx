@@ -99,6 +99,9 @@ const search = searchParams.get('search')
               </div>
             </div>
             <IsUserLogged>
+              {!renderCards.length
+                ? <div className="self-center my-auto -translate-y-12 text-2xl  text-graySecondary ">No offers found</div>
+                :
               <div className="px-[24px] py-[30px] grid grid-cols-2 sm:grid-cols-cards gap-1">
                 {renderCards.map((item, idx) => (
                   <ItemCard
@@ -123,6 +126,7 @@ const search = searchParams.get('search')
                     />
                 ))}
               </div>
+               }
             </IsUserLogged>
             <div className={classNames('mb-10', isLoading ? 'block': 'hidden' )}>
               <Loader/>

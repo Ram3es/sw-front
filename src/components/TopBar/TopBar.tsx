@@ -6,7 +6,7 @@ import { USDCircleIcon } from '../USDIcon/usd-circle'
 import { CartIcon } from '../CartIcon/cart'
 import { Button, BaseLink } from '../Navigation'
 import { useAppContext } from '../../context/AppContext'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useHideOnScroll } from '../../helpers/useHideOnScroll'
 import UserMenu from '../Content/UserMenu'
 import NavDropdown from './NavDropdown'
@@ -43,6 +43,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
     searchOpened,
     updateGameId
   } = useAppContext()
+  const {push} = useRouter()
   const [, setSelected] = useState('')
   const [isOpenNavBar, setIsOpenNavBar] = useState(false)
   const { cartItems } = useCartContext()
@@ -93,7 +94,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 <Listbox.Option
                   key={game.id}
                   className="flex flex-col gap-3 w-[178px] cursor-pointer"
-                  onClick={() => { updateGameId(game.id) }}
+                  onClick={() => { updateGameId(game.id); push(`/market/offers?appId=${game.id}`) }}
                   value={game}
                 >
                   <div className={classNames('relative w-full', gameId === game.id ? 'border border-swViolet' : '')}>

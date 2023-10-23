@@ -1,10 +1,10 @@
 import { IFilterwithCheckbox, IOfferFilter } from "@/constants/market-offers";
 import { IOffersCard } from "@/types/Card";
 import { ESteamAppId } from "@/types/Inventory";
-import { ISortByOptions, ISortingState } from "@/types/Market";
+import { ISortingState } from "@/types/Market";
 import { Dispatch, SetStateAction, createContext, useContext } from "react";
 
-type TRange = { value: number[], data: number[] }
+type TRange = { value: number[], data: number[], options: number[] }
 
 export interface IInitialFiltersState {
     appId: ESteamAppId | null
@@ -42,15 +42,17 @@ export interface IMarketOffersCtx {
     defaulSideBarStateFilters: IFiltersSideBar
     hasMore: boolean
     isLoading: boolean
+    search: string
     setSideBarFilters:  Dispatch<SetStateAction<IFiltersSideBar>>
     updateFilter: <K extends keyof IInitialFiltersState>(value: TValue<K>) => void
-    setDefaultFilters: (appId: ESteamAppId) => Promise<void>
+    setDefaultFilters: (query: string) => Promise<void>
     getFilteredItems:  (query: string) => Promise<void>
     updateFilterWithCheckbox: (filterKey:TKeysCheckboxFilter, value: string) => void
     setHeaderFilterOptions: Dispatch<SetStateAction<ISortingState>>
     resetSideBarFilters: () => void
     resetFilters: (appId?: ESteamAppId) => void
     updatePage: () => void
+    setSearch: Dispatch<SetStateAction<string>>
     
 }
 

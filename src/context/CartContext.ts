@@ -7,7 +7,7 @@ export interface CartState {
 
 export interface ICartContext {
   cartItems: CartState
-  isCheckoutCompleated: boolean
+  isCheckoutCompleted: boolean
   lastAddedItem: IOffersCard | null
   setLastAddedItem: (item: IOffersCard | null) => void
   addToCart: (item: IOffersCard) => void

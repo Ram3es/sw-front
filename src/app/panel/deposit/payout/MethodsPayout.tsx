@@ -24,7 +24,7 @@ const MethodsPayout = () => {
     amount,
     methodsState,
     availableMethods,
-    setSelecteMethod,
+    setSelectedMethod,
     setPayoutStep
   } = usePayoutContext()
 
@@ -44,14 +44,14 @@ const MethodsPayout = () => {
           return
         }
     }
-    setSelecteMethod(prev => ({
+    setSelectedMethod(prev => ({
       ...prev,
       [method]: { ...prev[method], methodAccount: inputValue }
     }))
   }
 
   const radioChange = (method: string) => {
-    setSelecteMethod(prev => {
+    setSelectedMethod(prev => {
       const copy = { ...prev }
       for (const key in copy) {
         if (key === method) {
@@ -148,7 +148,7 @@ const MethodsPayout = () => {
                                                     <Button
                                                         text='edit'
                                                         onClick={() => {
-                                                          setSelecteMethod(prev => ({
+                                                          setSelectedMethod(prev => ({
                                                             ...prev,
                                                             [method.name]: { ...prev[method.name], methodAccount: '' }
                                                           }))

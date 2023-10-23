@@ -83,9 +83,11 @@ export default function Inventory() {
                     </span>
                   </div>
                   {cartObject[k].map(card => (
-                    <div className="flex w-full justify-between border-b border-white/10">
+                    <div 
+                      key={card.inventoryItemId}
+                      className="flex w-full justify-between border-b border-white/10"
+                    >
                       <ItemSelectedCard
-                        key={card.inventoryItemId}
                         id={card.inventoryItemId}
                         variant='offer'
                         image={IMAGE_ROOT_URL.concat(card.imageUrl)}

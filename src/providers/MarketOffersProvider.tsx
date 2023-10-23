@@ -24,7 +24,7 @@ const [filtersState, setFiltersState] = useState(initialFiltersState)
 const [sortOptions, setHeaderFilterOptions] = useState<ISortingState>({sortBy:'', options:[]})
 const [renderCards, setRenderCards] = useState<IOffersCard[]>([])
 const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBarState)
-const [defaulSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
+const [defaultSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
 const [amountPages, setAmountPages] = useState<number>(0)
 const [isLoading, setIsLoading]= useState(false)
 const [search,setSearch] =useState<string>('')
@@ -197,7 +197,7 @@ const setDefaultFilters = useCallback(async (query: string) => {
         sortOptions,
         isSelectedSideBarFilter,
         sidebarFilters,
-        defaulSideBarStateFilters,
+        defaultSideBarStateFilters,
         hasMore,
         isLoading,
         search,

@@ -11,9 +11,11 @@ import { Button } from '@/components/Navigation';
 import { classNames } from '@/helpers/className';
 import { useRouter } from 'next/navigation';
 import CountryList from '@/components/Content/CountryList';
+import BirthdayPicker from '@/components/Content/BirthdayPicker';
+import { isValid } from 'date-fns';
 
 
-const ERRROS_STATE = {
+const ERRROS_STATE: TErrState = {
     firstName: {
       status: false,
       message: '',
@@ -43,10 +45,38 @@ const ERRROS_STATE = {
     status: false,
     message: '',
     errorClass: 'text-red-500',
+},
+birthday: {
+  status: false,
+  message: '',
+  errorClass: 'text-red-500',
 }
+}
+export interface IInitialState{
+  firstName: string
+  lastName: string
+  streetAddress: string
+  streetAddress2: string
+  zip: string
+  city: string
+  province: string
+  country: string
+  birthday: number | null
+}
+const initValues:IInitialState = {
+  firstName:  '',
+  lastName:  '',
+  streetAddress:  '',
+  streetAddress2:  '',
+  zip:  '',
+  city:  '',
+  province:  '' ,
+  country: undefined || '',
+  birthday: null
 }
 
-type TErrState = Record<string, { status: boolean, message: string, errorClass: string }>
+ type TErrState = Record<keyof Omit<IInitialState,'province' | 'streetAddress2'>, IError>
+ export interface IError  { status: boolean, message: string, errorClass: string }
 
 
 const BillingInfo = () => {
@@ -66,23 +96,15 @@ const BillingInfo = () => {
       province: false,
       country: false 
     },
-    initialValues: {
-      firstName:  '',
-      lastName:  '',
-      streetAddress:  '',
-      streetAddress2:  '',
-      zip:  '',
-      city:  '',
-      province:  '' ,
-      country: undefined || ''
-    },
+    initialValues: initValues,
     validationSchema: Yup.object({
       firstName: Yup.string().min(2).required('This field can not be empty'),
       lastName: Yup.string().min(2).required('This field can not be empty'),
       streetAddress: Yup.string().min(10).required('This field can not be empty'),
       zip: Yup.string().min(4).required('This field can not be empty'),
       city: Yup.string().min(2).required('This field can not be empty'),
-      country: Yup.string().required('Selecting country is required.')
+      country: Yup.string().required('Selecting country is required.'),
+      birthday:  Yup.number().required('This field is required.').test('birthday-test',' Please enter valid date', (value) => !!value )
     }),
     validateOnChange: true,
     onSubmit: async (values) => {
@@ -113,7 +135,7 @@ const BillingInfo = () => {
         setErrors(prev => ({
           ...prev,
           [fieldName]: {
-            ...prev[fieldName],
+            ...prev[fieldName as keyof TErrState],
             status: true,
             message: formik.errors[fieldName as keyof typeof formik.initialValues] as string}
         }))
@@ -121,7 +143,7 @@ const BillingInfo = () => {
         setErrors(prev => ({
           ...prev,
           [fieldName]: {
-            ...prev[fieldName],
+            ...prev[fieldName  as keyof TErrState],
             status: false,
             message: '' }
         }))
@@ -141,7 +163,8 @@ const BillingInfo = () => {
       zip: data.billingAddress.zip ?? '',
       city: data.billingAddress.city ?? '',
       province: data.billingAddress.province ?? '' ,
-      country: data.billingAddress.country ?? undefined
+      country: data.billingAddress.country ?? undefined,
+      birthday: data.billingAddress.birthday 
      })
     }
   }, [data])
@@ -258,6 +281,14 @@ const BillingInfo = () => {
                     />
                 <CountryList value={formik.values.country} onChange={handleChangeCountry}  />
                   <span className={` -mt-2 ml-4 ${errors.country.status ? 'block' : 'hidden'} ${errors.country.errorClass}`}>{errors.country.message}</span>
+                  <div className='border-b border-darkGrey my-6' />
+                  <BirthdayPicker
+                    dateMs={formik.values.birthday}
+                    error={errors.birthday}
+                    onChange={(value: number) => {
+                      formik.setFieldValue('birthday',value, true);
+                    }}
+                   />
                 <div className="flex gap-4 ml-auto mt-8">
                   <Button
                     text='cancel'

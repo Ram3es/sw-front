@@ -92,8 +92,8 @@ return (
         <Dropbox label="price">
             <TwoPointsSliderWithChart
             data={priceRange.data}
-            maxPrice={initFilters.priceRange.value[1]}
-            minPrice = {initFilters.priceRange.value[0]}
+            maxPrice={priceRange.options[1]}
+            minPrice = {priceRange.options[0]}
             maskId="priceMask"
             rangeLimit={priceRange.value}
             setRangeLimit={(value: number[]) =>{
@@ -121,8 +121,8 @@ return (
         <Dropbox label="wear">
             <TwoPointsSliderWithChart
             data={wear?.data}
-            maxPrice={initFilters?.wear?.value[1]}
-            minPrice={initFilters?.wear?.value[0]}
+            maxPrice={wear?.options[1]}
+            minPrice={wear?.options[0]}
             barWidthArr={[0.07, 0.08, 0.22, 0.07, 0.56]}
             colorsArr={[
             'rgba(24,232,107,1)',

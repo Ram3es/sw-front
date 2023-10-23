@@ -27,6 +27,13 @@ const cartReducer = (state: CartState, action: { type: string; payload: any }): 
         // Item already exists, don't add it again
         return state
       }
+      
+      if(Array.isArray(action.payload)){
+        return {
+          ...state,
+          items: [...state.items, ...action.payload]
+        }
+      }
 
       // Item doesn't exist, add it to the cart
       return {

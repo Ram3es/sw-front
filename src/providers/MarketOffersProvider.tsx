@@ -4,8 +4,7 @@ import { IFiltersSideBar, IInitialFiltersState, MarketOffersContext, TKeysCheckb
 import { generateQuery } from "@/helpers/generateQuery"
 import { getOffers } from "@/services/market/market"
 import { IOffersCard } from "@/types/Card"
-import { ESteamAppId } from "@/types/Inventory"
-import { ISortingState } from "@/types/Market"
+import { IDefaultOptionRes, IRangeOptions, ISortingState } from "@/types/Market"
 import { FC, PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react"
 
 const initialFiltersState: Record<string, any> = {}
@@ -13,8 +12,8 @@ const initialFiltersState: Record<string, any> = {}
 const initSideBarState:IFiltersSideBar = {
   pattern: '',
   tradableIn: { value: 8, data: []},
-  priceRange: { value: [], data: [] },
-  wear: { value: [], data: [] },
+  priceRange: { value: [], data: [], options:[] },
+  wear: { value: [], data: [], options:[] },
   quality: [],
   rarity: [],
   variant: { value: '', options: [] }
@@ -28,8 +27,11 @@ const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBa
 const [defaultSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
 const [amountPages, setAmountPages] = useState<number>(0)
 const [isLoading, setIsLoading]= useState(false)
+const [search,setSearch] =useState<string>('')
+
 
 const { gameId } = useAppContext()
+
 const hasMore = useMemo(() => filtersState.page ? filtersState.page < amountPages : true, [filtersState, amountPages])
 
 const updateFilter = <K extends keyof IInitialFiltersState>(value: TValue<K>): void => {
@@ -56,43 +58,42 @@ const updateFilterWithCheckbox = (filterKey:TKeysCheckboxFilter, value: string) 
   }))
  }
 
-  // checking was changed sidebar filters
-  const isSelectedSideBarFilter = useMemo((): boolean => {
-    if (typeof window === 'undefined') {
-      return false
-    }
+ // checking was changed sidebar filters
+const isSelectedSideBarFilter = useMemo(():boolean => {
+  if (typeof localStorage !== "undefined") {
+    
+  const initialFiltersString  = localStorage?.getItem('filters')
+    if(initialFiltersString){
 
-    if (!window.navigator.cookieEnabled) {
-      return false
-    }
-
-    const initialFiltersString = window.localStorage.getItem('filters')
-    if (!initialFiltersString) {
-      return false
-    }
-
-    const initFilters = JSON.parse(initialFiltersString) as IFiltersSideBar
-    if (Object.keys(initFilters).length !== Object.keys(sidebarFilters).length) {
-      return false
-    }
-
-    return Object.entries(sidebarFilters).some(([key, value]) => {
-      if (typeof value !== 'object' && Array.isArray(value)) {
+      const initFilters = JSON.parse(initialFiltersString) as IFiltersSideBar
+      if(Object.keys(initFilters).length !== Object.keys(sidebarFilters).length) return false
+     
+      return Object.entries(sidebarFilters).some(([key, value]) => {
+        if(typeof value === 'object' && !Array.isArray(value) ){
+  
+          const initValue = initFilters[key as keyof IFiltersSideBar] as {value: any} 
+          if(Array.isArray(value.value) && value.value.length && Array.isArray(initValue.value)  ){
+            if( !initValue.value[1]) return false
+            for(let i = 0; i < value.value.length; i++ ){
+              if(value.value[i] !== initValue.value[i]){
+                return true
+              }
+            }
+            return false
+          }
+          return initValue.value !== value.value 
+        }
+        if(Array.isArray(value) && value.length ){
+          return value.some((el) => el.selected )
+        }
         return sidebarFilters[key as keyof IFiltersSideBar] !== initFilters[key as keyof IFiltersSideBar]
-      }
+      })
+  
+    } 
+  }
+  return false
 
-      if (Array.isArray(value) && value.length) {
-        return value.some((el) => el.selected)
-      }
-
-      const initValue = initFilters[key as keyof IFiltersSideBar] as { value: any }
-      if (Array.isArray(value.value) && value.value.length && Array.isArray(initValue.value)) {
-        return value.value.some((item: any, index: number) => item !== initValue.value[index]);
-      }
-
-      return initValue.value !== value.value
-    })
-  }, [sidebarFilters])
+},[sidebarFilters])
 
 const resetFilters = () => {
   Object.entries(filtersState).forEach(([key, value]) =>{
@@ -118,10 +119,10 @@ const resetSideBarFilters = () => {
   }
 }
 
-const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
+const setDefaultFilters = useCallback(async (query: string) => {
   setFiltersState({})
     try {
-      const { defaultFilters, sortByOptions, offers, sortBy, total  } = await getOffers(`appId=${appId}`)
+      const { defaultFilters, sortByOptions, offers, sortBy, total  } = await getOffers(query)
 
       
       // create initial sidebar state
@@ -129,10 +130,16 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
 
       defaultFilters.forEach(filter => {
         if(filter.type === 'range'){
-         return initFilters[filter.name] = { value: filter.value, data: filter?.diagramData?.map((el: { count: any }) => el?.count) }
+          const { from, to } = filter?.options as IRangeOptions
+         return initFilters[filter.name] = { 
+          value: typeof filter.value === 'object' ? [filter?.value?.from?.amount, filter?.value?.to?.amount] : filter.value, 
+          data: filter?.diagramData?.map((el: { count: any }) => el?.count) ,
+          options: [from?.amount, to?.amount]
+        }
         }
         if(filter.type === 'multiple-choice-filter'){
-           return initFilters[filter.name] = filter?.options?.map(el => ({...el, selected: false}))
+          const checkboxoptions = filter?.options as IDefaultOptionRes[]
+           return initFilters[filter.name] = checkboxoptions?.map(el => ({...el, selected: false}))
         }
         if(filter.type === 'radio'){
           return initFilters[filter.name] = ({value: filter.value, options:filter.options})
@@ -158,8 +165,9 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
   }, [])
 
   const getFilteredItems = useCallback( async (query: string) => {
+    const baseQuery = generateQuery({appId:gameId, search})
     try {
-      const { offers } = await getOffers(`appId=${gameId}${query ? `&${query}` : '' }`)
+      const { offers } = await getOffers(`${baseQuery}${query ? `&${query}` : '' }`)
       setIsLoading(false)
       if(filtersState?.page > 1){
         return setRenderCards(prev => ([...prev, ...offers]))
@@ -170,7 +178,7 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
       console.log(error)
     }
 
-  }, [sortOptions, gameId, filtersState])
+  }, [sortOptions, gameId, filtersState,search])
 
 
   useEffect(() => {
@@ -192,6 +200,7 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
         defaultSideBarStateFilters,
         hasMore,
         isLoading,
+        search,
         setSideBarFilters,
         setHeaderFilterOptions,
         updateFilter,
@@ -201,6 +210,7 @@ const setDefaultFilters = useCallback(async (appId: ESteamAppId) => {
         resetSideBarFilters,
         getFilteredItems,
         updatePage,
+        setSearch
         
         }}>
           {children}

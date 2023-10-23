@@ -11,6 +11,7 @@ export interface IUserBillingAddress {
     province?: string 
     zip: string;
     country: string;
+    birthday: number | null
   }
 
   export interface IUserCryptoWallet {

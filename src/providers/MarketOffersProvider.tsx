@@ -5,6 +5,7 @@ import { generateQuery } from "@/helpers/generateQuery"
 import { getOffers } from "@/services/market/market"
 import { IOffersCard } from "@/types/Card"
 import { IDefaultOptionRes, IRangeOptions, ISortingState } from "@/types/Market"
+import { useSearchParams } from "next/navigation"
 import { FC, PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react"
 
 const initialFiltersState: Record<string, any> = {}
@@ -27,9 +28,9 @@ const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBa
 const [defaulSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
 const [amountPages, setAmountPages] = useState<number>(0)
 const [isLoading, setIsLoading]= useState(false)
-const [search,setSearch] =useState<string>('')
 
-
+const searchParams = useSearchParams()
+const search = searchParams.get('search')
 const { gameId } = useAppContext()
 
 const hasMore = useMemo(() => filtersState.page ? filtersState.page < amountPages : true, [filtersState, amountPages])
@@ -96,14 +97,7 @@ const isSelectedSideBarFilter = useMemo(():boolean => {
 },[sidebarFilters])
 
 const resetFilters = () => {
-  Object.entries(filtersState).forEach(([key, value]) =>{
-    if( value || value === 0 ){
-      setFiltersState(prev => ({
-        ...prev,
-        [key]: initialFiltersState[key as keyof IInitialFiltersState],
-      }))
-    }
-  })
+  setFiltersState({ appId: gameId, sortBy: sortOptions.sortBy})
 }
 
 const resetSideBarFilters = () => {
@@ -164,10 +158,15 @@ const setDefaultFilters = useCallback(async (query: string) => {
     }
   }, [])
 
-  const getFilteredItems = useCallback( async (query: string) => {
-    const baseQuery = generateQuery({appId:gameId, search})
+  const getFilteredItems = useCallback( async () => {
+    const query = generateQuery({
+      appId: gameId,
+      sortBy: sortOptions.sortBy,
+      page:filtersState.page ?? 1,
+      ...filtersState
+    })
     try {
-      const { offers } = await getOffers(`${baseQuery}${query ? `&${query}` : '' }`)
+      const { offers } = await getOffers(query)
       setIsLoading(false)
       if(filtersState?.page > 1){
         return setRenderCards(prev => ([...prev, ...offers]))
@@ -178,17 +177,22 @@ const setDefaultFilters = useCallback(async (query: string) => {
       console.log(error)
     }
 
-  }, [sortOptions, gameId, filtersState,search])
+  }, [gameId,sortOptions, filtersState,search])
 
 
   useEffect(() => {
+    console.log(filtersState)
     if(Object.keys(filtersState).length){
-      const copiedState = {...filtersState, sortBy: sortOptions.sortBy, page:filtersState.page ?? 1 }
-      const filtersQuery = generateQuery(copiedState)
       setIsLoading(true)
-      void getFilteredItems(filtersQuery)
+      void getFilteredItems()
     }
-   }, [filtersState, sortOptions])
+   }, [filtersState])
+
+   useEffect(() => {
+    if(search){
+      updateFilter({search})
+    }
+   } ,[search])
 
     return (
       <MarketOffersContext.Provider value={{
@@ -210,7 +214,6 @@ const setDefaultFilters = useCallback(async (query: string) => {
         resetSideBarFilters,
         getFilteredItems,
         updatePage,
-        setSearch
         
         }}>
           {children}

@@ -28,13 +28,10 @@ export default function MarketOffers () {
     isLoading,
     setDefaultFilters,
     updatePage,
-    setSearch,
-    filtersState
   } = useMarketOffersCtx()
 
 const searchParams = useSearchParams();
 const appId = searchParams.get('appId')
-const search = searchParams.get('search')
 
   const observer = useRef<IntersectionObserver | null>(null)
   const lastElementRef = useCallback(
@@ -50,11 +47,9 @@ const search = searchParams.get('search')
 
    useEffect(() => {
     if(!gameId) return
-    setSearch(search ?? '')
-    const additional = search ? {...filtersState, page:1} : {}
-    const query = generateQuery({appId, search, ...additional})
+    const query = generateQuery({appId})
     setDefaultFilters(query)
-   }, [search, appId])
+   }, [appId])
 
     return(
       <>

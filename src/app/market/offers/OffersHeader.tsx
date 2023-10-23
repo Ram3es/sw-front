@@ -15,7 +15,8 @@ const OffersHeader = () => {
     const { gameId } = useAppContext()
     const { 
       updateFilter,
-      setSearch,
+      resetFilters,
+      resetSideBarFilters,
       setHeaderFilterOptions,
       sortOptions,
       search
@@ -42,7 +43,7 @@ const OffersHeader = () => {
                     <span className='uppercase'>results for</span>
                     <div className='flex gap-4 items-center'>
                       <div className='text-white text-24 '>'{search}'</div>
-                      <div onClick={() => { push(`/market/offers?appId=${gameId}`); setSearch('')}} className='hover:text-white duration-200 cursor-pointer'>
+                      <div onClick={() => { push(`/market/offers?appId=${gameId}`);resetSideBarFilters(); resetFilters()}} className='hover:text-white duration-200 cursor-pointer'>
                         <CloseIcon className='h-[18px]' />
                       </div>
                     </div>

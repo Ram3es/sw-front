@@ -13,10 +13,11 @@ import { useCartContext } from '@/context/CartContext'
 import { classNames } from '@/helpers/className'
 import { format } from '@/helpers/numberFormater'
 import { getUserAccountSettings } from '@/services/user/user'
-import { IBillingAddress } from '@/types/User'
+import { IUserBillingAddress } from '@/types/Settings'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import { SyntheticEvent, useCallback, useEffect, useState } from 'react'
+import { format as formatDate} from 'date-fns'
 
 interface IAgreements {
   policy: boolean
@@ -28,7 +29,7 @@ export default function CartCheckout() {
   const { user } = useAppContext()
   const { replace }  = useRouter();
 
-  const [billingAddress, setBillingAddress] = useState<IBillingAddress>()
+  const [billingAddress, setBillingAddress] = useState<IUserBillingAddress>()
   const [agreements, setAgreements] = useState<IAgreements>({
     policy: false,
     cancelation: false
@@ -55,7 +56,6 @@ export default function CartCheckout() {
   useEffect(() => {
     const getBillingAddres = async () => {
       const { billingAddress } = await getUserAccountSettings()
-      console.log(billingAddress)
       if(billingAddress.id) setBillingAddress(billingAddress)
   
     }
@@ -117,7 +117,7 @@ export default function CartCheckout() {
                         <p className="font-normal">{`${billingAddress?.streetAddress} ${billingAddress?.zip} ${billingAddress?.province}, ${billingAddress?.country}`}</p>
                       </div>
                       <div className="text-lg leading-[26px] text-white">
-                        <p className="font-medium">11.03.1997</p>
+                        <p className="font-medium">{formatDate(+billingAddress.birthDate,'dd.MM.yyyy')}</p>
                       </div>
                     </div>
                     <Link className="justify-self-end col-span-1 col-start-6" href="/settings/billing-info">

@@ -3,6 +3,7 @@ import InformationIcon from '../../../components/icons/InformationIcon'
 import ErrorLabelRounded from '../../../components/funds/ErrorLabelRounded'
 import { useRouter } from 'next/navigation'
 import { useSettingsContext } from '@/context/SettingsContext'
+import { format as formatDate } from 'date-fns'
 
 const BillingField = () => {
   const { push } = useRouter()
@@ -14,7 +15,7 @@ const BillingField = () => {
           icon={<InformationIcon iconClasses='w-[14px] h-auto' />}
           editableFn={() => { push('/settings/billing-info') }}
          >
-          {data?.billingAddress.firstName
+          {data?.billingAddress.id
             ? (
                 <div className='max-w-[300px] flex flex-col gap-6 text-white'>
                   <div className='flex flex-col'>
@@ -29,7 +30,7 @@ const BillingField = () => {
                       {data.billingAddress.zip } {data.billingAddress.city }, {data.billingAddress.province} {data.billingAddress.country}
                     </p>
                   </div>
-                  <span>18.05.1986</span>
+                  <span>{formatDate(+data.billingAddress.birthDate,'dd.MM.yyyy')}</span>
                 </div>
               )
             : <ErrorLabelRounded isError={true} message='missing data' />}

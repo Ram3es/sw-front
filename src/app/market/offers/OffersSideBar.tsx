@@ -23,7 +23,7 @@ const OffersSideBar = () => {
   const { 
     isSelectedSideBarFilter,
     sidebarFilters ,
-    defaulSideBarStateFilters: initFilters,
+    defaultSideBarStateFilters: initFilters,
     setSideBarFilters,
     updateFilter,
     resetFilters,

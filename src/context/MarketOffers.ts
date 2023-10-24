@@ -40,7 +40,7 @@ export interface IMarketOffersCtx {
     sortOptions:ISortingState
     isSelectedSideBarFilter: boolean
     sidebarFilters: IFiltersSideBar
-    defaulSideBarStateFilters: IFiltersSideBar
+    defaultSideBarStateFilters: IFiltersSideBar
     hasMore: boolean
     isLoading: boolean
     search: string | null

@@ -9,7 +9,7 @@ const PayoutProvider: FC<PropsWithChildren> = ({ children }) => {
   const [emailPayPal, setPayPalEmail] = useState('')
   const [inputPaypal, setInputPayPal] = useState('')
   const [availableMethods, setPayoutMethods] = useState<Record<string, any>>({})
-  const [methodsState, setSelecteMethod] = useState<TMethodState>(
+  const [methodsState, setSelectedMethod] = useState<TMethodState>(
     PAYOUT_METHODS.reduce((acc, method) =>
       ({ ...acc, [method.name]: { isSelected: false, methodAccount: '' } }), {})
   )
@@ -26,7 +26,7 @@ const PayoutProvider: FC<PropsWithChildren> = ({ children }) => {
           setPayPalEmail,
           setInputPayPal,
           setPayoutMethods,
-          setSelecteMethod
+          setSelectedMethod
         }}>
             {children}
         </PayoutContext.Provider>

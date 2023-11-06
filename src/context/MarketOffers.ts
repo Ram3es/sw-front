@@ -18,6 +18,7 @@ export interface IInitialFiltersState {
     quality: string[] | null
     rarity: string[] | null
     variant: string
+    search: string | null
 }
 
 export interface IFiltersSideBar {
@@ -42,7 +43,7 @@ export interface IMarketOffersCtx {
     defaultSideBarStateFilters: IFiltersSideBar
     hasMore: boolean
     isLoading: boolean
-    search: string
+    search: string | null
     setSideBarFilters:  Dispatch<SetStateAction<IFiltersSideBar>>
     updateFilter: <K extends keyof IInitialFiltersState>(value: TValue<K>) => void
     setDefaultFilters: (query: string) => Promise<void>
@@ -52,7 +53,6 @@ export interface IMarketOffersCtx {
     resetSideBarFilters: () => void
     resetFilters: (appId?: ESteamAppId) => void
     updatePage: () => void
-    setSearch: Dispatch<SetStateAction<string>>
     
 }
 

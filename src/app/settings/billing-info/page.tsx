@@ -12,7 +12,7 @@ import { classNames } from '@/helpers/className';
 import { useRouter } from 'next/navigation';
 import CountryList from '@/components/Content/CountryList';
 import BirthdayPicker from '@/components/Content/BirthdayPicker';
-import { isValid } from 'date-fns';
+import axios, { AxiosError } from 'axios';
 
 
 const ERRROS_STATE: TErrState = {
@@ -46,7 +46,7 @@ const ERRROS_STATE: TErrState = {
     message: '',
     errorClass: 'text-red-500',
 },
-birthday: {
+birthDate: {
   status: false,
   message: '',
   errorClass: 'text-red-500',
@@ -61,7 +61,7 @@ export interface IInitialState{
   city: string
   province: string
   country: string
-  birthday: number | null
+  birthDate: number | null
 }
 const initValues:IInitialState = {
   firstName:  '',
@@ -71,8 +71,8 @@ const initValues:IInitialState = {
   zip:  '',
   city:  '',
   province:  '' ,
-  country: undefined || '',
-  birthday: null
+  country: '',
+  birthDate: null
 }
 
  type TErrState = Record<keyof Omit<IInitialState,'province' | 'streetAddress2'>, IError>
@@ -83,7 +83,6 @@ const BillingInfo = () => {
   const { data, showToast } = useSettingsContext()
   const { back } = useRouter()
   const [errors, setErrors] = useState<TErrState>(ERRROS_STATE)
-
 
   const formik = useFormik({
     initialTouched: {
@@ -104,7 +103,7 @@ const BillingInfo = () => {
       zip: Yup.string().min(4).required('This field can not be empty'),
       city: Yup.string().min(2).required('This field can not be empty'),
       country: Yup.string().required('Selecting country is required.'),
-      birthday:  Yup.number().required('This field is required.').test('birthday-test',' Please enter valid date', (value) => !!value )
+      birthDate:  Yup.number().test('birthday-test',' Please enter valid date', (value) => !!value ).required('This field is required.')
     }),
     validateOnChange: true,
     onSubmit: async (values) => {
@@ -119,7 +118,7 @@ const BillingInfo = () => {
         } catch(error) {
           showToast({ 
             type: 'error',
-            message: 'Error occurred',
+            message: axios.isAxiosError(error) ? error.response?.data?.message : 'Error occurred',
             id: Date.now().toString()})
         } 
       } 
@@ -154,17 +153,17 @@ const BillingInfo = () => {
   
 
   useEffect(() => {
-    if(data?.billingAddress){
+    if(data?.billingAddress.id){
      formik.setValues({ 
-      firstName: data.billingAddress.firstName ?? '',
-      lastName: data.billingAddress.lastName ?? '',
-      streetAddress: data.billingAddress.streetAddress ?? '',
+      firstName: data.billingAddress.firstName,
+      lastName: data.billingAddress.lastName,
+      streetAddress: data.billingAddress.streetAddress,
       streetAddress2: data.billingAddress.streetAddress2 ?? '',
-      zip: data.billingAddress.zip ?? '',
-      city: data.billingAddress.city ?? '',
+      zip: data.billingAddress.zip ,
+      city: data.billingAddress.city,
       province: data.billingAddress.province ?? '' ,
-      country: data.billingAddress.country ?? undefined,
-      birthday: data.billingAddress.birthday 
+      country: data.billingAddress.country,
+      birthDate: +data.billingAddress.birthDate || null
      })
     }
   }, [data])
@@ -283,10 +282,10 @@ const BillingInfo = () => {
                   <span className={` -mt-2 ml-4 ${errors.country.status ? 'block' : 'hidden'} ${errors.country.errorClass}`}>{errors.country.message}</span>
                   <div className='border-b border-darkGrey my-6' />
                   <BirthdayPicker
-                    dateMs={formik.values.birthday}
-                    error={errors.birthday}
+                    dateMs={formik.values.birthDate}
+                    error={errors.birthDate}
                     onChange={(value: number) => {
-                      formik.setFieldValue('birthday',value, true);
+                      formik.setFieldValue('birthDate',value, true);
                     }}
                    />
                 <div className="flex gap-4 ml-auto mt-8">

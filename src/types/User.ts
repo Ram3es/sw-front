@@ -1,16 +1,5 @@
 import { IUserAccount, IUserBillingAddress, IUserCryptoWallet } from "./Settings"
 
-export interface IBillingAddress {
-  id?: number
-  firstName: string
-  lastName: string
-  streetAddress: string
-  streetAddress2?: string
-  city: string
-  province?: string
-  zip: string
-  country: string
-}
 
 export interface IUser {
   id: string
@@ -18,7 +7,7 @@ export interface IUser {
   balance: number
   payoutLimit?: number
   avatar: string
-  billingAddress?: IBillingAddress
+  billingAddress?: IUserBillingAddress
 }
 
 export interface ISteamUser {

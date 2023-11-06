@@ -65,7 +65,7 @@ const InputWithErrors: FC<IInputWithErrors> = ({
   return (
       <div className='group'>
         <div
-          onMouseDown={handleClick}
+          onClick={handleClick}
           onBlur={onBlur}
           className={classNames('w-full flex items-center h-14  group  px-6 cursor-text relative',
             wrapperClasses ?? 'border-2 border-darkGrey',
@@ -84,7 +84,7 @@ const InputWithErrors: FC<IInputWithErrors> = ({
                 type='text'
                 value={value}
                 onChange={(e) => { handleChange(e.target.value, e) }}
-                className='w-0 grow bg-transparent outline-none pr-4'
+                className='w-full grow bg-transparent outline-none pr-4'
                 {...rest}
               />
             </div>

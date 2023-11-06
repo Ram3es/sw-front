@@ -80,7 +80,7 @@ const BirthdayPicker = ({ dateMs, error, onChange }: IBirthdayProps ) => {
       }
     }, [birthdayDate])
     return (
-        <div className=' flex flex-col gap-4 text-graySecondary '>
+        <div className=' flex flex-col gap-3 text-graySecondary '>
           <h2 className='uppercase text-lg small-caps tracking-[1.44px]'>birthdate</h2>
           <div className='flex gap-8'>
           {Fields.map((field) => (
@@ -106,7 +106,7 @@ const BirthdayPicker = ({ dateMs, error, onChange }: IBirthdayProps ) => {
            </Listbox>
           ))}
           </div>
-            <div className={classNames('text-lg', error?.errorClass ?? '')}>{error?.status && error.message}</div>
+            <div className={classNames(' ml-4 ', error?.errorClass ?? '')}>{error?.status && error.message}</div>
         </div>
     );
 };

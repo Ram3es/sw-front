@@ -14,7 +14,7 @@ const CountryList = ({ value, onChange } : { value?: string, onChange: (value: s
                 <Listbox.Button className={'relative w-full h-14 px-6 bg-darkGrey flex items-center justify-between'}>
                 {({ open }) => (
                     <>
-                        <span className='text-lg capitalize'>{value ?? 'country'}</span>
+                        <span className='text-lg capitalize'>{value || 'country'}</span>
                         <ChevronDown
                             className={classNames('fill-current h-[12px] w-[12px]', open ? 'rotate-180' : '')}
                         />

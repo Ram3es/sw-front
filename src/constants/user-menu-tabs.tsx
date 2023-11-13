@@ -30,7 +30,7 @@ export const USER_MENU: IUserMenu[][] = [
     },
     {
       title: 'redeem gift card',
-      path: '/wallet',
+      path: '/market/giftcards',
       icon: <ProfileGiftIcon />
     }
   ],

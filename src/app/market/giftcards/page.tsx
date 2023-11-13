@@ -8,18 +8,14 @@ import Link from "next/link"
 import { useState } from 'react'
 
 export default function RedeemGiftCard() {
-  const [cardCode, setCardCode] = useState('')
-  const isButtonDisabled = () => !cardCode.length
+  const [code, setCode] = useState('')
+  const isButtonDisabled = () => !code.length
   const [giftCard, setGiftCard] = useState<IGiftCardRedeemRes>()
   const [responseStatus, setResponseStatus] = useState('')
 
   const redeemGiftcard = async () => {
     try {
-      const body = {
-        "code": cardCode
-      }
-      const data = await buyGiftCard(body)
-      console.log('data', data)
+      const data = await buyGiftCard({ code })
       setGiftCard(data)
       if (data?.value) setResponseStatus('success')
     } catch (error) {
@@ -103,8 +99,8 @@ export default function RedeemGiftCard() {
             ( <div>        
                 <div className="bg-transparent border border-graySecondary mb-6">
                   <input
-                    value={cardCode}
-                    onChange={(e) => { setCardCode(e.target.value) }}
+                    value={code}
+                    onChange={(e) => { setCode(e.target.value) }}
                     type="text"
                     placeholder="Gift card code"
                     className="w-full p-3 bg-transparent border-none outline-none text-graySecondary font-Barlow"
@@ -117,7 +113,7 @@ export default function RedeemGiftCard() {
                     heightClass='h-12'
                   />
                   <Button
-                    text='by now'
+                    text='redeem'
                     disabled={isButtonDisabled()}
                     onClick={redeemGiftcard}
                     className={classNames('bg-skinwalletPink justify-center items-center w-max h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200 cta-clip-path',

@@ -6,7 +6,7 @@ import MethodsPayout from "./MethodsPayout"
 import SummaryPayout from "./SummaryPayout"
 import { useAppContext } from "@/context/AppContext"
 import { useCallback, useEffect } from "react"
-import { getPayoutDailyLimits, getPayoutMethods } from "@/services/payout/payout"
+import { getPayoutDailyLimits, getPaymentsMethods } from "@/services/payout/payout"
 import { usePayoutContext } from "@/context/PayoutContext"
 
 export default function Payout() {
@@ -14,7 +14,7 @@ export default function Payout() {
   const { payoutStep, setPayoutMethods } = usePayoutContext()
 
   const getAvailableMethodsAndDailyLimit = useCallback(async () => {
-    const methods = await getPayoutMethods()
+    const methods = await getPaymentsMethods()
     console.log("methods", methods);
     
     const { amount: payoutLimit } = await getPayoutDailyLimits()

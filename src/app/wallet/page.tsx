@@ -10,8 +10,9 @@ import PayPalMethod from './fund-steps/PayPalMethod'
 import Summary from './fund-steps/Summary'
 import SelectCryptoMethod from './fund-steps/SelectCryptoMethod'
 import CryptoAdress from './fund-steps/CryptoAdress'
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import Loader from '@/components/Content/Loader'
+import { getPaymentsMethods } from '@/services/payout/payout'
 const TrustBox = lazy(() => import('../../components/Content/TrustBox'))
 
 const getMethod = (method: string) => {
@@ -26,6 +27,19 @@ const availablePages = [2, 3, 4]
 
 export default function Wallet() {
   const { selectedMethod, addFundsStep, setAddFundsStep } = useFundsContext()
+  
+  const [payinMethods, setPayinMethods] = useState()
+
+  const getAvailableMethods = useCallback(async () => {
+    const methods = await getPaymentsMethods()
+    const payinMethods = methods.filter((method:any) => method.allowedTypes.includes('payin'))
+    setPayinMethods(payinMethods)
+  }, [])
+
+  useEffect(() => {
+    void getAvailableMethods()
+  }, [])
+  
   return (
   <>
     <Bar>
@@ -48,7 +62,7 @@ export default function Wallet() {
         </Suspense>
       </div>
       <Link
-        href={'/'}
+        href={'/market/giftcards'}
         className='flex shrink-0 items-center gap-2.5 sm:ml-auto text-sm text-graySecondary uppercase  hover:text-white button'>
         <GiftIcon />
         <span className='uppercase tracking-[1.12px]' >redeem gift card</span>
@@ -73,7 +87,7 @@ export default function Wallet() {
               </>
             </Readme>
             {addFundsStep === 1
-              ? <SelectMethod />
+              ? <SelectMethod methods={payinMethods} />
               : addFundsStep === 2
                 ? selectedMethod?.methodName && getMethod(selectedMethod.methodName)
                 : addFundsStep === 3

@@ -4,7 +4,7 @@ import { GET, POST } from '../axios.instance'
 export const payout = async (data: { amount: number }) =>
   await POST<IPayoutResponse, { amount: number }>('/payments/payout', data)
 
-export const getPayoutMethods = async () =>
+export const getPaymentsMethods = async () =>
   await GET<any>('/payments/payment-methods')
 
 export const getPayoutDailyLimits = async () =>

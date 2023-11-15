@@ -19,9 +19,25 @@ export interface IMethod {
   label?: string
   summary?: string
   topUpFee?: string
+  isAvaible?: boolean
 }
 
 export const FUND_METHODS: IMethod[] = [
+  {
+    methodName: 'stripe',
+    title: 'Stripe',
+    label: 'select to Stripe',
+  },
+  {
+    methodName: 'cashapp',
+    title: 'Cashapp',
+    label: 'select to Cashapp',
+  },
+  {
+    methodName: 'coinbase',
+    title: 'Coinbase',
+    label: 'select to Coinbase',
+  },
   {
     methodName: 'gift',
     title: 'Skinwallet Gift Cards',

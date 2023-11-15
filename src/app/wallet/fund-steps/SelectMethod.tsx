@@ -6,7 +6,17 @@ import { classNames } from '../../../helpers/className'
 import { useFundsContext } from '../../../context/FundsContext'
 
 interface ISelectMethodProps {
-  methods?: []
+  methods?: Method[]
+}
+
+interface Method {
+  name: string;
+  enabled: boolean;
+  allowedTypes: string[];
+  feePercentage: number;
+  fee: number;
+  max: number;
+  min: number;
 }
 
 const SelectMethod: FC<ISelectMethodProps> = ({methods}) => {

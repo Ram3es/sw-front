@@ -3,7 +3,7 @@ import Bar from "@/components/Bar/Bar"
 import { Button } from "@/components/Navigation/Button"
 import { classNames } from "@/helpers/className"
 import { buyGiftCard } from "@/services/wallet/wallet"
-import { IGiftCardRedeemRes } from "@/types/GiftCard"
+import { IGiftCardRedeemRes } from "@/types/Wallet"
 import Link from "next/link"
 import { useState } from 'react'
 

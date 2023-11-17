@@ -4,20 +4,7 @@ import { FUND_METHODS } from '../../../constants/fundsMethods'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
 import { useFundsContext } from '../../../context/FundsContext'
-
-interface ISelectMethodProps {
-  methods?: Method[]
-}
-
-interface Method {
-  name: string;
-  enabled: boolean;
-  allowedTypes: string[];
-  feePercentage: number;
-  fee: number;
-  max: number;
-  min: number;
-}
+import { ISelectMethodProps } from '@/types/Wallet'
 
 const SelectMethod: FC<ISelectMethodProps> = ({methods}) => {
   const { selectedMethod, setSelectedMethod, setAddFundsStep } = useFundsContext()

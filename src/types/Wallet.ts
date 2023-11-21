@@ -1,8 +1,10 @@
+import { TransactionStatus } from "./Transactions";
+
 export interface ISelectMethodProps {
-    methods?: Method[]
+    methods?: PayMethod[]
 }
   
-export interface Method {
+export interface PayMethod {
     name: string;
     enabled: boolean;
     allowedTypes: string[];
@@ -17,4 +19,27 @@ export interface IGiftCardRedeemRes {
     code: string,
     used: boolean,
     externalUserId: string
+}
+
+export enum EPaymentMethod {
+    Stripe = 'stripe',
+    Coinbase = 'coinbase',
+    Cashapp = 'cashapp',
+    Redeem = 'redeem',
+}
+
+
+export interface Checkout {
+    productName: string,
+    productDescription: string,
+    uccessUrl: string,
+    cancelUrl: string,
+    expiresMinutes: number
+}
+export interface ICreatePayinRes {
+    method: string,
+    amount: number,
+    externalUserId: string,
+    status: TransactionStatus,
+    url: string,
 }

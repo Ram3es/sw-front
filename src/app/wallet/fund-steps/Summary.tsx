@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import RoundedMark from '../../../components/icons/RoundedMark'
 import { useFundsContext } from '../../../context/FundsContext'
 import EditPencil from '../../../components/icons/EditPencil'
-import { format, formatToDecimal } from '../../../helpers/numberFormater'
+import { convertToCents, format, formatToDecimal } from '../../../helpers/numberFormater'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
 import CouponLabel from '../../../components/funds/coupon/CouponLabel'
@@ -10,10 +11,15 @@ import { ImportantNotice, NoticeContent } from '../../../components/funds/Import
 import CloseIcon from '@/components/icons/CloseIcon'
 import InputWithErrors from '@/components/Content/InputWithErrors'
 import Mark from '@/components/icons/wallet/Mark'
+import { createPayin } from '@/services/wallet/wallet'
+import { EPaymentMethod } from '@/types/Wallet'
+
+
 
 const Summary = () => {
   const [isEditAmount, setIsEditAmount] = useState(false)
   const [isEditCoupon, setIsEditCoupon] = useState(false)
+  const { replace }  = useRouter();
   const {
     amountInputValue,
     couponInputValue,
@@ -28,6 +34,11 @@ const Summary = () => {
     handleBlurInputAmount,
     handleBlurInputCoupon
   } = useFundsContext()
+
+  const PayinSubmit = async () => {
+    const created = await createPayin({method: selectedMethod?.methodName as EPaymentMethod , amount: convertToCents(+amountInputValue)})
+    replace(created.url)
+  }
 
   return (
     <div className='w-full flex flex-grow justify-center pt-6 sm:py-12 '>
@@ -56,7 +67,7 @@ const Summary = () => {
                   value={amountInputValue}
                   handleChange={(value: string) => { setAmountInputValue(value) }}
                   onClear={() => { setAmountInputValue('') } }
-                  handleBlur={handleBlurInputAmount}
+                  handleBlur={() => handleBlurInputAmount}
                   successIcon={<Mark className='w-4 h-[18px] text-swLime' />}
                   error={Object.values(errorsState).filter(obj => obj.status && obj.relative === 'amount')[0]}
                   errorBorder='border-swOrange'
@@ -156,7 +167,7 @@ const Summary = () => {
             </div>
             <Button
               text='proceed payment'
-              onClick={() => {}}
+              onClick={PayinSubmit}
               className={classNames('bg-skinwalletPink justify-center items-center w-full h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
                 selectedMethod?.methodName ? '' : 'pointer-events-none grayscale opacity-50')}
              />

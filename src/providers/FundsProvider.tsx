@@ -6,6 +6,8 @@ import { ERRORS, type TErrors } from '../constants/fundsMethods'
 import axios from 'axios'
 import { sendCouponCode } from '../services/funds/funds'
 import { formatToDecimal } from '../helpers/numberFormater'
+import { getPaymentsMethods } from '@/services/payout/payout'
+import { PayMethod } from '@/types/Wallet'
 
 export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [amountInputValue, setAmountInputValue] = useState<string>(() => formatToDecimal('5'))
@@ -16,8 +18,10 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [errorsState, setErrorsState] = useState<TErrors>(ERRORS)
   const [monthlyLimit, setMonthlyLimit] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
+  const [payMethods, setPayMethods] = useState<PayMethod[]>([])
 
-  const handleBlurInputAmount = () => {
+  const handleBlurInputAmount = (min: number = 5, max: number = 100) => {
+    
     setErrorsState(prev => {
       let copy = { ...prev }
       Object.keys(copy).forEach(key => {
@@ -27,14 +31,14 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
       })
       return { ...copy }
     })
-    if (!amountInputValue || +amountInputValue < 5 || !Number(amountInputValue)) {
+    if (!amountInputValue || +amountInputValue < min || !Number(amountInputValue)) {
       setErrorsState(prev => ({ ...prev, lowAmount: { ...prev.lowAmount, status: true } }))
       setAmountInputValue(parseFloat('5').toFixed(2))
       return
     }
-    if (amountInputValue && (+amountInputValue) > 100) {
+    if (amountInputValue && (+amountInputValue) > max) {
       setErrorsState(prev => ({ ...prev, lowAmount: { ...prev.excededAmount, status: true } }))
-      setAmountInputValue(parseFloat('100').toFixed(2))
+      setAmountInputValue(parseFloat(max.toString()).toFixed(2))
       return
     }
     setAmountInputValue(parseFloat(amountInputValue).toFixed(2))
@@ -56,6 +60,11 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }
 
+  const handlePaymentsMethods = async () => {
+    const methods = await getPaymentsMethods()
+    setPayMethods(methods)
+  }
+
   useEffect(() => {
     // getMonthlyLimit
     const data: number = 10000
@@ -64,6 +73,7 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
       return
     }
     setMonthlyLimit(data)
+    handlePaymentsMethods()
   }
   , [])
   return (
@@ -76,6 +86,7 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
           errorsState,
           monthlyLimit,
           isLoading,
+          payMethods,
           setAddFundsStep,
           setSelectedMethod,
           setAmountInputValue,
@@ -84,8 +95,8 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
           setErrorsState,
           handleBlurInputAmount,
           handleBlurInputCoupon,
-          setMonthlyLimit
-
+          setMonthlyLimit,
+          setPayMethods
         }}>
             {children}
         </FundsContext.Provider>

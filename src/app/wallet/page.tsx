@@ -13,27 +13,36 @@ import CryptoAdress from './fund-steps/CryptoAdress'
 import { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import Loader from '@/components/Content/Loader'
 import { getPaymentsMethods } from '@/services/payout/payout'
+import StripeMethod from './fund-steps/StripeMethod'
+import { PayMethod } from '@/types/Wallet'
+import GiftCardMethod from './fund-steps/GiftCardMethod'
 const TrustBox = lazy(() => import('../../components/Content/TrustBox'))
 
-const getMethod = (method: string) => {
-  switch (method) {
-    case 'paypal':
-      return <PayPalMethod/>
-    case 'crypto':
-      return <SelectCryptoMethod />
-  }
-}
 const availablePages = [2, 3, 4]
 
 export default function Wallet() {
-  const { selectedMethod, addFundsStep, setAddFundsStep } = useFundsContext()
   
-  const [payinMethods, setPayinMethods] = useState()
+  const getMethod = (method: string) => {
+    switch (method) {
+      case 'paypal':
+        return <PayPalMethod/>
+        case 'crypto':
+          return <SelectCryptoMethod />
+        case 'stripe':
+          return <StripeMethod />
+        case 'gift':
+          return <GiftCardMethod />
+          // return redirect('/market/giftcards')
+    }
+  }
+
+  const { selectedMethod,  addFundsStep, payMethods, setAddFundsStep } = useFundsContext()
+  
+  const [payinMethods, setPayinMethods] = useState<PayMethod[]>([])
 
   const getAvailableMethods = useCallback(async () => {
-    const methods = await getPaymentsMethods()
-    const payinMethods = methods.filter((method:any) => method.allowedTypes.includes('payin'))
-    setPayinMethods(payinMethods)
+    const payinAvaibleMethods = payMethods.filter((method:any) => method.allowedTypes.includes('payin') && method.enabled)
+    setPayinMethods(payinAvaibleMethods)
   }, [])
 
   useEffect(() => {

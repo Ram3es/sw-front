@@ -7,28 +7,42 @@ import { classNames } from '../../../helpers/className'
 import AddCoupon from '../../../components/funds/coupon/AddCoupon'
 import { useFundsContext } from '../../../context/FundsContext'
 import ErrorLabelRounded from '../../../components/funds/ErrorLabelRounded'
-import LogoPayPal from '@/components/icons/logo/LogoPayPal'
 import ArrowRight from '@/components/icons/ArrowRight'
 import InputWithErrors from '@/components/Content/InputWithErrors'
 import Mark from '@/components/icons/wallet/Mark'
+import { PayMethod } from '@/types/Wallet'
 
-const PayPalMethod = () => {
+const StripeMethod = () => {
   const {
     amountInputValue,
     errorsState,
-    monthlyLimit,
+    payMethods,
     setAmountInputValue,
     setAddFundsStep,
     setErrorsState,
     handleBlurInputAmount
   } = useFundsContext()
 
+  const method = payMethods.find(method => method.name === 'stripe') as PayMethod
+
   useEffect(() => {
     setErrorsState(prev => ({ ...prev, limit: { ...prev.excededAmount, status: false } }))
-    if (amountInputValue && (+amountInputValue) >= 100) {
+    if (amountInputValue && method && (+amountInputValue) >= method.max) {
       setErrorsState(prev => ({ ...prev, limit: { ...prev.excededAmount, status: true } }))
     }
   }, [amountInputValue])
+
+  const goToSummary = () => { 
+    if(amountInputValue) {
+      if (method && (+amountInputValue) <= method.max / 100) {
+        setAddFundsStep(5) 
+      } else if (method) {
+        setAmountInputValue((method.max / 100).toString())
+      }
+
+    }
+    
+  }
 
   return (
         <div className='w-full text-white flex flex-col gap-8'>
@@ -37,7 +51,8 @@ const PayPalMethod = () => {
               <h3 className='tracking-[1.12px] text-graySecondary uppercase text-sm'>step 2/2</h3>
               <h2 className='uppercase tracking-[1.28px]'>fill top-up amount</h2>
             </div>
-            <LogoPayPal />
+            Stripe
+            {/* <LogoPayPal /> */}
           </div>
           <ErrorLabelRounded
             isError={errorsState.excededMonthly.status}
@@ -46,7 +61,7 @@ const PayPalMethod = () => {
           <div className='flex flex-col '>
               <h3 className='tracking-[1.12px] text-graySecondary uppercase text-sm'>top-up limit</h3>
               <div className='text-graySecondary font-normal '>
-                <span className={`${errorsState?.limit.status ? 'text-swOrange' : 'text-white'} font-medium mr-1`}>${format(monthlyLimit)}</span>
+                <span className={`${errorsState?.limit.status ? 'text-swOrange' : 'text-white'} font-medium mr-1`}>${format(method?.max)}</span>
                  left for this month
                  <div className='flex  mt-2' >
                    <InformationIcon iconClasses='w-4 h-4 shrink-0 mr-2 mt-[2px]' />
@@ -70,7 +85,7 @@ const PayPalMethod = () => {
               value={amountInputValue}
               handleChange={(value: string) => { setAmountInputValue(value) }}
               onClear={() => { setAmountInputValue('') } }
-              handleBlur={() => handleBlurInputAmount(5, 100)}
+              handleBlur={() => handleBlurInputAmount(method.min/100, method.max/100)}
               successIcon={<Mark className='w-4 h-[18px] text-swLime' />}
               error={Object.values(errorsState).filter(obj => obj.status && obj.relative === 'amount')[0]}
               errorBorder='border-swOrange'
@@ -90,7 +105,7 @@ const PayPalMethod = () => {
 
             <Button
               text='go to summary'
-              onClick={() => { setAddFundsStep(5) }}
+              onClick={goToSummary}
               className={classNames('bg-skinwalletPink justify-center items-center w-[208px] h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
                 errorsState.excededMonthly.status ? 'pointer-events-none grayscale opacity-50' : '')}
              />
@@ -98,4 +113,4 @@ const PayPalMethod = () => {
   )
 }
 
-export default PayPalMethod
+export default StripeMethod

@@ -25,8 +25,10 @@ export interface IMethod {
 export const FUND_METHODS: IMethod[] = [
   {
     methodName: 'stripe',
-    title: 'Stripe',
-    label: 'select to Stripe',
+    title: 'card',
+    logo: <VisaMastercard/>,
+    content: <MethodFee topUpFee={`3.1% + $${format(30)}`} />,
+    label: 'powered by STRIPE'
   },
   {
     methodName: 'cashapp',
@@ -45,41 +47,34 @@ export const FUND_METHODS: IMethod[] = [
     label: 'select to redeem gift card',
     content: <GiftContent/>
   },
-  {
-    methodName: 'paypal',
-    title: 'PayPal',
-    logo: <LogoPayPal/>,
-    content: <PayPalContent/>,
-    label: 'powered by conotoxia pay'
-  },
-  {
-    methodName: 'card',
-    title: 'card',
-    logo: <VisaMastercard/>,
-    content: <MethodFee topUpFee={`3.1% + $${format(30)}`} />,
-    label: 'powered by STRIPE'
-  },
-  {
-    methodName: 'crypto',
-    title: 'crypto',
-    logo: <CryptoIcon/>,
-    content: <MethodFee topUpFee='0%' />,
-    summary: 'Aenean rhoncus ligula nibh, efficitur molestie elit aliquam quis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.'
-  },
-  {
-    methodName: 'g2a',
-    title: 'G2A Pay',
-    logo: <LogoBitcoin/>,
-    content: <G2AContent/>,
-    summary: 'To browse all top-up methods, switch locations on G2A Pay website.'
-  },
-  {
-    methodName: 'skinwallet',
-    title: 'balance',
-    logo: <SkinwaletInstant />,
-    content: <MethodFee topUpFee='0%' />,
-    summary: 'Use this method to transfer existing Balance from Skinwallet Instant or to sell virtual items instantly. After confirming this method, you will be redirected to the Skinwallet Instant website where you can finish the transaction.'
-  }
+  // {
+  //   methodName: 'paypal',
+  //   title: 'PayPal',
+  //   logo: <LogoPayPal/>,
+  //   content: <PayPalContent/>,
+  //   label: 'powered by conotoxia pay'
+  // },
+  // {
+  //   methodName: 'crypto',
+  //   title: 'crypto',
+  //   logo: <CryptoIcon/>,
+  //   content: <MethodFee topUpFee='0%' />,
+  //   summary: 'Aenean rhoncus ligula nibh, efficitur molestie elit aliquam quis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.'
+  // },
+  // {
+  //   methodName: 'g2a',
+  //   title: 'G2A Pay',
+  //   logo: <LogoBitcoin/>,
+  //   content: <G2AContent/>,
+  //   summary: 'To browse all top-up methods, switch locations on G2A Pay website.'
+  // },
+  // {
+  //   methodName: 'skinwallet',
+  //   title: 'balance',
+  //   logo: <SkinwaletInstant />,
+  //   content: <MethodFee topUpFee='0%' />,
+  //   summary: 'Use this method to transfer existing Balance from Skinwallet Instant or to sell virtual items instantly. After confirming this method, you will be redirected to the Skinwallet Instant website where you can finish the transaction.'
+  // }
 ]
 
 export type TErrors = Record<string, { status: boolean, message?: string, errorClass?: string, relative?: string, msgWithIcon?:boolean }>

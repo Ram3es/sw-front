@@ -1,7 +1,7 @@
 import { IMethodContentProps } from '@/constants/fundsMethods'
 import { format } from '../../../helpers/numberFormater'
 
-const MethodFee = ({ value }: { value?: IMethodContentProps }) => {
+const MethodFee = ({ value, topUpFee }: { value?: IMethodContentProps, topUpFee?: string }) => {
   return (
         <div className='flex flex-col gap-3 mt-5'>
             <div className='flex flex-col'>

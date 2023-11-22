@@ -14,7 +14,7 @@ export interface IMethod {
   methodName: string
   title: string
   titleLabel?: JSX.Element
-  content?: JSX.Element
+  renderContent?:(value?: IMethodContentProps) => JSX.Element
   logo?: JSX.Element
   label?: string
   summary?: string
@@ -22,22 +22,30 @@ export interface IMethod {
   isAvaible?: boolean
 }
 
+export interface IMethodContentProps {
+  fee: string
+  limit: string
+  
+}
+
 export const FUND_METHODS: IMethod[] = [
   {
     methodName: 'stripe',
     title: 'card',
     logo: <VisaMastercard/>,
-    content: <MethodFee topUpFee={`3.1% + $${format(30)}`} />,
+    renderContent: (value) => <MethodFee value={value} />,
     label: 'powered by STRIPE'
   },
   {
     methodName: 'cashapp',
     title: 'Cashapp',
+    renderContent: (value) => <MethodFee value={value} />,
     label: 'select to Cashapp',
   },
   {
     methodName: 'coinbase',
     title: 'Coinbase',
+    renderContent: (value) => <MethodFee value={value} />,
     label: 'select to Coinbase',
   },
   {
@@ -45,7 +53,7 @@ export const FUND_METHODS: IMethod[] = [
     title: 'Skinwallet Gift Cards',
     titleLabel: <GiftMethodTitleLabel />,
     label: 'select to redeem gift card',
-    content: <GiftContent/>
+    renderContent: () => <GiftContent/>
   },
   // {
   //   methodName: 'paypal',

@@ -1,20 +1,26 @@
-import { type FC } from 'react'
+import { useMemo, type FC } from 'react'
 import MethodCard from '../../../components/Content/MethodCard'
 import { FUND_METHODS } from '../../../constants/fundsMethods'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
 import { useFundsContext } from '../../../context/FundsContext'
-import { ISelectMethodProps } from '@/types/Wallet'
+import { ISelectMethodProps, PayMethod } from '@/types/Wallet'
 
-const SelectMethod: FC<ISelectMethodProps> = ({methods}) => {
-  const { selectedMethod, setSelectedMethod, setAddFundsStep } = useFundsContext()
+const SelectMethod: FC<ISelectMethodProps> = () => {
+  const { 
+  selectedMethod,
+  payInMethods,
+  setSelectedMethod,
+  setAddFundsStep 
+  } = useFundsContext()
 
-  const avaibleMethods = methods?.length ? FUND_METHODS.map(fundMethod => {
-    const matchingMethod = methods.find((method) => method?.name === fundMethod.methodName);
+  const avaibleMethods = useMemo(() => 
+    FUND_METHODS.filter( method => payInMethods
+      .map(mth => mth.name)
+      .includes(method.methodName))
+      ,[payInMethods]) 
 
-    return {...fundMethod, 'isNotActive': !matchingMethod}
-  }) : FUND_METHODS  
-
+  
   return (
         <div className='w-full text-white'>
             <h3 className='tracking-[1.12px] text-graySecondary uppercase text-sm'>step 1</h3>
@@ -25,6 +31,7 @@ const SelectMethod: FC<ISelectMethodProps> = ({methods}) => {
                         <MethodCard
                           onSelect={() => { selectedMethod?.methodName !== mth.methodName && setSelectedMethod({ methodName: mth.methodName, title: mth.title }) }}
                           isSelected={ selectedMethod?.methodName === mth.methodName }
+                          methodLimit={payInMethods.find(enabled => enabled.name === mth.methodName ) as PayMethod}
                           {...mth}
                         />
                     </div>)}

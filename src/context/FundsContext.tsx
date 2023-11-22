@@ -12,7 +12,7 @@ export interface IFundsContext {
   errorsState: TErrors
   monthlyLimit: number
   isLoading: boolean
-  payMethods:PayMethod[]
+  payInMethods:PayMethod[]
   setAddFundsStep: Dispatch<React.SetStateAction<number>>
   setSelectedMethod: Dispatch<React.SetStateAction<ISelectedMethod | undefined>>
   setAmountInputValue: Dispatch<React.SetStateAction<string>>
@@ -22,7 +22,8 @@ export interface IFundsContext {
   setMonthlyLimit: Dispatch<React.SetStateAction<number>>
   handleBlurInputAmount: (min: number, max: number) => void
   handleBlurInputCoupon: () => Promise<void>
-  setPayMethods: Dispatch<React.SetStateAction<PayMethod[]>>
+  setPayInMethods: Dispatch<React.SetStateAction<PayMethod[]>>
+  getAvailablePayInMethods: () => void
 }
 
 export const FundsContext = createContext<IFundsContext>({
@@ -34,7 +35,7 @@ export const FundsContext = createContext<IFundsContext>({
   errorsState: {},
   monthlyLimit: 0,
   isLoading: false,
-  payMethods: [],
+  payInMethods: [],
   setAddFundsStep: () => {},
   setSelectedMethod: () => {},
   setAmountInputValue: () => {},
@@ -44,7 +45,8 @@ export const FundsContext = createContext<IFundsContext>({
   setMonthlyLimit: () => {},
   handleBlurInputAmount: () => {},
   handleBlurInputCoupon: async () => {},
-  setPayMethods: () => {}
+  setPayInMethods: () => {},
+  getAvailablePayInMethods: () => {}
 })
 
 export const useFundsContext = () => useContext(FundsContext)

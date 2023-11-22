@@ -16,14 +16,39 @@ const StripeMethod = () => {
   const {
     amountInputValue,
     errorsState,
-    payMethods,
+    selectedMethod,
+    payInMethods,
     setAmountInputValue,
     setAddFundsStep,
     setErrorsState,
     handleBlurInputAmount
   } = useFundsContext()
 
-  const method = payMethods.find(method => method.name === 'stripe') as PayMethod
+  const method = payInMethods.find(method => method.name === selectedMethod?.methodName) as PayMethod
+
+  const handleChange = (value: string) => {
+    if(value.length > 7) return
+    setAmountInputValue(value)
+  }
+
+  const goToSummary = () => { 
+    if(amountInputValue) {
+      if (method && (+amountInputValue) <= method.max / 100) {
+        setAddFundsStep(5) 
+        setErrorsState( prev => {
+          let copy = {...prev}
+            Object.keys(copy).forEach(key => {
+            if(copy[key].relative === 'amount'){
+              copy = {...copy, [key]: {...copy[key], status: false}}
+            }
+          })
+          return copy
+        })
+      } else if (method) {
+        setAmountInputValue((method.max / 100).toString())
+      }
+    }
+  }
 
   useEffect(() => {
     setErrorsState(prev => ({ ...prev, limit: { ...prev.excededAmount, status: false } }))
@@ -32,18 +57,6 @@ const StripeMethod = () => {
     }
   }, [amountInputValue])
 
-  const goToSummary = () => { 
-    if(amountInputValue) {
-      if (method && (+amountInputValue) <= method.max / 100) {
-        setAddFundsStep(5) 
-      } else if (method) {
-        setAmountInputValue((method.max / 100).toString())
-      }
-
-    }
-    
-  }
-
   return (
         <div className='w-full text-white flex flex-col gap-8'>
           <div className='flex items-center justify-between'>
@@ -51,7 +64,7 @@ const StripeMethod = () => {
               <h3 className='tracking-[1.12px] text-graySecondary uppercase text-sm'>step 2/2</h3>
               <h2 className='uppercase tracking-[1.28px]'>fill top-up amount</h2>
             </div>
-            Stripe
+            <span className='uppercase'>{method.name}</span>
             {/* <LogoPayPal /> */}
           </div>
           <ErrorLabelRounded
@@ -59,10 +72,9 @@ const StripeMethod = () => {
             message={errorsState.excededMonthly.message}
            />
           <div className='flex flex-col '>
-              <h3 className='tracking-[1.12px] text-graySecondary uppercase text-sm'>top-up limit</h3>
+              <h3 className='tracking-[1.12px] text-graySecondary uppercase text-sm'>top-up range</h3>
               <div className='text-graySecondary font-normal '>
-                <span className={`${errorsState?.limit.status ? 'text-swOrange' : 'text-white'} font-medium mr-1`}>${format(method?.max)}</span>
-                 left for this month
+                <span className={`${errorsState?.limit.status ? 'text-swOrange' : 'text-white'} font-medium mr-1`}>{`$${format(method.min)}  -  $${format(method.max)}`}</span>
                  <div className='flex  mt-2' >
                    <InformationIcon iconClasses='w-4 h-4 shrink-0 mr-2 mt-[2px]' />
                   <div className='flex items-center  gap-x-2 text-sm  flex-wrap'>
@@ -83,7 +95,7 @@ const StripeMethod = () => {
             <div className={errorsState.excededMonthly.status ? 'pointer-events-none opacity-50' : '' } >
             <InputWithErrors
               value={amountInputValue}
-              handleChange={(value: string) => { setAmountInputValue(value) }}
+              handleChange={handleChange}
               onClear={() => { setAmountInputValue('') } }
               handleBlur={() => handleBlurInputAmount(method.min/100, method.max/100)}
               successIcon={<Mark className='w-4 h-[18px] text-swLime' />}

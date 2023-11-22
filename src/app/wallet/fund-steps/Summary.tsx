@@ -12,7 +12,7 @@ import CloseIcon from '@/components/icons/CloseIcon'
 import InputWithErrors from '@/components/Content/InputWithErrors'
 import Mark from '@/components/icons/wallet/Mark'
 import { createPayin } from '@/services/wallet/wallet'
-import { EPaymentMethod } from '@/types/Wallet'
+import { EPaymentMethod, PayMethod } from '@/types/Wallet'
 
 
 
@@ -25,6 +25,7 @@ const Summary = () => {
     couponInputValue,
     couponInfo,
     selectedMethod,
+    payInMethods,
     errorsState,
     isLoading,
     setAddFundsStep,
@@ -35,9 +36,18 @@ const Summary = () => {
     handleBlurInputCoupon
   } = useFundsContext()
 
+  const method = payInMethods.find(method => method.name === selectedMethod?.methodName) as PayMethod
+  const fee = Math.ceil(convertToCents(+amountInputValue) * method.feePercentage + method.fee)
+  const finalAmount = convertToCents(+amountInputValue) + fee
+
   const PayinSubmit = async () => {
-    const created = await createPayin({method: selectedMethod?.methodName as EPaymentMethod , amount: convertToCents(+amountInputValue)})
+    const created = await createPayin({method: selectedMethod?.methodName as EPaymentMethod , amount: finalAmount})
     replace(created.url)
+  }
+
+  const handleChange = (value: string) => {
+    if(value.length > 7) return
+    setAmountInputValue(value)
   }
 
   return (
@@ -65,9 +75,9 @@ const Summary = () => {
               ? (
                 <InputWithErrors
                   value={amountInputValue}
-                  handleChange={(value: string) => { setAmountInputValue(value) }}
+                  handleChange={handleChange}
                   onClear={() => { setAmountInputValue('') } }
-                  handleBlur={() => handleBlurInputAmount}
+                  handleBlur={() => handleBlurInputAmount(method.min/100, method.max/100)}
                   successIcon={<Mark className='w-4 h-[18px] text-swLime' />}
                   error={Object.values(errorsState).filter(obj => obj.status && obj.relative === 'amount')[0]}
                   errorBorder='border-swOrange'
@@ -157,11 +167,11 @@ const Summary = () => {
                     }
                 <div className='w-full flex justify-between items-center text-sm '>
                   <div className='uppercase tracking-[1.12px]'>payment fee</div>
-                  <span className=''>${format(0)}</span>
+                  <span className=''>${format(fee)}</span>
                 </div>
                 <div className='w-full flex justify-between items-center text-sm '>
                   <div className='uppercase tracking-[1.12px]'>total payment</div>
-                  <span className=' text-2xl leading-6  text-white '>${formatToDecimal(amountInputValue)}</span>
+                  <span className=' text-2xl leading-6  text-white '>${format(finalAmount)}</span>
                 </div>
               </div>
             </div>

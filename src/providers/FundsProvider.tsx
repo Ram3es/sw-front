@@ -18,7 +18,8 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
   const [errorsState, setErrorsState] = useState<TErrors>(ERRORS)
   const [monthlyLimit, setMonthlyLimit] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
-  const [payMethods, setPayMethods] = useState<PayMethod[]>([])
+  const [payInMethods, setPayInMethods] = useState<PayMethod[]>([])
+
 
   const handleBlurInputAmount = (min: number = 5, max: number = 100) => {
     
@@ -33,12 +34,12 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
     })
     if (!amountInputValue || +amountInputValue < min || !Number(amountInputValue)) {
       setErrorsState(prev => ({ ...prev, lowAmount: { ...prev.lowAmount, status: true } }))
-      setAmountInputValue(parseFloat('5').toFixed(2))
+      setAmountInputValue(min.toFixed(2))
       return
     }
     if (amountInputValue && (+amountInputValue) > max) {
       setErrorsState(prev => ({ ...prev, lowAmount: { ...prev.excededAmount, status: true } }))
-      setAmountInputValue(parseFloat(max.toString()).toFixed(2))
+      setAmountInputValue(max.toFixed(2))
       return
     }
     setAmountInputValue(parseFloat(amountInputValue).toFixed(2))
@@ -60,22 +61,22 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }
 
-  const handlePaymentsMethods = async () => {
+  const getAvailablePayInMethods = async () => {
     const methods = await getPaymentsMethods()
-    setPayMethods(methods)
+    setPayInMethods(methods.filter((method:any) => method.allowedTypes.includes('payin') && method.enabled))
   }
 
-  useEffect(() => {
-    // getMonthlyLimit
-    const data: number = 10000
-    if (data === 0) {
-      setErrorsState(prev => ({ ...prev, excededMonthly: { ...prev.excededMonthly, status: true } }))
-      return
-    }
-    setMonthlyLimit(data)
-    handlePaymentsMethods()
-  }
-  , [])
+  // useEffect(() => {
+  //   // getMonthlyLimit
+  //   const data: number = 10000
+  //   if (data === 0) {
+  //     setErrorsState(prev => ({ ...prev, excededMonthly: { ...prev.excededMonthly, status: true } }))
+  //     return
+  //   }
+  //   setMonthlyLimit(data)
+  //   handlePaymentsMethods()
+  // }
+  // , [])
   return (
         <FundsContext.Provider value={{
           addFundsStep,
@@ -86,7 +87,7 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
           errorsState,
           monthlyLimit,
           isLoading,
-          payMethods,
+          payInMethods,
           setAddFundsStep,
           setSelectedMethod,
           setAmountInputValue,
@@ -96,7 +97,8 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
           handleBlurInputAmount,
           handleBlurInputCoupon,
           setMonthlyLimit,
-          setPayMethods
+          setPayInMethods,
+          getAvailablePayInMethods
         }}>
             {children}
         </FundsContext.Provider>

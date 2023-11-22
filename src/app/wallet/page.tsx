@@ -28,6 +28,8 @@ export default function Wallet() {
         return <PayPalMethod/>
         case 'crypto':
           return <SelectCryptoMethod />
+        case 'coinbase':
+        case 'cashapp':
         case 'stripe':
           return <StripeMethod />
         case 'gift':
@@ -36,17 +38,15 @@ export default function Wallet() {
     }
   }
 
-  const { selectedMethod,  addFundsStep, payMethods, setAddFundsStep } = useFundsContext()
-  
-  const [payinMethods, setPayinMethods] = useState<PayMethod[]>([])
-
-  const getAvailableMethods = useCallback(async () => {
-    const payinAvaibleMethods = payMethods.filter((method:any) => method.allowedTypes.includes('payin') && method.enabled)
-    setPayinMethods(payinAvaibleMethods)
-  }, [])
+  const { 
+  selectedMethod,
+  addFundsStep,
+  setAddFundsStep,
+  getAvailablePayInMethods 
+ } = useFundsContext()
 
   useEffect(() => {
-    void getAvailableMethods()
+    getAvailablePayInMethods()
   }, [])
   
   return (
@@ -96,7 +96,7 @@ export default function Wallet() {
               </>
             </Readme>
             {addFundsStep === 1
-              ? <SelectMethod methods={payinMethods} />
+              ? <SelectMethod />
               : addFundsStep === 2
                 ? selectedMethod?.methodName && getMethod(selectedMethod.methodName)
                 : addFundsStep === 3

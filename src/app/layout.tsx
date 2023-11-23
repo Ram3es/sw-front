@@ -25,6 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <meta data-react-helmet="true" name="robots" content="noindex, nofollow"/>
       <body className={barlow.className}>
         <div className='flex flex-col bg-darkSecondary min-h-screen relative'>
           <Providers>

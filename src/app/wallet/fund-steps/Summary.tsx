@@ -38,10 +38,14 @@ const Summary = () => {
 
   const method = payInMethods.find(method => method.name === selectedMethod?.methodName) as PayMethod
   const fee = Math.ceil(convertToCents(+amountInputValue) * method.feePercentage + method.fee)
-  const finalAmount = convertToCents(+amountInputValue) + fee
+  const amountTrx = convertToCents(+amountInputValue) + fee
 
   const PayinSubmit = async () => {
-    const created = await createPayin({method: selectedMethod?.methodName as EPaymentMethod , amount: finalAmount})
+    const created = await createPayin({
+      method: selectedMethod?.methodName as EPaymentMethod,
+      amount: amountTrx,
+      balanceAmount: convertToCents(+amountInputValue)
+    })
     replace(created.url)
   }
 
@@ -102,7 +106,7 @@ const Summary = () => {
                   </div>
                 </div>)
             }
-            { couponInfo || isEditCoupon
+            {/* { couponInfo || isEditCoupon
               ? !isEditCoupon
                   ? (
                 <div className='w-full flex flex-col sm:flex-row items-start px-6 py-4 bg-darkGrey relative'>
@@ -144,7 +148,7 @@ const Summary = () => {
                       variant='coupon'
                     />
                     )
-              : <CouponLabel submitFn={() => { setIsEditCoupon(true) }} />}
+              : <CouponLabel submitFn={() => { setIsEditCoupon(true) }} />} */}
           </div>
           <div className=' h-max w-full sm:w-[320px] text-graySecondary bg-darkGrey p-6 sm:cta-clip-path relative'>
             <div className='w-full '>
@@ -171,7 +175,7 @@ const Summary = () => {
                 </div>
                 <div className='w-full flex justify-between items-center text-sm '>
                   <div className='uppercase tracking-[1.12px]'>total payment</div>
-                  <span className=' text-2xl leading-6  text-white '>${format(finalAmount)}</span>
+                  <span className=' text-2xl leading-6  text-white '>${format(amountTrx)}</span>
                 </div>
               </div>
             </div>

@@ -3,13 +3,13 @@ import { useEffect, type MouseEvent, useCallback, useState, useMemo } from 'reac
 import Bar from '@/components/Bar/Bar'
 import { useHideOnScroll } from '@/helpers/useHideOnScroll'
 import { classNames } from '@/helpers/className'
-import TransactionCard from '@/components/Content/TransactionCard'
+import TransactionCard from '@/components/transaction/TransactionCard'
 import DownloadFileIcon from '@/components/icons/DownloadFileIcon'
 import TransactionsSidebar from './TransactionsSidebar'
 import Dropbox from '@/components/Content/Dropbox'
 import { getTransactions } from '@/services/transactions/transactions'
 import { useAppContext } from '@/context/AppContext'
-import { type TransactionItem } from '@/types/Transactions'
+import { ITransactionRes, type TransactionItem } from '@/types/Transactions'
 import NoTransactionPage from './NoTransactionPage'
 
 const fullMonthNames = [
@@ -31,9 +31,9 @@ export default function TransactionsPage() {
   const shouldHide = useHideOnScroll()
   const { user } = useAppContext()
   const [transactions, setTransactions] = useState<
-    Record<string, TransactionItem[]>
+    Record<string, ITransactionRes[]>
   >({})
-  const [rawArrayTrx, setRawArrayTrx] = useState<TransactionItem[]>([])
+  const [rawArrayTrx, setRawArrayTrx] = useState<ITransactionRes[]>([])
   const [startDate, setStartDate] = useState<Date>()
   const [endDate, setEndDate] = useState<Date>()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -43,10 +43,10 @@ export default function TransactionsPage() {
     console.log('click')
   }
 
-  const sortTransactionsByYearAndMonth = (transactions: TransactionItem[]) => {
-    const sortedTransactions: Record<string, TransactionItem[]> = {}
+  const sortTransactionsByYearAndMonth = (transactions: ITransactionRes[]) => {
+    const sortedTransactions: Record<string, ITransactionRes[]> = {}
     transactions.forEach((transaction) => {
-      const date = transaction.date
+      const date = new Date (transaction.createdAt)
       const year = date.getFullYear()
       const month = date.getMonth()
       const key = `${fullMonthNames[month]}-${year}`
@@ -61,24 +61,24 @@ export default function TransactionsPage() {
 
   const getUserTransactions = useCallback(async () => {
     if (user) {
-      const transactions = await getTransactions()
-      const transactionsArray: TransactionItem[] = Object.values(
-        transactions
-      ).map((item: any) => ({
-        hash: item.id,
-        amount: item.amount,
-        date: new Date(item.created),
-        status: item.tradeComplete ? 'completed' : 'pending'
-      }))
-      setRawArrayTrx(transactionsArray)
+      const userTransactions = await getTransactions()
+      // console.log(userTransactions)
+      // const transactionsArray = userTransactions.map((trx) => ({
+      //   hash: trx.transactionId,
+      //   amount: trx.amount,
+      //   date: new Date(trx.createdAt),
+      //   status: trx.status
+      // }))
+      setRawArrayTrx(userTransactions)
       const sortedTransactions =
-        sortTransactionsByYearAndMonth(transactionsArray)
+        sortTransactionsByYearAndMonth(userTransactions)
+        console.log(sortedTransactions)
       setTransactions(sortedTransactions)
     }
   }, [user])
 
   const ranged = useMemo(() => rawArrayTrx.filter(item => {
-    const itemDate = new Date(item.date)
+    const itemDate = new Date(item.createdAt)
     const start = new Date(startDate ?? 0)
     const end = new Date(endDate ?? Date.now())
 
@@ -92,6 +92,8 @@ export default function TransactionsPage() {
   useEffect(() => {
     setTransactions(sortTransactionsByYearAndMonth(ranged))
   }, [ranged])
+
+  console.log(transactions)
 
   return (
     <>

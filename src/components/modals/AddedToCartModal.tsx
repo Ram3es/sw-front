@@ -1,7 +1,7 @@
 
 import { useCartContext } from '@/context/CartContext'
 import { Button } from '../Navigation'
-import { IMAGE_ROOT_URL } from '@/constants/strings'
+import { IMAGE_ROOT_URL } from '@/constants/transactions'
 import CloseIcon from '../icons/CloseIcon'
 import ItemSelectedCard from '../Content/ItemSelectedCard'
 import { classNames } from '@/helpers/className'

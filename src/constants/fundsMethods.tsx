@@ -31,7 +31,7 @@ export interface IMethodContentProps {
 export const FUND_METHODS: IMethod[] = [
   {
     methodName: 'stripe',
-    title: 'card',
+    title: 'Card',
     logo: <VisaMastercard/>,
     renderContent: (value) => <MethodFee value={value} />,
     label: 'powered by STRIPE'

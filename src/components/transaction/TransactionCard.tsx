@@ -3,19 +3,19 @@ import CopyIcon from '../icons/CopyIcon'
 import { classNames } from '../../helpers/className'
 import Chevron from '../icons/ChevronDown'
 import { format } from '../../helpers/numberFormater'
-import RoundedMark from '../icons/RoundedMark'
-import ReloadIcon from '../icons/ReloadIcon'
-import { TRNS_STRING } from '../../constants/strings'
-import { type TransactionItem } from '../../types/Transactions'
+import { TRX_CARD_CONTENT } from '../../constants/transactions'
+import { ETransactionType, ITransactionRes } from '../../types/Transactions' 
+import { getTransactionStatus } from './getTransactionStatus'
+import Tooltip from '../Content/Tooltip'
 
-const TransactionCard: FC<TransactionItem> = ({ hash, amount, date, paypalId, status }) => {
+const TransactionCard: FC<ITransactionRes> = ({ transactionId, amountTransaction, amountBalance, createdAt, status, type, method }) => {
   const [isOpen, setIsOpen] = useState(false)
   const hashRef = useRef<HTMLDivElement>(null)
   const paypalIdRef = useRef<HTMLDivElement>(null)
 
   const toggle = () => { setIsOpen(!isOpen) }
 
-  const formatCustomDate = (dateString: Date) => {
+  const formatCustomDate = (dateString: string) => {
     // Convert the dateString to a Date object
     const dateObject = new Date(dateString)
 
@@ -41,15 +41,20 @@ const TransactionCard: FC<TransactionItem> = ({ hash, amount, date, paypalId, st
     }
   }
 
+  const isDebitOperation = [ETransactionType.Payin].includes(type)
+
   return (
         <div className="w-full max-w-[672px] p-6 bg-darkGrey cta-clip-path relative ">
             <div className=" flex flex-col lg:grid grid-cols-4 grid-rows-2 lg:gap-y-2 " >
                 <div className="order-1 lg:order-none col-span-3 flex flex-col lg:flex-row  lg:items-center text-graySecondary gap-x-2">
-                    <span className="text-lg tracking-[1.12px]  uppercase  ">sale no.</span>
+                    <span className="text-lg tracking-[1.12px]  uppercase  ">{TRX_CARD_CONTENT[type].title} no.</span>
                     <div className='flex items-center gap-2'>
-                        <div ref={hashRef} className="text-white">{hash}</div>
-                        <div onClick={() => { void handleCopy(hashRef) }} className="hover button" >
+                        <div ref={hashRef} className="text-white">{transactionId}</div>
+                        <div onClick={() => { void handleCopy(hashRef) }} className=" button group relative" >
                             <CopyIcon />
+                            <div className='absolute top-6 -left-4 group-hover:block hidden '>
+                              <Tooltip content='Copy to clipboard' />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -63,20 +68,11 @@ const TransactionCard: FC<TransactionItem> = ({ hash, amount, date, paypalId, st
                 </div>
                 <div className=' order-2 mt-4 lg:mt-0 lg:order-none col-span-4 flex lg:items-center justify-between  '>
                     <div className=" w-full mr-2" >
-                        {status === 'completed'
-                          ? <div className='flex items-start gap-2 text-swLime ' >
-                                <RoundedMark className='shrink-0' />
-                                <p className='leading-4'>Sold - Payout of funds to PayPal</p>
-                            </div>
-                          : <div className='flex items-start gap-2 text-swOrange'>
-                                <ReloadIcon className='shrink-0 ' />
-                                <p className='leading-4'>Payout of funds to PayPal</p>
-                            </div>
-                        }
+                        {getTransactionStatus(type, status)}
                     </div>
                     <div className=' w-full flex flex-col items-end lg:flex-row   lg:justify-between'>
-                        <span className=" text-end font-normal text-graySecondary">{formatCustomDate(date)}</span>
-                        <div className="" >+${format(amount)}</div>
+                        <span className=" text-end font-normal text-graySecondary">{formatCustomDate(createdAt)}</span>
+                        <div className="" >${format(amountTransaction)}</div>
                     </div>
                 </div>
             </div>
@@ -84,18 +80,18 @@ const TransactionCard: FC<TransactionItem> = ({ hash, amount, date, paypalId, st
                     <div className=''>
                         <div className='flex flex-col gap-2 py-2 mb-4 px-6 text-sm [&>p]:text-white '>
                             <div>
-                                <span className='text-xs leading-[14px] font-normal text-graySecondary '>Payment method PayPal</span>
-                                <p>PayPal</p>
+                                <span className='text-xs leading-[14px] font-normal text-graySecondary '>Payment method</span>
+                                <p className='first-letter:uppercase'>{method}</p>
                             </div>
-                            {paypalId && <div>
+                            {/* {!!"paypalId" && <div>
                                 <span className='text-xs leading-[14px] font-normal text-graySecondary '>PayPal ID</span>
                                 <div className='flex items-center gap-2'>
-                                    <div ref={paypalIdRef}>{paypalId}</div>
+                                    <div ref={paypalIdRef}>{121212}</div>
                                     <div className='hover button text-graySecondary ' onClick={() => { void handleCopy(paypalIdRef) }} >
                                         <CopyIcon className='w-[11px] h-3' />
                                     </div>
                                 </div>
-                            </div>}
+                            </div>} */}
                         </div>
                         <div className=' absolute left-0 w-full  border border-b border-white/10' />
                         <div className='flex flex-col gap-6 sm:gap-2'>
@@ -103,23 +99,28 @@ const TransactionCard: FC<TransactionItem> = ({ hash, amount, date, paypalId, st
                                 <div className='col-span-2'>
                                     <div className='flex flex-col gap-2'>
                                         <div className='flex flex-col'>
-                                            <span className='text-sm leading-[14px] font-normal text-graySecondary '>Payout Status</span>
-                                            <span>{status === 'completed' ? 'Complete' : 'In Progress '}</span>
+                                            <span className='flex gap-1 text-sm leading-[14px] font-normal text-graySecondary'>
+                                              <span className='first-letter:uppercase'>{type}</span>
+                                              Status</span>
+                                            <span className='first-letter:uppercase'>{status}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className='col-span-2 sm:col-span-1 flex justify-center '>
                                     <div className='flex flex-col'>
                                         <span className='text-sm leading-[14px] font-normal text-graySecondary '>Wallet Funds Impact</span>
-                                        <span>-${format(amount)}</span>
+                                        <span>{isDebitOperation ? '+' : '-'}${format(amountBalance)}</span>
                                     </div>
                                 </div>
                                 <div className='col-span-4 sm:col-span-1 flex flex-col sm:items-end'>
-                                    <span className='text-sm leading-[14px] font-normal text-graySecondary '>Payout Value</span>
-                                    <span>${format(amount)}</span>
+                                  <span className='flex gap-1 text-sm leading-[14px] font-normal text-graySecondary '>
+                                    <span className='first-letter:uppercase'>{type}</span> 
+                                    Value
+                                  </span>
+                                  <span>${format(amountTransaction)}</span>
                                 </div>
                             </div>
-                            <p className=' w-full sm:max-w-[40%] text-sm font-normal text-graySecondary '>{status === 'completed' ? TRNS_STRING.ps_done : TRNS_STRING.ps_pending} </p>
+                            {/* <p className=' w-full sm:max-w-[40%] text-sm font-normal text-graySecondary '>{status === 'complete' ? TRNS_STRING.ps_done : TRNS_STRING.ps_pending} </p> */}
                         </div>
                     </div>
                 }

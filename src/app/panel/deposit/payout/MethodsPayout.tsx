@@ -24,11 +24,11 @@ const MethodsPayout = () => {
     amount,
     methodsState,
     availableMethods,
-    setSelectedMethod,
+    setStateMethods,
     setPayoutStep
   } = usePayoutContext()
 
-  const currentMethod = useMemo(() => Object.keys(methodsState).filter(key => methodsState[key].isSelected).join(), [methodsState])
+  const selectedMethod = useMemo(() => Object.keys(methodsState).filter(key => methodsState[key].isSelected).join(), [methodsState])
 
   const handleSetMethodRequirments = (method: string, inputValue: string) => {
     switch (method) {
@@ -44,14 +44,14 @@ const MethodsPayout = () => {
           return
         }
     }
-    setSelectedMethod(prev => ({
+    setStateMethods(prev => ({
       ...prev,
       [method]: { ...prev[method], methodAccount: inputValue }
     }))
   }
 
   const radioChange = (method: string) => {
-    setSelectedMethod(prev => {
+    setStateMethods(prev => {
       const copy = { ...prev }
       for (const key in copy) {
         if (key === method) {
@@ -99,7 +99,7 @@ const MethodsPayout = () => {
                         <ExclamationStarIcon />
                         <span>0% fee for wire transfers in USD!</span>
                     </div>
-                    {PAYOUT_METHODS.map((method, idx) =>
+                    {availableMethods.map((method, idx) =>
                         <React.Fragment key={method.name}>
                             {idx === 2 && isCryptoErr &&
                                 <div className='w-full flex items-center gap-2 px-2 py-1 text-sm text-darkSecondary font-normal bg-yellow-1e '>
@@ -108,8 +108,8 @@ const MethodsPayout = () => {
                                 </div>}
                             <div
                                 className={classNames('flex flex-col mb-2  text-swLime bg-gray-29 cta-clip-path',
-                                  currentMethod === method.name ? 'border-2 border-swLime' : '',
-                                  Object.keys(availableMethods).includes(method.name) && !(idx === 2 && isCryptoErr) ? '' : 'opacity-30 grayscale pointer-events-none')}
+                                  selectedMethod === method.name ? 'border-2 border-swLime' : '',
+                                  method.enabled && !(idx === 2 && isCryptoErr) ? '' : 'opacity-30 grayscale pointer-events-none')}
                             >
                                 <div className='flex items-center justify-between p-4'>
                                     <div
@@ -121,26 +121,26 @@ const MethodsPayout = () => {
                                             activeClass=''
                                             additionalClasses='bg-gray-40 border-none pointer-events-none shrink-0'
                                         />
-                                        <img src={method.logo} alt="method-logo" />
+                                        <img src={PAYOUT_METHODS[method.name].logo} alt="method-logo" />
                                     </div>
 
                                     <div className={classNames('flex items-center gap-1.5 text-xs sm:text-sm ',
                                       idx % 3 ? 'text-graySecondary' : '')}>
                                         <ClockIcon />
-                                        {method.timeline}
+                                        {PAYOUT_METHODS[method.name].timeline}
                                     </div>
                                 </div>
-                                {currentMethod === method.name &&
+                                {selectedMethod === method.name &&
                                     <div>
                                         { !methodsState[method.name].methodAccount
                                           ? <div className='flex flex-col'>
                                             <InputWithBtn
-                                              placeholder={method.placeholder}
+                                              placeholder={PAYOUT_METHODS[method.name].placeholder}
                                               submitFn={(inputValue: string) => { handleSetMethodRequirments(method.name, inputValue) }} />
                                             </div>
                                           : <div className=" flex items-center justify-between  pb-4 sm:pb-8 px-4 sm:px-0 sm:pr-4 sm:pl-12 text-white">
                                                 <div className="flex flex-col">
-                                                    <p className="text-graySecondary">{method.methodTitle}</p>
+                                                    <p className="text-graySecondary">{PAYOUT_METHODS[method.name].methodTitle}</p>
                                                     <p className="text-base">{methodsState[method.name].methodAccount}</p>
 
                                                 </div>
@@ -148,7 +148,7 @@ const MethodsPayout = () => {
                                                     <Button
                                                         text='edit'
                                                         onClick={() => {
-                                                          setSelectedMethod(prev => ({
+                                                          setStateMethods(prev => ({
                                                             ...prev,
                                                             [method.name]: { ...prev[method.name], methodAccount: '' }
                                                           }))
@@ -193,10 +193,10 @@ const MethodsPayout = () => {
                     </div>
                     <div className='h-12 mt-4'>
                         <Button
-                            text={currentMethod ? `process payout [$${format(amount)}]` : 'select a payment method'}
+                            text={selectedMethod ? `process payout [$${format(amount)}]` : 'select a payment method'}
                             onClick={() => { void handleSubmit() }}
                             className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest uppercase text-17 sm:text-21 font-medium hover small-caps',
-                              isAcceptedPolicy && methodsState[currentMethod]?.methodAccount && !(isCryptoErr && currentMethod === 'crypto') ? '' : 'pointer-events-none opacity-50 grayscale')}
+                              isAcceptedPolicy && methodsState[selectedMethod]?.methodAccount && !(isCryptoErr && selectedMethod === 'crypto') ? '' : 'pointer-events-none opacity-50 grayscale')}
                         />
                     </div>
 

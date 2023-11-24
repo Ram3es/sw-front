@@ -9,9 +9,10 @@ import VisaMastercard from '@/components/icons/logo/VisaMastercard'
 import CryptoIcon from '@/components/icons/wallet/CryptoIcon'
 import LogoBitcoin from '@/components/icons/logo/LogoBitcoin'
 import SkinwaletInstant from '@/components/icons/logo/SkinwaletInstant'
+import { EPaymentMethod } from '@/types/Wallet'
 
 export interface IMethod {
-  methodName: string
+  methodName: EPaymentMethod
   title: string
   titleLabel?: JSX.Element
   renderContent?:(value?: IMethodContentProps) => JSX.Element
@@ -30,26 +31,26 @@ export interface IMethodContentProps {
 
 export const FUND_METHODS: IMethod[] = [
   {
-    methodName: 'stripe',
+    methodName: EPaymentMethod.Stripe,
     title: 'Card',
     logo: <VisaMastercard/>,
     renderContent: (value) => <MethodFee value={value} />,
     label: 'powered by STRIPE'
   },
   {
-    methodName: 'cashapp',
+    methodName: EPaymentMethod.Cashapp,
     title: 'Cashapp',
     renderContent: (value) => <MethodFee value={value} />,
     label: 'select to Cashapp',
   },
   {
-    methodName: 'coinbase',
+    methodName: EPaymentMethod.Coinbase,
     title: 'Coinbase',
     renderContent: (value) => <MethodFee value={value} />,
     label: 'select to Coinbase',
   },
   {
-    methodName: 'gift',
+    methodName: EPaymentMethod.Redeem,
     title: 'Skinwallet Gift Cards',
     titleLabel: <GiftMethodTitleLabel />,
     label: 'select to redeem gift card',

@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { getTradeOffers } from '../../../services/market/market'
 import { ITradeOffersResponse } from '../../../types/Market'
 import TradeOfferCard from '../../../components/Content/TradeOfferCard'
-import { IMAGE_ROOT_URL } from '../../../constants/strings'
+import { IMAGE_ROOT_URL } from '../../../constants/transactions'
 import { ECardVariant } from '../../../types/Card'
 import { Button } from '../../../components/Navigation'
 

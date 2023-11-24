@@ -11,15 +11,16 @@ import { usePayoutContext } from "@/context/PayoutContext"
 
 export default function Payout() {
   const { userUpdate } = useAppContext()
-  const { payoutStep, setPayoutMethods } = usePayoutContext()
+  const { payoutStep, setPayoutMethods, setStateMethods } = usePayoutContext()
 
   const getAvailableMethodsAndDailyLimit = useCallback(async () => {
-    const methods = await getPaymentsMethods()
-    console.log("methods", methods);
-    
+    const allMethods = await getPaymentsMethods()
+    const payoutMethods = allMethods.filter(mth => mth.allowedTypes.includes('payout'))
     const { amount: payoutLimit } = await getPayoutDailyLimits()
     userUpdate({ payoutLimit })
-    setPayoutMethods(methods)
+    setPayoutMethods(payoutMethods)
+    setStateMethods(payoutMethods.reduce((acc, method) =>
+    ({ ...acc, [method.name]: { isSelected: false, methodAccount: '' } }), {}))
   }, [])
 
   useEffect(() => {

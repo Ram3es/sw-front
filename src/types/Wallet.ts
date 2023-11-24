@@ -1,11 +1,11 @@
-import { TransactionStatus } from "./Transactions";
+import { ETransactionStatus } from "./Transactions";
 
 export interface ISelectMethodProps {
     methods?: PayMethod[]
 }
   
 export interface PayMethod {
-    name: string;
+    name: EPaymentMethod;
     enabled: boolean;
     allowedTypes: string[];
     feePercentage: number;
@@ -26,6 +26,10 @@ export enum EPaymentMethod {
     Coinbase = 'coinbase',
     Cashapp = 'cashapp',
     Redeem = 'redeem',
+    // Paypal = 'paypal',
+    // Venmo = 'venmo',
+    // Bitcoin = 'bitcoin',
+    // Litecoin = 'litecoin'
 }
 
 
@@ -40,6 +44,6 @@ export interface ICreatePayinRes {
     method: string,
     amount: number,
     externalUserId: string,
-    status: TransactionStatus,
+    status: ETransactionStatus,
     url: string,
 }

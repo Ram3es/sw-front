@@ -6,7 +6,7 @@ import { useHideOnScroll } from "@/helpers/useHideOnScroll";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ItemCard from "@/components/Content/ItemCard";
 import { ECardVariant } from "@/types/Card";
-import { IMAGE_ROOT_URL } from "@/constants/strings";
+import { IMAGE_ROOT_URL } from "@/constants/transactions";
 import { useCartContext } from "@/context/CartContext";
 import { useAppContext } from "@/context/AppContext";
 import { IsUserLogged } from "@/components/IsUserLogged/IsUserLogged";

@@ -1,5 +1,6 @@
 import { type Dispatch, createContext, useContext } from 'react'
 import { type TMethodState } from '../types/Payout'
+import { PayMethod } from '@/types/Wallet'
 
 export interface IPayoutContext {
   amount: number
@@ -7,13 +8,13 @@ export interface IPayoutContext {
   emailPayPal: string
   inputPaypal: string
   methodsState: TMethodState
-  availableMethods: Record<string, any>
+  availableMethods: PayMethod[]
   setAmount: Dispatch<React.SetStateAction<number>>
   setPayoutStep: Dispatch<React.SetStateAction<string>>
   setPayPalEmail: Dispatch<React.SetStateAction<string>>
   setInputPayPal: Dispatch<React.SetStateAction<string>>
-  setPayoutMethods: Dispatch<React.SetStateAction<Record<string, any>>>
-  setSelectedMethod: Dispatch<React.SetStateAction<TMethodState>>
+  setPayoutMethods: Dispatch<React.SetStateAction<PayMethod[]>>
+  setStateMethods: Dispatch<React.SetStateAction<TMethodState>>
 
 }
 
@@ -22,14 +23,14 @@ export const PayoutContext = createContext<IPayoutContext>({
   payoutStep: '',
   emailPayPal: '',
   inputPaypal: '',
-  availableMethods: {},
+  availableMethods: [],
   methodsState: {},
   setAmount: () => {},
   setPayoutStep: () => {},
   setPayPalEmail: () => {},
   setInputPayPal: () => {},
   setPayoutMethods: () => {},
-  setSelectedMethod: () => {}
+  setStateMethods: () => {}
 })
 
 export const usePayoutContext = () => useContext(PayoutContext)

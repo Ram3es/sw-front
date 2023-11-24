@@ -113,7 +113,7 @@ const StripeMethod = () => {
                   <ArrowRight className='h-6 w-auto rotate-180  ' />
                   <span className='uppercase tracking-[1.28px]'>back to wallet</span>
                </div>
-               : <AddCoupon /> }
+               : null }
 
             <Button
               text='go to summary'

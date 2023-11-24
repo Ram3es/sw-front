@@ -2,17 +2,15 @@ import { type FC, type PropsWithChildren, useState } from 'react'
 import { PayoutContext } from '../context/PayoutContext'
 import { PAYOUT_METHODS } from '../constants/payout-methods'
 import { type TMethodState } from '../types/Payout'
+import { PayMethod } from '@/types/Wallet'
 
 const PayoutProvider: FC<PropsWithChildren> = ({ children }) => {
   const [amount, setAmount] = useState<number>(0)
   const [payoutStep, setPayoutStep] = useState<string>('amount')
   const [emailPayPal, setPayPalEmail] = useState('')
   const [inputPaypal, setInputPayPal] = useState('')
-  const [availableMethods, setPayoutMethods] = useState<Record<string, any>>({})
-  const [methodsState, setSelectedMethod] = useState<TMethodState>(
-    PAYOUT_METHODS.reduce((acc, method) =>
-      ({ ...acc, [method.name]: { isSelected: false, methodAccount: '' } }), {})
-  )
+  const [availableMethods, setPayoutMethods] = useState<PayMethod[]>([])
+  const [methodsState, setStateMethods] = useState<TMethodState>({})
   return (
         <PayoutContext.Provider value={{
           amount,
@@ -26,7 +24,7 @@ const PayoutProvider: FC<PropsWithChildren> = ({ children }) => {
           setPayPalEmail,
           setInputPayPal,
           setPayoutMethods,
-          setSelectedMethod
+          setStateMethods
         }}>
             {children}
         </PayoutContext.Provider>

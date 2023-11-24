@@ -10,7 +10,7 @@ import { IOffersCard } from "../../types/Card"
 import { useCartContext } from "../../context/CartContext"
 import { format } from "../../helpers/numberFormater"
 import ItemSelectedCard from "../../components/Content/ItemSelectedCard"
-import { IMAGE_ROOT_URL } from "../../constants/strings"
+import { IMAGE_ROOT_URL } from "../../constants/transactions"
 import SteamIcon from "@/components/icons/checkout/SteamIcon"
 import { useRouter } from "next/navigation"
 

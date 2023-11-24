@@ -3,7 +3,7 @@
 import ItemCard from '@/components/Content/ItemCard'
 import Loader from '@/components/Content/Loader'
 import { Button } from '@/components/Navigation'
-import { IMAGE_ROOT_URL } from '@/constants/strings'
+import { IMAGE_ROOT_URL } from '@/constants/transactions'
 import { useCartContext } from '@/context/CartContext'
 import { buyItems } from '@/services/market/market'
 import { CardItem, ECardVariant, IOffersCard } from '@/types/Card'

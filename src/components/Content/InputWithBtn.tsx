@@ -1,15 +1,16 @@
 
-import { useState } from 'react'
+import { InputHTMLAttributes, useState } from 'react'
 import { Button } from '../Navigation'
 
-interface IInputWithBtnProps {
+interface IInputWithBtnProps extends InputHTMLAttributes<HTMLInputElement> {
   submitFn: (inputValue: string) => void
   placeholder: string
+  walletAddress?: string
 
 }
 
-const InputWithBtn = ({ placeholder, submitFn }: IInputWithBtnProps) => {
-  const [inputValue, setInputValue] = useState('')
+const InputWithBtn = ({ placeholder,walletAddress, submitFn, ...rest }: IInputWithBtnProps) => {
+  const [inputValue, setInputValue] = useState(walletAddress ?? '')
   return (
     <div className='relative mt-0  mx-4 my-5'>
     <input
@@ -17,7 +18,8 @@ const InputWithBtn = ({ placeholder, submitFn }: IInputWithBtnProps) => {
         placeholder={placeholder}
         value={inputValue}
         onChange={(e) => { setInputValue(e.target.value) }}
-        className='w-full h-8 sm:h-11 pl-4 pr-24 bg-darkGrey outline-none'
+        className='w-full h-8 sm:h-11 pl-2 sm:pl-4 pr-[84px] sm:pr-[116px] bg-darkGrey outline-none'
+        {...rest}
     />
     <Button
         text='set'

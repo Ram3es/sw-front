@@ -1,31 +1,33 @@
 import { Button } from "@/components/Navigation"
 import { usePayoutContext } from "@/context/PayoutContext"
-import { redirect } from "next/navigation"
 import { format } from '@/helpers/numberFormater'
+import { useRouter } from "next/navigation"
+import { useEffect, useMemo } from "react"
 
 const SummaryPayout = () => {
+  const { replace } = useRouter()
   const {
     amount,
     methodsState,
-    availableMethods,
     setPayoutStep,
     setAmount
   } = usePayoutContext()
 
+  const getFee = useMemo(() => {
+    const [currentMethod] = methodsState.filter( method => method.isSelected)
+    const fixedFee = currentMethod.fee
+    const percentage = currentMethod.feePercentage
+    const fee = Math.ceil(amount * percentage + fixedFee)
 
-  const handleViewMore = () => {
+    return fee
+  },[methodsState, amount])
+
+  useEffect(() => {
+    return () => {
     setPayoutStep('amount')
     setAmount(0)
-    redirect('/deposit')
-  }
-
-  const getFee = (): number => {
-    const currentMethod = Object.keys(methodsState).filter(key => methodsState[key].isSelected).join()
-    console.log(availableMethods, currentMethod);
-    
-    // const fixedFee = availableMethods[currentMethod].fixedFee
-    return Number(((amount / 100) * 0).toFixed(2))
-  }
+    }
+  },[])
 
   return (
         <div className=' flex flex-col items-center mx-auto gap-6 text-center max-w-[432px] text-white '>
@@ -40,16 +42,16 @@ const SummaryPayout = () => {
             </p>
             <div className=''>
                 <h5 className='text-sm uppercase  tracking-[1.12px]'>total payout value</h5>
-                <span className='text-swLime text-2xl'>${format(amount)}</span>
+                <span className='text-swLime text-2xl'>${format(amount - getFee)}</span>
             </div>
             <div className=''>
                 <h5 className='text-sm uppercase  tracking-[1.12px]'>fee value</h5>
-                <span className='text-yellow-1e text-2xl'>${getFee()}</span>
+                <span className='text-yellow-1e text-2xl'>${getFee / 100}</span>
             </div>
             <div className=' w-full flex flex-col sm:flex-row gap-3  mt-4'>
                 <Button
                     text='view transaction'
-                    onClick={() => { redirect('/panel/transactions') }}
+                    onClick={() => replace('/panel/transactions')}
                     className='w-full sm:w-1/2 bg-swLime hover justify-center text-darkSecondary cta-clip-path uppercase '
                     heightClass='h-10'
                 />
@@ -57,7 +59,7 @@ const SummaryPayout = () => {
                     <Button
                         text='sell more items '
                         className=' w-full  border border-graySecondary  hover justify-center cta-clip-path uppercase text-graySecondary '
-                        onClick={handleViewMore}
+                        onClick={() => replace('/panel/deposit')}
                         heightClass='h-10'
                     />
                         <div className='absolute w-4 bottom-1 -left-1 border-b border-graySecondary hover rotate-45' />

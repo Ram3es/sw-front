@@ -26,10 +26,11 @@ export enum EPaymentMethod {
     Coinbase = 'coinbase',
     Cashapp = 'cashapp',
     Redeem = 'redeem',
-    // Paypal = 'paypal',
-    // Venmo = 'venmo',
-    // Bitcoin = 'bitcoin',
-    // Litecoin = 'litecoin'
+    Paypal = 'paypal',
+    Venmo = 'venmo',
+    Bitcoin = 'bitcoin',
+    Ethereum = 'ethereum',
+    Litecoin = 'litecoin'
 }
 
 
@@ -47,3 +48,17 @@ export interface ICreatePayinRes {
     status: ETransactionStatus,
     url: string,
 }
+
+export interface IUserWallet {
+    id: number
+    walletAddress: string
+    method: EPaymentMethod
+}
+
+export interface IPayoutDataReq {
+    amount: number
+    balanceAmount: number
+    method: EPaymentMethod
+    walletAddress: string
+}
+

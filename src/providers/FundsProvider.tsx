@@ -1,8 +1,7 @@
-import { useState, type FC, type PropsWithChildren, useEffect } from 'react'
+import { useState, type FC, type PropsWithChildren } from 'react'
 import { FundsContext } from '../context/FundsContext'
 import { type ISelectedMethod } from '../types/Funds'
 import { ERRORS, type TErrors } from '../constants/fundsMethods'
-// import { sendCouponCode } from '../services/funds/funds'
 import axios from 'axios'
 import { sendCouponCode } from '../services/funds/funds'
 import { formatToDecimal } from '../helpers/numberFormater'
@@ -65,18 +64,6 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
     const methods = await getPaymentsMethods()
     setPayInMethods(methods.filter((method:any) => method.allowedTypes.includes('payin') && method.enabled))
   }
-
-  // useEffect(() => {
-  //   // getMonthlyLimit
-  //   const data: number = 10000
-  //   if (data === 0) {
-  //     setErrorsState(prev => ({ ...prev, excededMonthly: { ...prev.excededMonthly, status: true } }))
-  //     return
-  //   }
-  //   setMonthlyLimit(data)
-  //   handlePaymentsMethods()
-  // }
-  // , [])
   return (
         <FundsContext.Provider value={{
           addFundsStep,

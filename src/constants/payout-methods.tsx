@@ -1,9 +1,14 @@
-import paypal from '../../public/img/payout/logo-paypal.svg'
+import LogoPayPal from "@/components/icons/logo/LogoPayPal";
+import LogoBtc from "@/components/icons/payments/payout/LogoBtc";
+import LogoEthereum from "@/components/icons/payments/payout/LogoEthereum";
+import LogoVenmo from "@/components/icons/payments/payout/LogoVenmo";
+import LogoLtc from "../../public/img/payout/logo-ltc.png"
+import Image from "next/image";
 
 export const PAYOUT_METHODS:Record<string, any>= {
   venmo: {
     name: 'venmo',
-    logo: '/img/payout/simple-icons_venmo.svg',
+    logo: <LogoVenmo />,
     timeline: 'Instant Payout',
     placeholder: 'Enter Username or Phone Number',
     methodTitle: 'Venmo Account'
@@ -11,7 +16,7 @@ export const PAYOUT_METHODS:Record<string, any>= {
   },
   paypal: {
     name: 'paypal',
-    logo: '/img/payout/ppcom-white 1.svg',
+    logo: <LogoPayPal />,
     timeline: '2-24h (avg. 6h)',
     placeholder: 'Enter PayPal email',
     methodTitle: 'PayPal Email'
@@ -19,18 +24,26 @@ export const PAYOUT_METHODS:Record<string, any>= {
   },
   bitcoin: {
     name: 'bitcoin',
-    logo: '/img/payout/logo-crypto-group.png',
+    logo: <LogoBtc />,
     timeline: '2-24h (avg. 6h)',
     placeholder: 'Enter Address',
-    methodTitle: 'Crypto Address'
+    methodTitle: 'Bitcoin Address'
+
+  },
+  ethereum: {
+    name: 'ethereum',
+    logo: <LogoEthereum />,
+    timeline: '2-24h (avg. 6h)',
+    placeholder: 'Enter Address',
+    methodTitle: 'Ethereum Address'
 
   },
   litecoin:{
     name: 'litecoin',
-    logo: '/img/payout/logo-crypto-group.png',
+    logo: <Image src={LogoLtc} alt="logo-ltc"  />,
     timeline: '2-24h (avg. 6h)',
     placeholder: 'Enter Address',
-    methodTitle: 'Crypto Address'
+    methodTitle: 'Litecoin Address'
 
   },
   // {

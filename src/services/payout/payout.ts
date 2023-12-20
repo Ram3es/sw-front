@@ -2,9 +2,6 @@ import { PayMethod } from '@/types/Wallet'
 import { type IPayoutResponse } from '../../types/Payout'
 import { GET, POST } from '../axios.instance'
 
-export const payout = async (data: { amount: number }) =>
-  await POST<IPayoutResponse, { amount: number }>('/payments/payout', data)
-
 export const getPaymentsMethods = async () =>
   await GET<PayMethod[]>('/payments/payment-methods')
 

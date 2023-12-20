@@ -15,6 +15,7 @@ import ReloadIcon from '../icons/ReloadIcon';
        
         case ETransactionStatus.pending:
         case ETransactionStatus.processing:
+        case ETransactionStatus.sent:
           return (
             <div className='flex items-start gap-2 text-swOrange'>
               <ReloadIcon className='shrink-0 ' />

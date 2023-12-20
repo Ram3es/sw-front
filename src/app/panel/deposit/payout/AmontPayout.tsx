@@ -24,10 +24,11 @@ const AmontPayout = () => {
     if(!/^[0-9]*(\.[0-9]{0,2})?$/.test(e.target.value)){
       return
     }
-    const amountCents = +e.target.value * 100
+    const amountCents = Math.ceil(+e.target.value * 100)
     if (amountCents > (user?.balance ?? 0)) {
       return
     }
+    console.log(amountCents)
     setAmount(amountCents)
   }
 

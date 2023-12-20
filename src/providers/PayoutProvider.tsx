@@ -6,14 +6,17 @@ import { PayMethod } from '@/types/Wallet'
 
 const PayoutProvider: FC<PropsWithChildren> = ({ children }) => {
   const [amount, setAmount] = useState<number>(0)
+  const [feeByMethod, setFeeByMethod] = useState<number>(0)
   const [payoutStep, setPayoutStep] = useState<string>('amount')
   const [emailPayPal, setPayPalEmail] = useState('')
   const [inputPaypal, setInputPayPal] = useState('')
   const [availableMethods, setPayoutMethods] = useState<PayMethod[]>([])
-  const [methodsState, setStateMethods] = useState<TMethodState>({})
+  const [methodsState, setStateMethods] = useState<TMethodState[]>([])
+
   return (
         <PayoutContext.Provider value={{
           amount,
+          feeByMethod,
           payoutStep,
           emailPayPal,
           inputPaypal,
@@ -24,7 +27,8 @@ const PayoutProvider: FC<PropsWithChildren> = ({ children }) => {
           setPayPalEmail,
           setInputPayPal,
           setPayoutMethods,
-          setStateMethods
+          setStateMethods,
+          setFeeByMethod
         }}>
             {children}
         </PayoutContext.Provider>

@@ -2,13 +2,14 @@ import { useAppContext } from '@/context/AppContext'
 import { useState, type ChangeEvent, useRef, useEffect } from 'react'
 import { usePayoutContext } from '@/context/PayoutContext'
 import { useCounter } from '@/helpers/useCounter'
-import { convertToCents, format } from '@/helpers/numberFormater'
+import { format } from '@/helpers/numberFormater'
 import { classNames } from '@/helpers/className'
 import ExclamationTriangleIcon from '@/components/icons/ExclamationTriangle'
 import PaperPayout from './PaperPayout'
 import MinusIcon from '@/components/icons/MinusIcon'
 import PlusIcon from '@/components/icons/PlusIcon'
 import { Button } from '@/components/Navigation'
+import InstantLogo from '@/components/icons/payments/payout/InstantLogo'
 
 const AmontPayout = () => {
   const { user } = useAppContext()
@@ -20,7 +21,10 @@ const AmontPayout = () => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const amountCents = convertToCents(+e.target.value)
+    if(!/^[0-9]*(\.[0-9]{0,2})?$/.test(e.target.value)){
+      return
+    }
+    const amountCents = +e.target.value * 100
     if (amountCents > (user?.balance ?? 0)) {
       return
     }
@@ -46,7 +50,7 @@ const AmontPayout = () => {
   return (
         <div className='flex flex-col items-center mx-auto max-w-[472px]'>
             <div className=' flex items-center gap-2 mb-6'>
-                <img src="/logo-skinwallet.inline.svg" alt="logo" />
+                <InstantLogo />
                 <h2 className='text-24 leading-6 font-medium text-swLime'>Instant</h2>
             </div>
             <div

@@ -117,8 +117,6 @@ const setDefaultFilters = useCallback(async (query: string) => {
   setFiltersState({})
     try {
       const { defaultFilters, sortByOptions, offers, sortBy, total  } = await getOffers(query)
-
-      
       // create initial sidebar state
       const initFilters: Record<string, any> = {}
 
@@ -181,7 +179,6 @@ const setDefaultFilters = useCallback(async (query: string) => {
 
 
   useEffect(() => {
-    console.log(filtersState)
     if(Object.keys(filtersState).length){
       setIsLoading(true)
       void getFilteredItems()

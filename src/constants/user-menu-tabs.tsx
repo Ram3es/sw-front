@@ -25,7 +25,7 @@ export const USER_MENU: IUserMenu[][] = [
     },
     {
       title: 'pay out',
-      path: 'panel/deposit/payout',
+      path: '/panel/deposit/payout',
       icon: <ProfileCircleMinus />
     },
     {

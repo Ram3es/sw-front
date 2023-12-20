@@ -57,7 +57,7 @@ const MethodsPayout = () => {
     switch (method) {
       case 'venmo':
         if (!REGEX.phoneOrName.test(inputValue)) {
-          showToast({
+          return showToast({
             id: `${Date.now().toString()}`,
             type: 'error',
             message:'Incorrect format phone number'
@@ -66,7 +66,7 @@ const MethodsPayout = () => {
         break
       case 'paypal':
         if (!REGEX.email.test(inputValue)) {
-           showToast({
+          return showToast({
             id: `${Date.now().toString()}`,
             type: 'error',
             message:'Incorrect Email'
@@ -75,7 +75,7 @@ const MethodsPayout = () => {
         break
       case 'bitcoin':
         if (!REGEX.bitcoin.test(inputValue)) {
-           showToast({
+          return showToast({
             id: `${Date.now().toString()}`,
             type: 'error',
             message:'Incorrect Wallet Address'
@@ -84,7 +84,7 @@ const MethodsPayout = () => {
         break
       case 'ethereum':
         if (!REGEX.ethereum.test(inputValue)) {
-            showToast({
+          return  showToast({
             id: `${Date.now().toString()}`,
             type: 'error',
             message:'Incorrect Wallet Address'

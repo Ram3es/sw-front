@@ -164,6 +164,7 @@ const setDefaultFilters = useCallback(async (query: string) => {
       ...filtersState
     })
     try {
+      console.log(query)
       const { offers } = await getOffers(query)
       setIsLoading(false)
       if(filtersState?.page > 1){

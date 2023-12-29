@@ -4,6 +4,7 @@ import { InitUserState } from '../constants/user'
 import { ESteamAppId } from '../types/Inventory'
 
 export interface IAppContext {
+  getCurrentBalanceAndUpdate: () => Promise<void>
   changeCategoriesState: () => void
   categoriesState: boolean
   changeSearchState: () => void
@@ -17,6 +18,7 @@ export interface IAppContext {
 
 export const AppContext = createContext<IAppContext>({
   categoriesState: false,
+  getCurrentBalanceAndUpdate: async () => {},
   changeCategoriesState: () => {},
   changeSearchState: () => {},
   searchOpened: false,

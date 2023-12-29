@@ -5,12 +5,12 @@ import LogoVenmo from "@/components/icons/payments/payout/LogoVenmo";
 import LogoLtc from "../../public/img/payout/logo-ltc.png"
 import Image from "next/image";
 
-export const PAYOUT_METHODS:Record<string, any>= {
+export const PAYOUT_METHODS:Record<string, IPayoutMethod>= {
   venmo: {
     name: 'venmo',
     logo: <LogoVenmo />,
     timeline: 'Instant Payout',
-    placeholder: 'Enter Username or Phone Number',
+    placeholder: 'Example... 408-123-4567',
     methodTitle: 'Venmo Account'
 
   },
@@ -19,7 +19,8 @@ export const PAYOUT_METHODS:Record<string, any>= {
     logo: <LogoPayPal />,
     timeline: '2-24h (avg. 6h)',
     placeholder: 'Enter PayPal email',
-    methodTitle: 'PayPal Email'
+    methodTitle: 'PayPal Email',
+    summaryDescription: 'As soon as PayPal finishes processing your payout, we will send you an email with the final status of this operation.'
 
   },
   bitcoin: {
@@ -62,4 +63,13 @@ export const PAYOUT_METHODS:Record<string, any>= {
 
   // }
 
+}
+
+export interface IPayoutMethod {
+  name: string
+  logo: JSX.Element
+  timeline: string
+  placeholder: string
+  methodTitle: string
+  summaryDescription?:string
 }

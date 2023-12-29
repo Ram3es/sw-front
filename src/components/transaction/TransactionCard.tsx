@@ -4,11 +4,11 @@ import { classNames } from '../../helpers/className'
 import Chevron from '../icons/ChevronDown'
 import { format } from '../../helpers/numberFormater'
 import { TRX_CARD_CONTENT } from '../../constants/transactions'
-import { ETransactionType, ITransactionRes } from '../../types/Transactions' 
+import { ETransactionType, ITransaction } from '../../types/Transactions' 
 import { getTransactionStatus } from './getTransactionStatus'
 import Tooltip from '../Content/Tooltip'
 
-const TransactionCard: FC<ITransactionRes> = ({ transactionId, amountTransaction, amountBalance, createdAt, status, type, method }) => {
+const TransactionCard: FC<ITransaction> = ({ transactionId, amountTransaction, amountBalance, createdAt, status, type, method }) => {
   const [isOpen, setIsOpen] = useState(false)
   const hashRef = useRef<HTMLDivElement>(null)
   const paypalIdRef = useRef<HTMLDivElement>(null)

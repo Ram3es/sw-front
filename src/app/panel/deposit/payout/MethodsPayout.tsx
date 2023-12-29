@@ -17,11 +17,15 @@ import { useSettingsContext } from '@/context/SettingsContext'
 import { EPaymentMethod } from '@/types/Wallet'
 import { createPayout } from '@/services/wallet/wallet'
 import { PAYOUT_METHODS } from '@/constants/payout-methods'
+import Loader from '@/components/Content/Loader'
 
 const MethodsPayout = () => {
   const [isAcceptedPolicy, setIsAcceptedPolicy] = useState(false)
   const [isCryptoErr, setIsCryptoErr] = useState(false)
+  const [isShownLoader, setIsShownLoader] = useState(false)
 
+  const { userUpdate } = useAppContext()
+  const { showToast } = useSettingsContext()
   const {
     amount,
     methodsState,
@@ -30,7 +34,7 @@ const MethodsPayout = () => {
     setFeeByMethod
   } = usePayoutContext()
 
-  const { showToast } = useSettingsContext()
+ 
 
   const [selectedMethod] = useMemo(() => methodsState.filter(method => method.isSelected), [methodsState])
   const fee = useMemo(() => {
@@ -123,12 +127,14 @@ const MethodsPayout = () => {
   }
   const handleSubmit = async () => {
     try {
-      await createPayout({ 
+      setIsShownLoader(true)
+      const { balance } = await createPayout({ 
         amount: amount - fee,
         balanceAmount: amount,
         method: selectedMethod.name,
         walletAddress: selectedMethod.walletAddress as string 
       })
+      userUpdate({ balance })
       setFeeByMethod(fee)
       setPayoutStep('summary')
     } catch (error) {
@@ -137,6 +143,8 @@ const MethodsPayout = () => {
         type: 'error',
         message:'Something went wrong'
       })
+    } finally {
+      setIsShownLoader(false)
     }
    
   }
@@ -245,7 +253,7 @@ const MethodsPayout = () => {
                                                   <span> ${format(selectedMethod.min)} - ${format(selectedMethod.max)}</span>
                                                 </div>
                                             </div>
-                                            <p>Provider may take additional free.</p>
+                                            <p>Provider may take additional fee.</p>
                                         </div>
                                     </div>
                                 }
@@ -259,32 +267,37 @@ const MethodsPayout = () => {
                         <p className='text-xs sm:text-sm font-normal'>
                             I agree to the {''}
                             <Link
-                                href={''}
+                                href={'/market/terms-of-service'}
                                 className='text-swLime underline hover:text-swLime/90'
                             >
                                 Terms of Service
                             </Link> and {''}
                             <Link
-                                href={''}
+                                href={'/market/privacy-policy'}
                                 className='text-swLime underline  hover:text-swLime/90'
                             >
                                 Privacy Policy
                             </Link>.
                         </p>
                     </div>
-                    <div className='h-12 mt-4'>
+                    <div className='h-12 mt-4 relative'>
                         <Button
                             text={selectedMethod ? `process payout [$${format(amount- fee)}]` : 'select a payment method'}
                             onClick={() => { void handleSubmit() }}
                             className={classNames('w-full h-full flex justify-center bg-swLime text-darkSecondary cta-clip-path tracking-widest uppercase text-17 sm:text-21 font-medium hover small-caps',
-                              isAcceptedPolicy 
+                              isAcceptedPolicy
+                              && selectedMethod?.walletAddress  
                               && !selectedMethod?.isEditMode 
-                              && selectedMethod?.walletAddress 
                               && !isExceededLimit
-                              && !(isCryptoErr && selectedMethod.name === EPaymentMethod.Cashapp) 
+                              && !isShownLoader 
                                 ? '' 
                                 : 'pointer-events-none opacity-50 grayscale')}
                         />
+                        {isShownLoader && 
+                          <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
+                            <Loader />
+                          </div>
+                        }
                     </div>
 
                 </div>

@@ -88,7 +88,7 @@ export default function Wallet() {
                 <p>Your top-up may require an additional KYC and/or AML verification. In such case, please follow the instructions displayed on the screen and wait for the verification process to finalize. The verification may take up to few hours.If, for any reason, your KYC procedure fails, your balance will be refunded.If, for any reason, your KYC procedure fails, your balance will be refunded.</p>
                 <p>If, for any reason, your KYC procedure fails, your balance will be refunded.</p>
                 <Link
-                  href={'/terms-of-service'}
+                  href={'/market/terms-of-service'}
                   className='underline hover:no-underline'
                 >
                     Read more about Wallet in our Terms of Service

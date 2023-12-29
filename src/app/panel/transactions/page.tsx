@@ -9,9 +9,11 @@ import TransactionsSidebar from './TransactionsSidebar'
 import Dropbox from '@/components/Content/Dropbox'
 import { getTransactions } from '@/services/transactions/transactions'
 import { useAppContext } from '@/context/AppContext'
-import { ITransactionRes, type TransactionItem } from '@/types/Transactions'
+import { ITransaction } from '@/types/Transactions'
 import NoTransactionPage from './NoTransactionPage'
+import { IDefaultFilters } from '@/types/Market'
 
+type TTransactionsObj = Record<string, ITransaction[]>
 const fullMonthNames = [
   'January',
   'February',
@@ -29,22 +31,22 @@ const fullMonthNames = [
 
 export default function TransactionsPage() {
   const shouldHide = useHideOnScroll()
-  const { user } = useAppContext()
-  const [transactions, setTransactions] = useState<
-    Record<string, ITransactionRes[]>
-  >({})
-  const [rawArrayTrx, setRawArrayTrx] = useState<ITransactionRes[]>([])
+  const { user, getCurrentBalanceAndUpdate } = useAppContext()
+  const [transactions, setTransactions] = useState<TTransactionsObj>({})
+  const [rawArrayTrx, setRawArrayTrx] = useState<ITransaction[]>([])
   const [startDate, setStartDate] = useState<Date>()
   const [endDate, setEndDate] = useState<Date>()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [filters, setFilters] = useState<IDefaultFilters[]>([])
+  const [totalTrx, setTotalTrx] = useState<number>(0)
 
   const download = (e: MouseEvent) => {
     e.stopPropagation()
     console.log('click')
   }
 
-  const sortTransactionsByYearAndMonth = (transactions: ITransactionRes[]) => {
-    const sortedTransactions: Record<string, ITransactionRes[]> = {}
+  const sortTransactionsByYearAndMonth = (transactions: ITransaction[]) => {
+    const sortedTransactions: TTransactionsObj = {}
     transactions.forEach((transaction) => {
       const date = new Date (transaction.createdAt)
       const year = date.getFullYear()
@@ -59,23 +61,20 @@ export default function TransactionsPage() {
     return sortedTransactions
   }
 
-  const getUserTransactions = useCallback(async () => {
+  const getUserTransactions = useCallback(async (query?:string) => {
     if (user) {
-      const userTransactions = await getTransactions()
-      // console.log(userTransactions)
-      // const transactionsArray = userTransactions.map((trx) => ({
-      //   hash: trx.transactionId,
-      //   amount: trx.amount,
-      //   date: new Date(trx.createdAt),
-      //   status: trx.status
-      // }))
-      setRawArrayTrx(userTransactions)
-      const sortedTransactions =
-        sortTransactionsByYearAndMonth(userTransactions)
-        console.log(sortedTransactions)
+      const { data, defaultFilters, total } = await getTransactions(query ?? '')
+
+       if(!filters.length){
+        setFilters(defaultFilters)
+       }
+
+      setTotalTrx(total)
+      setRawArrayTrx(data)
+      const sortedTransactions = sortTransactionsByYearAndMonth(data)
       setTransactions(sortedTransactions)
     }
-  }, [user])
+  }, [user,filters])
 
   const ranged = useMemo(() => rawArrayTrx.filter(item => {
     const itemDate = new Date(item.createdAt)
@@ -86,14 +85,15 @@ export default function TransactionsPage() {
   }), [endDate, startDate, rawArrayTrx])
 
   useEffect(() => {
-    void getUserTransactions()
-  }, [user])
+    if(user?.id){
+      void getUserTransactions()
+      void getCurrentBalanceAndUpdate()
+    }
+  }, [user?.id])
 
   useEffect(() => {
     setTransactions(sortTransactionsByYearAndMonth(ranged))
   }, [ranged])
-
-  console.log(transactions)
 
   return (
     <>
@@ -104,7 +104,7 @@ export default function TransactionsPage() {
           </h1>
         </div>
       </Bar>
-      {!Object.keys(transactions).length
+      {!totalTrx
         ? <NoTransactionPage />
         : (
           <div className="flex text-white pt-5">
@@ -113,7 +113,7 @@ export default function TransactionsPage() {
             )}>
               <div
                 className={classNames(
-                  'flex flex-col flex-grow max-w-[326px] lg:max-w-[256px] px-6 sm:px-0  max-h-screen sticky overflow-auto bottom-0',
+                  'flex flex-col flex-grow max-w-[326px] lg:max-w-[256px] px-6 sm:px-0 overflow-auto max-h-screen sticky  bottom-0',
                   shouldHide
                     ? 'h-[calc(100vh-60px)] top-[60px]'
                     : 'h-[calc(100vh-120px)] top-[120px]'
@@ -133,6 +133,8 @@ export default function TransactionsPage() {
                   setStartDate={setStartDate}
                   endDate={endDate}
                   startDate={startDate}
+                  filters={filters}
+                  getData={getUserTransactions}
                 />
               </div>
             </div>
@@ -147,31 +149,34 @@ export default function TransactionsPage() {
                   <path d="M4.30811 7.3706L4.52686 7.1792C4.63623 7.04248 4.63623 6.85107 4.52686 6.71435L2.22998 4.44482L12.4839 4.44482C12.6753 4.44482 12.812 4.28076 12.812 4.1167L12.812 3.84326C12.812 3.65186 12.6753 3.51514 12.4839 3.51514L2.22998 3.51514L4.52686 1.21826C4.63623 1.08154 4.63623 0.890136 4.52686 0.753417L4.30811 0.562011C4.19873 0.425292 3.97998 0.425292 3.84326 0.562011L0.671387 3.73389C0.534668 3.8706 0.534668 4.06201 0.671387 4.19873L3.84326 7.3706C3.97998 7.50732 4.19873 7.50732 4.30811 7.3706Z" fill="currentColor" />
                 </svg>
               </div>
-              {Object.keys(transactions).map((yearAndMonth) => (
-                <div key={yearAndMonth} className=" w-full max-w-[672px] mx-auto ">
-                  <Dropbox
-                    label={yearAndMonth}
-                    renderSubHeader={
-                      <div
-                        className="flex items-center gap-2 text-graySecondary ml-2 hover button"
-                        onClick={download}
+              {Object.keys(transactions).length 
+                ?
+                  Object.keys(transactions).map((yearAndMonth) => (
+                    <div key={yearAndMonth} className=" w-full max-w-[672px] mx-auto ">
+                      <Dropbox
+                        label={yearAndMonth}
+                        renderSubHeader={
+                          <div
+                            className="flex items-center gap-2 text-graySecondary ml-2 hover button"
+                            onClick={download}
+                          >
+                            <DownloadFileIcon />
+                            <span className="text-sm tracking-[1.12px] uppercase">
+                              invoice
+                            </span>
+                          </div>
+                        }
                       >
-                        <DownloadFileIcon />
-                        <span className="text-sm tracking-[1.12px] uppercase">
-                          invoice
-                        </span>
-                      </div>
-                    }
-                  >
-                    <div className="flex flex-col gap-3 mt-4">
-                      {transactions[yearAndMonth].map((trx, id) => (
-                        <TransactionCard key={id} {...trx} />
-                      ))}
+                        <div className="flex flex-col gap-3 mt-4">
+                          {transactions[yearAndMonth].map((trx, id) => (
+                            <TransactionCard key={id} {...trx} />
+                          ))}
+                        </div>
+                      </Dropbox>
+                      <div className=" border border-b border-darkGrey my-8" />
                     </div>
-                  </Dropbox>
-                  <div className=" border border-b border-darkGrey my-8" />
-                </div>
-              ))}
+                  ))
+                : <div className='pt-[200px] mx-auto text-2xl text-graySecondary'>No Transactions Found</div>}
             </div>
           </div>)}
     </>

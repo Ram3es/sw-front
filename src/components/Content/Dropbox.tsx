@@ -11,7 +11,7 @@ const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses
 
   return (
     <Listbox onChange={onChange}>
-      {() => (
+    
         <>
           <div className="relative">
             <Listbox.Button onClick={toggle} className={classNames('relative w-full cursor-pointer ',
@@ -30,11 +30,13 @@ const Dropbox = ({ label, onChange, children, renderSubHeader, additionalClasses
             <Transition
               show={isOpen}
             >
-              { children }
+              <Listbox.Options>
+                {children}
+              </Listbox.Options>
             </Transition>
           </div>
         </>
-      )}
+
     </Listbox>
   )
 }

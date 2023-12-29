@@ -52,7 +52,7 @@ const PayPalMethod = () => {
                                     additionalClasses='bg-gray-40 border-none'
 
                                 />
-                                <img src={PAYOUT_METHODS[1].logo} alt="method-logo" />
+                                {PAYOUT_METHODS[1]?.logo}
                             </div>
 
                             <div className={classNames('flex items-center gap-4 text-graySecondary ')}>

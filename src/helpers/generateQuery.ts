@@ -1,7 +1,7 @@
 export const generateQuery = <T extends Record<string, any>>(
     state: T
-    ): string => {
-        return Object.entries(state)
+    ): string => { 
+        const rawQuery = Object.entries(state)
           .filter(([_, value]) => !!value || value === 0)
           .reduce((acc, [key, value],idx ,v) => {
              if(Array.isArray(value) ){
@@ -10,4 +10,5 @@ export const generateQuery = <T extends Record<string, any>>(
                 }
              return acc += `${key}=${value}${idx + 1 === v.length ? '' : '&'}`
     },'')
+    return rawQuery ? '?'.concat(rawQuery) : ''
 }

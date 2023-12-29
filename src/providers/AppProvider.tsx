@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import { type IUser } from '../types/User'
-import { getUser } from '../services/user/user'
+import { getUser, getUserBalance } from '../services/user/user'
 import { ESteamAppId } from '../types/Inventory'
 import { useSearchParams } from 'next/navigation'
 
@@ -61,18 +61,24 @@ export const AppProvider = ({ children }: IProps) => {
     setGameId(id)
   }
 
+  const getCurrentBalanceAndUpdate = useCallback(async() => {
+    const { balance } = await getUserBalance()
+    userUpdate({ balance })
+  },[])
+
   return (
     <AppContext.Provider
       value={{
+        getCurrentBalanceAndUpdate,
         changeCategoriesState,
-        categoriesState,
         changeSearchState,
-        searchOpened,
-        user,
-        userUpdate,
-        gameId,
         updateGameId,
-        isUserLoading
+        userUpdate,
+        categoriesState,
+        isUserLoading,
+        searchOpened,
+        gameId,
+        user,
       }}
     >
       {children}

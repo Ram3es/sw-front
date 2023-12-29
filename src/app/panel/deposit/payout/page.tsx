@@ -10,6 +10,7 @@ import { getPayoutDailyLimits, getPaymentsMethods } from "@/services/payout/payo
 import { usePayoutContext } from "@/context/PayoutContext"
 import { getAllWallets } from "@/services/wallet/wallet"
 import ToastManager from "@/containers/ToastManager"
+import { getUserBalance } from "@/services/user/user"
 
 
 export default function Payout() {
@@ -21,8 +22,10 @@ export default function Payout() {
     const payoutMethods = allMethods.filter(mth => mth.allowedTypes.includes('payout'))
   
     const { amount: payoutLimit } = await getPayoutDailyLimits()
-    userUpdate({ payoutLimit })
     setPayoutMethods(payoutMethods)
+
+    const { balance } = await getUserBalance()
+    userUpdate({ payoutLimit, balance })
 
     const allWallets = await getAllWallets()
     setStateMethods(payoutMethods.map(method => {

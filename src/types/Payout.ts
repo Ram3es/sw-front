@@ -1,11 +1,13 @@
 import { PayMethod } from "./Wallet"
 
 export interface IPayoutResponse {
-  daily_limit: number
-  new_balance: number
-  operation: string
-  prev_balance: number
-
+  id: string
+  method: string
+  amount: number
+  address: string
+  externalUserId: string
+  status: string
+  balance: number
 }
 
  export interface TMethodState  extends PayMethod {

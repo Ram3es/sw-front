@@ -8,9 +8,10 @@ interface DatepickerProps {
   onChange: (date: Date) => void
   label: string
   align?: 'left' | 'right'
+  additionalClasses?: string
 }
 
-const Datepicker: React.FC<DatepickerProps> = ({ selectedDate, onChange, label, align }) => {
+const Datepicker: React.FC<DatepickerProps> = ({ selectedDate,additionalClasses, onChange, label, align }) => {
   const [isOpen, setIsOpen] = useState(false)
   const divRef = useRef<HTMLDivElement>(null)
 
@@ -52,10 +53,12 @@ const Datepicker: React.FC<DatepickerProps> = ({ selectedDate, onChange, label, 
           className='absolute top-full w-full h-full z-10'
         >
           <DatePicker
-            calendarClassName={classNames(
-              'absolute z-10',
-              align === 'right' ? 'right-0' : 'left-0'
-            )}
+            // calendarClassName={classNames(
+            //   'absolute z-10',
+            //   align === 'right' ? 'right-0' : 'left-0 ',
+            //   additionalClasses ?? ''
+            // )}
+            calendarClassName={additionalClasses}
             selected={selectedDate}
             onChange={onChange}
             inline

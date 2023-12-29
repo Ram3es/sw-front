@@ -13,14 +13,16 @@ const SummaryPayout = () => {
     setAmount
   } = usePayoutContext()
 
+  const [currentMethod] = useMemo(() => methodsState.filter(method => method.isSelected),[methodsState])
+
   const getFee = useMemo(() => {
-    const [currentMethod] = methodsState.filter( method => method.isSelected)
+
     const fixedFee = currentMethod.fee
     const percentage = currentMethod.feePercentage
     const fee = Math.ceil(amount * percentage + fixedFee)
 
     return fee
-  },[methodsState, amount])
+  },[currentMethod, amount])
 
   useEffect(() => {
     return () => {
@@ -34,11 +36,11 @@ const SummaryPayout = () => {
             <div className=' uppercase tracking-[1.12px]'>
                 <h6 className='text-graySecondary mb-2'>summary</h6>
                 <p className=' text-2xl leading-[24px]  max-w-[294px] '>
-                    Your payout is being processed by paypal.
+                    Your payout is being processed by {currentMethod.name}.
                 </p>
             </div>
             <p className=' text-graySecondary left-5'>
-                As soon as PayPal finishes processing your payout, we will send you an email with the final status of this operation.
+                As soon as <span className="uppercase">{currentMethod.name}</span> finishes processing your payout, we will send you an email with the final status of this operation.
             </p>
             <div className=''>
                 <h5 className='text-sm uppercase  tracking-[1.12px]'>total payout value</h5>

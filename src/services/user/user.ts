@@ -4,6 +4,8 @@ import { GET, PATCH, PUT } from '../axios.instance'
 
 export const getUser = async () => await GET<ISteamUser>('/users/me')
 
+export const getUserBalance = async () => await GET<{ balance: number}>('/users/balance')
+
 export const getUserAccountSettings = async () => await GET<IUserWithSettingsData>('/users')
 
 export const updateSettings = async (data: IUpdateSettingDto) => await PATCH('/users', data)

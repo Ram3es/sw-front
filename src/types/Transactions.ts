@@ -1,3 +1,5 @@
+import { IDefaultFilters } from "./Market"
+
 export interface TransactionItem {
   hash: string
   amount: number
@@ -7,16 +9,23 @@ export interface TransactionItem {
 }
 
 export interface ITransactionRes {
-    id: number
-    userId: number
-    transactionId: string
-    type: ETransactionType
-    amountTransaction: number
-    amountBalance: number
-    status: ETransactionStatus
-    method: string
-    createdAt: string
-    updatedAt: string
+  data: ITransaction[]
+  defaultFilters: IDefaultFilters[]
+  total: number
+}
+
+export interface ITransaction {
+  id: number
+  userId: number
+  transactionId: string
+  type: ETransactionType
+  amountTransaction: number
+  amountBalance: number
+  status: ETransactionStatus
+  method: string
+  createdAt: string
+  updatedAt: string
+
 }
 
 export enum ETransactionType {

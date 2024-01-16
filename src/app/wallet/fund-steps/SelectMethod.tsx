@@ -26,15 +26,15 @@ const SelectMethod: FC<ISelectMethodProps> = () => {
             <h3 className='tracking-[1.12px] text-graySecondary uppercase text-sm'>step 1</h3>
             <h2 className='uppercase tracking-[1.28px]'>select top-up method</h2>
             <div className='grid grid-cols-methods justify-center mt-8 gap-4'>
-                {avaibleMethods.map(mth =>
-                    <div key={mth.methodName}>
-                        <MethodCard
-                          onSelect={() => { selectedMethod?.methodName !== mth.methodName && setSelectedMethod({ methodName: mth.methodName, title: mth.title }) }}
-                          isSelected={ selectedMethod?.methodName === mth.methodName }
-                          methodLimit={payInMethods.find(enabled => enabled.name === mth.methodName ) as PayMethod}
-                          {...mth}
-                        />
-                    </div>)}
+              {avaibleMethods.map(mth =>
+                <div key={mth.methodName}>
+                  <MethodCard
+                    onSelect={() => { selectedMethod?.methodName !== mth.methodName && setSelectedMethod({ methodName: mth.methodName, title: mth.title }) }}
+                    isSelected={ selectedMethod?.methodName === mth.methodName }
+                    methodLimit={payInMethods.find(enabled => enabled.name === mth.methodName ) as PayMethod}
+                    {...mth}
+                  />
+                </div>)}
             </div>
             <Button
               text='Next'

@@ -10,10 +10,7 @@ export const formatToThousands = (num: number): string => {
   return balance.toFormat('0,0.000')
 }
 
-export const convertToCents = (amount: number): number => {
-  const dinero = Dinero({ amount }).multiply(100)
-  return dinero.getAmount()
-}
+export const convertToCents = (amount: number): number => amount * 100
 
 export const convertToBacks = (amount: number): number => {
   const dinero = Dinero({ amount }).divide(100)

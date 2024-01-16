@@ -13,6 +13,7 @@ import InputWithErrors from '@/components/Content/InputWithErrors'
 import Mark from '@/components/icons/wallet/Mark'
 import { createPayin } from '@/services/wallet/wallet'
 import { EPaymentMethod, PayMethod } from '@/types/Wallet'
+import { REGEX } from '@/constants/regex'
 
 
 
@@ -38,7 +39,9 @@ const Summary = () => {
 
   const method = payInMethods.find(method => method.name === selectedMethod?.methodName) as PayMethod
   const fee = Math.ceil(convertToCents(+amountInputValue) * method.feePercentage + method.fee)
-  const amountTrx = convertToCents(+amountInputValue) + fee
+  const amountTrx = Math.ceil(convertToCents(+amountInputValue) + fee)
+
+  console.log(fee, amountTrx)
 
   const PayinSubmit = async () => {
     const created = await createPayin({
@@ -50,9 +53,10 @@ const Summary = () => {
   }
 
   const handleChange = (value: string) => {
-    if(value.length > 7) return
+    if(value.length > 7 || !REGEX.inputNumber.test(value)) return
     setAmountInputValue(value)
   }
+
 
   return (
     <div className='w-full flex flex-grow justify-center pt-6 sm:py-12 '>
@@ -155,7 +159,7 @@ const Summary = () => {
               <div className='flex flex-col gap-2'>
                 <div className='w-full flex justify-between items-center text-sm '>
                   <div className='uppercase tracking-[1.12px]'>amount</div>
-                  <span className='text-white'>${formatToDecimal(amountInputValue)}</span>
+                  <span className='text-white'>${formatToDecimal(parseFloat(amountInputValue).toFixed(2))}</span>
                 </div>
                 {!!couponInfo &&
                   <div className='flex flex-col gap-2 pb-6 mb-4 border-b border-white/10'>

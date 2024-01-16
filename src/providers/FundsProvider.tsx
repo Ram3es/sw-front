@@ -21,7 +21,7 @@ export const FundsProvider: FC<PropsWithChildren> = ({ children }) => {
 
 
   const handleBlurInputAmount = (min: number = 5, max: number = 100) => {
-    
+    //clear previous error
     setErrorsState(prev => {
       let copy = { ...prev }
       Object.keys(copy).forEach(key => {

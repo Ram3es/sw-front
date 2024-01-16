@@ -3,5 +3,6 @@ export const REGEX = {
   phoneOrName: /^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/,
   number: /^[0-9]*$/,
   ethereum: /^0x[a-fA-F0-9]{40}$/g,
-  bitcoin: /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/g
+  bitcoin: /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/g,
+  inputNumber: /^(?:\d+(?:\.\d*)?|\.\d+)?$/
 }

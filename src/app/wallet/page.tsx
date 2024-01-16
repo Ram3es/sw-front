@@ -23,18 +23,19 @@ const availablePages = [2, 3, 4]
 export default function Wallet() {
   
   const getMethod = (method: string) => {
+    console.log(method)
     switch (method) {
       case 'paypal':
         return <PayPalMethod/>
-        case 'crypto':
-          return <SelectCryptoMethod />
-        case 'coinbase':
-        case 'cashapp':
-        case 'stripe':
-          return <StripeMethod />
-        case 'gift':
-          return <GiftCardMethod />
-          // return redirect('/market/giftcards')
+      case 'crypto':
+        return <SelectCryptoMethod />
+      case 'coinbase':
+      case 'cashapp':
+      case 'stripe':
+        return <StripeMethod />
+      case 'gift':
+        return <GiftCardMethod />
+        // return redirect('/market/giftcards')
     }
   }
 

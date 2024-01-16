@@ -1,5 +1,7 @@
+import { EPaymentMethod } from "@/types/Wallet"
+
 export interface IWalletSettings {
-    currency: string
+    currency: EPaymentMethod
     title: string
     text: string
     varificationRequired?: boolean
@@ -7,35 +9,35 @@ export interface IWalletSettings {
 
 export const WALLETS: IWalletSettings[]  = [
     {
-        currency: 'venmo',
+        currency: EPaymentMethod.Venmo,
         title:'venmo account',
         text: ''
     },
     {
-        currency: 'btc',
+        currency: EPaymentMethod.Bitcoin,
         title:'btc wallet',
         text: ''
     },
     {
-        currency: 'eth',
+        currency: EPaymentMethod.Ethereum,
         title:'eth wallet',
         text: ''
     },
     {
-        currency: 'ltc',
+        currency: EPaymentMethod.Litecoin,
         title:'ltc wallet',
         text: ''
     },
     {
-        currency: 'paypal',
+        currency: EPaymentMethod.Paypal ,
         title:'paypal account',
         text: '',
         varificationRequired: true
     },
-    {
-        currency: 'webmoney',
-        title:'webmoney account',
-        text: ''
-    },
+    // {
+    //     currency: 'webmoney',
+    //     title:'webmoney account',
+    //     text: ''
+    // },
 
 ]

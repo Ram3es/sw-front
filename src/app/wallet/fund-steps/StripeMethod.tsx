@@ -11,6 +11,8 @@ import ArrowRight from '@/components/icons/ArrowRight'
 import InputWithErrors from '@/components/Content/InputWithErrors'
 import Mark from '@/components/icons/wallet/Mark'
 import { PayMethod } from '@/types/Wallet'
+import { REGEX } from '@/constants/regex'
+
 
 const StripeMethod = () => {
   const {
@@ -27,7 +29,7 @@ const StripeMethod = () => {
   const method = payInMethods.find(method => method.name === selectedMethod?.methodName) as PayMethod
 
   const handleChange = (value: string) => {
-    if(value.length > 7) return
+    if(value.length > 7 || !REGEX.inputNumber.test(value)) return
     setAmountInputValue(value)
   }
 

@@ -31,6 +31,6 @@ export interface IUserBillingAddress {
 
   export interface IToast  {
     id: string
-    type: keyof typeof EToastType,
+    type:EToastType,
     message: string
   }

@@ -1,10 +1,14 @@
 "use client"
 import Bar from "@/components/Bar/Bar"
 import { Button } from "@/components/Navigation/Button"
+import Readme from "@/components/funds/readme/Readme"
+import { useAppContext } from "@/context/AppContext"
 import { classNames } from "@/helpers/className"
 import { buyGiftCard } from "@/services/wallet/wallet"
 import { IGiftCardRedeemRes } from "@/types/Wallet"
+import axios from "axios"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useState } from 'react'
 
 export default function RedeemGiftCard() {
@@ -13,74 +17,18 @@ export default function RedeemGiftCard() {
   const [giftCard, setGiftCard] = useState<IGiftCardRedeemRes>()
   const [responseStatus, setResponseStatus] = useState('')
 
+  const { showToast } = useAppContext()
+  const { push } = useRouter()
+
   const redeemGiftcard = async () => {
     try {
       const data = await buyGiftCard({ code })
       setGiftCard(data)
       if (data?.value) setResponseStatus('success')
     } catch (error) {
-      console.log('redeemGiftcard', error)
-      setResponseStatus('failed')
-    }
+  if(axios.isAxiosError(error)){
+    showToast(error?.response?.data?.message)
   }
-
-  const getRedeemCardStatus = (status: string) => {
-    switch (status) {
-      case 'success':
-        return (
-          <>
-              <div className=' w-full flex flex-col md:flex-row items-center justify-center pb-8'>
-                <div className='flex flex-col items-center text-center text-24 uppercase tracking-[1.2px] text-white'>
-                  <h2>the transaction is successful</h2>
-                </div>
-              </div>
-              <div className='flex flex-row justify-center'>
-                <Link href="/market">
-                  <Button
-                    className='bg-skinwalletPink w-max uppercase text-dark-14 hover:opacity-50 cta-clip-path'
-                    heightClass='h-12'
-                    text='home page'
-                  />
-                </Link>
-              </div>
-          </> 
-        )
-      case 'failed':
-        return (
-          <>
-              <div className=' w-full flex flex-col md:flex-row items-center justify-center pb-8'>
-                <div className='flex flex-col items-center text-center text-24 uppercase tracking-[1.2px] text-white'>
-                  <h2>Oops! something went wrong...</h2>
-                </div>
-              </div>
-              <div className='flex flex-row justify-center'>
-                <Button
-                  className='bg-skinwalletPink w-max uppercase text-dark-14 hover:opacity-50 cta-clip-path'
-                  heightClass='h-12'
-                  text='try one more time'
-                  onClick={() => setResponseStatus('')}
-                />
-              </div>
-          </> 
-        )
-      case 'already_redeemed':
-        return (
-          <>
-              <div className=' w-full flex flex-col md:flex-row items-center justify-center pb-8'>
-                <div className='flex flex-col items-center text-center text-24 uppercase tracking-[1.2px] text-white'>
-                  <h2>giftcard already redeemed</h2>
-                </div>
-              </div>
-              <div className='flex flex-row justify-center'>
-                <Button
-                  className='bg-skinwalletPink w-max uppercase text-dark-14 hover:opacity-50 cta-clip-path'
-                  heightClass='h-12'
-                  text='try one more time'
-                  onClick={() => setResponseStatus('')}
-                />
-              </div>
-          </> 
-        )
     }
   }
 
@@ -95,43 +43,41 @@ export default function RedeemGiftCard() {
     </Bar>
       <div className="text-graySecondary w-full mt-[68px] mb-40">
         <div className=" max-w-[640px] mx-auto px-6 flex flex-col gap-[120px] ">
-          { !responseStatus ? 
-            ( <div>        
-                <div className="bg-transparent border border-graySecondary mb-6">
-                  <input
-                    value={code}
-                    onChange={(e) => { setCode(e.target.value) }}
-                    type="text"
-                    placeholder="Gift card code"
-                    className="w-full p-3 bg-transparent border-none outline-none text-graySecondary font-Barlow"
-                  />
-                </div>
-                <div className='flex justify-end gap-3 text-21'>
-                  <Button
-                    text='cancel'
-                    className=' bg-black bg-opacity-50 border border-graySecondary  hover justify-center cta-clip-path uppercase text-graySecondary text-23 small-caps leading-[24px] tracking-[2.3px] [&_.text]:mb-1'
-                    heightClass='h-12'
-                  />
-                  <Button
-                    text='redeem'
-                    disabled={isButtonDisabled()}
-                    onClick={redeemGiftcard}
-                    className={classNames('bg-skinwalletPink justify-center items-center w-max h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200 cta-clip-path',
-                    isButtonDisabled() ? 'opacity-50' : '')}
-                  />
-                </div> 
+        <Readme>
+          <div className="flex flex-col gap-8">
+            <p>Gift cards are used to top up your wallet with a specified amount. </p>
+            <p>Keep in mind that funds redeemed through gift cards are not withdrawable and can only be used for market purchases.</p>
+            <Link href='/market/terms-of-service' className="underline hover:no-underline">Read more about the SW Market Wallet in Terms of Service.</Link>
+          </div>
+        </Readme>
+          <div>        
+              <div className="bg-transparent border border-graySecondary mb-6">
+                <input
+                  value={code}
+                  onChange={(e) => { setCode(e.target.value) }}
+                  type="text"
+                  placeholder="Gift card code"
+                  className="w-full p-3 bg-transparent border-none outline-none text-graySecondary font-Barlow"
+                />
               </div>
-            ) : (
-              <div className='w-full flex flex-col items-center max-w-[1850px] pt-16 px-16'>
-                <div className='w-full flex flex-col max-w-[1160px]'>
-                  <div className='w-full h-full flex flex-col '>
-                    {getRedeemCardStatus(responseStatus)} 
-                  </div>
-                </div>
-              </div>
-            )
-            
-          }
+              <div className='flex justify-end gap-3 text-21'>
+                <Button
+                  text='cancel'
+                  onClick={() => push('/wallet')}
+                  className='relative bg-black bg-opacity-50 border border-graySecondary  hover justify-center cta-clip-path uppercase text-graySecondary text-23 small-caps leading-[24px] tracking-[2.3px] [&_.text]:mb-1'
+                  heightClass='h-12'
+                >
+                  <div className=' w-4 absolute -left-[5px] bottom-1  border-b border-graySecondary rotate-45' />
+                </Button>
+                <Button
+                  text='redeem'
+                  disabled={isButtonDisabled()}
+                  onClick={redeemGiftcard}
+                  className={classNames('bg-skinwalletPink justify-center items-center w-max h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200 cta-clip-path',
+                  isButtonDisabled() ? 'opacity-50' : '')}
+                />
+              </div> 
+            </div>
         </div>
       </div>
     </>

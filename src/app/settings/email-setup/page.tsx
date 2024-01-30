@@ -9,10 +9,15 @@ import { useFormik } from "formik"
 import { useRouter } from "next/navigation"
 import * as Yup from 'yup'
 import { useEffect, useState } from "react"
+import { useAppContext } from "@/context/AppContext"
+import { EToastType } from "@/types/Enums"
+import { updateSettings } from "@/services/user/user"
+import axios from "axios"
 
 export default function EmailSetup() {
     const [errors, setErrors] = useState({status: false, message: '', errorClass: 'text-red-500' })
-    const {data, updateField, showToast } = useSettingsContext()
+    const {data } = useSettingsContext()
+    const { showToast } = useAppContext()
     const { back } = useRouter()
 
     const formik = useFormik({
@@ -22,25 +27,18 @@ export default function EmailSetup() {
         initialValues: {
           email: data?.email ?? ''
         },
-        validationSchema: Yup.object({
+        validationSchema: Yup.object().shape({
           email: Yup.string().email('Invalid email').required('This field can not be empty')
         }),
         validateOnChange: false,
         onSubmit: async (values) => {
+          console.log(values)
             try {
-              await updateField(values)
+               await updateSettings(values)
               back()
-              showToast({
-                id: 'email',
-                message: 'Email was changed',
-                type: "success"
-              })
+              showToast('Email was changed', EToastType.success)
             } catch(error) {
-              showToast({
-                id: 'email-error',
-                message: 'Email wasn`t changed',
-                type: "error"
-              })
+              showToast('Email hasn`t been changed')
             } 
           } 
       })

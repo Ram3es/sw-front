@@ -11,12 +11,14 @@ import { useRouter } from "next/navigation";
 import { useSettingsContext } from "@/context/SettingsContext";
 import { useEffect, useState } from "react";
 import * as Yup from 'yup'
+import { EToastType } from "@/types/Enums";
 
 export default function TradeUrl() {
     const [errors, setErrors] = useState({status: false, message: '', errorClass: 'text-red-500' })
 
-    const { data } = useSettingsContext()
-    const { updateField, showToast } = useSettingsContext()
+    const { data, updateField } = useSettingsContext()
+    const { showToast } = useAppContext()
+
     const { back } = useRouter()
  
     const formik = useFormik({
@@ -34,17 +36,9 @@ export default function TradeUrl() {
           try {
            await updateField(values)
            back()
-           showToast({
-            id: Date.now.toString(),
-            type: 'success',
-            message: 'Trade Url was updated'
-           })
+           showToast('Trade Url was updated', EToastType.success)
           } catch(error) {
-            showToast({
-              id: Date.now.toString(),
-              type: 'error',
-              message: 'Error occurred'
-             })
+            showToast('Error occurred')
           } 
         } 
     })

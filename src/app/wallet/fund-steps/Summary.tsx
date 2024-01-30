@@ -6,50 +6,51 @@ import EditPencil from '../../../components/icons/EditPencil'
 import { convertToCents, format, formatToDecimal } from '../../../helpers/numberFormater'
 import { Button } from '../../../components/Navigation'
 import { classNames } from '../../../helpers/className'
-import CouponLabel from '../../../components/funds/coupon/CouponLabel'
 import { ImportantNotice, NoticeContent } from '../../../components/funds/ImportantNotice'
-import CloseIcon from '@/components/icons/CloseIcon'
 import InputWithErrors from '@/components/Content/InputWithErrors'
 import Mark from '@/components/icons/wallet/Mark'
 import { createPayin } from '@/services/wallet/wallet'
 import { EPaymentMethod, PayMethod } from '@/types/Wallet'
 import { REGEX } from '@/constants/regex'
+import { useAppContext } from '@/context/AppContext'
+import axios from 'axios'
 
 
 
 const Summary = () => {
   const [isEditAmount, setIsEditAmount] = useState(false)
-  const [isEditCoupon, setIsEditCoupon] = useState(false)
-  const { replace }  = useRouter();
+  const { replace } = useRouter()
+  const { showToast } = useAppContext()
   const {
     amountInputValue,
-    couponInputValue,
     couponInfo,
     selectedMethod,
     payInMethods,
     errorsState,
-    isLoading,
     setAddFundsStep,
     setAmountInputValue,
-    setCouponInputValue,
-    setCouponInfo,
     handleBlurInputAmount,
-    handleBlurInputCoupon
   } = useFundsContext()
 
   const method = payInMethods.find(method => method.name === selectedMethod?.methodName) as PayMethod
   const fee = Math.ceil(convertToCents(+amountInputValue) * method.feePercentage + method.fee)
   const amountTrx = Math.ceil(convertToCents(+amountInputValue) + fee)
 
-  console.log(fee, amountTrx)
-
-  const PayinSubmit = async () => {
-    const created = await createPayin({
-      method: selectedMethod?.methodName as EPaymentMethod,
-      amount: amountTrx,
-      balanceAmount: convertToCents(+amountInputValue)
-    })
-    replace(created.url)
+  const payinSubmit = async () => {
+    try {
+      const created = await createPayin({
+        method: selectedMethod?.methodName as EPaymentMethod,
+        amount: amountTrx,
+        balanceAmount: convertToCents(+amountInputValue)
+      })
+      replace(created.url)
+    } catch (error) {
+      if(axios.isAxiosError(error)){
+        const message = error?.response?.data?.message
+        showToast(message)
+      }
+    }
+    
   }
 
   const handleChange = (value: string) => {
@@ -110,49 +111,6 @@ const Summary = () => {
                   </div>
                 </div>)
             }
-            {/* { couponInfo || isEditCoupon
-              ? !isEditCoupon
-                  ? (
-                <div className='w-full flex flex-col sm:flex-row items-start px-6 py-4 bg-darkGrey relative'>
-                <div className='w-full sm:w-1/3 flex items-center gap-2'>
-                  <RoundedMark className='text-swLime w-[18px] h-auto' />
-                  <span className='text-lg text-graySecondary uppercase tracking-[1.44px]' >coupon code</span>
-                </div>
-                <div className='w-full sm:w-2/3 flex items-center justify-between'>
-                  <span className='text-lg text-white'>Awesome 2000 code</span>
-                  <div className='flex items-center gap-4'>
-                    <div
-                      onClick={() => { setIsEditCoupon(true) } }
-                      className='text-graySecondary group cursor-pointer '
-                    >
-                      <EditPencil className='group-hover:text-white duration-200 ' />
-                    </div>
-                    <div
-                      onClick={() => { setCouponInfo(0); setCouponInputValue('') }}
-                      className='text-graySecondary hover:text-white duration-200 cursor-pointer'
-                    >
-                      <CloseIcon className='w-3 h-[18px] ' />
-                    </div>
-                  </div>
-                </div>
-              </div>
-                    )
-                  : (
-                    <InputWithErrors
-                      label='coupon code'
-                      value={couponInputValue}
-                      handleChange={(value) => { setCouponInputValue(value) }}
-                      onClear={() => { setCouponInputValue('') }}
-                      handleBlur={() => { void handleBlurInputCoupon() }}
-                      successIcon={<Mark className='w-4 h-[18px] text-swLime' />}
-                      errorBorder='border-swRed'
-                      error={errorsState.wrongCoupon }
-                      isLoading={isLoading}
-                      autoFocus
-                      variant='coupon'
-                    />
-                    )
-              : <CouponLabel submitFn={() => { setIsEditCoupon(true) }} />} */}
           </div>
           <div className=' h-max w-full sm:w-[320px] text-graySecondary bg-darkGrey p-6 sm:cta-clip-path relative'>
             <div className='w-full '>
@@ -185,7 +143,7 @@ const Summary = () => {
             </div>
             <Button
               text='proceed payment'
-              onClick={PayinSubmit}
+              onClick={payinSubmit}
               className={classNames('bg-skinwalletPink justify-center items-center w-full h-[48px] uppercase text-dark-14 hover:opacity-50 duration-200  ml-auto mt-12 cta-clip-path',
                 selectedMethod?.methodName ? '' : 'pointer-events-none grayscale opacity-50')}
              />

@@ -7,15 +7,18 @@ import { useSettingsContext } from "@/context/SettingsContext"
 import ErrorLabelRounded from "@/components/funds/ErrorLabelRounded"
 import { useRouter, usePathname } from "next/navigation"
 import { useCallback } from "react"
+import { useAppContext } from "@/context/AppContext"
+import { EToastType } from "@/types/Enums"
+import axios from "axios"
 
 export default function Settings() { 
 const { push } = useRouter()
+const { showToast } = useAppContext()
 
 const { 
   data,
   isAcceptedNotification,
   updateField,
-  showToast,
   setAcceptedNotification
  } = useSettingsContext()
 
@@ -23,18 +26,13 @@ const {
   setAcceptedNotification(val => val ? 0 : 1 )
   try {
     await updateField({ notifications: isAcceptedNotification ? 0 : 1 })
-    showToast({
-      id: `notification-${Date.now().toString()}`,
-      message: 'Setting was applied',
-      type: "success"
-    })
+    showToast('Setting was applied', EToastType.success)
 
   } catch (error) {
-    showToast({
-      id: `notification-error-${Date.now().toString()}`,
-      message: 'Error occurred',
-      type: "error"
-    })
+    if(axios.isAxiosError(error)){
+      const message = error?.response?.data?.message
+      showToast(message || 'Error occured')
+    }
   }
    
  }, [isAcceptedNotification])

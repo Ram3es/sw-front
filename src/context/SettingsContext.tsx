@@ -5,11 +5,8 @@ import { Dispatch, SetStateAction, createContext, useContext } from "react";
 
 export interface ISettingsContext {
     data?: IUserWithSettingsData
-    listToasts: IToast[]
     isAcceptedNotification: number 
-    removeToast: (id: string) => void
     setData: Dispatch<SetStateAction<IUserWithSettingsData | undefined>>
-    showToast: (data:IToast) => void
     updateField: (value: IUpdateSettingDto) => Promise<void>
     setAcceptedNotification:Dispatch<SetStateAction<number>>
 }

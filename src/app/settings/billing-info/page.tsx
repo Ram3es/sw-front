@@ -12,7 +12,8 @@ import { classNames } from '@/helpers/className';
 import { useRouter } from 'next/navigation';
 import CountryList from '@/components/Content/CountryList';
 import BirthdayPicker from '@/components/Content/BirthdayPicker';
-import axios, { AxiosError } from 'axios';
+import { useAppContext } from '@/context/AppContext';
+import { EToastType } from '@/types/Enums';
 
 
 const ERRROS_STATE: TErrState = {
@@ -80,7 +81,8 @@ const initValues:IInitialState = {
 
 
 const BillingInfo = () => {
-  const { data, showToast } = useSettingsContext()
+  const { data } = useSettingsContext()
+  const { showToast } = useAppContext()
   const { back } = useRouter()
   const [errors, setErrors] = useState<TErrState>(ERRROS_STATE)
 
@@ -110,16 +112,10 @@ const BillingInfo = () => {
         try {
           await setBillingAddress({...values, userId: data?.id, id:data?.billingAddress?.id })
           back()
-          showToast({ 
-            type: 'success',
-            message: 'Billing settings have been changed',
-            id: Date.now().toString()})
+          showToast('Billing settings have been changed', EToastType.success)
 
         } catch(error) {
-          showToast({ 
-            type: 'error',
-            message: axios.isAxiosError(error) ? error.response?.data?.message : 'Error occurred',
-            id: Date.now().toString()})
+          showToast('Error occurred')
         } 
       } 
   })

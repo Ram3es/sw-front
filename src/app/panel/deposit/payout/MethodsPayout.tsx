@@ -13,19 +13,18 @@ import ClockIcon from '@/components/icons/ClockIcon'
 import InputWithBtn from '@/components/Content/InputWithBtn'
 import Link from 'next/link'
 import { setWallet } from '@/services/user/user'
-import { useSettingsContext } from '@/context/SettingsContext'
-import { EPaymentMethod } from '@/types/Wallet'
 import { createPayout } from '@/services/wallet/wallet'
 import { PAYOUT_METHODS } from '@/constants/payout-methods'
 import Loader from '@/components/Content/Loader'
+import axios from 'axios'
 
 const MethodsPayout = () => {
   const [isAcceptedPolicy, setIsAcceptedPolicy] = useState(false)
   const [isCryptoErr, setIsCryptoErr] = useState(false)
   const [isShownLoader, setIsShownLoader] = useState(false)
 
-  const { userUpdate } = useAppContext()
-  const { showToast } = useSettingsContext()
+  const { userUpdate, showToast } = useAppContext()
+
   const {
     amount,
     methodsState,
@@ -57,42 +56,25 @@ const MethodsPayout = () => {
   },[selectedMethod,fee,amount])
 
   const handleSetMethodRequirments = async (method: string, inputValue: string) => {
-    console.log(method, 'method')
     switch (method) {
       case 'venmo':
         if (!REGEX.phoneOrName.test(inputValue)) {
-          return showToast({
-            id: `${Date.now().toString()}`,
-            type: 'error',
-            message:'Incorrect format phone number'
-          })
+          return showToast('Incorrect format phone number')
         }
         break
       case 'paypal':
         if (!REGEX.email.test(inputValue)) {
-          return showToast({
-            id: `${Date.now().toString()}`,
-            type: 'error',
-            message:'Incorrect Email'
-          })
+          return showToast('Incorrect Email')
         }
         break
       case 'bitcoin':
         if (!REGEX.bitcoin.test(inputValue)) {
-          return showToast({
-            id: `${Date.now().toString()}`,
-            type: 'error',
-            message:'Incorrect Wallet Address'
-          })
+          return showToast('Incorrect Wallet Address')
         }
         break
       case 'ethereum':
         if (!REGEX.ethereum.test(inputValue)) {
-          return  showToast({
-            id: `${Date.now().toString()}`,
-            type: 'error',
-            message:'Incorrect Wallet Address'
-          })
+          return  showToast('Incorrect Wallet Address')
         }
         break
     }
@@ -138,11 +120,10 @@ const MethodsPayout = () => {
       setFeeByMethod(fee)
       setPayoutStep('summary')
     } catch (error) {
-      showToast({
-        id: `${Date.now().toString()}`,
-        type: 'error',
-        message:'Something went wrong'
-      })
+      if(axios.isAxiosError(error)){
+        const message = error?.response?.data?.message
+        showToast( message || 'Something went wrong')
+      }
     } finally {
       setIsShownLoader(false)
     }

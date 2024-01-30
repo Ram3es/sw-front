@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Barlow } from 'next/font/google'
 import { Providers } from '../providers/providers'
 import Script from 'next/script'
+import ToastManager from '@/containers/ToastManager'
 
 const barlow = Barlow({ subsets: ['latin'], weight: ['500'] })
 
@@ -27,14 +28,16 @@ export default function RootLayout({
     <html lang="en">
       <meta data-react-helmet="true" name="robots" content="noindex, nofollow"/>
       <body className={barlow.className}>
-        <div className='flex flex-col bg-darkSecondary min-h-screen relative'>
-          <Providers>
-            <>
-              <TopBar isHidableOnScroll={true} />
+        <Providers>
+          <div className='bg-darkSecondary w-full min-h-screen relative'>
+            <TopBar isHidableOnScroll={true} />
+            <div className='fixed top-[132px] right-0 ssl:right-6 z-50'>
+              <ToastManager />
+            </div>
               {children}
-            </>
-          </Providers>
-        </div>
+          </div>
+        </Providers>
+        
         <script type="text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js" async></script>
         <Script>
           {`window.intercomSettings = {

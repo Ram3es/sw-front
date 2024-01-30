@@ -5,6 +5,8 @@ import { type IUser } from '../types/User'
 import { getUser, getUserBalance } from '../services/user/user'
 import { ESteamAppId } from '../types/Inventory'
 import { useSearchParams } from 'next/navigation'
+import { IToast } from '@/types/Settings'
+import { EToastType } from '@/types/Enums'
 
 interface IProps {
   children: React.JSX.Element
@@ -19,6 +21,7 @@ export const AppProvider = ({ children }: IProps) => {
   const [gameId, setGameId] = useState<ESteamAppId>(appId as ESteamAppId  ?? ESteamAppId.CSGO)
   const [user, setUser] = useState<IUser>()
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true)
+  const [listToasts, setToast] = useState<IToast[]>([])
 
   
   const getUserApp = useCallback(async () => {
@@ -66,6 +69,20 @@ export const AppProvider = ({ children }: IProps) => {
     userUpdate({ balance })
   },[])
 
+  const showToast = (message:string, type = EToastType.error) => {
+    const id = Date.now().toString()
+    const toast: IToast = {
+      id,
+      type,
+      message
+    }
+    setToast(prev => [...prev, toast ].slice(-2))
+  }
+
+  const removeToast = (id: string) => {
+    setToast(prev => prev.filter( val => val.id !== id ) )
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -74,11 +91,14 @@ export const AppProvider = ({ children }: IProps) => {
         changeSearchState,
         updateGameId,
         userUpdate,
+        showToast,
+        removeToast,
         categoriesState,
         isUserLoading,
         searchOpened,
         gameId,
         user,
+        listToasts
       }}
     >
       {children}

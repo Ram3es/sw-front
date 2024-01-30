@@ -5,7 +5,8 @@ import InformationIcon from '../icons/InformationIcon';
 import { classNames } from '@/helpers/className';
 import { Button } from '../Navigation';
 import { setWallet } from '@/services/user/user';
-import { useSettingsContext } from '@/context/SettingsContext';
+import { useAppContext } from '@/context/AppContext';
+import { EToastType } from '@/types/Enums';
 
 export interface IWalletCard {
   id?: number
@@ -20,7 +21,7 @@ export interface IWalletCard {
 
 const WalletCard = ({id, currency, title, placeholder, varificationRequired, isVerified, verifyFn, onValueUpdate } : IWalletCard) => {
     const [isEditMode, setIsEditMode] = useState(false)
-    const { showToast } = useSettingsContext()
+    const { showToast } = useAppContext()
 
     const ref = useRef<HTMLInputElement>(null)
 
@@ -28,18 +29,10 @@ const WalletCard = ({id, currency, title, placeholder, varificationRequired, isV
       setIsEditMode(false)
       try {
         await setWallet({ id, currency, wallet: placeholder })
-        showToast({
-          id: `${id}-${Date.now().toString()}`,
-          type: 'success',
-          message: `${title} was updated`
-        })
+        showToast(`${title} was updated`,EToastType.success)
         
       } catch (error) {
-        showToast({
-          id: `${id}-${Date.now().toString()}`,
-          type: 'error',
-          message:'Error occurred'
-        })
+        showToast('Error occurred')
       }
     }
 

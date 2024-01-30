@@ -9,7 +9,6 @@ import { useCallback, useEffect } from "react"
 import { getPayoutDailyLimits, getPaymentsMethods } from "@/services/payout/payout"
 import { usePayoutContext } from "@/context/PayoutContext"
 import { getAllWallets } from "@/services/wallet/wallet"
-import ToastManager from "@/containers/ToastManager"
 import { getUserBalance } from "@/services/user/user"
 
 
@@ -51,7 +50,6 @@ export default function Payout() {
         </div>
         <IsUserLogged>
           <div className='px-[24px] py-[30px] '>
-          <ToastManager />
             {payoutStep === 'amount'
               ? <AmontPayout />
               : payoutStep === 'method'

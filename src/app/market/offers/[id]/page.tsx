@@ -115,7 +115,7 @@ const conditionObj = findNearestMaxValue(CONDITIONS, wearFloat)
                     : ''
                   }
                 </div>
-                <AddOfferToCart offer={offerData} />
+                {/* <AddOfferToCart offer={offerData} /> */}
               </div>
             </div>
           </div>
@@ -150,11 +150,11 @@ const conditionObj = findNearestMaxValue(CONDITIONS, wearFloat)
         <div className="max-w-[1160px] mx-auto ">
           <h2 className="text-white uppercase text-2xl tracking-[1.2px] mb-8">similar offers</h2>
           <div className="px-6">
-            <SliderCard  
+            {/* <SliderCard  
               items={similarOffers}
               settings={NEWLY_SLIDER_SETTINGS} 
               withEmptySlide={false}
-            />
+            /> */}
           </div>
         </div>
       </div>

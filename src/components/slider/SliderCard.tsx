@@ -35,9 +35,9 @@ const SliderCard: FC<ISliderProps> = ({ items, settings, withEmptySlide = true }
                 key={item.assetid}
                 id={item.assetid}
                 variant={ECardVariant.market}
-                isTradable={true}
+                isTradable={item.tradable}
                 name={item.name}
-                type={item.qualities.type}
+                type={item?.qualities?.type ?? ''}
                 condition={0.2087172418832779}
                 price={item.price.buy}
                 steamPrice={item.price.buy}

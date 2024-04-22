@@ -9,7 +9,6 @@ import SliderCard from "@/components/slider/SliderCard"
 import SliderFade from "@/components/slider/SliderFade"
 import { HOT_SLIDER_SETTINGS, NEWLY_SLIDER_SETTINGS } from "@/constants/slider-settings"
 import { getOffers } from "@/services/market/market"
-import { IOffersCard } from "@/types/Card"
 import Link from "next/link"
 import LandingInfo from "./LandingInfo"
 import { Metadata } from "next"
@@ -35,12 +34,6 @@ const SkinsCategoriesTitle = ({ title, icon, path, totalSkins }: { title: string
       </Link>
      </div>
   )
-}
-
-interface IOffersCardsState {
-  total: number
-  hot: IOffersCard[]
-  newest: IOffersCard[]
 }
 
 export default async function Market() {

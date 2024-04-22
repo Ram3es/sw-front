@@ -24,7 +24,6 @@ const TwoPointsSliderWithChart = ({ data, maxPrice, minPrice, maskId, colorsArr,
   const [isFocused, setIsFocused] = useState({from:false, to:false})
   const [sliderRange, setSloderRange] = useState<number[]>(rangeLimit ?? [])
 
-  
   const maxValue = Math.max(...data)
   const { current: debounce } = useRef(useDebounce())
 

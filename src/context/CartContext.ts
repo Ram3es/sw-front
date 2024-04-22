@@ -1,16 +1,16 @@
-import { CardItem, IOffersCard } from '@/types/Card'
+import { CardItem, IOfferInventory, IOffersCard } from '@/types/Card'
 import { createContext, useContext } from 'react'
 
 export interface CartState {
-  items: IOffersCard[]
+  items: IOfferInventory[]
 }
 
 export interface ICartContext {
   cartItems: CartState
   isCheckoutCompleted: boolean
-  lastAddedItem: IOffersCard | null
-  setLastAddedItem: (item: IOffersCard | null) => void
-  addToCart: (item: IOffersCard) => void
+  lastAddedItem: IOfferInventory | null
+  setLastAddedItem: (item: IOfferInventory | null) => void
+  addToCart: (item: IOfferInventory) => void
   removeFromCart: (itemId: string) => void
   getSteamTotalPrice: () => number
   getDiscount: () => number

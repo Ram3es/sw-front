@@ -1,12 +1,12 @@
 
 import { useCartContext } from '@/context/CartContext'
 import { Button } from '../Navigation'
-import { IMAGE_ROOT_URL } from '@/constants/transactions'
 import CloseIcon from '../icons/CloseIcon'
 import ItemSelectedCard from '../Content/ItemSelectedCard'
 import { classNames } from '@/helpers/className'
 import CheckUnfilled from '../icons/checkout/CheckUnfilled'
 import Link from 'next/link'
+import { getImageURL } from '@/helpers/getImageURL'
 
 const AddedToCartModal = () => {
   const { lastAddedItem, cartItems, setLastAddedItem } = useCartContext()
@@ -27,13 +27,13 @@ const AddedToCartModal = () => {
           </div>
           { lastAddedItem ? 
               <ItemSelectedCard
-                key={lastAddedItem.inventoryItemId}
-                image={IMAGE_ROOT_URL.concat(lastAddedItem.imageUrl)}
-                price={lastAddedItem.price.amount}
-                steamPrice={lastAddedItem.steamPrice.amount}
-                id={lastAddedItem.inventoryItemId}
+                key={lastAddedItem.assetid}
+                image={getImageURL(lastAddedItem.icon_url)}
+                price={lastAddedItem.price.buy}
+                steamPrice={lastAddedItem.price.buy}
+                id={lastAddedItem.assetid}
                 name={lastAddedItem.name}
-                condition={lastAddedItem.wearFloat}
+                condition={0.2087172418832779}
               /> 
             : <div className='h-[175px]' ></div>
           }

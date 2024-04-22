@@ -3,10 +3,10 @@
 import ItemCard from '@/components/Content/ItemCard'
 import Loader from '@/components/Content/Loader'
 import { Button } from '@/components/Navigation'
-import { IMAGE_ROOT_URL } from '@/constants/transactions'
 import { useCartContext } from '@/context/CartContext'
+import { getImageURL } from '@/helpers/getImageURL'
 import { buyItems } from '@/services/market/market'
-import { CardItem, ECardVariant, IOffersCard } from '@/types/Card'
+import { CardItem, ECardVariant, IOfferInventory, IOffersCard } from '@/types/Card'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -15,14 +15,14 @@ export default function CartCompleate() {
   const { cartItems, clearCart } = useCartContext()
   const [ isCheckoutSuccess, setIsCheckoutSuccess ] = useState(false)
   const [ isCheckoutLoading, setIsCheckoutLoading ] = useState(false)
-  const [ itemsToShow, setItemsToShow ] = useState<IOffersCard[]>([])
+  const [ itemsToShow, setItemsToShow ] = useState<IOfferInventory[]>([])
 
   const submitOrder = async () => {
     if (!isCheckoutLoading) {
       setIsCheckoutLoading(true)
       setItemsToShow(cartItems.items)
       try {
-        const assetIds = cartItems.items.map(i => i.inventoryItemId)
+        const assetIds = cartItems.items.map(i => i.assetid)
         await buyItems({ assetIds })
         setIsCheckoutSuccess(true)
         setIsCheckoutLoading(false)
@@ -55,18 +55,18 @@ export default function CartCompleate() {
             </div>
 
             <div className='flex flex-col gap-1 md:flex-row justify-center pb-16'>
-              {itemsToShow.map((item: IOffersCard) =>
-                item.inventoryItemId ? <ItemCard
-                  key={item.inventoryItemId}
-                  id={item.inventoryItemId.toString() }
+              {itemsToShow.map((item: IOfferInventory) =>
+                item.assetid ? <ItemCard
+                  key={item.assetid}
+                  id={item.assetid.toString() }
                   variant={ECardVariant.purchased}
                   isTradable={true}
                   name={item.name}
-                  type={item.typeName}
-                  condition={item.wearFloat}
-                  price={item.price.amount}
-                  steamPrice={item.steamPrice.amount}
-                  image={IMAGE_ROOT_URL.concat(item.imageUrl)}
+                  type={item.qualities.type}
+                  condition={ 0.34189847111701965}
+                  price={item.price.buy}
+                  steamPrice={item.price.sell}
+                  image={getImageURL(item.icon_url, 300)}
                   onClick={() => {}}
                     /> : ''
               )}

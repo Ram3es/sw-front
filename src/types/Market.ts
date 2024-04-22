@@ -1,22 +1,38 @@
-import { IOfferPrice, type IOffersCard } from './Card'
+import { IOfferInventory, IOfferPrice, type IOffersCard } from './Card'
+import { ITradeItem } from './Inventory'
 
 export interface IOffersResponse {
-  offers: IOffersCard[]
+  offers: IOfferInventory[]
   total: number
   sortBy: string
   sortByOptions: ISortByOptions[]
   defaultFilters: IDefaultFilters []
+  limit: number
 }
 
 export interface ITradeOffersResponse {
-  items: IOffersCard[]
-  bot_name: string
-  createdAt: Date
-  security_token: string
-  accepted: boolean
-  expired_at: Date
-  browser_confiramation_url: string
-  steam_confiramation_url: string
+  id: number
+  steamId: string
+  tradeId: string
+  tradeOfferId: string
+  botId: string
+  state: string
+  type: any
+  extra: any
+  createdAt: string
+  updatedAt: string
+  items: any[]
+  botProfile: BotProfile
+  trade_items: ITradeItem[]
+}
+
+export interface BotProfile {
+  id: number
+  name: string
+  avatarHash: string
+  memberSince: string
+  botSteamId: string
+  level: number
 }
 
 export interface ISortingState {

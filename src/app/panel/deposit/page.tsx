@@ -10,18 +10,19 @@ import CardsListWrapper from './CardsListWrapper'
 import SellsBar from './SellsBar'
 import { Filters } from '@/components/InstantSellControls/filters'
 import { Nav } from '@/components/InstantSellControls/nav'
+import { IInventoryCard } from '@/types/Inventory'
 
 export default function Deposit() {
-  const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])
-  const [selectedCards, setSellectedCards] = useState<TInventoryCard[]>([])
+  const [renderCards, setRenderCards] = useState<IInventoryCard[]>([])
+  const [selectedCards, setSellectedCards] = useState<IInventoryCard[]>([])
   const [isSelectedAll, setSelectedAll] = useState(false)
   const { user, gameId } = useAppContext()
   const { currentOption, toggleSort } = useSort()
 
   const sorted = useMemo(() => sortData(renderCards, 'price', currentOption), [renderCards, currentOption])
 
-  const toggleSelect = (card: TInventoryCard) => {
-    setRenderCards(prev => [...prev.map(item => card.id === item.id ? { ...item, isChecked: !item.isChecked } : item)])
+  const toggleSelect = (card: IInventoryCard) => {
+    setRenderCards(prev => [...prev.map(item => card.id === item.id ? { ...item, isChecked: !item.isSelected } : item)])
     setSellectedCards(prev => {
       const index = prev.findIndex((idx) => idx.id === card.id)
       if (index === -1) {

@@ -1,12 +1,14 @@
 'use client'
 import { useAppContext } from "@/context/AppContext"
-import { IFiltersSideBar, IInitialFiltersState, MarketOffersContext, TKeysCheckboxFilter, TValue } from "@/context/MarketOffers"
+import { IFiltersSideBar, IInitialFiltersState, IMarketOfferFilters, MarketOffersContext, TKeysCheckboxFilter, TValue } from "@/context/MarketOffers"
+import { generateFiltersObject } from "@/helpers/genMarketFilters"
 import { generateQuery } from "@/helpers/generateQuery"
 import { getOffers } from "@/services/market/market"
-import { IOffersCard } from "@/types/Card"
-import { IDefaultOptionRes, IRangeOptions, ISortingState } from "@/types/Market"
+import { IOfferInventory, IOffersCard } from "@/types/Card"
+import { ISortingState } from "@/types/Market"
 import { useSearchParams } from "next/navigation"
 import { FC, PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react"
+import qs from 'qs'
 
 const initialFiltersState: Record<string, any> = {}
 
@@ -23,29 +25,30 @@ const initSideBarState:IFiltersSideBar = {
 export const MarketOffersProvider: FC<PropsWithChildren> = ({ children }) => {
 const [filtersState, setFiltersState] = useState(initialFiltersState)
 const [sortOptions, setHeaderFilterOptions] = useState<ISortingState>({sortBy:'', options:[]})
-const [renderCards, setRenderCards] = useState<IOffersCard[]>([])
+const [renderCards, setRenderCards] = useState<IOfferInventory[]>([])
 const [sidebarFilters, setSideBarFilters] = useState<IFiltersSideBar>(initSideBarState)
 const [defaultSideBarStateFilters, setDefaultStateFilters] =useState<IFiltersSideBar>(initSideBarState)
 const [amountPages, setAmountPages] = useState<number>(0)
 const [isLoading, setIsLoading]= useState(false)
 
 const searchParams = useSearchParams()
-const search = searchParams.get('search')
 const { gameId } = useAppContext()
 
-const hasMore = useMemo(() => filtersState.page ? filtersState.page < amountPages : true, [filtersState, amountPages])
+const hasMore = useMemo(() => {
+  return filtersState.offset ? filtersState.offset < amountPages : true
 
-const updateFilter = <K extends keyof IInitialFiltersState>(value: TValue<K>): void => {
+} , [filtersState, amountPages])
+
+const updateFilter = <K extends keyof IMarketOfferFilters>(value: TValue<K>): void => {
     setFiltersState(prev => ({
         ...prev,
         ...value,
-        page: 1
     }))
 }
 const updateFilterWithCheckbox = (filterKey:TKeysCheckboxFilter, value: string) => {
   setFiltersState(prev => ({
     ...prev,
-    page: 1,
+    offset: 0,
     [filterKey]: prev[filterKey]?.some((el: string) => el === value ) 
       ?  prev[filterKey]?.filter((el: string) => el !== value)
       : [ ...prev[filterKey] ?? [], value ]
@@ -55,7 +58,7 @@ const updateFilterWithCheckbox = (filterKey:TKeysCheckboxFilter, value: string) 
  const updatePage = () => {
   setFiltersState( prev => ({
     ...prev,
-    page: prev.page ? prev.page + 1 : 2
+    offset: prev.offset ? prev.offset + 1 : 1
   }))
  }
 
@@ -97,7 +100,7 @@ const isSelectedSideBarFilter = useMemo(():boolean => {
 },[sidebarFilters])
 
 const resetFilters = () => {
-  setFiltersState({ appId: gameId, sortBy: sortOptions.sortBy})
+  setFiltersState({ appid: gameId, sort: sortOptions.sortBy})
 }
 
 const resetSideBarFilters = () => {
@@ -113,84 +116,60 @@ const resetSideBarFilters = () => {
   }
 }
 
-const setDefaultFilters = useCallback(async (query: string) => {
-  setFiltersState({})
+  const getFilteredItems = useCallback(async () => {
+    const query = generateQuery({
+      appid: filtersState.appid ?? gameId,
+      sort: sortOptions.sortBy,
+      ...filtersState
+    })
+    setIsLoading(true)
     try {
-      const { defaultFilters, sortByOptions, offers, sortBy, total  } = await getOffers(query)
-      // create initial sidebar state
-      const initFilters: Record<string, any> = {}
+       const { defaultFilters, sortByOptions, offers, sortBy, total, limit } = await getOffers(query)
 
-      defaultFilters.forEach(filter => {
-        if(filter.type === 'range'){
-          const { from, to } = filter?.options as IRangeOptions
-         return initFilters[filter.name] = { 
-          value: typeof filter.value === 'object' ? [filter?.value?.from?.amount, filter?.value?.to?.amount] : filter.value, 
-          data: filter?.diagramData?.map((el: { count: any }) => el?.count) ,
-          options: [from?.amount, to?.amount]
-        }
-        }
-        if(filter.type === 'multiple-choice-filter'){
-          const checkboxoptions = filter?.options as IDefaultOptionRes[]
-           return initFilters[filter.name] = checkboxoptions?.map(el => ({...el, selected: false}))
-        }
-        if(filter.type === 'radio'){
-          return initFilters[filter.name] = ({value: filter.value, options:filter.options})
-        }
-        initFilters[filter.name] = filter.value ?? ''
+      const initFilters = generateFiltersObject(defaultFilters)
 
-        
-      })
       setHeaderFilterOptions(prev => ({
         prev,
         options: sortByOptions,
         sortBy
       }))
+      
       setSideBarFilters(initFilters as IFiltersSideBar )
       setDefaultStateFilters(initFilters as IFiltersSideBar)
-      setRenderCards(offers)
-      setAmountPages(Math.ceil(total / 24))
+      setAmountPages(Math.ceil(total / limit))
+
+      if(filtersState?.offset > 0){
+        return setRenderCards(prev => ([...prev, ...offers]))
+      } else {
+        setRenderCards(offers)
+      }
       localStorage.setItem('filters', JSON.stringify(initFilters) )
 
-    } catch (error) {
-      console.log(error)
-    }
-  }, [])
-
-  const getFilteredItems = useCallback( async () => {
-    const query = generateQuery({
-      appId: gameId,
-      sortBy: sortOptions.sortBy,
-      page:filtersState.page ?? 1,
-      ...filtersState
-    })
-    try {
-      console.log(query)
-      const { offers } = await getOffers(query)
       setIsLoading(false)
-      if(filtersState?.page > 1){
-        return setRenderCards(prev => ([...prev, ...offers]))
-      }
+      
       window.scrollTo({top: 0, behavior: "instant"})
       setRenderCards(offers)
     } catch (error) {
       console.log(error)
     }
 
-  }, [gameId,sortOptions, filtersState,search])
+  }, [gameId, sortOptions, filtersState ])
 
 
   useEffect(() => {
     if(Object.keys(filtersState).length){
       setIsLoading(true)
       void getFilteredItems()
+      setIsLoading(false)
     }
    }, [filtersState])
 
    useEffect(() => {
-    if(search){
-      updateFilter({search})
+    if(searchParams.toString()){
+      const objParams = qs.parse(searchParams.toString())
+      setFiltersState(objParams)
     }
-   } ,[search])
+   } ,[searchParams])
 
     return (
       <MarketOffersContext.Provider value={{
@@ -202,12 +181,10 @@ const setDefaultFilters = useCallback(async (query: string) => {
         defaultSideBarStateFilters,
         hasMore,
         isLoading,
-        search,
         setSideBarFilters,
         setHeaderFilterOptions,
         updateFilter,
         updateFilterWithCheckbox,
-        setDefaultFilters,
         resetFilters,
         resetSideBarFilters,
         getFilteredItems,

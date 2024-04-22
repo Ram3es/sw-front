@@ -8,7 +8,6 @@ import MarketHotIcon from "@/components/icons/market/MarketHotIcon"
 import SliderCard from "@/components/slider/SliderCard"
 import SliderFade from "@/components/slider/SliderFade"
 import { HOT_SLIDER_SETTINGS, NEWLY_SLIDER_SETTINGS } from "@/constants/slider-settings"
-import { IMAGE_ROOT_URL } from "@/constants/transactions"
 import { getOffers } from "@/services/market/market"
 import { IOffersCard } from "@/types/Card"
 import Link from "next/link"
@@ -45,8 +44,8 @@ interface IOffersCardsState {
 }
 
 export default async function Market() {
-  const { total, offers: hot } = await getOffers('?sortBy=HotDeals')
-  const { offers: newest } = await getOffers('?sortBy=Newest')
+  const { total, offers: hot } = await getOffers('?sort=price-asc')
+  const { offers: newest } = await getOffers('?sort=price-desc')
   
   const offerCards = { total, hot, newest }
   return (

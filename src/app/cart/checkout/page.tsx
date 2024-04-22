@@ -226,11 +226,11 @@ export default function CartCheckout() {
                 <div className="mb-6 flex flex-col gap-4">
                   {cartItems.items.map((cartItem) => (
                     <div
-                      key={cartItem.inventoryItemId}
+                      key={cartItem.assetid}
                       className="grid col-span-12 gap-2 text-white font-medium text-base"
                     >
                       <span className="col-span-9 truncate">{cartItem.name}</span>
-                      <span className="place-self-end span-3 col-start-10">${format(cartItem.price.amount)}</span>
+                      <span className="place-self-end span-3 col-start-10">${format(cartItem.price.buy)}</span>
                     </div>
                   ))}
                 </div>

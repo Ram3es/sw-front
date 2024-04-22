@@ -8,8 +8,6 @@ export const TRNS_STRING = {
     your transaction. Thank you for your patience.`
 }
 
-export const IMAGE_ROOT_URL = 'https://community.akamai.steamstatic.com/economy/image/'
-
 export const TRX_CARD_CONTENT: Record<ETransactionType , ICardContent> = {
   payin: {
     title: 'Deposit',

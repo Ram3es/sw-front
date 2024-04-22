@@ -19,6 +19,7 @@ const ItemCard = ({
   isSelected,
   isNoFee,
   price, name,
+  colorName,
   steamPrice,
   type,
   condition,
@@ -50,7 +51,7 @@ const ItemCard = ({
         )} />
       </div>
       {!isTradable
-        ? <div className="bg-darkSecondary bg-opacity-50 absolute left-0 top-0 w-full h-full z-20">
+        ? <div className="bg-darkSecondary bg-opacity-50 absolute left-0 top-0 w-full h-full z-[5]">
         <span
           className={classNames("absolute left-1/2 -translate-x-1/2 uppercase flex w-max text-14 font-Barlow text-white py-1 px-3 border rounded-[24px]",
             variant === ECardVariant.withdraw ? ' top-[114px] ' : ' top-[84px] '

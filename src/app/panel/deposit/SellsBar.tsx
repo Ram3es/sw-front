@@ -9,10 +9,11 @@ import ItemSelectedCard from '../../../components/Content/ItemSelectedCard'
 import { format } from '../../../helpers/numberFormater'
 import { useHideOnScroll } from '../../../helpers/useHideOnScroll'
 import Link from 'next/link'
+import { IInventoryCard } from '@/types/Inventory'
 
 interface ISellBarProps {
-  selectedCards: TInventoryCard[]
-  onClose: (card: TInventoryCard) => void
+  selectedCards: IInventoryCard[]
+  onClose: (card: IInventoryCard) => void
 }
 
 const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
@@ -25,7 +26,7 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
     setInputValue(e.target.value)
   }
 
-  const totalWorth = selectedCards.reduce((acc, val) => acc + val.price, 0)
+  const totalWorth = selectedCards.reduce((acc, val) => acc + val.price.sell, 0)
   return (
     <div
       className={classNames(
@@ -87,6 +88,7 @@ const SellsBar: FC<ISellBarProps> = ({ selectedCards, onClose }) => {
                   onClose(card)
                 }}
                 {...card}
+                price={card.price.sell}
               />
                 ))
               )

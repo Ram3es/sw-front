@@ -10,62 +10,82 @@ import MarketWithdrawSidebar from './MarketWithdrawSidebar'
 import SelectBottomBar from './SelectBottomBar'
 import { getItemsToWithdraw, withdrawItems } from '@/services/market/market'
 import { ECardVariant, type TInventoryCard } from '@/types/Card'
+import {  makeTradeOffer } from '@/services/inventory/inventory'
+import { IInventoryCard, IMakeTradeOffer, ITradeItem } from '@/types/Inventory'
+import { useAppContext } from '@/context/AppContext'
+import axios from 'axios'
+import { getImageURL } from '@/helpers/getImageURL'
 
 
 export default function MarketWithdraw() {
   const shouldHide = useHideOnScroll()
-  const [renderCards, setRenderCards] = useState<TInventoryCard[]>([])
+  const [renderCards, setRenderCards] = useState<IInventoryCard[]>([])
   const [isSelectedAll, setSelectedAll] = useState(false)
   const [isOnlySelectedShown, setIsOnlySelectedShown] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   const router = useRouter()
+  const { showToast } = useAppContext()
 
-  const toggleSelect = (card: TInventoryCard) => {
-    setRenderCards(prev => [...prev.map(item => card.id === item.id ? { ...item, isChecked: !item.isChecked } : item)])
+  const toggleSelect = (card: IInventoryCard) => {
+    setRenderCards(prev => [...prev.map(item => card.id === item.id ? { ...item, isSelected: !item.isSelected } : item)])
   }
 
   const toggleAllSelected = () => {
     if (isSelectedAll) {
-      setRenderCards(prev => [...prev.map(item => item.isTradable ? { ...item, isChecked: false } : item)])
+      setRenderCards(prev => [...prev.map(item => item.isTradable ? { ...item, isSelected: false } : item)])
       setSelectedAll(false)
       return
     }
-    setRenderCards(prev => [...prev.map(item => item.isTradable ? { ...item, isChecked: true } : item)])
+    setRenderCards(prev => [...prev.map(item => item.isTradable ? { ...item, isSelected: true } : item)])
     setSelectedAll(true)
   }
 
-  const selectedItemsQty = useMemo(() => renderCards.reduce((prev, cur) => cur.isChecked ? prev + 1 : prev, 0), [renderCards])
-  const cardsToShow = useMemo(() => isOnlySelectedShown ? [...renderCards].filter(c => c.isChecked) : renderCards, [isOnlySelectedShown, renderCards])
+  const selectedItemsQty = useMemo(() => renderCards.reduce((prev, cur) => cur.isSelected ? prev + 1 : prev, 0), [renderCards])
+  const cardsToShow = useMemo(() => isOnlySelectedShown ? [...renderCards].filter(c => c.isSelected) : renderCards, [isOnlySelectedShown, renderCards])
 
   const getItems = useCallback(async () => {
     try {
       const items = await getItemsToWithdraw()
-      console.log('items', items)
       setRenderCards(() => items.map((item: any) => ({
-        id: item.inventoryItemId,
-        name: item.name,
+        id: item.assetid,
         type: item.typeName,
         variant: ECardVariant.withdraw,
         condition: item.wearFloat,
-        price: item.price.amount,
-        steamPrice: item.steamPrice.amount,
-        // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-        image: item.imageUrl ? `https://community.akamai.steamstatic.com/economy/image/${item.imageUrl}` : '',
+        steamPrice: item.price.sell,
+        image: getImageURL(item.icon_url),
         isInWithdraw: item.withdrawn,
-        isTradable: !item.withdrawn,
-        isChecked: false
+        isTradable: item.tradable,
+        isSelected: false,
+        ...item
       })))
     } catch (error) {
+     
       console.log(error)
+      showToast(error as string)
     }
   }, [])
 
   const withdtraw = async () => {
-    const assetIds = renderCards.filter(card => card.isChecked).map(filteredCard => filteredCard.id)
+    const itemsToOffer: IMakeTradeOffer[] = renderCards.filter(card => card.isSelected)
+      .map((card) => ({
+        appid: card.appid,
+        assetid: card.assetid,
+        classid: card.classid,
+        steamid: card.steamid,
+        instanceid: card.instanceid,
+        name: card.name,
+        amount: card.amount,
+        price: card.price.sell,
+        tradable: card.tradable,
+      }))
     try {
-      await withdrawItems({ assetIds })
+         await makeTradeOffer(itemsToOffer)
+         router.push('/market/withdraw')
     } catch (error) {
+      if(axios.isAxiosError(error)){
+        showToast(error.message)
+      }
       console.log(error)
     }
   }
@@ -149,7 +169,7 @@ export default function MarketWithdraw() {
         selectedItemsQty={selectedItemsQty}
         onShowSelected={() => { setIsOnlySelectedShown(prev => !prev) }}
         onCancel={() => { setRenderCards(prev => [...prev.map(item => item.isTradable ? { ...item, isChecked: false } : item)]) }}
-        onWithdraw={() => { void withdtraw(); router.push('/market/withdraw')}}
+        onWithdraw={() => { void withdtraw() }}
       />
     </div>
   )

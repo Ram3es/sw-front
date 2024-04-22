@@ -7,19 +7,33 @@ import { useCallback, useEffect, useState } from 'react'
 import { getTradeOffers } from '../../../services/market/market'
 import { ITradeOffersResponse } from '../../../types/Market'
 import TradeOfferCard from '../../../components/Content/TradeOfferCard'
-import { IMAGE_ROOT_URL } from '../../../constants/transactions'
 import { ECardVariant } from '../../../types/Card'
 import { Button } from '../../../components/Navigation'
+import { IMAGE_ROOT_URL } from '@/constants/common'
+import { getImageURL } from '@/helpers/getImageURL'
+import { createTrade, receiveTradeOffers } from '@/services/inventory/inventory'
 
 export default function Inventory() {
-  const [tradeOffers, setTradeOffers] = useState<ITradeOffersResponse[]>([])
+  const [tradeOffers, setTradeOffers] = useState<ITradeOffersResponse[] >([])
 
   const getAllTradeOffers = useCallback(async () => {
     try {
-      const data = await getTradeOffers()
-      setTradeOffers(data)
+      const offerData = await receiveTradeOffers()
+      setTradeOffers(offerData)
+      //old
+      // const data = await getTradeOffers()
+      // setTradeOffers(data)
     } catch (error) {
 
+    }
+  }, [])
+
+  const sendTrade = useCallback(async(offerId:string ) => {
+    try {
+      const updatedTradeOffers = await createTrade(offerId)
+      setTradeOffers(updatedTradeOffers)
+    } catch (error) {
+     console.log(error) 
     }
   }, [])
 
@@ -50,19 +64,23 @@ export default function Inventory() {
           <div className=' flex flex-col gap-4 my-10'>
             {tradeOffers.map(offer =>
                <TradeOfferCard
-                 key={offer.security_token}
-                 botName={offer.bot_name}
-                 token={offer.security_token}
-                 createdAt={offer.createdAt}
-                 expiredAt={offer.expired_at}
-                 items={offer.items.map(item => (
+                 key={offer.tradeId}
+                 botName={offer.botProfile.name}
+                 token={offer.botProfile.avatarHash}
+                 status={offer.state}
+                 botLevel = {offer.botProfile.level}
+                 memberSince={offer.botProfile.memberSince}
+                 expiredAt={offer.updatedAt}
+                 tradeOfferId={offer.tradeOfferId}
+                 items={offer.trade_items.map(item => (
                    {
-                     id: item.inventoryItemId,
+                     id: item.assetid,
                      name: item.name,
-                     image: IMAGE_ROOT_URL.concat(item.imageUrl),
-                     condition: item.wearFloat,
+                     image: getImageURL(item.icon_url),
+                     condition: 0.0002323023232,
                      variant: ECardVariant.offer
                    }))}
+                 sendTrade={() => sendTrade(offer.tradeId)}
                />)}
           </div>
 

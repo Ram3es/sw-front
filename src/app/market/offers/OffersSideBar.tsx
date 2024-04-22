@@ -41,7 +41,6 @@ const OffersSideBar = () => {
     tradableIn,
   } = sidebarFilters
 
-  
 const setOption = (value: string) => {
   setSideBarFilters(prev => ({ ...prev, variant: {...prev.variant, value } }))
   updateFilter({ variant: value === 'all' ? '' : value })
@@ -103,17 +102,17 @@ return (
               }))
             }}
             updateFilterFn={(value) => { 
-              const priceFrom = value[0] === initFilters.priceRange.value[0]
+              const priceMin = value[0] === initFilters.priceRange.value[0]
                 && value[1] === initFilters.priceRange.value[1] 
                   ? null 
                   : value[0]
 
-              const priceTo = value[1] === initFilters.priceRange.value[1] 
+              const priceMax = value[1] === initFilters.priceRange.value[1] 
                 &&  value[0] === initFilters.priceRange.value[0] 
                   ? null 
                   : value[1]
 
-              updateFilter({ priceFrom, priceTo })}}
+              updateFilter({ priceMin, priceMax })}}
             />
         </Dropbox>
         {ESteamAppId.CSGO === gameId && (<>
@@ -203,7 +202,7 @@ return (
                 label='Value (0 - 1000)'
                 value={pattern}
                 handleChange={handleChangePatternValue}
-                handleBlur={() => (pattern || pattern === '') && updateFilter({ pattern: pattern })}
+                handleBlur={() => (pattern || pattern === '') && updateFilter({ pattern })}
                 activeClass='focus-within:border-swViolet'
                 wrapperClasses='h-[44px] px-[12px] text-sm bg-darkGrey border-2 border-darkGrey z-[10]'
                 variant='coupon'

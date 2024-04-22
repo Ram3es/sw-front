@@ -33,7 +33,7 @@ const SearchModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if(e.key === 'Enter'){
       if(searchValue){
-        push(`/market/offers?appId=${gameId}&search=${searchValue.toLowerCase()}`)
+        push(`/market/offers?appid=${gameId}&itemName=${searchValue.toLowerCase()}`)
       }
       onClose()
       setSearchValue('')

@@ -8,31 +8,31 @@ import { useMarketOffersCtx } from '@/context/MarketOffers';
 import { classNames } from '@/helpers/className';
 import { ISortByOptions } from '@/types/Market';
 import { Listbox } from '@headlessui/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 
 const OffersHeader = () => {
+  const { push } = useRouter()
+  const searchParams = useSearchParams()
+  const search = searchParams.get('itemName')
     const { gameId } = useAppContext()
     const { 
       updateFilter,
       resetFilters,
       resetSideBarFilters,
       setHeaderFilterOptions,
-      sortOptions,
-      search
+      sortOptions
      } = useMarketOffersCtx()
-     const { push } = useRouter()
-
 
     const onChangeFilter = (value: ISortByOptions) => {
       setHeaderFilterOptions(prev => ({
         ...prev,
-        sortBy: value.name
+        sort: value.name,
 
       }))
-      updateFilter({ sortBy: value.name })
+      updateFilter({ sort: value.name, offset: 0 })
     }
-   
+    
     return(
       <Bar>
         <div className='flex justify-between items-center h-full px-6'>
@@ -43,7 +43,7 @@ const OffersHeader = () => {
                     <span className='uppercase'>results for</span>
                     <div className='flex gap-4 items-center'>
                       <div className='text-white text-24 '>'{search}'</div>
-                      <div onClick={() => { push(`/market/offers?appId=${gameId}`);resetSideBarFilters(); resetFilters()}} className='hover:text-white duration-200 cursor-pointer'>
+                      <div onClick={() => { push(`/market/offers?appid=${gameId}`)}} className='hover:text-white duration-200 cursor-pointer'>
                         <CloseIcon className='h-[18px]' />
                       </div>
                     </div>

@@ -9,66 +9,65 @@ import RoundedMark from '../icons/RoundedMark'
 import ExclamationTriangleIcon from '../icons/ExclamationTriangle'
 import PaperPlane from '@/components/icons/PaperPlane'
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 
 interface ITradeOfferCardProps {
-  status?: string
+  status: string
   botName: string
   token: string
-  createdAt: Date
-  expiredAt: Date
+  memberSince: string
+  botLevel: number
+  expiredAt: string
+  tradeOfferId: null | string
   items: IItemSelectedCard[]
+  sendTrade: () => void
 }
 
-const TradeOfferCard = ({ status = 'pending', botName, items, token, createdAt, expiredAt }: ITradeOfferCardProps) => {
-  const [timer, setTimer] = useState<number>(600000)
+const TEN_MINUTES = 600000
+
+const TradeOfferCard = ({ status, botName, botLevel, items, token, memberSince, expiredAt, tradeOfferId, sendTrade }: ITradeOfferCardProps) => {
+  const [timer, setTimer] = useState<number>(0)
   const refInterval = useRef<ReturnType< typeof setInterval>>()
 
   useEffect(() => {
     refInterval.current && clearInterval(refInterval.current)
-    if (status === 'pending') {
+    if (status === 'pending' && timer) {
       refInterval.current = setInterval(() => { setTimer(prev => prev - 1000) }, 1000)
     }
     return () => { clearInterval(refInterval.current) }
   }, [timer])
 
-  // useEffect(() => {
-  //   if (status === 'pending') {
-  //     const now = Date.now()
-  //     const expired = new Date(expiredAt)
-  //     const leftMilliseconds = expired.getTime() - now
-  //     // console.log(now)
-  //     console.log(expiredAt)
+  useEffect(() => {
+    if(status === 'pending'){
+      const exp = new Date(expiredAt).getTime() + TEN_MINUTES
+      const timer =  exp > Date.now() ? exp - Date.now() : 0
 
-  //     setTimer(leftMilliseconds)
-  //   }
-  // }, [])
+      setTimer(timer)
+    }
+  }, [status])
+
 
   const getOfferStatus = (status: string) => {
     switch (status) {
-      case 'created':
+      case 'waiting_to_be_sent':
         return (
           <Button
             text='send'
-            onClick={() => {}}
+            onClick={sendTrade}
             className='text-darkSecondary bg-skinwalletPink uppercase hover:opacity-70 cta-clip-path'
             heightClass='h-10'
           />)
       case 'pending':
         return (
           <div className='flex flex-col sm:flex-row justify-between'>
-            <div className='flex flex-col sm:flex-row gap-4 mb-4 md:mb-0'>
+            <div className={`flex flex-col sm:flex-row gap-4 mb-4 md:mb-0 ${timer ? '' : 'pointer-events-none'}`}>
+            <Link href={`https://steamcommunity.com/tradeoffer/${tradeOfferId ?? ''}`} rel="noopener noreferrer" target="_blank">
               <Button
                 text='accept in steam'
                 className='w-full sm:w-max justify-center bg-skinwalletPink text-darkSecondary uppercase hover:opacity-70 cta-clip-path '
                 heightClass='h-10'
               />
-              <Button
-                text='accept in browser'
-                className='w-full sm:w-max justify-center text-graySecondary border border-graySecondary uppercase relative group hover:text-white hover:border-white cta-clip-path '
-                heightClass='h-10'
-              >
-                <span className='absolute -left-[3px] bottom-[3px] border-t border-graySecondary group-hover:border-white duration-200 rotate-45 w-3 '/>
-              </Button>
+              </Link>
             </div>
             <span className='text-2xl text-white text-center md:text-start uppercase font-semibold tracking-[1.2px] '>{formatDate(new Date(timer), 'mm:ss ')}</span>
           </div>)
@@ -107,9 +106,9 @@ const TradeOfferCard = ({ status = 'pending', botName, items, token, createdAt, 
                 {items.map(card =>
                   <ItemSelectedCard
                     key={card.id}
-                    variant='offer'
                     {...card}
-                     />)}
+                     />
+                )}
               </div>
             </div>
           </Dropbox>
@@ -121,12 +120,13 @@ const TradeOfferCard = ({ status = 'pending', botName, items, token, createdAt, 
               <InformationIcon iconClasses='w-[14px]  h-auto' />
             </div>
             <div className='flex flex-col md:items-end [&_span]:text-white'>
-              <div className='flex gap-1'> On Steam since:<span>{formatDate(new Date(createdAt), 'MMMM d, yyyy')}</span></div>
+              <div className='flex gap-1'> On Steam since:<span>{formatDate(new Date(memberSince), 'MMMM d, yyyy')}</span></div>
               <div className='flex gap-1'> Security token:<span className='w-20 truncate'>{token}</span></div>
+              <div className='flex gap-1'> Steam Level:<span>{botLevel}</span></div>
             </div>
           </div>
           <div className='mt-10'>
-            {getOfferStatus('pending')}
+            {getOfferStatus(status)}
           </div>
         </div>
   )

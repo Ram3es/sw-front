@@ -14,11 +14,11 @@ interface IProps {
 
 export const AppProvider = ({ children }: IProps) => {
   const searchParams = useSearchParams()
-  const appId = searchParams.get('appId')
+  const appid = searchParams.get('appid')
 
   const [categoriesState, setCategoriesState] = useState(false)
   const [searchOpened, setSearchOpened] = useState(false)
-  const [gameId, setGameId] = useState<ESteamAppId>(appId as ESteamAppId  ?? ESteamAppId.CSGO)
+  const [gameId, setGameId] = useState<ESteamAppId>(appid as ESteamAppId  ?? ESteamAppId.CSGO)
   const [user, setUser] = useState<IUser>()
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true)
   const [listToasts, setToast] = useState<IToast[]>([])

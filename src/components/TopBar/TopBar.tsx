@@ -94,7 +94,7 @@ const TopBar = ({ isHidableOnScroll }: ITopBar) => {
                 <Listbox.Option
                   key={game.id}
                   className="flex flex-col gap-3 w-[178px] cursor-pointer"
-                  onClick={() => { updateGameId(game.id); push(`/market/offers?appId=${game.id}`) }}
+                  onClick={() => { updateGameId(game.id); push(`/market/offers?appid=${game.id}`) }}
                   value={game}
                 >
                   <div className={classNames('relative w-full', gameId === game.id ? 'border border-swViolet' : '')}>

@@ -6,15 +6,15 @@ import 'slick-carousel/slick/slick-theme.css'
 import ItemCard from '../Content/ItemCard'
 import EmptyCard from '../Content/EmptyCard'
 import { useCartContext } from '@/context/CartContext'
-import { ECardVariant, IOffersCard } from '@/types/Card'
-import { IMAGE_ROOT_URL } from '@/constants/transactions'
+import { ECardVariant, IOfferInventory, IOffersCard } from '@/types/Card'
 import SliderArrow from '../../components/slider/SliderArrow'
 import { useAppContext } from '@/context/AppContext'
 import { useRouter } from 'next/navigation'
+import { getImageURL } from '@/helpers/getImageURL'
 
 interface ISliderProps extends PropsWithChildren {
   settings: Partial<Settings>,
-  items: IOffersCard[]
+  items: IOfferInventory[]
   withEmptySlide?: boolean 
 }
 
@@ -32,18 +32,19 @@ const SliderCard: FC<ISliderProps> = ({ items, settings, withEmptySlide = true }
         <Slider {...settingsWithArrow}>
             {items.map((item) =>
               <ItemCard
-                key={item.inventoryItemId}
-                id={item.inventoryItemId}
+                key={item.assetid}
+                id={item.assetid}
                 variant={ECardVariant.market}
                 isTradable={true}
                 name={item.name}
-                type={item.typeName}
-                condition={item.wearFloat}
-                price={item.price.amount}
-                steamPrice={item.steamPrice.amount}
-                image={IMAGE_ROOT_URL.concat(item.imageUrl)}
+                type={item.qualities.type}
+                condition={0.2087172418832779}
+                price={item.price.buy}
+                steamPrice={item.price.buy}
+                image={getImageURL(item.icon_url)}
+                colorName={item.qualities.name_color}
                 onClick={() => {
-                  push(`/market/offers/${item.inventoryItemId}`)
+                  push(`/market/offers/${item.assetid}`)
                 }}
                 submitFn={(e) => {
                   e.stopPropagation()

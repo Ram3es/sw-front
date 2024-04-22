@@ -9,7 +9,6 @@ import { findNearestMaxValue } from '@/helpers/findNearestMaxValue'
 
 const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, steamPrice, condition, name, variant, onClick, isBorderBottom = true }) => {
   const [type, modification] = name.split('|')
-  // .split(/[ -]+/)
 
   const { color, shortName } = useMemo(() => {
     const idx = CONDITIONS.findIndex((el) => condition <= el.maxVal)
@@ -39,7 +38,7 @@ const ItemSelectedCard: FC<IItemSelectedCard> = ({ image, price, steamPrice, con
                 </div>
                 <div className='w-[60%] flex flex-col gap-2 p-2'>
                     <span className='uppercase'>{type}</span>
-                    <h4 className='text-white text-lg group-[.offer]:text-2xl'>{modification}</h4>
+                    <h4 className='text-white text-lg group-[.offer]:text-2xl capitalize'>{modification}</h4>
                     <div className='flex flex-row group-[.withdraw]/card:hidden font-Barlow font-bold'>
                         <span className='text-2xl text-white group-[.offer]:hidden mr-3'>${format(price ?? 0)}</span>
                         {steamPrice && price ? <div className='bg-swLime text-black h-6 px-1'>{percentageDecrease(steamPrice, price)}%</div> : ''}

@@ -1,13 +1,14 @@
 import SymbolIcon from '@/components/icons/SymbolIcon'
 import ItemCard from '../../../components/Content/ItemCard'
 import { type TInventoryCard } from '../../../types/Card'
+import { IInventoryCard } from '@/types/Inventory'
 
 export default function CardsListWrapper ({
   renderCards,
   toggleSelect
 }: {
-  renderCards: TInventoryCard[]
-  toggleSelect: (card: TInventoryCard) => void
+  renderCards: IInventoryCard[]
+  toggleSelect: (card: IInventoryCard) => void
 }) {
   return (
     <>
@@ -16,12 +17,19 @@ export default function CardsListWrapper ({
         <div className="px-[24px] py-[30px] grid grid-cols-2 sm:grid-cols-cards gap-1">
           {renderCards.map((card) => (
             <ItemCard
+              id={card.id}
               key={card.id}
+              name={card.name}
+              price={card.price.sell}
+              image={card.image}
+              type={card.qualities?.type}
+              variant={card.variant}
               onClick={() => {
                 toggleSelect(card)
               }}
-              isSelected={card.isChecked}
-              {...card}
+              condition={card.condition}
+              isSelected={card.isSelected}
+              isTradable= {card.isTradable}
             />
           ))}
         </div>

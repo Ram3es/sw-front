@@ -7,8 +7,8 @@ import ShieldCheck from "@/components/icons/settings/ShieldCheck"
 import SliderCard from "@/components/slider/SliderCard"
 import { CONDITIONS } from "@/constants/item-conditions"
 import { NEWLY_SLIDER_SETTINGS } from "@/constants/slider-settings"
-import { IMAGE_ROOT_URL } from "@/constants/transactions"
 import { findNearestMaxValue } from "@/helpers/findNearestMaxValue"
+import { getImageURL } from "@/helpers/getImageURL"
 import { format, percentageDecrease } from "@/helpers/numberFormater"
 import { getOfferById, getOfferSalesHistory, getSimilarOffers } from "@/services/market/market"
 import { ESteamAppId } from "@/types/Inventory"
@@ -69,7 +69,7 @@ const conditionObj = findNearestMaxValue(CONDITIONS, wearFloat)
                   boxShadow: 'rgba(255, 255, 255, 0.7) 0px 0px 95px 23px'
                 }}
               />
-              <img src={IMAGE_ROOT_URL.concat(imageUrl)} alt="item" className="w-[360px] h-auto relative mx-auto" />
+              <img src={getImageURL(imageUrl)} alt="item" className="w-[360px] h-auto relative mx-auto" />
             </div>
             <div className="w-full max-w-[50%] flex flex-col gap-8 py-4 px-8">
               <div>

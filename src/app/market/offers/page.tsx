@@ -6,34 +6,32 @@ import { useHideOnScroll } from "@/helpers/useHideOnScroll";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import ItemCard from "@/components/Content/ItemCard";
 import { ECardVariant } from "@/types/Card";
-import { IMAGE_ROOT_URL } from "@/constants/transactions";
 import { useCartContext } from "@/context/CartContext";
 import { useAppContext } from "@/context/AppContext";
 import { IsUserLogged } from "@/components/IsUserLogged/IsUserLogged";
 import { useMarketOffersCtx } from "@/context/MarketOffers";
 import { useRouter, useSearchParams } from "next/navigation";
 import Loader from "@/components/Content/Loader";
-import { generateQuery } from "@/helpers/generateQuery";
+import { getImageURL } from "@/helpers/getImageURL";
 
 
 export default function MarketOffers () {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
   const shouldHide = useHideOnScroll()
   const { addToCart } = useCartContext()
-  const { user, gameId } = useAppContext()
+  const { user } = useAppContext()
   const { push } = useRouter()
   const {
     renderCards,
     hasMore,
     isLoading,
-    setDefaultFilters,
+    getFilteredItems,
     updatePage,
   } = useMarketOffersCtx()
+  const searchParams = useSearchParams()
+  
+const observer = useRef<IntersectionObserver | null>(null)
 
-const searchParams = useSearchParams();
-const appId = searchParams.get('appId')
-
-  const observer = useRef<IntersectionObserver | null>(null)
   const lastElementRef = useCallback(
       (node: HTMLElement) => {
         if(observer.current || !hasMore) observer.current?.disconnect()
@@ -46,10 +44,9 @@ const appId = searchParams.get('appId')
     }, [hasMore])
 
    useEffect(() => {
-    if(!gameId) return
-    const query = generateQuery({appId})
-    setDefaultFilters(query)
-   }, [appId])
+    if(!searchParams.toString())
+    getFilteredItems()
+   },[searchParams])
 
     return(
       <>
@@ -101,17 +98,19 @@ const appId = searchParams.get('appId')
                 {renderCards.map((item, idx) => (
                   <ItemCard
                   forwardRef={ idx + 1 === renderCards.length ? lastElementRef : null}
-                  key={item.inventoryItemId + idx}
-                  id={item.inventoryItemId}
+                  key={item.assetid + idx}
+                  id={item.assetid}
                   variant={ECardVariant.market}
-                  isTradable={true}
+                  isTradable={item.tradable}
                   name={item.name}
-                  type={item.typeName}
-                  condition={item.wearFloat}
-                  price={item.price.amount}
-                  steamPrice={item.steamPrice.amount}
-                  image={IMAGE_ROOT_URL.concat(item.imageUrl)}
-                  onClick={() => push(`/market/offers/${item.inventoryItemId}`) }
+                  type={item.qualities.type}
+                  condition={0.2087172418832779} //wearFloat
+                  price={item.price.buy}
+                  steamPrice={item.price.trade}
+                  image={getImageURL(item.icon_url, 192)}
+                  colorName={item.qualities.name_color}
+                  // onClick={() => push(`/market/offers/${item.assetid}`) } 
+                  onClick= {() => {}} //need to implement getting item by id
                   submitFn={(e) => {
                     e.stopPropagation()
                     if (user?.id){
@@ -126,7 +125,6 @@ const appId = searchParams.get('appId')
             <div className={classNames('mb-10', isLoading ? 'block': 'hidden' )}>
               <Loader/>
             </div>
-            
           </div>
         </div>
         </div>

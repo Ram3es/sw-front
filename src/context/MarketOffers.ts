@@ -1,5 +1,5 @@
 import { IFilterwithCheckbox, IOfferFilter } from "@/constants/market-offers";
-import { IOffersCard } from "@/types/Card";
+import { IOfferInventory } from "@/types/Card";
 import { ESteamAppId } from "@/types/Inventory";
 import { ISortingState } from "@/types/Market";
 import { Dispatch, SetStateAction, createContext, useContext } from "react";
@@ -18,7 +18,32 @@ export interface IInitialFiltersState {
     quality: string[] | null
     rarity: string[] | null
     variant: string
-    search: string | null
+}
+
+// filters microservice new
+export interface IMarketOfferFilters {
+  offset: number;
+  limit: number;
+  sort:  string  //'price-asc' | 'price-desc' | 'float-desc' | 'float-asc';
+  priceType: 'buy' | 'trade' | 'sell';
+  priceMin: number | null;
+  priceMax: number | null;
+  appid: ESteamAppId;
+  exterior: any;
+  type: any;
+  rarity: any;
+  weapon: any;
+  collection: any;
+  other: any;
+  category: any;
+  itemName: string;
+  tradehold: number;
+  exact: boolean;
+  wearFrom: number | null
+  wearTo: number | null
+  variant: string
+  pattern: string | null 
+  tradableIn: number | null
 }
 
 export interface IFiltersSideBar {
@@ -30,12 +55,12 @@ export interface IFiltersSideBar {
     rarity: IFilterwithCheckbox[]
     variant: { value: string, options: IOfferFilter[] }
   }
-export type TValue <K extends keyof IInitialFiltersState> = Record<K, IInitialFiltersState[K]>
+export type TValue <K extends keyof IMarketOfferFilters> = Record<K, IMarketOfferFilters[K]>
 export type TKeysCheckboxFilter = keyof Pick<IInitialFiltersState,'quality' | 'rarity'>
 
 
 export interface IMarketOffersCtx {
-    renderCards: IOffersCard[]
+    renderCards: IOfferInventory[]
     filtersState: Record<string, any>
     sortOptions:ISortingState
     isSelectedSideBarFilter: boolean
@@ -43,11 +68,9 @@ export interface IMarketOffersCtx {
     defaultSideBarStateFilters: IFiltersSideBar
     hasMore: boolean
     isLoading: boolean
-    search: string | null
     setSideBarFilters:  Dispatch<SetStateAction<IFiltersSideBar>>
-    updateFilter: <K extends keyof IInitialFiltersState>(value: TValue<K>) => void
-    setDefaultFilters: (query: string) => Promise<void>
-    getFilteredItems:  (query: string) => Promise<void>
+    updateFilter: <K extends keyof IMarketOfferFilters>(value: TValue<K>) => void
+    getFilteredItems:  () => Promise<void>
     updateFilterWithCheckbox: (filterKey:TKeysCheckboxFilter, value: string) => void
     setHeaderFilterOptions: Dispatch<SetStateAction<ISortingState>>
     resetSideBarFilters: () => void

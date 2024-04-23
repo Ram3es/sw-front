@@ -15,6 +15,8 @@ import { IInventoryCard, IMakeTradeOffer, ITradeItem } from '@/types/Inventory'
 import { useAppContext } from '@/context/AppContext'
 import axios from 'axios'
 import { getImageURL } from '@/helpers/getImageURL'
+import { checkTradeAbility } from '@/services/settings/general'
+import TradeModal from '@/components/modals/TradeModal'
 
 
 export default function MarketWithdraw() {
@@ -23,6 +25,8 @@ export default function MarketWithdraw() {
   const [isSelectedAll, setSelectedAll] = useState(false)
   const [isOnlySelectedShown, setIsOnlySelectedShown] = useState(false)
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [modalVariant, setModalVariant] = useState<string>('')
 
   const router = useRouter()
   const { showToast } = useAppContext()
@@ -90,7 +94,21 @@ export default function MarketWithdraw() {
     }
   }
 
+  const checkTradeAccount = useCallback(async () => {
+    try {
+      const data = await checkTradeAbility()
+      if(data.status !== 'success'){
+        setIsOpenModal(true)
+        setModalVariant(data.status)
+      }
+      
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
   useEffect(() => {
+    void checkTradeAccount()
     void getItems()
   }, [])
 
@@ -171,6 +189,7 @@ export default function MarketWithdraw() {
         onCancel={() => { setRenderCards(prev => [...prev.map(item => item.isTradable ? { ...item, isChecked: false } : item)]) }}
         onWithdraw={() => { void withdtraw() }}
       />
+      <TradeModal isOpen={isOpenModal} variant={modalVariant} />
     </div>
   )
 }

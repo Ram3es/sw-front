@@ -28,7 +28,7 @@ export default function TradeUrl() {
       initialValues: {
         tradeUrl: ''
       },
-      validationSchema: Yup.object({
+      validationSchema: Yup.object().shape({
         tradeUrl: Yup.string().required('Steam Trade URL cannot be empty')
       }),
       validateOnChange: false,
